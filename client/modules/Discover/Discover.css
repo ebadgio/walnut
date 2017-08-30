@@ -187,6 +187,7 @@
     width: 320px !important;
     padding-top: 6vh !important;
     padding-left: 15px !important;
+    max-height: 100vh !important;
 }
 
 .followedPostsButton {

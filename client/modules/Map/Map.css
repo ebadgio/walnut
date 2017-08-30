@@ -10,12 +10,11 @@
 #outer {
   display: flex;
   flex-direction: row;
-  height: 92vh
+  padding-top: 45px;
+  width: 100%;
 }
 
 #inner {
-  display: flex;
-  flex-direction: column;
   margin-left: 1%;
   margin-right: 1%;
   margin-top: 14px;
@@ -44,7 +43,6 @@
 
 .outerfilterall  {
   margin-top: 20px;
-  width: 20vw;
   display: flex;
   flex-direction: column;
 }
@@ -72,9 +70,10 @@
 }
 
 #scrollbar {
-  height: 80vh;
-  width: 20vw;
-  margin-left: 20px;
+  position: relative !important;
+  overflow: hidden !important;
+  width: 24vw !important;
+  height: 65vh !important;
 }
 
 .zoomControl {
@@ -82,11 +81,11 @@
 }
 #PlacesAutocomplete__root {
   height: 36px;
-  margin-top: 10px;
 }
 #PlacesAutocomplete__root input {
-  border-radius: 5px;
-  margin-top: 10px;
+  border: 1px solid !important;
+  border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
+  border-radius: 3px !important;
 }
 
 #PlacesAutocomplete__root input::placeholder {
@@ -117,19 +116,29 @@ i.icon.map {
 }
 
 .iconSelectorWrapper1 {
+  cursor: pointer;
   height: 40px;
   width: 40px;
   border-radius: 20px;
-  background-color: #314460;
-  color: #FFF;
+  background-color: #3a3a3a;
+  color: #FAFAFA;
 }
 
 .iconSelectorWrapper2 {
+  cursor: pointer;
   height: 40px;
   width: 40px;
   border-radius: 20px;
-  background-color: #FFF;
-  color: #314460;
+  background-color: #3a3a3a;
+  color: #FAFAFA;
+}
+
+.iconSelectorWrapper1:hover {
+  color: #5bc0e3;
+}
+
+.iconSelectorWrapper2:hover {
+  color: #5bc0e3;
 }
 
 i.clock.icon {
@@ -141,7 +150,8 @@ i.clock.icon {
 i.university.icon {
   font-size: 20px;
   padding: 8px;
-  padding-left: 9px;
+  padding-top: 10px;
+  padding-left: 10px;
 }
 
 i.home.icon {
@@ -150,20 +160,34 @@ i.home.icon {
   padding-top: 10px;
 }
 
-button.ui.positive.button, button.ui.positive.button:focus  {
-  background-color: #314460;
+button.ui.positive.button, button.ui.positive.button:hover  {
+  background-color: #5bc0e3 !important;
 }
 
-button.ui.positive.button:hover {
-  background-color: #314460;
-}
-
-button.ui.button {
+.buttonPlaceNegative {
   background-color: #FFF;
 }
 
+.buttonPersonNegative {
+  background-color: #FFF;
+}
+
+.buttonPlaceNegative:hover {
+  background-color: #fff !important;
+  color: #5bc0e3 !important;
+}
+
+.buttonPersonNegative:hover {
+  background-color: #fff !important;
+  color: #5bc0e3 !important;
+}
+
+.ui.buttons .or:before {
+  background-color: #3a3a3a !important;
+  color: #FAFAFA !important;
+}
+
 .mapSelector .Select-placeholder {
-  background: #313D4D;
   border-width: 0px;
 }
 
@@ -194,8 +218,10 @@ button.ui.button {
 }
 
 .cardOuter {
+  width: 90% !important;
   margin-top: 0px !important;
   margin-bottom: 4px !important;
+  margin-left: 1% !important;
 }
 
 .ui.card.cardOuter.clicked > .content {
