@@ -48,6 +48,7 @@ class Post extends React.Component {
     const urls = this.urlFinder(this.props.postData.content);
     this.setState({urls: urls});
   }
+
   urlFinder(text) {
     const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
     const urls = [];
@@ -57,9 +58,11 @@ class Post extends React.Component {
     });
     return urls;
   }
+
   handleClick() {
     this.setState({isOpen: !this.state.isOpen});
   }
+
   toggleLike() {
     this.props.newLike();
     if (this.state.isLiked) {
@@ -68,19 +71,24 @@ class Post extends React.Component {
       this.setState({likeCount: this.state.likeCount + 1, isLiked: true});
     }
   }
+
   renderLightBox(data) {
     this.setState({lightBoxData: data});
   }
+
   closeLightbox() {
     this.setState({lightBoxData: ''});
     console.log('this is closed', this.state.lightBoxData);
   }
+
   renderPdfModal(data) {
     this.setState({pdfModalData: data});
   }
+
   closeModal() {
     this.setState({ pdfUrl: '', page: 1 });
   }
+
   handlePrevious() {
     if(this.state.page === 1) {
       this.setState({ page: this.state.pages });
@@ -88,6 +96,7 @@ class Post extends React.Component {
       this.setState({ page: this.state.page - 1 });
     }
   }
+
   handleNext() {
     if(this.state.page === this.state.pages) {
       this.setState({ page: 1 });
@@ -95,18 +104,23 @@ class Post extends React.Component {
       this.setState({ page: this.state.page + 1 });
     }
   }
+
   onDocumentComplete(pages) {
     this.setState({ page: 1, pages: pages });
   }
+
   onPageComplete(page) {
     this.setState({ page: page });
   }
+
   closePdfModal() {
     this.setState({pdfModalData: ''});
   }
+
   closeDownloadModal() {
     this.setState({downloadUrl: ''});
   }
+
   render() {
     const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreview url={url} />) : [];
     return (

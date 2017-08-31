@@ -177,8 +177,8 @@ const mapStateToProps = (state) => ({
   lastRefresh: state.discoverReducer.lastRefresh,
   otherTags: state.discoverReducer.otherTags,
   postTags: state.postReducer.postTags,
-  useFilters: state.discoverReducer.useFilters,
-  newPostTags: state.postReducer.newPostTags
+  newPostTags: state.postReducer.newPostTags,
+  useFilters: state.discoverReducer.useFilters
 });
 
 const mapDispatchToProps = (dispatch) => ({
