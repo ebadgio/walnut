@@ -12,6 +12,11 @@ const directoryReducer = (state = {
         users: action.users,
         lastRefresh: action.lastRefresh
       };
+    case 'DIRECTORY_FRESH':
+      return {
+        users: [],
+        lastRefresh: ''
+      };
     default:
       return state;
   }

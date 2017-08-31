@@ -11,7 +11,8 @@ const newPostThunk = (postBody, postTags, newTags, lastRefresh, filters) => (dis
     filters: filters
   })
     .then((response) => {
-      dispatch({ type: 'GET_DISCOVER_DATA_REFRESH', posts: response.data.posts, lastRefresh: response.data.lastRefresh});
+      dispatch({ type: 'GET_DISCOVER_DATA_REFRESH', posts: response.data.posts,
+      lastRefresh: response.data.lastRefresh, otherTags: response.data.otherTags});
       dispatch({type: 'MODAL_TOGGLE'});
     })
     .catch((err) =>{

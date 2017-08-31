@@ -26,9 +26,10 @@ router.get('/user', (req, res) => {
       });
 });
 
-// TODO: this needs to be fixed. There is a "cannot read property map of undefined" error
 router.post('/create/community', (req, res) => {
   console.log('this is the backend route', req.body);
+  let userEnd;
+  let commEnd;
   const tagModels = req.body.otherTags.map((filter) =>
         new Tag({
           name: filter
@@ -47,36 +48,38 @@ router.post('/create/community', (req, res) => {
           return community.save();
         })
         .then((community) => {
-          User.findById(req.user._id)
-                .then((user) => {
-                  user.communities.push(community._id);
-                  user.currentCommunity = community._id;
-                  const pref = {
-                    community: `${community._id}`,
-                    pref: []
-                  };
-                  user.preferences.push(pref);
-                  user.markModified('preferences');
-                  return user.save();
-                })
-                .then((userSave) => {
-                  console.log('dhhdhdhd', userSave);
-                  Community.findById(community._id)
-                        .populate('otherTags')
-                        .then((com) => {
-                          com.queries.push(userSave.queries);
-                          const tags = [];
-                          com.otherTags.forEach((tag) => {
-                            tag.owner = community._id;
-                            tags.push(tag);
-                          });
-                          Promise.all(tags.map((tag) => tag.save()))
-                                .then((values) => {
-                                  res.json({success: true, community: community});
-                                });
-                        });
-                });
+          commEnd = community;
+          return User.findById(req.user._id);
         })
+        .then((user) => {
+          user.communities.push(commEnd._id);
+          user.currentCommunity = commEnd._id;
+          const pref = {
+            community: `${commEnd._id}`,
+            pref: []
+          };
+          user.preferences.push(pref);
+          user.markModified('preferences');
+          return user.save();
+        })
+          .then((savedUser) => {
+            const opts = [
+              { path: 'communities' },
+              { path: 'currentCommunity' },
+              {
+                path: 'currentCommunity',
+                populate: { path: 'admins defaultags users' }
+              }
+            ];
+            return User.populate(savedUser, opts);
+          })
+          .then((userSave) => {
+            userEnd = userSave;
+            return Community.find();
+          })
+          .then((communities) => {
+            res.json({user: userEnd, communities: communities});
+          })
         .catch((err) => {
           console.log('got error', err);
           res.json({error: err});

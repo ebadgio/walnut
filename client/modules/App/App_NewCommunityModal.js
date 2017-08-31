@@ -13,7 +13,7 @@ class NewCommunityModal extends React.Component {
     super();
     this.state = {
       titleValue: '',
-      image: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+      image: 'https://avatars2.githubusercontent.com/u/5745754?v=4&s=88',
       otherTags: [],
       filterValue: '',
       file: '',
@@ -39,29 +39,29 @@ class NewCommunityModal extends React.Component {
   }
 
   handleNewComm() {
-    console.log('in here', this.state.titleValue);
-    if (this.state.file !== '') {
-      console.log('inside here', this.state.file);
-      // superagent.post('/aws/upload/community')
-      //   .attach('community', this.state.file)
-      //   .end((err, res) => {
-      //     if (err) {
-      //       console.log(err);
-      //       alert('failed uploaded!');
-      //     }
-      //     if (this.state.titleValue) {
-      //       this.props.handleCreate(res.body.pictureURL, this.state.titleValue, this.state.defaultFilters);
-      //       this.setState({ open: false });
-      //     }
-      //   });
+    if (this.state.file !== '' && this.state.titleValue) {
+      superagent.post('/aws/upload/community')
+        .field('otherTags', this.state.otherTags)
+        .field('title', this.state.titleValue)
+        .attach('community', this.state.file)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            alert('failed uploaded!');
+          }
+          console.log('return on front end for aws create', res.body);
+          // dispatch({ type: 'GET_USER_DATA_DONE', user: response.data.user });
+          // dispatch({ type: 'GET_ALL_COMMUNITIES_NEW', communities: response.data.communities });
+          this.setState({ open: false, titleValue: '', otherTags: [] });
+        });
     } else if (this.state.titleValue) {
-      console.log('no file selected');
-      this.props.handleCreate(this.state.image, this.state.titleValue, this.state.defaultFilters);
-      this.setState({ open: false });
+      this.props.handleCreate(this.state.image, this.state.titleValue, this.state.otherTags);
+      this.setState({ open: false, titleValue: '', otherTags: [] });
     }
   }
 
   handleUpload(file) {
+    // TODO: front end picture preview upload
     console.log('this is the file', file);
     this.setState({file: file});
     const reader = new FileReader();
@@ -103,11 +103,13 @@ class NewCommunityModal extends React.Component {
                 Create your Community!
             </Modal.Header>
             <Modal.Content scrolling>
-                <img className="communityImgUpload" src={'http://www.sessionlogs.com/media/icons/defaultIcon.png'} />
-                    <ReactUploadFile
-                        style={{width: '80px', height: '40px'}}
-                        chooseFileButton={<Button icon="plus" />}
-                        options={optionsForUpload}/>
+                {/* <img className="communityImgUpload" src={'http://www.sessionlogs.com/media/icons/defaultIcon.png'} /> */}
+                    <div id="communityUploaderCreate">
+                      <ReactUploadFile
+                          style={{width: '80px', height: '40px'}}
+                          chooseFileButton={<Button icon="plus" />}
+                          options={optionsForUpload}/>
+                    </div>
                 <Input
                        className="titleInput"
                        value={this.state.titleValue}
