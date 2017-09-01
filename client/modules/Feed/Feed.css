@@ -22,6 +22,10 @@
 
 .Feed_Wrapper {
     background-color: #FAFAFA;
+    position: absolute;
+    left: 50%;
+    margin-top: 6vh;
+    transform: translate(-50%);
 }
 
 .newPostFooter {

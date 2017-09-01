@@ -63,36 +63,37 @@ class Home extends React.Component {
   // }
 
   render() {
+    // return (
+    //   <Sidebar.Pushable>
+    //     <Sidebar className="followedPostsSidebar"
+    //              animation="overlay"
+    //              visible={this.state.visible}
+    //              icon="labeled"
+    //              direction="right"
+    //              vertical>
+    //         <Button icon onClick={() => this.toggleVisibility()} className="minifyButton">
+    //           <Icon name="chevron circle right"
+    //                 size="large"
+    //                 />
+    //         </Button>
+    //         {(this.props.myConversations && this.props.myConversations.length > 0) ? this.props.myConversations.map((conv) =>
+    //             <ConversationCard data={conv}
+    //                               key={uuidv4()}
+    //                               user={this.props.currentUser}/>
+    //         ) : null}
+    //     </Sidebar>
+    //     <Sidebar.Pusher>
+    //     </Sidebar.Pusher>
+    //   </Sidebar.Pushable>
+    // );
     return (
-      <Sidebar.Pushable>
-        <Sidebar className="followedPostsSidebar"
-                 animation="overlay"
-                 visible={this.state.visible}
-                 icon="labeled"
-                 direction="right"
-                 vertical>
-            <Button icon onClick={() => this.toggleVisibility()} className="minifyButton">
-              <Icon name="chevron circle right"
-                    size="large"
-                    />
-            </Button>
-            {(this.props.myConversations && this.props.myConversations.length > 0) ? this.props.myConversations.map((conv) =>
-                <ConversationCard data={conv}
-                                  key={uuidv4()}
-                                  user={this.props.currentUser}/>
-            ) : null}
-        </Sidebar>
-        <Sidebar.Pusher>
-          <div id="Discover">
-            {!this.props.isReady ? <p>loading new community</p> : null}
-            <LeftSideBar />
-            <Feed />
-            <Button onClick={() => this.toggleVisibility()} className="followedPostsButton">
-              Followed Posts
-            </Button>
-          </div>
-        </Sidebar.Pusher>
-      </Sidebar.Pushable>
+        <div className="row" id="Discover">
+          {/* <LeftSideBar />*/}
+          <Feed id="Feed"/>
+          {/* <Button onClick={() => this.toggleVisibility()} className="followedPostsButton">*/}
+            {/* Followed Posts*/}
+          {/* </Button>*/}
+        </div>
     );
   }
 }

@@ -50,7 +50,6 @@ class ModalInstance extends React.Component {
     membersRef.on('value', (snapshot) => {
       const peeps =  _.values(snapshot.val());
       const members = peeps.filter((peep) => typeof (peep) === 'object');
-      console.log('members mount', members);
       this.setState({membersCount: members.length, members: members});
     });
     const countRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
@@ -61,7 +60,7 @@ class ModalInstance extends React.Component {
     const updates = {};
     const userId = firebaseApp.auth().currentUser.uid;
     firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.postData.postId).on('value', snapshotB => {
-      let unreadCount =  snapshotB.val();
+      const unreadCount =  snapshotB.val();
       if (!isNaN(unreadCount)) {
         if (unreadCount > 0) {
           this.setState({unread: unreadCount});
