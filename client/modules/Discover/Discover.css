@@ -14,27 +14,8 @@
 }
 
 .LeftSidebar_Container {
-  margin-left: 30px;
-}
-
-.discoverTitleBox {
-  margin-left: 20px;
-}
-
-.discoverTitle {
-  font-family: Avenir Next;
-  font-size: 18px;
-  line-height: 41px;
-  margin-bottom: 0px;
-  color: #3a3a3a;
-  margin-top: 0 !important;
-}
-
-.discoverTitleLine {
-  width: 200px;
-  height: 2px;
-  background-color: #3a3a3a;
-  margin-bottom: 10px;
+    position: fixed;
+    z-index: 200;
 }
 
 .discoverImage {
@@ -43,13 +24,13 @@
 }
 
 .LeftSideBar_Preference {
-  margin-left: 20px;
-  padding-top: 6px;
-  padding-bottom: 2px;
-  margin-top: 10px;
-  border-radius: 4px;
-  margin-right: 10px;
-  width: 250px;
+    margin-left: 20px;
+    padding-top: 6px;
+    padding-bottom: 2px;
+    margin-top: 50px;
+    border-radius: 4px;
+    margin-right: 10px;
+    width: 30vh;
 }
 
 .outeritem {
@@ -164,12 +145,10 @@
 }
 
 .onlineName {
-  margin-top: 5px;
-  align-self: center;
-}
-
-.LeftSidebar_Online {
-  margin-top: 20px;
+    margin-top: 5px;
+    align-self: center;
+    font-family: avenir next;
+    color: #fafafa;
 }
 
 .miniPostCard {
@@ -177,34 +156,9 @@
 }
 
 .itemGroupOnline {
-  height: 300px !important;
+  height: auto !important;
   overflow-y: scroll !important;
-}
-
-.followedPostsSidebar {
-    box-shadow: none !important;
-    background: #3a3a3a !important;
-    width: 320px !important;
-    padding-top: 6vh !important;
-    padding-left: 15px !important;
-    max-height: 100vh !important;
-}
-
-.followedPostsButton {
-    height: 40px !important;
-    background: #fff !important;
-    color: #5bc0e3 !important;
-    margin-top: 20px !important;
-    margin-right: 0px !important;
-    border-top-right-radius: 0px !important;
-    border-bottom-right-radius: 0px !important;
-    width: 200px !important;
-    border: 1px solid !important;
-    border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
-    text-align: left !important;
-    border-right: none !important;
-    min-width: 150px !important;
-
+    padding-bottom: 40px;
 }
 
 .onlineCircle {
@@ -230,4 +184,124 @@
 
 .minifyButton:hover {
     color: #5bc0e3 !important;
+}
+
+.onlineTab {
+    cursor: pointer !important;
+    border: 1px solid !important;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
+    border-radius: 3px !important;
+    width: 30vh;
+    height: auto;
+    position: fixed !important;
+    bottom: 0;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-left: 20px !important;
+    margin-bottom: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-bottom: none !important;
+    color: #3a3a3a !important;
+
+}
+
+.onlineTab:hover {
+    color: #5bc0e3 !important;
+}
+
+.discoverOnlineTitle {
+    font-family: Avenir Next;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 34px;
+    margin-bottom: 0px;
+    margin-top: 0 !important;
+}
+
+.onlinePushable {
+    position: fixed !important;
+    bottom: 0 !important;
+    width: 35vh !important;
+}
+
+.onlineSidebar {
+
+}
+
+.ui.bottom.sidebar {
+    background: #3a3a3a;
+    width: 30vh !important;
+    margin-left: 20px !important;
+    height: auto!important;
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
+    max-height: 300px !important;
+    position: fixed !important;
+}
+
+.ui.top.visible.sidebar {
+    top: auto !important;
+}
+
+.rightContainer {
+    position: fixed;
+    right: 0;
+    margin-top: 9vh;
+    height: 50vh;
+}
+
+.followedPostsSidebar {
+    box-shadow: none !important;
+    background: #3a3a3a !important;
+    width: 320px !important;
+    padding-top: 6vh !important;
+    padding-left: 15px !important;
+    max-height: 100vh !important;
+}
+
+.followedPostsButton {
+    height: 40px !important;
+    background: #fff !important;
+    color: #3a3a3a !important;
+    margin-top: 0 !important;
+    margin-right: 0px !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    width: 200px !important;
+    border: 1px solid !important;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
+    text-align: left !important;
+    border-right: none !important;
+    min-width: 150px !important;
+
+}
+
+.followedPostsButton:hover {
+    color: #5bc0e3 !important;
+}
+
+.followedPostsPushable {
+    z-index: 103;
+    position: fixed !important;
+    width: 40vh !important;
+    height: 100% !important;
+    right: 0;
+}
+
+.followedPostsBox{
+    margin: 10px 5px 10px 5px;
+    height: 50vh;
+    width: 36vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.ui.right.sidebar {
+    height: 60vh !important;
+    margin-top: 9vh !important;
+    width: 40vh !important;
+    background: #3a3a3a;
+    border-top-left-radius: 3px !important;
+    border-bottom-left-radius: 3px !important;
 }

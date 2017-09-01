@@ -4,14 +4,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import firebaseApp from '../../firebase';
-import { Icon, Label, Image, Item } from 'semantic-ui-react';
+import { Icon, Segment, Sidebar, Button, Item } from 'semantic-ui-react';
 import './Discover.css';
 
 class Online extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      people: []
+      people: [],
+      visible: false
     };
   }
 
@@ -55,47 +56,83 @@ class Online extends React.Component {
     }
   }
 
-  componentDidMount() {
-    if (this.props.user.pictureURL) {
-      const realThis = this;
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          console.log('inside componentdidMount', realThis.props);
-          const allUser = firebaseApp.database().ref('/presence/' + realThis.props.user.currentCommunity._id);
-          allUser.on('value', snapshot => {
-            console.log('allUsers', snapshot.val());
-            realThis.setState({people: Object.values(snapshot.val())});
-          });
-        }
-      });
-    }
+  // componentDidMount() {
+  //   if (this.props.user.pictureURL) {
+  //     const realThis = this;
+  //     firebase.auth().onAuthStateChanged(function(user) {
+  //       if (user) {
+  //         console.log('inside componentdidMount', realThis.props);
+  //         const allUser = firebaseApp.database().ref('/presence/' + realThis.props.user.currentCommunity._id);
+  //         allUser.on('value', snapshot => {
+  //           console.log('allUsers', snapshot.val());
+  //           realThis.setState({people: Object.values(snapshot.val())});
+  //         });
+  //       }
+  //     });
+  //   }
+  // }
+
+  toggleVisibility() {
+    this.setState({ visible: !this.state.visible });
   }
 
-
   render() {
-    console.log('user info', this.state.people);
+    // return (
+    //   <div className="LeftSidebar_Online">
+    //     <div className="discoverTitleBox">
+    //         <div className="onlineInline">
+    //             <div className="onlineCircle"></div>
+    //             <h1 className="discoverTitle">Online</h1>
+    //         </div>
+    //         <div className="discoverTitleLine"></div>
+    //         <Item.Group className="itemGroupOnline">
+    //             {this.state.people.map(person => (
+    //                 <Item>
+    //                     <Item.Content verticalAlign="middle">
+    //                             <div className="imageWrapperOnline">
+    //                                 <img className="postUserImage" src={person.pictureURL} />
+    //                             </div>
+    //                         <div className="onlineName">{person.name}</div>
+    //                     </Item.Content>
+    //                 </Item>
+    //             ))}
+    //         </Item.Group>
+    //     </div>
+    //   </div>
+    // );
     return (
-      <div className="LeftSidebar_Online">
-        <div className="discoverTitleBox">
+      <Sidebar.Pushable className="onlinePushable">
+        <Sidebar className="onlineSidebar"
+                 animation="push"
+                 direction="bottom"
+                 visible={this.state.visible}>
+          <Button icon onClick={() => this.toggleVisibility()} className="minifyButton">
+            <Icon name="chevron circle down"
+                  size="large"
+            />
+          </Button>
+          <Item.Group className="itemGroupOnline">
+            {this.state.people.map(person => (
+              <Item>
+                <Item.Content verticalAlign="middle">
+                  <div className="imageWrapperOnline">
+                    <img className="postUserImage" src={person.pictureURL} />
+                  </div>
+                  <div className="onlineName">{person.name}</div>
+                </Item.Content>
+              </Item>
+            ))}
+          </Item.Group>
+        </Sidebar>
+        <Sidebar.Pusher>
+            {!this.state.visible ? <Segment className="onlineTab" onClick={() => this.toggleVisibility()}>
             <div className="onlineInline">
-                <div className="onlineCircle"></div>
-                <h1 className="discoverTitle">Online</h1>
+              <div className="onlineCircle"></div>
+              <p className="discoverOnlineTitle">Online</p>
             </div>
-            <div className="discoverTitleLine"></div>
-            <Item.Group className="itemGroupOnline">
-                {this.state.people.map(person => (
-                    <Item>
-                        <Item.Content verticalAlign="middle">
-                                <div className="imageWrapperOnline">
-                                    <img className="postUserImage" src={person.pictureURL} />
-                                </div>
-                            <div className="onlineName">{person.name}</div>
-                        </Item.Content>
-                    </Item>
-                ))}
-            </Item.Group>
-        </div>
-      </div>
+          </Segment> : null}
+        </Sidebar.Pusher>
+      </Sidebar.Pushable>
     );
   }
 }

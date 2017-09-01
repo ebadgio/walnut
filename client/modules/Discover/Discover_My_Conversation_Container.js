@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ConversationCard from './Discover_My_Conversations_Card';
-import { Loader  } from 'semantic-ui-react';
+import { Loader, Sidebar, Button, Icon  } from 'semantic-ui-react';
 import './Discover.css';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
 import uuidv4 from 'uuid/v4';
 import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
 
-class MyConversationContainer extends React.Component {
+class FollowedPostsContainer extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -33,27 +33,60 @@ class MyConversationContainer extends React.Component {
     }
   }
 
+  toggleVisibility() {
+    this.setState({ visible: !this.state.visible });
+  }
+
+
   render() {
-    if (this.props.myConversations && this.props.myConversations.length > 0) {
-      return (
-        <div className="myConversationBox">
-            {this.props.myConversations.map((conv) =>
-                <ConversationCard data={conv}
-                                  key={uuidv4()}
-                                  user={this.props.currentUser}/>
-            )}
-        </div>
-      );
-    }
+    // if (this.props.myConversations && this.props.myConversations.length > 0) {
+    //   return (
+    //     <div className="myConversationBox">
+    //         {this.props.myConversations.map((conv) =>
+    //             <ConversationCard data={conv}
+    //                               key={uuidv4()}
+    //                               user={this.props.currentUser}/>
+    //         )}
+    //     </div>
+    //   );
+    // }
+    // return (
+    //     <div className="myConversationBox">
+    //
+    //     </div>
+    // );
     return (
-        <div className="myConversationBox">
-          <p>conversation box with infinite scroll</p>
-        </div>
-    );
+       <Sidebar.Pushable className="followedPostsPushable">
+         <Sidebar animation="overlay"
+                  direction="right"
+                  visible={this.state.visible}>
+           <Button icon onClick={() => this.toggleVisibility()} className="minifyButton">
+             <Icon name="chevron circle down"
+                   size="large"
+             />
+           </Button>
+           {(this.props.myConversations && this.props.myConversations.length > 0) ?
+               <div className="followedPostsBox">
+                   {this.props.myConversations.map((conv) =>
+                       <ConversationCard data={conv}
+                                         key={uuidv4()}
+                                         user={this.props.currentUser}/>
+                     )}
+               </div> : <div className="followedPostsBox"></div>}
+         </Sidebar>
+         <Sidebar.Pusher>
+           <div className="rightContainer">
+             <Button onClick={() => this.toggleVisibility()} className="followedPostsButton">
+               Followed Posts
+             </Button>
+           </div>
+         </Sidebar.Pusher>
+       </Sidebar.Pushable>
+     );
   }
 }
 
-MyConversationContainer.propTypes = {
+FollowedPostsContainer.propTypes = {
   myConversations: PropTypes.array,
   currentUser: PropTypes.object,
   currentCommunity: PropTypes.string,
@@ -72,6 +105,6 @@ const mapDispatchToProps = (dispatch) => ({
   addIds: (iDs) => dispatch({type: 'ADD_IDS', iDs: iDs})
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyConversationContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(FollowedPostsContainer);
 
 
