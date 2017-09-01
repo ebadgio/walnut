@@ -121,7 +121,7 @@ i.icon.map {
   width: 40px;
   border-radius: 20px;
   background-color: #3a3a3a;
-  color: #FAFAFA;
+  color: #5bc0e3;
 }
 
 .iconSelectorWrapper2 {
@@ -165,11 +165,11 @@ button.ui.positive.button, button.ui.positive.button:hover  {
 }
 
 .buttonPlaceNegative {
-  background-color: #FFF;
+  background-color: #FFF !important;
 }
 
 .buttonPersonNegative {
-  background-color: #FFF;
+  background-color: #FFF !important;
 }
 
 .buttonPlaceNegative:hover {
