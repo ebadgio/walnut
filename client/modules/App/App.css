@@ -57,6 +57,10 @@
     color: #3a3a3a;
 }
 
+.navBarHome:hover {
+    color: #5bc0e3 !important;
+}
+
 .bar {
     background-color: #B48059;
     width: 8px;

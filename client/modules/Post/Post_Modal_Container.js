@@ -68,6 +68,16 @@ class ModalInstance extends React.Component {
         }
       }
     });
+
+    // taking users out of chat when they close the window with modal still open
+    window.addEventListener('beforeunload', (ev) => {
+      ev.preventDefault();
+      if (this.state.user) {
+        const updates2 = {};
+        updates2['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
+        firebaseApp.database().ref().update(updates2);
+      }
+    });
   }
 
   scrollToBottom(id) {
@@ -163,7 +173,7 @@ class ModalInstance extends React.Component {
         const memberIds = this.state.members.map(member => member.uid);
         followers.forEach(follower => {
           let unreadCount = firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId);
-          console.log('got in here?', memberIds, follower, snapshot.val()[follower])
+          console.log('got in here?', memberIds, follower, snapshot.val()[follower]);
           if (snapshot.val()[follower] && !memberIds.includes(follower)) {
             firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId).once('value', snapshotB => {
               let unreadCount =  snapshotB.val();
@@ -173,7 +183,7 @@ class ModalInstance extends React.Component {
             });
           }
         });
-      })
+      });
       // notification stuff ends here
       this.setState({commentBody: '', prevBody: ''});
       const update = {};
@@ -269,15 +279,26 @@ class ModalInstance extends React.Component {
   }
 
   handleClose() {
-    const updates = {};
-    updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
-    firebaseApp.database().ref().update(updates);
+    if (this.state.user) {
+      const updates = {};
+      updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
+      firebaseApp.database().ref().update(updates);
 
-    const updatesEx = {};
-    updatesEx['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
-    firebaseApp.database().ref().update(updatesEx);
+      const updatesEx = {};
+      updatesEx['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
+      firebaseApp.database().ref().update(updatesEx);
 
-    this.setState({hitBottom: false, messages: [], firstKey: null, firstId: null, commentBody: '', prevBody: '', did: 0, c: 0});
+      this.setState({
+        hitBottom: false,
+        messages: [],
+        firstKey: null,
+        firstId: null,
+        commentBody: '',
+        prevBody: '',
+        did: 0,
+        c: 0
+      });
+    }
   }
 
   joinConversation() {

@@ -13,11 +13,12 @@
 } 
 
 .attachFileIcon:hover {
-    color: #0082B0 !important;
+    color: #5bc0e3 !important;
 }
 
 .attachFileIcon {
-    color: #837F8A !important;
+    cursor: pointer;
+    color: #3a3a3a !important;
 }
 
 .Feed_Wrapper {
@@ -239,3 +240,10 @@
 .topicRemove {
     cursor: pointer;
 }
+
+@media (max-width: 940px) {
+    .Feed_Wrapper {
+        margin-top: 16vh !important;
+    }
+}
+

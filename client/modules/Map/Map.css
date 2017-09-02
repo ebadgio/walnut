@@ -48,7 +48,7 @@
 }
 
 .filter {
-  border-width: 1;
+  border-width: 1px;
   height: 10vh;
 }
 
@@ -59,12 +59,15 @@
 }
 
 .mapImage {
-  height: 30px;
-  width: 30px;
-  border-radius: 15px;
+  min-height: 30px;
+  min-width: 30px;
+  max-width: 30px;
+  max-height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-.imageWrapper {
+.imageWrapperMap {
   display: flex;
   flex-direction: row;
 }
@@ -215,6 +218,7 @@ button.ui.positive.button, button.ui.positive.button:hover  {
 .headerOuter {
   display: flex;
   flex-direction: row;
+  color: #3a3a3a;
 }
 
 .cardOuter {
@@ -230,4 +234,27 @@ button.ui.positive.button, button.ui.positive.button:hover  {
 
 .mapIcon {
   color: black;
+}
+
+.deckAvatar {
+  object-fit: cover !important;
+  min-width: 2em !important;
+  min-height: 2em !important;
+  max-width: 2em !important;
+  max-height: 2em !important;
+  border-radius: 50% !important;
+  margin-right: 5px;
+  margin-bottom: 3px;
+}
+
+.mapPopup {
+  max-height: 400px !important;
+  overflow-y: auto;
+  max-width: 400px !important;
+  background-color: #3a3a3a !important;
+  z-index: 200 !important;
+}
+
+.popup {
+  max-width: 400px;
 }

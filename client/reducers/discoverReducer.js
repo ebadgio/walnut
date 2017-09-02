@@ -37,6 +37,7 @@ const discoverReducer = (state = {
     case 'GET_DISCOVER_DATA_ERROR':
       return state;
     case 'GET_DISCOVER_POSTS_DONE':
+      console.log('these posts', action.posts);
       return {
         ...state,
         posts: action.posts,
