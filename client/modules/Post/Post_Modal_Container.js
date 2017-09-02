@@ -242,6 +242,7 @@ class ModalInstance extends React.Component {
       const messagesRef = firebaseApp.database().ref('/messages/' + data.postId).orderByKey().limitToLast(20);
       messagesRef.on('value', (snapshot) => {
         if (snapshot.val()) {
+          console.log('still coming', snapshot.val());
           const send = _.values(snapshot.val());
           const ID = send[0].authorId + '' + send[0].content;
           const bottomID = send[send.length - 1].authorId + '' + send[send.length - 1].content;

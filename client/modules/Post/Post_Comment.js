@@ -55,11 +55,18 @@ const dateStuff = {
 
 };
 
+let c = 0;
+
 class Comment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      useDate: ''
     };
+  }
+
+  componentDidMount() {
+    this.setState({useDate: this.getUseDate(this.props.createdAt)});
   }
 
   getUseDate(dateObj) {
@@ -98,7 +105,8 @@ class Comment extends React.Component {
   }
 
   render() {
-    const useDate = this.getUseDate(this.props.createdAt);
+    c += 1;
+    console.log(c);
     if (this.props.authorId === firebaseApp.auth().currentUser.uid) {
       return (
         <Popup
@@ -114,7 +122,7 @@ class Comment extends React.Component {
             </Card>
           </div>
         </div>}
-        content={useDate}
+        content={this.state.useDate}
         position="right center"
         inverted />
       );
@@ -140,7 +148,7 @@ class Comment extends React.Component {
               </Card.Content>
             </Card>
           </div>}
-        content={useDate}
+        content={this.state.useDate}
         position="left center"
         inverted />
       </div>

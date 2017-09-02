@@ -290,7 +290,6 @@ router.post('/toggle/checkedtemp', (req, res) => {
         .populate('comments.createdBy')
         .populate('createdBy')
         .then((postArr) => {
-          console.log('POSTSARRAY', postArr);
           posts = postArr.map((postObj) => {
             return {
               postId: postObj._id,
