@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'semantic-ui-react';
+import { Card, Popup } from 'semantic-ui-react';
 import './Discover.css';
 import Linkify from 'linkifyjs/react';
 import ModalContainer from '../Post/Post_Modal_Container';
@@ -42,9 +42,15 @@ class ConversationCard extends React.Component {
                   </div>
                     <h3 className="conversationCardHeaderUser">{this.props.data.username}</h3>
                 </div>
-                <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify>
+                  {this.props.data.content.split(' ').length > 4 ? <Popup inverted
+                       hoverable
+                       trigger={<p className="conversationCardBody">{this.props.data.content.split(' ').slice(0, 4).join(' ') + '...'}</p>}
+                       content={<Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify>}/> :
+                      <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify> }
                 <div className="conversationFootnote">
-                  <ModalContainer postData={this.props.data} currentUser={this.props.user} />
+                  <ModalContainer mini
+                                  postData={this.props.data}
+                                  currentUser={this.props.user} />
                 </div>
               </Card.Content>
             </Card>

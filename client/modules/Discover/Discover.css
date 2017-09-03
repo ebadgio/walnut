@@ -64,23 +64,24 @@
 .conversationCardWrapper {
     margin-left: 0px;
     margin-top: 0px;
-    min-width: 20px;
+    min-width: 24px;
     min-height: 20px;
-    max-width: 20px;
-    max-height: 20px;
+    max-width: 24px;
+    max-height: 24px;
     border-radius: 50%;
     display: flex;
     overflow: hidden;
 }
 
 .conversationCardUserImage {
-    max-width: 110%;
-    max-height: auto;
-    object-fit: contain;
+    max-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
     margin: auto;
 }
 
 .conversationCardContent {
+    color: #fafafa !important;
   padding: 6px !important;
   padding-bottom: 0px !important;
 }
@@ -151,7 +152,9 @@
 }
 
 .miniPostCard {
-  box-shadow: none !important;
+    background: none !important;
+    box-shadow: none !important;
+    border: solid 1px #fafafa !important;
 }
 
 .itemGroupOnline {

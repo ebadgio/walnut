@@ -271,6 +271,19 @@
     color: #3a3a3a !important;
 }
 
+.commentIconMini {
+    cursor: pointer;
+    color: #FAFAFA !important;
+}
+
+.commentIconMini:hover {
+    color: #5bc0e3 !important;
+}
+
+.commentIcon:hover {
+    color: #5bc0e3 !important;
+}
+
 .commentNum {
     color: #4CC1FC;
     margin-left: 10px;
@@ -553,6 +566,10 @@ iframe {
 
 .usersIcon {
     color: #3a3a3a;
+}
+
+.usersIconMini {
+    color: #FAFAFA;
 }
 
 .Select-control {

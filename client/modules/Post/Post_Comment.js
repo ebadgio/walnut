@@ -55,8 +55,6 @@ const dateStuff = {
 
 };
 
-let c = 0;
-
 class Comment extends React.Component {
   constructor(props) {
     super(props);
@@ -105,8 +103,6 @@ class Comment extends React.Component {
   }
 
   render() {
-    c += 1;
-    console.log(c);
     if (this.props.authorId === firebaseApp.auth().currentUser.uid) {
       return (
         <Popup

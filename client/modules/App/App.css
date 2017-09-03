@@ -282,8 +282,9 @@
 
 .bottomBar {
     background-color: #5bc0e3;
-    height: 5px;
-    padding-bottom: 5px;
+    margin-top: 12px;
+    height: 2px !important;
+    border-radius: 20px;
 }
 
 .navbarLinkOff:hover {

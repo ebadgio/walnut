@@ -325,9 +325,9 @@ class ModalInstance extends React.Component {
              trigger={
         <div className="commentDiv">
           <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
-          <Icon size="big" name="users" className="usersIcon" />
+          <Icon size="big" name="users" className={this.props.mini ? 'usersIconMini' : 'usersIcon' } />
           <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
-          <Icon size="big" name="comments" className="commentIcon" />
+          <Icon size="big" name="comments" className={this.props.mini ? 'commentIconMini' : 'commentIcon'} />
         </div>}
         closeIcon="close"
         >
@@ -435,7 +435,8 @@ ModalInstance.propTypes = {
   currentUser: PropTypes.object,
   startListen: PropTypes.func,
   joinConversation: PropTypes.func,
-  myConvoIds: PropTypes.array
+  myConvoIds: PropTypes.array,
+  mini: PropTypes.bool
 };
 const mapStateToProps = (state) => ({
   myConvoIds: state.conversationReducer.iDs,
