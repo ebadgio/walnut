@@ -138,10 +138,13 @@
 }
 
 .tag {
-    background-color: #5bc0e3;
+    background-color: #fff;
+    color: #5bc0e3;
     border-radius: 27px;
     padding-top: 4px;
     padding-bottom: 4px;
+    font-weight: bold;
+    border: solid 1px;
     padding-left: 10px;
     padding-right: 10px;
     display: inline-block;
@@ -150,7 +153,7 @@
 }
 
 .hashtag {
-    color: #FAFAFA;
+    color: #5bc0e3;
     font-size: 12px;
     line-height: 19px;
 }
@@ -405,10 +408,6 @@
     display: flex;
 }
 
-.linkImage {
-
-}
-
 .linkPub {
     margin-bottom: 0;
 }
@@ -556,4 +555,54 @@ iframe {
     border: 1px solid !important;
     border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
     border-radius: 3px !important;
+}
+
+
+.linkPrevComment {
+    margin-right: 10px;
+    margin-left: -8px;
+    display: flex;
+    margin-top: 10px;
+}
+
+.linkPreviewCommentWrapper{
+     width: 100%
+}
+
+.linkPreviewComment {
+    color: black;
+    padding-left: 10px;
+    margin-bottom: 15px;
+}
+
+.linkTitleComment {
+    margin: 0;
+    font-size: 15px;
+}
+
+.linkImgComment {
+    overflow: hidden;
+    width: 100%;
+    object-fit: contain;
+    object-position: 0 0;
+}
+
+.linkImageComment {
+    max-width: 233px;
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.linkDescComment {
+    font-size: 10px;
+    margin-bottom: 0px !important;
+    height: 66px;
+}
+
+.lineLeftComment {
+    height: 246px;
+    width: 6px;
+    background-color: #3E719F;
+    border-radius: 100px;
+    margin-left: 10px;
 }

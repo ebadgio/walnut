@@ -8,7 +8,7 @@ import RightSideBar from './Discover_Right_Sidebar_Container';
 import ConversationCard from './Discover_My_Conversations_Card';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
-import {Sidebar, Button, Icon} from 'semantic-ui-react';
+import {Sidebar, Button, Icon, Sticky} from 'semantic-ui-react';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
 import uuidv4 from 'uuid/v4';
@@ -66,7 +66,7 @@ class Home extends React.Component {
     return (
       <Sidebar.Pushable>
         <Sidebar className="followedPostsSidebar"
-                 animation="push"
+                 animation="overlay"
                  visible={this.state.visible}
                  icon="labeled"
                  direction="right"
@@ -84,7 +84,6 @@ class Home extends React.Component {
         </Sidebar>
         <Sidebar.Pusher>
           <div id="Discover">
-            {!this.props.isReady ? <p>loading new community</p> : null}
             <LeftSideBar />
             <Feed />
             <Button onClick={() => this.toggleVisibility()} className="followedPostsButton">

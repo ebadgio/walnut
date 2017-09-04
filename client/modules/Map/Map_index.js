@@ -114,7 +114,10 @@ class MapContainer extends React.Component {
             id="realmap"
             containerStyle={{
               height: '92vh',
-              width: '80vw'
+              width: '73vw',
+              marginTop: '1px',
+              textAlign: 'left',
+              marginRight: '1vh'
             }}>
               <ZoomControl style={styles.zoom} className="zoomControl" style={{right: '5%'}}/>
               <div className="mapWrapper" onClick={() => {this.setState({mapInd: (this.state.mapInd + 1) % 3});}}>

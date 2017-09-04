@@ -28,6 +28,8 @@ const testers = [
   }
 ];
 
+
+
 class ModalInstance extends React.Component {
   constructor(props) {
     super(props);
@@ -50,7 +52,6 @@ class ModalInstance extends React.Component {
     membersRef.on('value', (snapshot) => {
       const peeps =  _.values(snapshot.val());
       const members = peeps.filter((peep) => typeof (peep) === 'object');
-      console.log('members mount', members);
       this.setState({membersCount: members.length, members: members});
     });
     const countRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
@@ -282,6 +283,7 @@ class ModalInstance extends React.Component {
   }
 
   joinConversation() {
+    console.log('inside here');
     const updates = {};
     updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = true;
     updates['/followGroups/' + this.props.postData.postId + '/' + this.state.user.uid] = true;

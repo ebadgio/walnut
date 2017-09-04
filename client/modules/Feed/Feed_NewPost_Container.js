@@ -70,8 +70,7 @@ class NewPostContainer extends React.Component {
         const elem = document.getElementById('textarea1');
         elem.value = '';
         this.setState({postBody: '', file: '', newFileName: null});
-        // TODO: dispatch front end refresh no backend call
-        this.props.refreshDiscover(res.body.posts, res.body.lastRefresh);
+        this.props.refreshDiscover(res.body.posts, res.body.lastRefresh, res.body.otherTags);
       });
     } else {
       if (this.state.postBody && this.state.file === '') {
@@ -177,12 +176,12 @@ const mapStateToProps = (state) => ({
   lastRefresh: state.discoverReducer.lastRefresh,
   otherTags: state.discoverReducer.otherTags,
   postTags: state.postReducer.postTags,
-  useFilters: state.discoverReducer.useFilters,
-  newPostTags: state.postReducer.newPostTags
+  newPostTags: state.postReducer.newPostTags,
+  useFilters: state.discoverReducer.useFilters
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  refreshDiscover: (posts, lastRefresh) => dispatch({ type: 'GET_DISCOVER_DATA_REFRESH', posts: posts, lastRefresh: lastRefresh}),
+  refreshDiscover: (posts, lastRefresh, otherTags) => dispatch({ type: 'GET_DISCOVER_DATA_REFRESH', posts: posts, lastRefresh: lastRefresh, otherTags: otherTags}),
   newPost: (postBody, postTags, newTags, lastRefresh, filter) => dispatch(newPostThunk(postBody, postTags, newTags, lastRefresh, filter)),
   newTag: (tag) => dispatch({type: 'ADD_NEW_TAG', tag: tag}),
   addTag: (tag) => dispatch({type: 'ADD_TAG', tag: tag}),

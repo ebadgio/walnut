@@ -31,38 +31,6 @@ const upload = multer({
   })
 });
 
-router.post('/upload/portfolio', upload.single('portfolio'), (req, res) => {
-  const toSave = req.user._id + (req.query.name || req.file.originalname) + Date.now();
-  s3.putObject({
-    Bucket: 'walnut-test',
-    Key: toSave,
-    Body: req.file.buffer,
-    ACL: 'public-read',
-  }, (err, result) => {
-    if (err) {
-      console.log(err);
-      res.status(400).send(err);
-      return;
-    }
-    User.findById(req.user._id)
-    .then((user) => {
-      const newFile = {
-        fileName: req.query.name,
-        fileType: req.file.mimetype,
-        fileUrl: process.env.AWS_BUCKET_URL + toSave
-      };
-      user.portfolio.filter((i) => (i.name === req.query.port))[0].data.push(newFile);
-      user.markModified('portfolio');
-      return user.save();
-    })
-    .then(user => {
-      res.json({portfolio: user.portfolio});
-    })
-    .catch((error) => console.log('error in aws db save', error));
-  });
-  console.log('query....', req.query);
-});
-
 router.post('/upload/profile', upload.single('profile'), (req, res) => {
   console.log('this is the profile pic from the upload', req.file);
   User.findById(req.user._id)
@@ -79,22 +47,74 @@ router.post('/upload/profile', upload.single('profile'), (req, res) => {
 });
 
 router.post('/upload/community', upload.single('community'), (req, res) => {
-  res.json({pictureURL: req.file.location}).
-  catch((error) => {
-    res.json({pictureURL: null});
-  });
-  // User.findById(req.user._id)
-  //   .then((user) => {
-  //     const url = req.file.location;
-  //     user.pictureURL = url;
-  //     return user.save();
-  //   })
-  //   .then((user) => {
-  //     console.log('end of upload', user);
-  //     // user pic thunk and reducer data refresh
-  //     res.json({pictureURL: user.pictureURL});
-  //   })
-  //   .catch((error) => console.log('error in aws db save', error));
+  console.log('inside the aws backend', typeof(req.body.otherTags), req.file);
+  let tags;
+  if (!req.body.otherTags) {
+    tags = [];
+    console.log('no tags', tags);
+  } else if (typeof(req.body.otherTags) === 'string') {
+    tags = [req.body.otherTags];
+    console.log('1 tag', tags);
+  } else {
+    tags = req.body.otherTags;
+  }
+  let userEnd;
+  let commEnd;
+  const tagModels = tags.map((filter) =>
+    new Tag({
+      name: filter
+    })
+  );
+  Promise.all(tagModels.map((tag) => tag.save()))
+    .then((values) => {
+      const community = new Community({
+        title: req.body.title,
+        users: [req.user._id],
+        admins: [req.user._id],
+        icon: req.file.location,
+        otherTags: values.map((val) => val._id),
+        defaultTags: []
+      });
+      return community.save();
+    })
+    .then((community) => {
+      commEnd = community;
+      return User.findById(req.user._id);
+    })
+    .then((user) => {
+      user.communities.push(commEnd._id);
+      user.currentCommunity = commEnd._id;
+      const pref = {
+        community: `${commEnd._id}`,
+        pref: []
+      };
+      user.preferences.push(pref);
+      user.markModified('preferences');
+      return user.save();
+    })
+    .then((savedUser) => {
+      const opts = [
+        { path: 'communities' },
+        { path: 'currentCommunity' },
+        {
+          path: 'currentCommunity',
+          populate: { path: 'admins defaultags users' }
+        }
+      ];
+      return User.populate(savedUser, opts);
+    })
+    .then((userSave) => {
+      userEnd = userSave;
+      return Community.find();
+    })
+    .then((communities) => {
+      console.log('made it to the end of the backend before response');
+      res.json({ user: userEnd, communities: communities });
+    })
+    .catch((err) => {
+      console.log('got error', err);
+      res.json({ error: err });
+    });
 });
 
 router.post('/upload/post', upload.single('attach'), (req, res) => {
@@ -209,7 +229,7 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
     })
     .then((result) => {
       console.log(posts);
-      res.json({ posts: posts, lastRefresh: new Date()});
+      res.json({ posts: posts, lastRefresh: new Date(), otherTags: result.otherTags});
     })
     .catch((er) => {
       console.log('eror in aws save fetching recent posts', er);
@@ -219,18 +239,5 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
   .catch((error) => console.log('error in aws db save', error));
 });
 
-router.post('/download/post', upload.single('attach'), (req, res) => {
-  s3.getObject({
-    Bucket: 'walnut-test',
-    Key: req.body.url,
-  }, (err, result) => {
-    if (err) {
-      console.log(err);
-      res.status(400).send(err);
-      return;
-    }
-    res.json({data: result});
-  });
-});
 
 module.exports = router;

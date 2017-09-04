@@ -15,10 +15,6 @@ class WalnutHomeContainer extends React.Component {
   constructor() {
     super();
     this.state = {
-      titleValue: '',
-      image: 'https://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
-      otherTags: [],
-      filterValue: '',
       isCalled: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,8 +44,9 @@ class WalnutHomeContainer extends React.Component {
   }
 
   handleSubmit(image, titleValue, defaultFilters) {
+    console.log('filters in handle submit ', defaultFilters);
     this.props.createCommunity(image, titleValue, defaultFilters);
-    window.location.reload();
+    // window.location.reload();
   }
 
 
@@ -72,11 +69,6 @@ class WalnutHomeContainer extends React.Component {
                 </div>
                <h2 className="subHead">Your Communities</h2>
                <div className="communitiesContainer">
-                   {/* {this.props.userCommunities.map((community, idx) => <Link key={idx}*/}
-                   {/* onClick={() => this.toggleCommunity(community)} to={'/community/' + community.title.split(' ').join('') + '/discover'}><div key={idx}>*/}
-                     {/* <img src={community.icon} style={styles.image} />*/}
-                     {/* <p>{community.title}</p>*/}
-                   {/* </div></Link> )}*/}
                    {this.props.userCommunities.map((community, idx) =>
                        <Link key={idx}
                              onClick={() => this.toggleCommunity(community)}
