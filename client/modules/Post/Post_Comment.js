@@ -88,7 +88,6 @@ class Comment extends React.Component {
   componentWillMount() {
     const urls = this.urlFinder(this.props.content);
     this.setState({ urls: urls });
-    console.log('yo mug', urls);
   }
 
   urlFinder(text) {
