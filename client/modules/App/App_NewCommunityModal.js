@@ -7,6 +7,7 @@ import './App.css';
 import { Label, Input, Modal, Button, Icon } from 'semantic-ui-react';
 import ReactUploadFile from 'react-upload-file';
 import superagent from 'superagent';
+import { connect } from 'react-redux';
 
 class NewCommunityModal extends React.Component {
   constructor() {
@@ -50,8 +51,8 @@ class NewCommunityModal extends React.Component {
             alert('failed uploaded!');
           }
           console.log('return on front end for aws create', res.body);
-          // dispatch({ type: 'GET_USER_DATA_DONE', user: response.data.user });
-          // dispatch({ type: 'GET_ALL_COMMUNITIES_NEW', communities: response.data.communities });
+          this.props.updateUser(res.body.user);
+          this.props.updateCommunities(res.body.communities);
           this.setState({ open: false, titleValue: '', otherTags: [] });
         });
     } else if (this.state.titleValue) {
@@ -144,8 +145,14 @@ class NewCommunityModal extends React.Component {
 
 
 NewCommunityModal.propTypes = {
-  handleCreate: PropTypes.func
+  handleCreate: PropTypes.func,
+  updateUser: PropTypes.func,
+  updateCommunities: PropTypes.func
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  updateUser: (user) => dispatch({ type: 'GET_USER_DATA_DONE', user}),
+  updateCommunities: (communities) => dispatch({ type: 'GET_ALL_COMMUNITIES_NEW', communities})
+});
 
-export default NewCommunityModal;
+export default connect(null, mapDispatchToProps)(NewCommunityModal);

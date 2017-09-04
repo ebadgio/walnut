@@ -47,10 +47,20 @@ router.post('/upload/profile', upload.single('profile'), (req, res) => {
 });
 
 router.post('/upload/community', upload.single('community'), (req, res) => {
-  console.log('inside the aws backend', req.body, req.file);
+  console.log('inside the aws backend', typeof(req.body.otherTags), req.file);
+  let tags;
+  if (!req.body.otherTags) {
+    tags = [];
+    console.log('no tags', tags);
+  } else if (typeof(req.body.otherTags) === 'string') {
+    tags = [req.body.otherTags];
+    console.log('1 tag', tags);
+  } else {
+    tags = req.body.otherTags;
+  }
   let userEnd;
   let commEnd;
-  const tagModels = req.body.otherTags.map((filter) =>
+  const tagModels = tags.map((filter) =>
     new Tag({
       name: filter
     })

@@ -27,7 +27,7 @@ router.get('/user', (req, res) => {
 });
 
 router.post('/create/community', (req, res) => {
-  console.log('this is the backend route', req.body);
+  console.log('this is the backend route', req.body.otherTags);
   let userEnd;
   let commEnd;
   const tagModels = req.body.otherTags.map((filter) =>
