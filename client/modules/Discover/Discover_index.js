@@ -8,7 +8,7 @@ import RightSideBar from './Discover_Right_Sidebar_Container';
 import ConversationCard from './Discover_My_Conversations_Card';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
-import {Sidebar, Button, Icon} from 'semantic-ui-react';
+import {Sidebar, Button, Icon, Sticky} from 'semantic-ui-react';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
 import uuidv4 from 'uuid/v4';

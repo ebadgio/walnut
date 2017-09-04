@@ -50,18 +50,18 @@ class Directory extends React.Component {
   render() {
     return (
       <div>
-        <Select
-          className="search"
-          name="selected-state"
-          value={this.state.query}
-          simpleValue
-          options={this.props.users.map((user) => {
-            return {value: user.fullName, label: user.fullName};
-          })}
-          placeholder="Search by Name..."
-          onInputChange={this.handleChange.bind(this)}
-        />
         <div className="directoryCardsList">
+              <Select
+                  className="search"
+                  name="selected-state"
+                  value={this.state.query}
+                  simpleValue
+                  options={this.props.users.map((user) => {
+                    return {value: user.fullName, label: user.fullName};
+                  })}
+                  placeholder="Search by Name..."
+                  onInputChange={this.handleChange.bind(this)}
+              />
               {this.state.currentCards.map(user =>
               <DirectoryCard
                 key={uuidv4()}

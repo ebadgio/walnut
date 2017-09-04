@@ -27,8 +27,8 @@ class MapFilter extends React.Component {
           }
           <Button.Or />
           {this.state.search === 'place' ?
-            <Button onClick={() => this.setState({search: 'person'})}>Person</Button> :
-            <Button className="buttonPersonNegative" positive>Person</Button>
+            <Button className="buttonPersonNegative" onClick={() => this.setState({search: 'person'})}>Person</Button> :
+            <Button positive>Person</Button>
           }
         </Button.Group>
         {this.state.search === 'place' ?
