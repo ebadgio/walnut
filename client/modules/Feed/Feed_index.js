@@ -59,7 +59,11 @@ class Feed extends React.Component {
     if (this.props.data.isFetching || !this.props.isReady) {
       return (
         <div className="Feed_Wrapper">
-            <Loader active inline="centered" /> :
+          <NewPostContainer />
+          {[...Array(10)].map(() =>
+            <div className="emptyLoaders">
+              <Loader className="postLoader" active inline="centered" />
+            </div>)}
         </div>
       );
     }

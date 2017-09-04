@@ -55,7 +55,7 @@
 .filterOuter {
   display: flex;
   flex-direction: column;
-  margin-top: 10%;
+  margin-top: 1px;
 }
 
 .mapImage {
@@ -230,4 +230,9 @@ button.ui.positive.button, button.ui.positive.button:hover  {
 
 .mapIcon {
   color: black;
+}
+
+.filter {
+  margin-top: 10px;
+  height: 52px;
 }

@@ -84,7 +84,6 @@ class Home extends React.Component {
         </Sidebar>
         <Sidebar.Pusher>
           <div id="Discover">
-            {!this.props.isReady ? <p>loading new community</p> : null}
             <LeftSideBar />
             <Feed />
             <Button onClick={() => this.toggleVisibility()} className="followedPostsButton">
