@@ -35,6 +35,9 @@ const styles = {
   disc: {
     display: 'flex',
     flexDirection: 'column'
+  },
+  cardContent: {
+    fontSize: '12px !important'
   }
 };
 
@@ -54,7 +57,7 @@ class MapCard extends React.Component {
   render() {
     return (this.props.clicked === this.props.id) ?
         <Card onClick={() => this.handleClick()} className="cardOuter clicked">
-          <Card.Content>
+          <Card.Content className="cardContent">
             <div className="headerOuter">
               <img className="deckAvatar" style={styles.image} src={this.props.profileURL} />
               <Card.Header>{this.props.name}</Card.Header>
@@ -64,7 +67,7 @@ class MapCard extends React.Component {
         </Card>
         :
          <Card onClick={() => this.handleClick()} className="cardOuter">
-          <Card.Content>
+          <Card.Content className="cardContent">
             <div className="headerOuter">
               <img className="deckAvatar" src={this.props.profileURL} />
               <Card.Header>{this.props.name}</Card.Header>

@@ -49,13 +49,15 @@
 
 .filter {
   border-width: 1px;
-  height: 10vh;
+  height: 50px;
+  width: 100%
 }
 
 .filterOuter {
   display: flex;
   flex-direction: column;
-  margin-top: 10%;
+  margin-top: 1%;
+  width: 263px;
 }
 
 .mapImage {
@@ -73,10 +75,10 @@
 }
 
 #scrollbar {
-  position: relative !important;
-  overflow: hidden !important;
-  width: 24vw !important;
-  height: 65vh !important;
+    position: relative !important;
+    overflow: scroll !important;
+    width: 24vw !important;
+    height: 71vh !important;
 }
 
 .zoomControl {
@@ -222,7 +224,7 @@ button.ui.positive.button, button.ui.positive.button:hover  {
 }
 
 .cardOuter {
-  width: 90% !important;
+  width: 96% !important;
   margin-top: 0px !important;
   margin-bottom: 4px !important;
   margin-left: 1% !important;

@@ -297,6 +297,8 @@
     width: 36vh;
     overflow-y: auto;
     overflow-x: hidden;
+    margin-right: 0px;
+    margin-left: 15px;
 }
 
 .ui.right.sidebar {

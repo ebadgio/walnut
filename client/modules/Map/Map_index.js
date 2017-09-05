@@ -107,7 +107,7 @@ class MapContainer extends React.Component {
           changeCenter={(coordinates) => {this.props.updateCenter(coordinates);}}
           changeZoom={(num) => {this.props.updateZoom(num);}} />
         </div>
-        <div>
+        <div className="mapDiv">
           <Map
             style={mapList[this.state.mapInd]}
             center={this.props.center}
@@ -117,9 +117,12 @@ class MapContainer extends React.Component {
             containerStyle={{
               height: '92vh',
               width: '73vw',
-              marginTop: '1px',
+              marginTop: '5px',
               textAlign: 'left',
-              marginRight: '1vh'
+              marginRight: '1vh',
+              border: '#5bc0e3',
+              borderStyle: 'solid',
+              borderRadius: '4px'
             }}>
               <ZoomControl style={styles.zoom} className="zoomControl"/>
               <div className="mapWrapper" onClick={() => {this.setState({mapInd: (this.state.mapInd + 1) % 3});}}>

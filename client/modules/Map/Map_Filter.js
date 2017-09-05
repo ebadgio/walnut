@@ -39,7 +39,7 @@ class MapFilter extends React.Component {
             <NameSearch />
           </div>
         }
-        <Scrollbars id="scrollbar" style={{height: '80vh', width: '20vw'}}>
+        <div id="scrollbar" style={{height: '80vh', width: '20vw'}}>
           <div className="filterOuter" >
             {this.props.users.filter((item) => {return item.location[this.props.selected].length > 0;}).map((user, index) => (
               <MapCard
@@ -55,7 +55,7 @@ class MapFilter extends React.Component {
               />
             ))}
           </div>
-        </Scrollbars>
+        </div>
       </div>
     );
   }
