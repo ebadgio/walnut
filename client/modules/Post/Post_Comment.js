@@ -81,6 +81,12 @@ class Comment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      useDate: ''
+    };
+  }
+
+  componentDidMount() {
+    this.setState({useDate: this.getUseDate(this.props.createdAt)});
       urls: []
     };
   }
@@ -157,7 +163,7 @@ class Comment extends React.Component {
             </Card>
           </div>
         </div>}
-        content={useDate}
+        content={this.state.useDate}
         position="right center"
         inverted />
       );
@@ -183,7 +189,7 @@ class Comment extends React.Component {
               </Card.Content>
             </Card>
           </div>}
-        content={useDate}
+        content={this.state.useDate}
         position="left center"
         inverted />
       </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import { Button, Form, Modal, Message, Icon} from 'semantic-ui-react';
+import { Button, Input, Form, Modal, Message, Icon} from 'semantic-ui-react';
 import facebookLoginThunk from '../../thunks/auth_thunks/facebookLoginThunk';
 import googleLoginThunk from '../../thunks/auth_thunks/googleLoginThunk';
 import signInThunk from '../../thunks/auth_thunks/signInThunk';
@@ -131,7 +131,7 @@ class Login extends React.Component {
               }
               <Form>
                 <Form.Field>
-                  <label>Email</label>
+                  <label className="authLabels">Email</label>
                   <input
                     placeholder="enter email"
                     type="text"
@@ -140,7 +140,7 @@ class Login extends React.Component {
                     value={this.state.emailVal} />
                 </Form.Field>
                 <Form.Field>
-                  <label>Password</label>
+                  <label className="authLabels">Password</label>
                   <input
                     type="password"
                     placeholder="enter password"
@@ -148,20 +148,20 @@ class Login extends React.Component {
                     onChange={(e) => this.handlePasswordChange(e)}
                     value={this.state.passwordVal} />
                 </Form.Field>
-                <Button onClick={(e) => { this.regLogin(e); }} type="submit">Submit</Button>
-                <Button onClick={() => this.open()}>Forgot Password</Button>
-                <Modal size={'mini'} open={this.state.open} onClose={() => this.close()}>
+                <Button onClick={(e) => { this.regLogin(e); }} className="authButtons" type="submit">Submit</Button>
+                <Button onClick={() => this.open()} className="authButtons" icon="help" labelPosition="right" content="Forgot Password"/>
+                <Modal size={'mini'} basic open={this.state.open} onClose={() => this.close()}>
                   <Modal.Header>
                     Reset the password
                   </Modal.Header>
                   <Modal.Content>
-                    <Form.Input label="Email" placeholder="Type Your Email" onChange={(e) => this.handleResetEmailChange(e)}/>
+                    <Input label="Email" onChange={(e) => this.handleResetEmailChange(e)}/>
                   </Modal.Content>
                   <Modal.Actions>
-                    <Button positive icon="checkmark" labelPosition="right" content="Reset" onClick={() => {this.handleReset(); this.close();}} />
+                    <Button className="authButtons" icon="mail forward" labelPosition="right" content="Verify" onClick={() => {this.handleReset(); this.close();}} />
                   </Modal.Actions>
                 </Modal>
-                <Modal size={'mini'} open={this.state.vopen} onClose={() => this.vclose()}>
+                <Modal size={'mini'} basic open={this.state.vopen} onClose={() => this.vclose()}>
                   <Modal.Header>
                     Reset the password
                   </Modal.Header>
@@ -170,7 +170,7 @@ class Login extends React.Component {
                     <Form.Input label="Password" placeholder="Type Your Password" onChange={(e) => this.setState({vpassword: e.target.value})}/>
                   </Modal.Content>
                   <Modal.Actions>
-                    <Button positive icon="checkmark" labelPosition="right" content="Reset" onClick={() => {this.handleVerification(); this.vclose();}} />
+                    <Button className="authButtons" positive icon="checkmark" labelPosition="right" content="Reset" onClick={() => {this.handleVerification(); this.vclose();}} />
                   </Modal.Actions>
                 </Modal>
               </Form>

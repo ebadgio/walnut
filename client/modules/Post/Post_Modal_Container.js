@@ -62,12 +62,22 @@ class ModalInstance extends React.Component {
     const updates = {};
     const userId = firebaseApp.auth().currentUser.uid;
     firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.postData.postId).on('value', snapshotB => {
-      let unreadCount =  snapshotB.val();
+      const unreadCount =  snapshotB.val();
       if (!isNaN(unreadCount)) {
         if (unreadCount > 0) {
           this.setState({unread: unreadCount});
           console.log('unread set to true');
         }
+      }
+    });
+
+    // taking users out of chat when they close the window with modal still open
+    window.addEventListener('beforeunload', (ev) => {
+      ev.preventDefault();
+      if (this.state.user) {
+        const updates2 = {};
+        updates2['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
+        firebaseApp.database().ref().update(updates2);
       }
     });
   }
@@ -165,7 +175,7 @@ class ModalInstance extends React.Component {
         const memberIds = this.state.members.map(member => member.uid);
         followers.forEach(follower => {
           let unreadCount = firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId);
-          console.log('got in here?', memberIds, follower, snapshot.val()[follower])
+          console.log('got in here?', memberIds, follower, snapshot.val()[follower]);
           if (snapshot.val()[follower] && !memberIds.includes(follower)) {
             firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId).once('value', snapshotB => {
               let unreadCount =  snapshotB.val();
@@ -175,7 +185,7 @@ class ModalInstance extends React.Component {
             });
           }
         });
-      })
+      });
       // notification stuff ends here
       this.setState({commentBody: '', prevBody: ''});
       const update = {};
@@ -234,6 +244,7 @@ class ModalInstance extends React.Component {
       const messagesRef = firebaseApp.database().ref('/messages/' + data.postId).orderByKey().limitToLast(20);
       messagesRef.on('value', (snapshot) => {
         if (snapshot.val()) {
+          console.log('still coming', snapshot.val());
           const send = _.values(snapshot.val());
           const ID = send[0].authorId + '' + send[0].content;
           const bottomID = send[send.length - 1].authorId + '' + send[send.length - 1].content;
@@ -271,15 +282,26 @@ class ModalInstance extends React.Component {
   }
 
   handleClose() {
-    const updates = {};
-    updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
-    firebaseApp.database().ref().update(updates);
+    if (this.state.user) {
+      const updates = {};
+      updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
+      firebaseApp.database().ref().update(updates);
 
-    const updatesEx = {};
-    updatesEx['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
-    firebaseApp.database().ref().update(updatesEx);
+      const updatesEx = {};
+      updatesEx['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
+      firebaseApp.database().ref().update(updatesEx);
 
-    this.setState({hitBottom: false, messages: [], firstKey: null, firstId: null, commentBody: '', prevBody: '', did: 0, c: 0});
+      this.setState({
+        hitBottom: false,
+        messages: [],
+        firstKey: null,
+        firstId: null,
+        commentBody: '',
+        prevBody: '',
+        did: 0,
+        c: 0
+      });
+    }
   }
 
   joinConversation() {
@@ -306,9 +328,9 @@ class ModalInstance extends React.Component {
              trigger={
         <div className="commentDiv">
           <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
-          <Icon size="big" name="users" className="usersIcon" />
+          <Icon size="big" name="users" className={this.props.mini ? 'usersIconMini' : 'usersIcon' } />
           <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
-          <Icon size="big" name="comments" className="commentIcon" />
+          <Icon size="big" name="comments" className={this.props.mini ? 'commentIconMini' : 'commentIcon'} />
         </div>}
         closeIcon="close"
         >
@@ -416,7 +438,8 @@ ModalInstance.propTypes = {
   currentUser: PropTypes.object,
   startListen: PropTypes.func,
   joinConversation: PropTypes.func,
-  myConvoIds: PropTypes.array
+  myConvoIds: PropTypes.array,
+  mini: PropTypes.bool
 };
 const mapStateToProps = (state) => ({
   myConvoIds: state.conversationReducer.iDs,

@@ -13,6 +13,8 @@ import firebaseApp from '../../firebase';
 import _ from 'underscore';
 import uuidv4 from 'uuid/v4';
 import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
+import Online from './Discover_Online';
+import FollowedPostsContainer from './Discover_My_Conversation_Container';
 
 
 class Home extends React.Component {
@@ -35,24 +37,6 @@ class Home extends React.Component {
     } else {
       this.props.getDiscoverRefresh(this.props.lastRefresh, this.props.useFilters);
     }
-    if (this.props.currentUser) {
-      const followsRef = firebaseApp.database().ref('/follows/' + this.props.currentUser.firebaseId + '/' + this.props.currentCommunity);
-      followsRef.on('value', (snapshot) => {
-        if (snapshot.val()) {
-          const follows = _.pairs(snapshot.val());
-                  // this will filter down to only those postIds which are mapped to true
-          const myConvs = follows.filter((follow) => follow[1]).map((fol) => fol[0]);
-          if (myConvs) {
-            this.props.getConvos(myConvs);
-            this.props.addIds(myConvs);
-          }
-        }
-      });
-    }
-  }
-
-  toggleVisibility() {
-    this.setState({ visible: !this.state.visible });
   }
 
   // componentWillReceiveProps(nextProps) {
@@ -64,34 +48,12 @@ class Home extends React.Component {
 
   render() {
     return (
-      <Sidebar.Pushable>
-        <Sidebar className="followedPostsSidebar"
-                 animation="overlay"
-                 visible={this.state.visible}
-                 icon="labeled"
-                 direction="right"
-                 vertical>
-            <Button icon onClick={() => this.toggleVisibility()} className="minifyButton">
-              <Icon name="chevron circle right"
-                    size="large"
-                    />
-            </Button>
-            {(this.props.myConversations && this.props.myConversations.length > 0) ? this.props.myConversations.map((conv) =>
-                <ConversationCard data={conv}
-                                  key={uuidv4()}
-                                  user={this.props.currentUser}/>
-            ) : null}
-        </Sidebar>
-        <Sidebar.Pusher>
-          <div id="Discover">
-            <LeftSideBar />
-            <Feed />
-            <Button onClick={() => this.toggleVisibility()} className="followedPostsButton">
-              Followed Posts
-            </Button>
-          </div>
-        </Sidebar.Pusher>
-      </Sidebar.Pushable>
+        <div className="row" id="Discover">
+          <LeftSideBar />
+          <Online />
+          <Feed id="Feed"/>
+          <FollowedPostsContainer />
+        </div>
     );
   }
 }

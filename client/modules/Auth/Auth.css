@@ -11,15 +11,39 @@
 }
 
 .loginCard {
-    background-color: #DADDD8;
+    background-color: #3a3a3a !important;
     padding: 20px;
     border-radius: 5px;
     margin-top: 150px;
+    color: #5bc0e3 !important;
 }
 
 .registerCard{
-    background-color: #DADDD8;
+    background-color: #3a3a3a !important;
     padding: 20px;
     border-radius: 5px;
-    margin-top: 50px;
+    width:440px;
+    color: #5bc0e3 !important;
+}
+
+.registerPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.authLabels {
+    color: #FAFAFA !important;
+}
+
+.authButtons {
+    background: #fafafa !important;
+    color: #3a3a3a !important;
+}
+
+.authButtons:hover {
+    color: #5bc0e3 !important;
 }
