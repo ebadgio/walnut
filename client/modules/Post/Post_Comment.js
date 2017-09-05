@@ -81,12 +81,7 @@ class Comment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      useDate: ''
-    };
-  }
-
-  componentDidMount() {
-    this.setState({useDate: this.getUseDate(this.props.createdAt)});
+      useDate: '',
       urls: []
     };
   }
@@ -94,6 +89,9 @@ class Comment extends React.Component {
   componentWillMount() {
     const urls = this.urlFinder(this.props.content);
     this.setState({ urls: urls });
+  }
+  componentDidMount() {
+    this.setState({useDate: this.getUseDate(this.props.createdAt)});
   }
 
   urlFinder(text) {
