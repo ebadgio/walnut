@@ -606,3 +606,12 @@ iframe {
     border-radius: 100px;
     margin-left: 10px;
 }
+
+.typing {
+    height: 100%;
+    width: 200px;
+}
+
+.emojiPicker:hover {
+    color: #4CC1FC;
+}

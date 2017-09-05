@@ -377,23 +377,28 @@ class ModalInstance extends React.Component {
                       />
                 ))}
             </InfiniteScroll>
-            <Modal.Description className="typersContainer">
-                {this.state.typers.map((typer) =>
-                    <div key={uuidv4()} className="typerGroup">
-                      <Popup
-                          trigger= {<div className="imageWrapper messageAvatarOther typingImage">
-                            <img className="postUserImage" src={typer.typerPhoto} />
-                          </div>}
-                          content={typer.typer}
-                          position="left center"
-                          inverted
-                      />
-                      <Icon className="typingIcon" name="ellipsis horizontal" size="big"/>
-                    </div>
-                )}
-            </Modal.Description>
         </Modal.Content>
         <Modal.Actions className="modalActions">
+          <div className="iconBar">
+            <div className="typing">
+              {this.state.typers.map((typer) =>
+                <div key={uuidv4()} className="typerGroup">
+                  <Popup
+                    trigger={<div className="imageWrapper messageAvatarOther typingImage">
+                      <img className="postUserImage" src={typer.typerPhoto} />
+                    </div>}
+                    content={typer.typer}
+                    position="left center"
+                    inverted
+                  />
+                  <Icon className="typingIcon" name="ellipsis horizontal" size="big" />
+                </div>
+              )}
+            </div>
+            <div className="actions">
+              <Icon size="big" name="smile"  className="emojiPicker"/>
+            </div>
+          </div>
           <Form className="textBoxForm">
             <TextArea
               id="messageInput"
