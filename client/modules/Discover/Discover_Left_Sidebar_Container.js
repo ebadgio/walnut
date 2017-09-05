@@ -31,7 +31,7 @@ class LeftSideBar extends React.Component {
              <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/>
           </div>
         </div>
-        <Online />
+        {/* <Online />*/}
       </div>
     );
   }

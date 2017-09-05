@@ -18,10 +18,6 @@ const styles = {
     flexDirection: 'column',
     marginTop: '10%'
   },
-  image: {
-    width: '15%',
-    height: '15%'
-  },
   listOuter: {
     display: 'flex',
     flexDirection: 'row',
@@ -60,7 +56,7 @@ class MapCard extends React.Component {
         <Card onClick={() => this.handleClick()} className="cardOuter clicked">
           <Card.Content>
             <div className="headerOuter">
-              <img className="ui avatar image" style={styles.image} src={this.props.profileURL} />
+              <img className="deckAvatar" style={styles.image} src={this.props.profileURL} />
               <Card.Header>{this.props.name}</Card.Header>
             </div>
              <Card.Description>{this.props.college ? this.props.college.name : null}</Card.Description>
@@ -70,7 +66,7 @@ class MapCard extends React.Component {
          <Card onClick={() => this.handleClick()} className="cardOuter">
           <Card.Content>
             <div className="headerOuter">
-              <img className="ui avatar image" style={styles.image} src={this.props.profileURL} />
+              <img className="deckAvatar" src={this.props.profileURL} />
               <Card.Header>{this.props.name}</Card.Header>
             </div>
             <Card.Description>{this.props.college ? this.props.college.name : null}</Card.Description>

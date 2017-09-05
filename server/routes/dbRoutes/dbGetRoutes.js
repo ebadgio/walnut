@@ -76,16 +76,6 @@ router.get('/discoverinfo', (req, res) => {
                           commentNumber: postObj.commentNumber,
                           link: postObj.link,
                           attachment: postObj.attachment,
-                          comments: postObj.comments.map((commentObj) => {
-                            return {
-                              commentId: commentObj._id,
-                              username: commentObj.createdBy.username,
-                              pictureURL: commentObj.createdBy.pictureURL,
-                              content: commentObj.content,
-                              createdAt: commentObj.createdAt,
-                              likes: commentObj.likes
-                            };
-                          })
                         };
                       });
                       res.json({ defaultFilters: defaultFilters, otherFilters: otherFilters, posts: posts, lastRefresh: new Date() });
@@ -131,16 +121,6 @@ router.get('/discoverrefresh', (req, res) => {
           commentNumber: postObj.commentNumber,
           link: postObj.link,
           attachment: postObj.attachment,
-          comments: postObj.comments.map((commentObj) => {
-            return {
-              commentId: commentObj._id,
-              username: commentObj.createdBy.username,
-              pictureURL: commentObj.createdBy.pictureURL,
-              content: commentObj.content,
-              createdAt: commentObj.createdAt,
-              likes: commentObj.likes
-            };
-          })
         };
       });
       res.json({ posts: posts, lastRefresh: new Date()});
@@ -199,16 +179,6 @@ router.get('/next10', (req, res) => {
                           commentNumber: postObj.commentNumber,
                           link: postObj.link,
                           attachment: postObj.attachment,
-                          comments: postObj.comments.map((commentObj) => {
-                            return {
-                              commentId: commentObj._id,
-                              username: commentObj.createdBy.username,
-                              pictureURL: commentObj.createdBy.pictureURL,
-                              content: commentObj.content,
-                              createdAt: commentObj.createdAt,
-                              likes: commentObj.likes
-                            };
-                          })
                         };
                       });
                       res.json({filters: filter, posts: posts});

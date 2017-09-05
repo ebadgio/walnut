@@ -35,7 +35,7 @@ const styles = {
   },
   zoom: {
     marginTop: '5%',
-    marginRigth: '1%'
+    marginRight: '1%'
   }
 };
 const Map = ReactMapboxGl({
@@ -82,11 +82,13 @@ class MapContainer extends React.Component {
           <div>
             <Popup
               trigger={<CircleIcon />}
+              hoverable
+              basic={false}
             >
               <Popup.Content>
-                <Image.Group className="wrapper" >
-                  {data.map((d, i) => (<Image key={uuidv4()} src={d.pictureURL} className="mapImage" />))}
-                </Image.Group>
+                <div className="popup" >
+                  {data.map((d, i) => (<img key={uuidv4()} src={d.pictureURL} className="deckAvatar" />))}
+                </div>
               </Popup.Content>
             </Popup>
           </div>
@@ -119,7 +121,7 @@ class MapContainer extends React.Component {
               textAlign: 'left',
               marginRight: '1vh'
             }}>
-              <ZoomControl style={styles.zoom} className="zoomControl" style={{right: '5%'}}/>
+              <ZoomControl style={styles.zoom} className="zoomControl"/>
               <div className="mapWrapper" onClick={() => {this.setState({mapInd: (this.state.mapInd + 1) % 3});}}>
                 <Icon name="map outline" className="mapIcon" />
               </div>
@@ -136,11 +138,12 @@ class MapContainer extends React.Component {
                           >
                           <Popup
                             trigger={<CircleIcon />}
+                            hoverable
                           >
                             <Popup.Content>
-                              <Image.Group className="imageWrapper" >
-                                <Image src={feature.pictureURL} className="mapImage" />
-                              </Image.Group>
+                              <div className="headerOuter" >
+                                <img src={feature.pictureURL} className="deckAvatar" />
+                              </div>
                             </Popup.Content>
                           </Popup>
                         </Marker>

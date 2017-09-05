@@ -193,16 +193,6 @@ router.post('/toggle/community', (req, res) => {
                         commentNumber: postObj.commentNumber,
                         link: postObj.link,
                         attachment: postObj.attachment,
-                        comments: postObj.comments.map((commentObj) => {
-                          return {
-                            commentId: commentObj._id,
-                            username: commentObj.createdBy.username,
-                            pictureURL: commentObj.createdBy.pictureURL,
-                            content: commentObj.content,
-                            createdAt: commentObj.createdAt,
-                            likes: commentObj.likes
-                          };
-                        })
                       };
                     });
                     res.json({ data: populatedUser, defaultFilters: defaultFilters, otherFilters: otherFilters, posts: posts, lastRefresh: new Date() });
@@ -263,7 +253,7 @@ router.post('/toggle/checked', (req, res) => {
                           posts = postArr.map((postObj) => {
                             return {
                               postId: postObj._id,
-                              username: postObj.createdBy.username,
+                              username: postObj.createdBy.fullName,
                               pictureURL: postObj.createdBy.pictureURL,
                               content: postObj.content,
                               createdAt: postObj.createdAt,
@@ -272,16 +262,6 @@ router.post('/toggle/checked', (req, res) => {
                               commentNumber: postObj.commentNumber,
                               link: postObj.link,
                               attachment: postObj.attachment,
-                              comments: postObj.comments.map((commentObj) => {
-                                return {
-                                  commentId: commentObj._id,
-                                  username: commentObj.createdBy.username,
-                                  pictureURL: commentObj.createdBy.pictureURL,
-                                  content: commentObj.content,
-                                  createdAt: commentObj.createdAt,
-                                  likes: commentObj.likes
-                                };
-                              })
                             };
                           });
                           res.json({ posts: posts, user: user, lastRefresh: new Date()});
@@ -317,7 +297,7 @@ router.post('/toggle/checkedtemp', (req, res) => {
           posts = postArr.map((postObj) => {
             return {
               postId: postObj._id,
-              username: postObj.createdBy.username,
+              username: postObj.createdBy.fullName,
               pictureURL: postObj.createdBy.pictureURL,
               content: postObj.content,
               createdAt: postObj.createdAt,
@@ -326,16 +306,6 @@ router.post('/toggle/checkedtemp', (req, res) => {
               commentNumber: postObj.commentNumber,
               link: postObj.link,
               attachment: postObj.attachment,
-              comments: postObj.comments.map((commentObj) => {
-                return {
-                  commentId: commentObj._id,
-                  username: commentObj.createdBy.username,
-                  pictureURL: commentObj.createdBy.pictureURL,
-                  content: commentObj.content,
-                  createdAt: commentObj.createdAt,
-                  likes: commentObj.likes
-                };
-              })
             };
           });
           if (posts.length > 10) {
