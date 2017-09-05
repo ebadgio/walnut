@@ -7,7 +7,6 @@ import firebaseApp from '../../../client/firebase';
 import adminApp from '../../firebaseAdmin';
 
 router.post('/post', (req, res) => {
-  console.log('thththththththththt', req.body.lastRefresh);
   const tagModels = req.body.newTags.map((filter) =>
         new Tag({
           name: filter
@@ -87,7 +86,7 @@ router.post('/post', (req, res) => {
       return com.save();
     })
     .then((result) => {
-      res.json({ posts: posts, lastRefresh: new Date() });
+      res.json({ posts: posts, lastRefresh: new Date(), otherTags: result.otherTags });
     })
     .catch((err) => {
       console.log('error in new post not aws refresh', err);

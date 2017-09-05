@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Card, Popup } from 'semantic-ui-react';
 import './Post.css';
 import firebaseApp from '../../firebase';
+import Linkify from 'linkifyjs/react';
+import LinkPreviewComment from './LinkPreviewComment';
 
 const dateStuff = {
   months: {
@@ -55,6 +57,26 @@ const dateStuff = {
 
 };
 
+const defaults = {
+  attributes: null,
+  className: 'linkified',
+  defaultProtocol: 'http',
+  events: null,
+  format: (value) => {
+    return value;
+  },
+  formatHref: (href) => {
+    return href;
+  },
+  ignoreTags: [],
+  nl2br: false,
+  tagName: 'a',
+  target: {
+    url: '_blank'
+  },
+  validate: true
+};
+
 class Comment extends React.Component {
   constructor(props) {
     super(props);
@@ -65,6 +87,24 @@ class Comment extends React.Component {
 
   componentDidMount() {
     this.setState({useDate: this.getUseDate(this.props.createdAt)});
+      urls: []
+    };
+  }
+
+  componentWillMount() {
+    const urls = this.urlFinder(this.props.content);
+    this.setState({ urls: urls });
+    console.log('yo mug', urls);
+  }
+
+  urlFinder(text) {
+    const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+    const urls = [];
+    text.replace(urlRegex, (url, b, c) => {
+      const url2 = (c === 'www.') ? 'http://' + url : url;
+      urls.push(url2);
+    });
+    return urls;
   }
 
   getUseDate(dateObj) {
@@ -102,7 +142,11 @@ class Comment extends React.Component {
     }
   }
 
+
   render() {
+    console.log('this is re rendering');
+    const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreviewComment url={url} />) : [];
+    const useDate = this.getUseDate(this.props.createdAt);
     if (this.props.authorId === firebaseApp.auth().currentUser.uid) {
       return (
         <Popup
@@ -112,8 +156,9 @@ class Comment extends React.Component {
             <Card className="commentCardYou">
               <Card.Content className="messageContent">
                 <Card.Description className="messageDescription" style={{color: '#fff'}}>
-                    {this.props.content}
+                  <Linkify tagName="p" options={defaults}>{this.props.content}</Linkify>
                 </Card.Description>
+                {urlPrev.length > 0 ? urlPrev[0] : null}
               </Card.Content>
             </Card>
           </div>

@@ -9,7 +9,7 @@ const discoverRefreshThunk = (lastRefresh, filters) => (dispatch) => {
       dispatch({
         type: 'GET_DISCOVER_DATA_REFRESH',
         posts: response.data.posts,
-        lastRefresh: response.data.lastRefresh
+        lastRefresh: response.data.lastRefresh,
       });
     })
     .catch((err) => {

@@ -7,13 +7,14 @@ import './App.css';
 import { Label, Input, Modal, Button, Icon } from 'semantic-ui-react';
 import ReactUploadFile from 'react-upload-file';
 import superagent from 'superagent';
+import { connect } from 'react-redux';
 
 class NewCommunityModal extends React.Component {
   constructor() {
     super();
     this.state = {
       titleValue: '',
-      image: 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=q864a/dpe4wfzcew4tph99.jpg',
+      image: 'https://avatars2.githubusercontent.com/u/5745754?v=4&s=88',
       otherTags: [],
       filterValue: '',
       file: '',
@@ -38,25 +39,35 @@ class NewCommunityModal extends React.Component {
     this.setState({otherTags: copy, filterValue: ''});
   }
 
-  handleCreate() {
-    superagent.post('/aws/upload/community')
-    .attach('community', this.state.file)
-    .end((err, res) => {
-      if (err) {
-        console.log(err);
-        alert('failed uploaded!');
-      }
-    //   this.setState({pic: res.body.pictureURL, file: {}});
-      if (this.state.titleValue) {
-        this.props.handleCreate(res.body.pictureURL, this.state.titleValue, this.state.defaultFilters);
-        this.setState({open: false});
-      }
-    });
+  handleNewComm() {
+    if (this.state.file !== '' && this.state.titleValue) {
+      superagent.post('/aws/upload/community')
+        .field('otherTags', this.state.otherTags)
+        .field('title', this.state.titleValue)
+        .attach('community', this.state.file)
+        .end((err, res) => {
+          if (err) {
+            console.log(err);
+            alert('failed uploaded!');
+          }
+          console.log('return on front end for aws create', res.body);
+          this.props.updateUser(res.body.user);
+          this.props.updateCommunities(res.body.communities);
+          this.setState({ open: false, titleValue: '', otherTags: [] });
+        });
+    } else if (this.state.titleValue) {
+      this.props.handleCreate(this.state.image, this.state.titleValue, this.state.otherTags);
+      this.setState({ open: false, titleValue: '', otherTags: [] });
+    }
   }
 
   handleUpload(file) {
+    // TODO: front end picture preview upload
     console.log('this is the file', file);
     this.setState({file: file});
+    const reader = new FileReader();
+    const url = reader.readAsDataURL(file);
+    console.log('cheeky url', url, reader.result);
   }
 
   saveImage() {
@@ -84,19 +95,22 @@ class NewCommunityModal extends React.Component {
     return (
         <Modal size={'small'}
                basic
-               trigger={ <Button className="modalTrigger" content="Create new Community" icon="add square" labelPosition="left" />}
+               trigger={ <Button className="modalTrigger" content="Create new Community" icon="add square" labelPosition="left"
+               onClick={() => this.setState({open: true})} />}
                closeIcon="close"
+               open={this.state.open}
         >
             <Modal.Header className="modalHeader">
                 Create your Community!
             </Modal.Header>
             <Modal.Content scrolling>
-                <img className="communityImgUpload" src={'http://www.sessionlogs.com/media/icons/defaultIcon.png'} />
-                    <ReactUploadFile
-                        style={{width: '80px', height: '40px'}}
-                        chooseFileButton={<Button icon="plus" />}
-                        options={optionsForUpload}/>
-                        {this.state.file ? <button value="save" onClick={() => {this.saveImage();}}>Upload</button> : <p></p>}
+                {/* <img className="communityImgUpload" src={'http://www.sessionlogs.com/media/icons/defaultIcon.png'} /> */}
+                    <div id="communityUploaderCreate">
+                      <ReactUploadFile
+                          style={{width: '80px', height: '40px'}}
+                          chooseFileButton={<Button icon="plus" />}
+                          options={optionsForUpload}/>
+                    </div>
                 <Input
                        className="titleInput"
                        value={this.state.titleValue}
@@ -119,7 +133,7 @@ class NewCommunityModal extends React.Component {
                 <Button className="addButton" content="Add" icon="add" onClick={(e) => {this.handleClick(e);}} />
             </Modal.Content>
             <Modal.Actions>
-                <Button onClick={() => this.props.handleCreate(this.state.image, this.state.titleValue, this.state.otherTags)}>
+                <Button onClick={() => this.handleNewComm(this.state.image, this.state.titleValue, this.state.otherTags)}>
                     Create
                     <Icon name="lightning" />
                 </Button>
@@ -131,8 +145,14 @@ class NewCommunityModal extends React.Component {
 
 
 NewCommunityModal.propTypes = {
-  handleCreate: PropTypes.func
+  handleCreate: PropTypes.func,
+  updateUser: PropTypes.func,
+  updateCommunities: PropTypes.func
 };
 
+const mapDispatchToProps = (dispatch) => ({
+  updateUser: (user) => dispatch({ type: 'GET_USER_DATA_DONE', user}),
+  updateCommunities: (communities) => dispatch({ type: 'GET_ALL_COMMUNITIES_NEW', communities})
+});
 
-export default NewCommunityModal;
+export default connect(null, mapDispatchToProps)(NewCommunityModal);

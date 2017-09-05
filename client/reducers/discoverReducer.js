@@ -28,11 +28,13 @@ const discoverReducer = (state = {
         isFetching: false,
         lastRefresh: action.lastRefresh
       };
+    // TODO: backend needs to check otherFilters
     case 'GET_DISCOVER_DATA_REFRESH':
       return {
         ...state,
         posts: action.posts.concat(state.posts).slice(0, 10),
-        lastRefresh: action.lastRefresh
+        lastRefresh: action.lastRefresh,
+        otherTags: action.otherTags
       };
     case 'GET_DISCOVER_DATA_ERROR':
       return state;

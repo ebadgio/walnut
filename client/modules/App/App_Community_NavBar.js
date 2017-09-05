@@ -83,7 +83,11 @@ class Navbar extends React.Component {
     }
     return (
           <div className="row" id="navBar">
-              <Link className="navBarHome" to={'/walnuthome'} onClick={() => {this.handleClick(1); this.setState({isOpen: true}); }}>
+              <Link className="navBarHome" to={'/walnuthome'} onClick={() => {
+                this.handleClick(1);
+                this.setState({isOpen: true});
+                this.props.clearDirectory();
+              }}>
                 <Icon name="home" size="big" />
               </Link>
               <div className="communityNavBarLogo">
@@ -177,7 +181,8 @@ Navbar.propTypes = {
   onLogout: PropTypes.func,
   history: PropTypes.object,
   user: PropTypes.string,
-  updateCommunity: PropTypes.func
+  updateCommunity: PropTypes.func,
+  clearDirectory: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -191,7 +196,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   changeTab: (tab) => dispatch({type: 'CHANGE_NAVBAR_TAB', tab: tab}),
   onLogout: (his) => dispatch(signOutThunk(his)),
-  updateCommunity: (img, title, oldT, newT, admins) => dispatch(updateCommunity(img, title, oldT, newT, admins))
+  updateCommunity: (img, title, oldT, newT, admins) => dispatch(updateCommunity(img, title, oldT, newT, admins)),
+  clearDirectory: () => dispatch({type: 'DIRECTORY_FRESH'})
 });
 
 

@@ -78,6 +78,7 @@
     "react-image-lightbox": "^4.1.0",
     "react-images": "^0.5.4",
     "react-infinite-scroller": "^1.0.14",
+    "react-loaders": "^2.5.0",
     "react-logger": "^1.1.0",
     "react-mapbox-gl": "^2.1.0",
     "react-modal": "^2.2.2",
