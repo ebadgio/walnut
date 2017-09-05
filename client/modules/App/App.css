@@ -280,6 +280,10 @@
     color: #3a3a3a;
 }
 
+.profileDropdown:hover {
+    color: #5bc0e3;
+}
+
 .bottomBar {
     background-color: #5bc0e3;
     margin-top: 12px;

@@ -31,7 +31,6 @@ class ConversationCard extends React.Component {
   }
 
   render() {
-    console.log('card content', this.props.data);
     return (
         <div className="myConversationCard">
             <Card className="miniPostCard">

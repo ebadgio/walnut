@@ -16,11 +16,12 @@ class FollowedPostsContainer extends React.Component {
     };
   }
 
-  componentDidMount() {
+  onOpen() {
     if (this.props.currentUser) {
       const followsRef = firebaseApp.database().ref('/follows/' + this.props.currentUser.firebaseId + '/' + this.props.currentCommunity);
       followsRef.on('value', (snapshot) => {
         if (snapshot.val()) {
+          console.log('got snapshot', snapshot.val());
           const follows = _.pairs(snapshot.val());
           // this will filter down to only those postIds which are mapped to true
           const myConvs = follows.filter((follow) => follow[1]).map((fol) => fol[0]);
@@ -39,28 +40,12 @@ class FollowedPostsContainer extends React.Component {
 
 
   render() {
-    // if (this.props.myConversations && this.props.myConversations.length > 0) {
-    //   return (
-    //     <div className="myConversationBox">
-    //         {this.props.myConversations.map((conv) =>
-    //             <ConversationCard data={conv}
-    //                               key={uuidv4()}
-    //                               user={this.props.currentUser}/>
-    //         )}
-    //     </div>
-    //   );
-    // }
-    // return (
-    //     <div className="myConversationBox">
-    //
-    //     </div>
-    // );
     return (
        <Sidebar.Pushable className="followedPostsPushable">
          <Sidebar animation="overlay"
                   direction="right"
                   visible={this.state.visible}>
-           <Button icon onClick={() => this.toggleVisibility()} className="minifyButton">
+           <Button icon onClick={() => {this.toggleVisibility()}} className="minifyButton">
              <Icon name="chevron circle down"
                    size="large"
              />
@@ -76,7 +61,7 @@ class FollowedPostsContainer extends React.Component {
          </Sidebar>
          <Sidebar.Pusher>
            <div className="rightContainer">
-             <Button onClick={() => this.toggleVisibility()} className="followedPostsButton">
+             <Button onClick={() => {this.toggleVisibility(); this.onOpen();}} className="followedPostsButton">
                Followed Posts
              </Button>
            </div>
