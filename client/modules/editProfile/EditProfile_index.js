@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button, Image, Dropdown } from 'semantic-ui-react';
+import { Button, Image, Dropdown, Form, Input, Icon, Divider } from 'semantic-ui-react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import saveAboutThunk from '../../thunks/profile_thunks/saveAboutThunk';
 import './EditProfile.css';
 import superagent from 'superagent';
 import ReactUploadFile from 'react-upload-file';
+import DirectoryCard from '../Directory/Directory_Card';
+
 
 const options = [{text: 2010, value: 2010}, {text: 2011, value: 2011}, {text: 2012, value: 2012},
     {text: 2013, value: 2013}, {text: 2014, value: 2014}, {text: 2015, value: 2015},
@@ -118,30 +120,33 @@ class EditProfile extends React.Component {
     return (
         <div className="editPage">
             <div className="editCard">
-                <form className="ui form" onSubmit={this.handleSubmit.bind(this)}>
+                <Form onSubmit={this.handleSubmit.bind(this)}>
                     {/* insert profile pic here */}
                     <div className="field">
-                            <label>Hometown</label>
-                            <PlacesAutocomplete inputProps={inputPropsHome} onSelect={this.handleLocation} />
+                            <label className="editCardLabel">Hometown</label>
+                            <PlacesAutocomplete inputProps={inputPropsHome} onSelect={this.handleChangeHome} />
                         </div>
                     {/* education section */}
-                    <h4 className="ui dividing header">Education</h4>
+                    <h4>Education</h4>
+                    <Divider />
                         <div className="field">
-                            <label>Current School (or most recent if graduated)</label>
-                            <input type="text" name="College" placeholder="ex. University of Pennsylvania"
-                            value={this.state.school}
-                            onChange={this.handleChangeSchool.bind(this)}/>
+                            <label className="editCardLabel">Current School (or most recent if graduated)</label>
+                            <Input name="College"
+                                   placeholder="ex. University of Pennsylvania"
+                                   value={this.state.school}
+                                   onChange={this.handleChangeSchool.bind(this)}/>
                         </div>
                         <div className="field">
                             <div className="fields">
                             <div className="ten wide field">
-                                <label>Concentration</label>
-                                <input type="text" name="Concentration" placeholder="ex. Computer Science"
-                                value={this.state.concentration}
-                                onChange={this.handleChangeConcentration.bind(this)}/>
+                                <label className="editCardLabel">Concentration</label>
+                                <Input name="Concentration"
+                                       placeholder="ex. Computer Science"
+                                       value={this.state.concentration}
+                                       onChange={this.handleChangeConcentration.bind(this)}/>
                             </div>
                             <div className="six wide field">
-                                <label>Graduation Year</label>
+                                <label className="editCardLabel">Graduation Year</label>
                                 {/* <input type="text" name="Graduation" placeholder="ex. 2020"
                                 onChange={this.handleChangeGraduation.bind(this)}/> */}
                                 {/* <YearSelect year={'2000'} handleSelect={this.handleChangeGraduation.bind(this)} /> */}
@@ -150,41 +155,48 @@ class EditProfile extends React.Component {
                             </div>
                             </div>
                         </div>
-                    {/* work experience */}
-                    <h4 className="ui dividing header">Occupation</h4>
+                    <h4>Occupation</h4>
+                    <Divider />
                         <div className="field">
-                            <label>Position</label>
-                            <input type="text" name="Position" placeholder="ex. Software Engineer"
+                            <label className="editCardLabel">Position</label>
+                            <Input type="text" name="Position" placeholder="ex. Software Engineer"
                             value={this.state.position}
                             onChange={this.handleChangePosition.bind(this)}/>
                         </div>
                         <div className="field">
-                            <label>Company</label>
+                            <label className="editCardLabel">Company</label>
                             <input type="text" name="Company" placeholder="ex. Google"
                             value={this.state.company}
                             onChange={this.handleChangeCompany.bind(this)}/>
                         </div>
                         <div className="field">
-                            <label>Location</label>
-                            <PlacesAutocomplete inputProps={inputProps} onSelect={this.handleLocation} />
+                            <label className="editCardLabel">Location</label>
+                            <PlacesAutocomplete inputProps={inputProps} onSelect={this.handleChangeLocation} />
                         </div>
                     <span>
-                    <Button type="submit" onClick={() => this.setState({saved: true})}>Save</Button>
+                    <Button className="saveButton" type="submit" onClick={() => this.setState({saved: true})}>Save</Button>
                     {this.state.saved ?
                     <div style={{color: 'black'}}>Your changes have been saved!</div>
                     : null}
                     </span>
-                </form>
+                </Form>
             </div>
             <div className="editProfilePic">
                 <div className="profilePicBox">
-                   <Image src={this.props.profilePic} size="small" /> 
-                  </div>
+                   <img src={this.props.profilePic} className="proPic" />
+                </div>
                 <ReactUploadFile
-                    chooseFileButton={<Button>Change</Button>}
+                    chooseFileButton={<Icon className="editPicButton" size="big" name="edit" />}
                     options={optionsForUpload} />
-                {this.state.file ? <Button value="save" onClick={() => { this.saveImage(); }}>Upload</Button> : <p></p>}
+                {this.state.file ? <Button className="uploadButton" onClick={() => { this.saveImage(); }}>Upload</Button> : <p></p>}
             </div>
+            {/* <DirectoryCard*/}
+                {/* picture={this.props.profilePic}*/}
+                {/* name={this.props.fullName}*/}
+                {/* email={this.props.contact.email[0]}*/}
+                {/* school={this.props.school}*/}
+                {/* job={this.props.company}*/}
+            {/* />*/}
         </div>
       );
   }
@@ -201,7 +213,9 @@ EditProfile.propTypes = {
   saveAbout: PropTypes.func,
   location: PropTypes.string,
   profilePic: PropTypes.string,
-  refreshUser: PropTypes.func
+  refreshUser: PropTypes.func,
+  fullName: PropTypes.string,
+  contact: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
@@ -214,7 +228,9 @@ const mapStateToProps = (state) => ({
   position: state.userReducer.work[0] ? state.userReducer.work[0].position : '',
   company: state.userReducer.work[0] ? state.userReducer.work[0].company : '',
   location: state.userReducer.work[0] ? state.userReducer.work[0].location : '',
-  profilePic: state.userReducer.pictureURL
+  profilePic: state.userReducer.pictureURL,
+  fullName: state.userReducer.fullName,
+  contact: state.userReducer.contact
 });
 
 const mapDispatchToProps = (dispatch) => ({

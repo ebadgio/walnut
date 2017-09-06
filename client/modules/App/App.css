@@ -32,13 +32,11 @@
 
 .navBarLinks {
     display: flex;
-    justify-content: space-between;
-    width: 300px;
-    left: 37%;
+    width: auto;
+    left: 40%;
     right: auto;
     position: absolute;
     margin-top: 7px;
-    color: #F1F1EF;
 }
 
 .navBarLinksRight {
@@ -92,6 +90,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 14vh;
 }
 
 .navbarLinkOn {
@@ -101,6 +100,7 @@
     color: #5bc0e3 !important;
     background-color: #FAFAFA !important;
     padding-top: 2px !important;
+    text-align: center;
 }
 
 .navbarLinkOff {
@@ -288,6 +288,7 @@
     background-color: #5bc0e3;
     margin-top: 12px;
     height: 2px !important;
+    width: 14vh;
     border-radius: 20px;
 }
 
@@ -365,4 +366,10 @@ button.ui.button > input {
 
 .ui.loader:after {
     border-color: #5bc0e3 transparent transparent !important;
+}
+
+.verticalDivider {
+    width: 1px;
+    background: #3a3a3a;
+    height: 30px;
 }

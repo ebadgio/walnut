@@ -292,11 +292,11 @@
 }
 
 .followedPostsBox{
-    margin: 10px 5px 10px 5px;
-    height: 50vh;
-    width: 36vh;
+    margin: 40px 0px 10px 5px;
+    height: 45vh;
     overflow-y: auto;
     overflow-x: hidden;
+    clear: both;
 }
 
 .ui.right.sidebar {
@@ -312,8 +312,57 @@
     border-color: #5bc0e3 transparent transparent !important;
 }
 
-@media (max-width: 940px) {
+@media (max-width: 950px) {
+    #root {
+        background-color: #FAFAFA;
+    }
     .onlinePushable {
         width: 0 !important;
+        position: relative !important;
+    }
+    #Discover {
+     display: flex;
+     flex-direction: row;
+     height: 100%;
+     justify-content: space-between;
+     overflow: auto;
+     min-width: 950px;
+    }
+    .LeftSidebar_Container {
+        position: relative !important;
+    }
+    .rightContainer {
+        z-index: inherit !important;
+        right: 0;
+        height: 50vh;
+        position: relative !important;
+    }
+    .ui.bottom.sidebar {
+        position: relative !important;
+        background: #3a3a3a;
+        width: 30vh !important;
+        margin-left: 20px !important;
+        height: auto!important;
+        border-top-left-radius: 3px !important;
+        border-top-right-radius: 3px !important;
+        max-height: 300px !important;
+    }
+    .followedPostsPushable {
+        z-index: inherit;
+        width: 40vh !important;
+        height: 100% !important;
+        position: relative !important;
+    }
+    .pushable:not(body)>.ui.sidebar {
+        position: fixed !important;
+        width: auto !important;
+    }
+
+    .miniPostCard {
+         width: 180px !important;
+    }
+
+    .pushable {
+        overflow-x: auto;
     }
 }

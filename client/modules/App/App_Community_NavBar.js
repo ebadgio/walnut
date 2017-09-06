@@ -104,14 +104,12 @@ class Navbar extends React.Component {
                     {this.state.pos === 1 ? <div className="bottomBar"></div> : null}
                   </Link>
                 </div>
-
                 <div className="navBarLink" onClick={() => { this.handleClick(2); this.setState({ isOpen: true }); this.navBarChoiceArt(2);}}>
                   <Link className="tabs" to={'/community/' + title + '/directory'}>
                     <p className={(this.state.pos === 2) ? 'navbarLinkOn' : 'navbarLinkOff'}>Directory</p>
                     {this.state.pos === 2 ? <div className="bottomBar"></div> : null}
                   </Link>
                 </div>
-
                 <div className="navBarLink" onClick={() => { this.handleClick(3); this.setState({ isOpen: true }); this.navBarChoiceArt(3);}}>
                   <Link className="tabs" to={'/community/' + title + '/map'}>
                     <p className={(this.state.pos === 3) ? 'navbarLinkOn' : 'navbarLinkOff'}>Map</p>
@@ -146,7 +144,9 @@ class Navbar extends React.Component {
               <Dropdown className="profileDropdown link item" text={this.props.fullName.split(' ')[0]} pointing>
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <Link className="dropdownProfileLink" to={'/community/' + title + '/editprofile'} >
+                    <Link className="dropdownProfileLink"
+                          to={'/community/' + title + '/editprofile'}
+                          onClick={() => this.setState({pos: 0})} >
                     Edit Profile
                     </Link>
                   </Dropdown.Item>
