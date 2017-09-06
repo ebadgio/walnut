@@ -352,3 +352,17 @@ button.ui.button > input {
     margin-right: 100px;
     margin-bottom: 23px;
 }
+
+.closingIcon {
+    cursor: pointer;
+}
+
+.modalHeader {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: space-between;
+}
+
+.ui.loader:after {
+    border-color: #5bc0e3 transparent transparent !important;
+}
