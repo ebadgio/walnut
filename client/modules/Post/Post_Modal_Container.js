@@ -84,7 +84,10 @@ class ModalInstance extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if(this.state.messages === nextState.messages) {
+    // TODO: shallow array comparison
+    console.log('should comparison', this.state.messages, nextState);
+    if(this.state.messages.length === nextState.messages.length) {
+      console.log('inside comparison');
       return false;
     }
     return true;

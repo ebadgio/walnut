@@ -91,12 +91,13 @@ class Comment extends React.Component {
     this.setState({ useDate: this.getUseDate(this.props.createdAt) });
     const urls = this.urlFinder(this.props.content);
     this.setState({ urls: urls });
-    if (urls.length === 0) {
+    if (urls.length !== 0) {
       const idx = this.props.content.indexOf(urls[0]);
       const newBody = this.props.content.substr(idx, 1);
       if(newBody.length < 1) {
         this.setState({ messageBody: this.props.content });
       } else {
+        console.log('spliced string', newBody, idx);
         this.setState({ messageBody: newBody });
       }
     } else {
@@ -151,6 +152,7 @@ class Comment extends React.Component {
 
 
   render() {
+    // TODO: shouldComponentUpdate needs to move to here
     console.log('this is re rendering');
     const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreviewComment url={url} />) : [];
     const useDate = this.getUseDate(this.props.createdAt);
@@ -191,7 +193,7 @@ class Comment extends React.Component {
             <Card className="commentCardOther">
               <Card.Content className="messageContent">
                 <Card.Description className="messageDescription" style={{color: '#fff'}}>
-                    {this.props.content}
+                  <Linkify tagName="p" options={defaults}>{this.state.messageBody}</Linkify>
                 </Card.Description>
               </Card.Content>
             </Card>

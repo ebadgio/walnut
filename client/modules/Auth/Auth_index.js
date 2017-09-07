@@ -44,6 +44,9 @@ class Auth extends React.Component {
           this.props.getUser();
           const isUserInCommunity = localStorage.getItem('isUserInCommunity');
           if (this.props.isCreated && !isUserInCommunity) {
+            // TODO: this is the redirect that is racing
+            // TODO: not to do with racing but the middleware, we need to make sure there is a server req
+            // TODO: otherwise req.user never gets hit
             history.replace('/walnuthome');
           } else {
             if (sessionStorage.getItem(('url'))) {
