@@ -34,8 +34,8 @@ class LinkPreview extends React.Component {
   render() {
     const bool = Object.keys(this.state.meta).length > 0;
     const opts = {
-      height: '270',
-      width: '513',
+      height: '60px',
+      width: '100px',
       playerVars: {
         autoplay: 0
       }
@@ -46,7 +46,7 @@ class LinkPreview extends React.Component {
                     <div className="lineLeftComment"></div> : null
                 }
                 <div className="linkPreviewCommentWrapper">
-                    {(bool && this.state.meta.image && this.state.meta.description) ?
+                  {(!bool || !this.state.meta.image || !this.state.meta.description) ?
                         <div className="linkPreviewComment">
                             <a href={this.state.meta.url}><h3 className="linkTitleComment">{this.state.meta.title}</h3></a><br />
                             <p className="linkDescComment">{this.state.meta.description}</p><br />

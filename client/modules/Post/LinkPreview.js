@@ -46,7 +46,7 @@ class LinkPreview extends React.Component {
           <div className="lineLeft"></div> : null
         }
         <div className="linkPreviewWrapper">
-          {(bool && this.state.meta.image && this.state.meta.description) ?
+          {(!bool || !this.state.meta.image || !this.state.meta.description) ?
           <div className="linkPreview">
               <a href={this.state.meta.url}><h3 className="linkTitle">{this.state.meta.title}</h3></a><br />
               <p className="linkDesc">{this.state.meta.description}</p><br />

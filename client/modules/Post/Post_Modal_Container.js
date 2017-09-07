@@ -7,13 +7,14 @@ import newCommentLikeThunk from '../../thunks/post_thunks/newCommentLikeThunk';
 import joinConversationThunk from '../../thunks/post_thunks/joinConversationThunk';
 import Comment from './Post_Comment';
 import './Post.css';
-import { Form, Icon, Modal, TextArea, Loader, Button, Popup } from 'semantic-ui-react';
+import { Icon, Modal, Loader, Button, Popup } from 'semantic-ui-react';
 import firebaseApp from '../../firebase';
 import uuidv4 from 'uuid/v4';
 import _ from 'underscore';
 import $ from 'jquery';
 import NestedPostModal from './Nested_Post_Modal';
 import InfiniteScroll from 'react-infinite-scroller';
+import ModalTextBox from './Post_Modal_TextBox';
 
 const testers = [
   {
@@ -47,7 +48,7 @@ class ModalInstance extends React.Component {
     this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const membersRef = firebaseApp.database().ref('/members/' + this.props.postData.postId);
     membersRef.on('value', (snapshot) => {
       const peeps =  _.values(snapshot.val());
@@ -80,6 +81,13 @@ class ModalInstance extends React.Component {
         firebaseApp.database().ref().update(updates2);
       }
     });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if(this.state.messages === nextState.messages) {
+      return false;
+    }
+    return true;
   }
 
   scrollToBottom(id) {
@@ -421,15 +429,7 @@ class ModalInstance extends React.Component {
               <Icon size="big" name="smile"  className="emojiPicker"/>
             </div>
           </div>
-          <Form className="textBoxForm">
-            <TextArea
-              id="messageInput"
-              autoHeight
-              placeholder="Give your two cents..."
-              onChange={(e) => {this.handleChange(e); this.findEnter();}}
-              rows={3}
-            />
-          </Form>
+          <ModalTextBox handleChange={(e) => this.handleChange(e)} findEnter={() =>this.findEnter()} />
         </Modal.Actions>
       </Modal>
     );

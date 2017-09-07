@@ -82,16 +82,26 @@ class Comment extends React.Component {
     super(props);
     this.state = {
       useDate: '',
-      urls: []
+      urls: [],
+      messageBody: ''
     };
   }
 
   componentWillMount() {
+    this.setState({ useDate: this.getUseDate(this.props.createdAt) });
     const urls = this.urlFinder(this.props.content);
     this.setState({ urls: urls });
-  }
-  componentDidMount() {
-    this.setState({useDate: this.getUseDate(this.props.createdAt)});
+    if (urls.length === 0) {
+      const idx = this.props.content.indexOf(urls[0]);
+      const newBody = this.props.content.substr(idx, 1);
+      if(newBody.length < 1) {
+        this.setState({ messageBody: this.props.content });
+      } else {
+        this.setState({ messageBody: newBody });
+      }
+    } else {
+      this.setState({messageBody: this.props.content});
+    }
   }
 
   urlFinder(text) {
@@ -153,7 +163,7 @@ class Comment extends React.Component {
             <Card className="commentCardYou">
               <Card.Content className="messageContent">
                 <Card.Description className="messageDescription" style={{color: '#fff'}}>
-                  <Linkify tagName="p" options={defaults}>{this.props.content}</Linkify>
+                  <Linkify tagName="p" options={defaults}>{this.state.messageBody}</Linkify>
                 </Card.Description>
                 {urlPrev.length > 0 ? urlPrev[0] : null}
               </Card.Content>
