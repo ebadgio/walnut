@@ -6,10 +6,17 @@
 }
 
 .editCard {
-    background-color: #DADDD8;
+    background-color: #fff;
     padding: 20px;
-    border-radius: 5px;
-    margin-top: 63px;
+    color: #3a3a3a !important;
+    margin-top: 10vh;
+    border: 1px solid !important;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
+    border-radius: 3px !important;
+}
+
+.editCardLabel {
+    color: #3a3a3a !important;
 }
 
 #graduation .text {
@@ -26,13 +33,42 @@
 }
 
 .editProfilePic {
-    background-color: #DADDD8;
+    background-color: #fff;
     padding: 20px;
-    border-radius: 5px;
-    margin-top: 63px;
+    margin-top: 10vh;
+    border: 1px solid !important;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
+    border-radius: 3px !important;
 }
 
 .profilePicBox {
-    width: 150px;
-    height: 160px;
+    width: 250px;
+    height: 280px;
+}
+
+.editPicButton {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.editPicButton:hover {
+    color: #5bc0e3 !important;
+}
+
+.proPic {
+    object-fit: cover;
+    max-width: 250px;
+    max-height: 280px;
+    min-width: 250px;
+    min-height: 280px;
+    border-radius: 3px;
+}
+
+.uploadButton, .saveButton {
+    background: #fafafa !important;
+    color: #3a3a3a !important;
+}
+
+.uploadButton:hover, .saveButton:hover {
+    color: #5bc0e3 !important;
 }

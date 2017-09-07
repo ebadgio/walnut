@@ -6,12 +6,13 @@ import URL from '../../info';
 const signInThunk = (email, password, redirect) => (dispatch) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then(result => {
-    console.log(result);
+    console.log('RESULT HERE', result);
     if (!result.emailVerified) {
       dispatch({type: 'GET_USER_VERIFY_ERROR', email: email, password: password});
     }
-    result.getToken(/* forceRefresh */ true)
+    result.getIdToken(/* forceRefresh */ true)
     .then((idToken) => {
+      console.log('the fucking token', idToken);
       axios.post(URL + 'auth/login', {
         token: idToken,
         email: email,
@@ -19,6 +20,7 @@ const signInThunk = (email, password, redirect) => (dispatch) => {
       })
       .then((res) => {
         dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
+        setTimeout(() => dispatch({type: 'WALNUT_READY'}), 1500);
         // redirect('/community/' + res.data.user.currentCommunity.title.split(' ').join('') + '/discover');
         // history.replace('/');
         // console.log('history', history);
