@@ -10,6 +10,7 @@ import newTagsReducer from './newTagsReducer';
 import navBarReducer from './navBarReducer';
 import postReducer from './postReducer';
 import conversationReducer from './conversationReducer';
+import walnutHomeReducer from './walnutHomeReducer';
 
 const rootReducer = combineReducers({
   conversationReducer: conversationReducer,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   newTagsReducer: newTagsReducer,
   navBarReducer: navBarReducer,
   postReducer: postReducer,
+  walnutHomeReducer: walnutHomeReducer,
   routing: routerReducer // this reducer is used by React Router in Redux
 });
 

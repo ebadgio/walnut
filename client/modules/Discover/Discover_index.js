@@ -8,13 +8,14 @@ import RightSideBar from './Discover_Right_Sidebar_Container';
 import ConversationCard from './Discover_My_Conversations_Card';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
-import {Sidebar, Button, Icon, Sticky} from 'semantic-ui-react';
+import {Sidebar, Button, Icon, Sticky, Loader} from 'semantic-ui-react';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
 import uuidv4 from 'uuid/v4';
 import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
 import Online from './Discover_Online';
 import FollowedPostsContainer from './Discover_My_Conversation_Container';
+import WalnutLoader from '../App/App_WalnutLoader';
 
 
 class Home extends React.Component {
@@ -49,10 +50,10 @@ class Home extends React.Component {
   render() {
     return (
         <div className="row" id="Discover">
-          <LeftSideBar />
-          <Online />
+          <LeftSideBar/>
+          <Online/>
           <Feed id="Feed"/>
-          <FollowedPostsContainer />
+          <FollowedPostsContainer/>
         </div>
     );
   }
