@@ -9,7 +9,7 @@ import NavBar from './App_Community_NavBar';
 import MapContainer from '../Map/Map_index';
 import updateLocationThunk from '../../thunks/map_thunks/updateLocationThunk';
 import EditProfile from '../EditProfile/EditProfile_index';
-
+import WalnutLoader from './App_WalnutLoader';
 
 class Community extends React.Component {
 
@@ -30,28 +30,39 @@ class Community extends React.Component {
   }
 
   render() {
+    if (this.props.isReady) {
+        return (
+            <div>
+                <NavBar/>
+                <Switch>
+                    <Route path="/community/:communityName/directory" component={Directory}/>
+                    <Route path="/community/:communityName/map" component={MapContainer}/>
+                    <Route path="/community/:communityName/discover" component={Discover}/>
+                    <Route path="/community/:communityName/editProfile" component={EditProfile}/>
+                </Switch>
+            </div>
+        );
+    }
     return (
-      <div>
-        <NavBar />
-         <Switch>
-            <Route path="/community/:communityName/directory" component={Directory} />
-            <Route path="/community/:communityName/map" component={MapContainer}/>
-            <Route path="/community/:communityName/discover" component={Discover} />
-            <Route path="/community/:communityName/editProfile" component={EditProfile} />
-         </Switch>
-       </div>
+      <WalnutLoader />
     );
   }
 }
 
 
 Community.propTypes = {
+  isReady: PropTypes.bool,
   updateLocation: PropTypes.func,
   history: PropTypes.object
 };
+
+const mapStateToProps = (state) => ({
+  isReady: state.discoverReducer.isReady,
+});
+
 
 const mapDispatchToProps = (dispatch) => ({
   updateLocation: (params) => dispatch(updateLocationThunk(params)),
 });
 
-export default connect(null, mapDispatchToProps)(Community);
+export default connect(mapStateToProps, mapDispatchToProps)(Community);

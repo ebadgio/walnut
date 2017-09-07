@@ -32,13 +32,11 @@
 
 .navBarLinks {
     display: flex;
-    justify-content: space-between;
-    width: 300px;
-    left: 37%;
+    width: auto;
+    left: 40%;
     right: auto;
     position: absolute;
     margin-top: 7px;
-    color: #F1F1EF;
 }
 
 .navBarLinksRight {
@@ -92,6 +90,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 14vh;
 }
 
 .navbarLinkOn {
@@ -101,6 +100,7 @@
     color: #5bc0e3 !important;
     background-color: #FAFAFA !important;
     padding-top: 2px !important;
+    text-align: center;
 }
 
 .navbarLinkOff {
@@ -248,7 +248,6 @@
 .imageWrapperCommunity {
     margin-left: 10px;
     margin-top: 7px;
-    background-color: #3a3a3a;
     width: 30px;
     height: 30px;
     display: flex;
@@ -288,6 +287,7 @@
     background-color: #5bc0e3;
     margin-top: 12px;
     height: 2px !important;
+    width: 14vh;
     border-radius: 20px;
 }
 
@@ -352,3 +352,115 @@ button.ui.button > input {
     margin-right: 100px;
     margin-bottom: 23px;
 }
+
+.closingIcon {
+    cursor: pointer;
+}
+
+.modalHeader {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: space-between;
+}
+
+.ui.loader:after {
+    border-color: #5bc0e3 transparent transparent !important;
+}
+
+.verticalDivider {
+    width: 1px;
+    background: #3a3a3a;
+    height: 30px;
+}
+
+.walnutLoading {
+    background: #fafafa;
+    height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.walnutHead {
+    color: #3a3a3a;
+    font-size: -webkit-xxx-large;
+}
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    height: 300px;
+    width: 300px;
+}
+
+.navbarLinkOnDropdown {
+    cursor: pointer !important;
+    font-weight: bold;
+    margin-bottom: 9px;
+    color: #5bc0e3 !important;
+    padding-top: 2px !important;
+}
+
+.navbarLinkOffDropdown {
+    cursor: pointer !important;
+    color: #3A3A3A;
+    padding-top: 8px !important;
+    font-weight: bold;
+    padding-bottom: 8px !important;
+}
+
+.sidebar.icon {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+    width: 1em !important;
+    height: auto !important;
+    font-size: 2em !important;
+}
+
+.menuDropdown {
+    margin-right: 5px;
+    margin-left: 10px;
+    color: #3a3a3a;
+    right: 20%;
+    position: absolute !important;
+}
+
+.menuDropdown:hover {
+    color: #5bc0e3;
+}
+
+.middle {
+    width: 30%
+}
+
+@media (max-width: 560px) {
+    .menuDropdown {
+        margin-right: 5px;
+        margin-left: 10px;
+        color: #3a3a3a;
+        right: 2%;
+        position: absolute !important;
+    }
+    .communityNavBarLogo {
+        display: flex;
+        margin-left: 40px;
+    }
+    .communityTitle {
+        font-size: 14px;
+        margin-left: 10px;
+        color: #3A3A3A;
+        margin-top: 0;
+        align-self: center;
+    }
+}
+@media (max-width: 255px) {
+    .communityTitle {
+        font-size: 0px;
+        margin-left: 10px;
+        color: #3A3A3A;
+        margin-top: 0;
+        align-self: center;
+    }
+}
+

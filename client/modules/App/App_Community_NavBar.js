@@ -18,12 +18,14 @@ class Navbar extends React.Component {
     this.state = {
       isOpen: this.props.isEdited,
       pos: 1,
-      admin: false
+      admin: false,
+      innerWidth: window.innerWidth
     };
   }
 
   componentDidMount() {
     this.navBarChoice();
+    setInterval(() => {this.setState({innerWidth: window.innerWidth});}, 100);
   }
 
   handleClick(num) {
@@ -81,93 +83,192 @@ class Navbar extends React.Component {
     } else {
       title = 'missing';
     }
-    return (
-          <div className="row" id="navBar">
+    if (this.state.innerWidth > 560) {
+      return (
+            <div className="row" id="navBar">
               <Link className="navBarHome" to={'/walnuthome'} onClick={() => {
                 this.handleClick(1);
                 this.setState({isOpen: true});
                 this.props.clearDirectory();
               }}>
-                <Icon name="home" size="big" />
+                <Icon name="home" size="big"/>
               </Link>
               <div className="communityNavBarLogo">
                 <div className="imageWrapperCommunity">
-                  <img className="communityImage" src={this.props.community.icon} onClick={() => this.handleLogoClick()} />
+                  <img className="communityImage" src={this.props.community.icon}
+                       onClick={() => this.handleLogoClick()}/>
                 </div>
                 <h3 className="communityTitle" onClick={() => this.handleLogoClick()}>{this.props.community.title}</h3>
               </div>
 
-              <div className="navBarLinks">
-                <div className="navBarLink" onClick={() => { this.handleClick(1); this.setState({ isOpen: true }); this.navBarChoiceArt(1);}}>
-                  <Link className="tabs" to={'/community/' + title + '/discover'}>
-                    <p className={(this.state.pos === 1) ? 'navbarLinkOn' : 'navbarLinkOff' }>Discover</p>
-                    {this.state.pos === 1 ? <div className="bottomBar"></div> : null}
-                  </Link>
-                </div>
+                {this.state.innerWidth > 745 ? <div className="navBarLinks">
+                      <div className="navBarLink" onClick={() => {
+                        this.handleClick(1);
+                        this.setState({isOpen: true});
+                        this.navBarChoiceArt(1);
+                      }}>
+                        <Link className="tabs" to={'/community/' + title + '/discover'}>
+                          <p className={(this.state.pos === 1) ? 'navbarLinkOn' : 'navbarLinkOff'}>Discover</p>
+                            {this.state.pos === 1 ? <div className="bottomBar"></div> : null}
+                        </Link>
+                      </div>
+                      <div className="navBarLink" onClick={() => {
+                        this.handleClick(2);
+                        this.setState({isOpen: true});
+                        this.navBarChoiceArt(2);
+                      }}>
+                        <Link className="tabs" to={'/community/' + title + '/directory'}>
+                          <p className={(this.state.pos === 2) ? 'navbarLinkOn' : 'navbarLinkOff'}>Directory</p>
+                            {this.state.pos === 2 ? <div className="bottomBar"></div> : null}
+                        </Link>
+                      </div>
+                      <div className="navBarLink" onClick={() => {
+                        this.handleClick(3);
+                        this.setState({isOpen: true});
+                        this.navBarChoiceArt(3);
+                      }}>
+                        <Link className="tabs" to={'/community/' + title + '/map'}>
+                          <p className={(this.state.pos === 3) ? 'navbarLinkOn' : 'navbarLinkOff'}>Map</p>
+                            {this.state.pos === 3 ? <div className="bottomBar"></div> : null}
+                        </Link>
+                      </div>
+                    </div> :
+                    <Dropdown
+                        className="menuDropdown"
+                        floating
+                        icon="sidebar">
+                      <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => {
+                          this.handleClick(1);
+                          this.setState({isOpen: true});
+                          this.navBarChoiceArt(1);
+                        }}>
+                          <Link className="tabs" to={'/community/' + title + '/discover'}>
+                            <p className={(this.state.pos === 1) ? 'navbarLinkOnDropdown' : 'navbarLinkOffDropdown'}>
+                              Discover</p>
+                          </Link>
+                        </Dropdown.Item>
+                        <Dropdown.Divider/>
+                        <Dropdown.Item onClick={() => {
+                          this.handleClick(2);
+                          this.setState({isOpen: true});
+                          this.navBarChoiceArt(2);
+                        }}>
+                          <Link className="tabs" to={'/community/' + title + '/directory'}>
+                            <p className={(this.state.pos === 2) ? 'navbarLinkOnDropdown' : 'navbarLinkOffDropdown'}>
+                              Directory</p>
+                          </Link>
+                        </Dropdown.Item>
+                        <Dropdown.Divider/>
+                        <Dropdown.Item onClick={() => {
+                          this.handleClick(3);
+                          this.setState({isOpen: true});
+                          this.navBarChoiceArt(3);
+                        }}>
+                          <Link className="tabs" to={'/community/' + title + '/map'}>
+                            <p className={(this.state.pos === 3) ? 'navbarLinkOnDropdown' : 'navbarLinkOffDropdown'}>
+                              Map</p>
+                          </Link>
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>}
 
-                <div className="navBarLink" onClick={() => { this.handleClick(2); this.setState({ isOpen: true }); this.navBarChoiceArt(2);}}>
-                  <Link className="tabs" to={'/community/' + title + '/directory'}>
-                    <p className={(this.state.pos === 2) ? 'navbarLinkOn' : 'navbarLinkOff'}>Directory</p>
-                    {this.state.pos === 2 ? <div className="bottomBar"></div> : null}
-                  </Link>
+              <div className="navBarLinksRight">
+                <div className="imageWrapperNav">
+                  <img className="postUserImage" src={this.props.pictureURL}/>
                 </div>
-
-                <div className="navBarLink" onClick={() => { this.handleClick(3); this.setState({ isOpen: true }); this.navBarChoiceArt(3);}}>
-                  <Link className="tabs" to={'/community/' + title + '/map'}>
-                    <p className={(this.state.pos === 3) ? 'navbarLinkOn' : 'navbarLinkOff'}>Map</p>
-                    {this.state.pos === 3 ? <div className="bottomBar"></div> : null}
-                  </Link>
-                </div>
-
-                {/* <div className="navBarLink" onClick={() => this.handleClick(4)}>
-                  <Link className="tabs" to={'/community/' + title + '/editprofile'}>
-                    <Icon className="navBarIcon" name="paypal" size="big"/>
-                  </Link>
-                  {(this.props.tab === 4) ?
-                    <div className="bar">
-                      </div> : null
-                    }
-                </div> */}
+                <Dropdown className="profileDropdown link item" text={this.props.fullName.split(' ')[0]} pointing>
+                  <Dropdown.Menu>
+                    <Dropdown.Item>
+                      <Link className="dropdownProfileLink"
+                            to={'/community/' + title + '/editprofile'}
+                            onClick={() => this.setState({pos: 0})}>
+                        Edit Profile
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Divider/>
+                    <Dropdown.Item className="dropdownLogout" onClick={() => this.handleLogout()}>Logout</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </div>
-
-            <div className="navBarLinksRight">
-              <div className="imageWrapperNav">
-                <img className="postUserImage" src={this.props.pictureURL} />
-                {/* {!(this.state.isOpen || this.props.isEdited) ?*/}
-                  {/* <div className="profilePopoutOuterMost" onClick={() => this.setState({isOpen: true})}>*/}
-                    {/* <div className="profilePopoutOuter">*/}
-                      {/* <div className="arrow-up"></div>*/}
-                      {/* <Link className="profilePopeoutHeaderTab" onClick={() => this.setState({isOpen: true})} to={'/community/' + title + '/editprofile'}>*/}
-                        {/* <h2 className="profilePopeoutHeader">Complete the profile</h2>*/}
-                      {/* </Link>*/}
-                    {/* </div>*/}
-                  {/* </div> : null}*/}
-              </div>
-              <Dropdown className="profileDropdown link item" text={this.props.fullName.split(' ')[0]} pointing>
-                <Dropdown.Menu>
-                  <Dropdown.Item>
-                    <Link className="dropdownProfileLink" to={'/community/' + title + '/editprofile'} >
-                    Edit Profile
-                    </Link>
-                  </Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item className="dropdownLogout" onClick={() => this.handleLogout()}>Logout</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              {/* <a className="logoutText" href="/logout">
-              <Icon name="log out" className="logoutIcon" size="big"/>
-                Logout</a> */}
+                {this.state.admin ?
+                    <EditCommunityModal
+                        handleUpdate={(image, titleValue, oldT, newT, admins) => this.handleSubmit(image, titleValue, oldT, newT, admins)}
+                        handleLogoClose={() => this.handleClose()}
+                        community={this.props.community}
+                    /> :
+                    null
+                }
             </div>
-            {this.state.admin ?
-              <EditCommunityModal
-                handleUpdate={(image, titleValue, oldT, newT, admins) => this.handleSubmit(image, titleValue, oldT, newT, admins)}
-                handleLogoClose={() => this.handleClose()}
-                community={this.props.community}
-                /> :
-              null
-            }
-        </div>
         );
+    }
+    return (
+        <div className="row" id="navBar">
+          <Link className="navBarHome" to={'/walnuthome'} onClick={() => {
+            this.handleClick(1);
+            this.setState({isOpen: true});
+            this.props.clearDirectory();
+          }}>
+            <Icon name="home" size="big"/>
+          </Link>
+          <div className="communityNavBarLogo">
+            <div className="imageWrapperCommunity">
+              <img className="communityImage" src={this.props.community.icon}
+                   onClick={() => this.handleLogoClick()}/>
+            </div>
+            <h3 className="communityTitle" onClick={() => this.handleLogoClick()}>{this.props.community.title}</h3>
+          </div>
+
+                <Dropdown
+                    className="menuDropdown"
+                    floating
+                    icon="sidebar">
+                  <Dropdown.Menu>
+                    <Dropdown.Item onClick={() => {
+                      this.handleClick(1);
+                      this.setState({isOpen: true});
+                      this.navBarChoiceArt(1);
+                    }}>
+                      <Link className="tabs" to={'/community/' + title + '/discover'}>
+                        <p className={(this.state.pos === 1) ? 'navbarLinkOnDropdown' : 'navbarLinkOffDropdown'}>
+                          Discover</p>
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Divider/>
+                    <Dropdown.Item onClick={() => {
+                      this.handleClick(2);
+                      this.setState({isOpen: true});
+                      this.navBarChoiceArt(2);
+                    }}>
+                      <Link className="tabs" to={'/community/' + title + '/directory'}>
+                        <p className={(this.state.pos === 2) ? 'navbarLinkOnDropdown' : 'navbarLinkOffDropdown'}>
+                          Directory</p>
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Divider/>
+                    <Dropdown.Item onClick={() => {
+                      this.handleClick(3);
+                      this.setState({isOpen: true});
+                      this.navBarChoiceArt(3);
+                    }}>
+                      <Link className="tabs" to={'/community/' + title + '/map'}>
+                        <p className={(this.state.pos === 3) ? 'navbarLinkOnDropdown' : 'navbarLinkOffDropdown'}>
+                          Map</p>
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Divider/>
+                    <Dropdown.Item>
+                      <Link className="dropdownProfileLink"
+                            to={'/community/' + title + '/editprofile'}
+                            onClick={() => this.setState({pos: 0})}>
+                        Edit Profile
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item className="dropdownLogout" onClick={() => this.handleLogout()}>Logout</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+        </div>
+    );
   }
 }
 
@@ -202,3 +303,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+
+// {!(this.state.isOpen || this.props.isEdited) ?
+//     <div className="profilePopoutOuterMost" onClick={() => this.setState({isOpen: true})}>
+//       <div className="profilePopoutOuter">
+//         <div className="arrow-up"></div>
+//         <Link className="profilePopeoutHeaderTab" onClick={() => this.setState({isOpen: true})} to={'/community/' + title + '/editprofile'}>
+//           <h2 className="profilePopeoutHeader">Complete the profile</h2>
+//         </Link>
+//       </div>
+//     </div> : null}
+

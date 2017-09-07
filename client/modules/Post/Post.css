@@ -1,13 +1,8 @@
 .mediaAttachment {
     margin-right: 10px;
     margin-left: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: auto;
     overflow: hidden;
-    margin-bottom: 15px;
+    max-height: 700px;
 }
 
 .lightBoxImage {
@@ -410,7 +405,7 @@
 .lineLeft {
     height: 200px;
     width: 6px;
-    background-color: #3E719F;
+    background-color: #59B7C5;
     border-radius: 100px;
     height: 297px;
     margin-left: 10px;
@@ -550,9 +545,9 @@ iframe {
 }
 
 .postImage {
-    width: 100% !important;
-    object-fit: cover !important;
-    height: auto !important;
+    height: auto;
+    min-height: initial;
+    width: 100%;
 }
 
 .postDivider {

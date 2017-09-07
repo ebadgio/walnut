@@ -97,11 +97,11 @@ class NewCommunityModal extends React.Component {
                basic
                trigger={ <Button className="modalTrigger" content="Create new Community" icon="add square" labelPosition="left"
                onClick={() => this.setState({open: true})} />}
-               closeIcon="close"
                open={this.state.open}
         >
             <Modal.Header className="modalHeader">
                 Create your Community!
+                <Icon className="closingIcon" name="close" onClick={() => this.setState({open: false})}/>
             </Modal.Header>
             <Modal.Content scrolling>
                 {/* <img className="communityImgUpload" src={'http://www.sessionlogs.com/media/icons/defaultIcon.png'} /> */}

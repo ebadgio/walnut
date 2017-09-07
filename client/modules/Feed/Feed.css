@@ -241,9 +241,13 @@
 }
 
 
-@media (max-width: 940px) {
+@media (max-width: 950px) {
     .Feed_Wrapper {
-        margin-top: 16vh !important;
+        background-color: #FAFAFA;
+        position: relative;
+        left: inherit;
+        margin-top: 6vh;
+        transform: inherit;
     }
 }
 

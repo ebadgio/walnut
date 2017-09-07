@@ -9,6 +9,8 @@ import getAllCommunities from '../../thunks/community_thunks/getAllCommunitiesTh
 import updateUserCommunityThunk from '../../thunks/user_thunks/updateUserCommunityThunk';
 import CommunityCard from './App_CommunityCard';
 import NewCommunityModal from './App_NewCommunityModal';
+import {Loader} from 'semantic-ui-react';
+import WalnutLoader from './App_WalnutLoader';
 
 
 class WalnutHomeContainer extends React.Component {
@@ -57,39 +59,45 @@ class WalnutHomeContainer extends React.Component {
 
   // TODO HORIZONS
   render() {
-    const userCommunityTitles = this.props.userCommunities.map((com) => com.title);
-    return (
-        <div className="walnutContainer">
-            <div className="Heading">
+    if (this.props.isReady) {
+      const userCommunityTitles = this.props.userCommunities.map((com) => com.title);
+      return (
+            <div className="walnutContainer">
+              <div className="Heading">
                 <h1>Walnut</h1>
-                <hr />
+                <hr/>
+              </div>
+              <div>
+                <NewCommunityModal
+                    handleCreate={(image, title, defaultFilters) => this.handleSubmit(image, title, defaultFilters)}/>
+              </div>
+              <h2 className="subHead">Your Communities</h2>
+              <div className="communitiesContainer">
+                  {this.props.userCommunities.map((community, idx) =>
+                      <Link key={idx}
+                            onClick={() => this.toggleCommunity(community)}
+                            to={'/community/' + community.title.split(' ').join('') + '/discover'}>
+                        <CommunityCard joined
+                                       icon={community.icon}
+                                       title={community.title}
+                                       key={idx}/></Link>)}
+              </div>
+              <h2 className="subHead">Search For new Communities</h2>
+              <div className="communitiesContainer">
+                  {this.props.communities.filter((com) => {
+                    return !(userCommunityTitles.indexOf(com.title) > -1);
+                  }).map((community, idx) => <CommunityCard icon={community.icon}
+                                                            title={community.title}
+                                                            communityId={community._id}
+                                                            join={this.joinCommunity}
+                                                            key={idx}/>)
+                  }
+              </div>
             </div>
-                <div>
-                  <NewCommunityModal handleCreate={(image, title, defaultFilters) => this.handleSubmit(image, title, defaultFilters)} />
-                </div>
-               <h2 className="subHead">Your Communities</h2>
-               <div className="communitiesContainer">
-                   {this.props.userCommunities.map((community, idx) =>
-                       <Link key={idx}
-                             onClick={() => this.toggleCommunity(community)}
-                             to={'/community/' + community.title.split(' ').join('') + '/discover'}>
-                     <CommunityCard joined
-                                    icon={community.icon}
-                                    title={community.title}
-                                    key={idx} /></Link>)}
-               </div>
-                  <h2 className="subHead">Search For new Communities</h2>
-                <div className="communitiesContainer">
-                    {this.props.communities.filter((com) => {
-                      return !(userCommunityTitles.indexOf(com.title) > -1);
-                    }).map((community, idx) => <CommunityCard icon={community.icon}
-                                                              title={community.title}
-                                                              communityId={community._id}
-                                                              join={this.joinCommunity}
-                                                              key={idx}/>)
-                    }
-               </div>
-        </div>
+        );
+    }
+    return (
+      <WalnutLoader />
     );
   }
 }
@@ -105,14 +113,16 @@ WalnutHomeContainer.propTypes = {
   changeCommunity: PropTypes.func,
   getAllCommunities: PropTypes.func,
   isCreated: PropTypes.bool,
-  updateConvos: PropTypes.func
+  updateConvos: PropTypes.func,
+  isReady: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
   hasProfile: state.userReducer.hasProfile,
   userCommunities: state.userReducer.communities,
   communities: state.getCommunityReducer.communities,
-  isCreated: state.userReducer.isCreated
+  isCreated: state.userReducer.isCreated,
+  isReady: state.walnutHomeReducer
 });
 
 const mapDispatchToProps = (dispatch) => ({

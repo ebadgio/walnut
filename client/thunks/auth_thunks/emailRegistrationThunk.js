@@ -14,7 +14,7 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
       return firebaseApp.auth().currentUser.sendEmailVerification();
     })
     .then(() => {
-      result.getToken(/* forceRefresh */ true)
+      result.getIdToken(/* forceRefresh */ true)
           .then(function(idToken) {
             console.log('idToken', idToken);
             axios.post(URL + 'auth/signup', {
@@ -27,6 +27,7 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
               .then((res) => {
                 console.log('register thunk', res);
                 dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
+                setTimeout(() => dispatch({type: 'WALNUT_READY'}), 1500);
               })
               .catch(function(error) {
                 console.log('axios did not go through');
