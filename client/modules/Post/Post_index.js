@@ -162,7 +162,7 @@ class Post extends React.Component {
         <div className="tagContainer">
           {this.props.postData.tags.map((tag, index) => (
           <div key={index} className="tag">
-            <text className="hashtag">#{tag.name}</text>
+            <text className="hashtag">#{' ' + tag.name}</text>
           </div>))}
         </div>
         <div></div>
