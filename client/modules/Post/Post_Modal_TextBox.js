@@ -21,7 +21,8 @@ class ModalTextBox extends React.Component {
 
 ModalTextBox.propTypes = {
   handleChange: PropTypes.func,
-  findEnter: PropTypes.func
+  findEnter: PropTypes.func,
+  comment: PropTypes.string
 };
 
 export default ModalTextBox;

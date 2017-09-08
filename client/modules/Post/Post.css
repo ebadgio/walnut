@@ -521,6 +521,7 @@ iframe {
 .modalActions {
     padding-top: 5px !important;
     padding-bottom: 5px !important;
+    margin-bottom: 3px !important;
 }
 .textBoxForm {
     border: 1px rgba(255,255,255,.9);
@@ -629,4 +630,15 @@ iframe {
 
 .emojiPicker:hover {
     color: #4CC1FC;
+}
+
+.emojiDiv {
+    position: absolute;
+    top: 371px;
+    left: 50px;
+    z-index: 1000;
+}
+
+.actions {
+    margin-bottom: 3px;
 }

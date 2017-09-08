@@ -15,21 +15,7 @@ import $ from 'jquery';
 import NestedPostModal from './Nested_Post_Modal';
 import InfiniteScroll from 'react-infinite-scroller';
 import ModalTextBox from './Post_Modal_TextBox';
-
-const testers = [
-  {
-    typer: 'Eli Badgio',
-    typerId: 'abcde',
-    typerPhoto: 'https://s3-us-west-1.amazonaws.com/walnut-test/598b4634733b59030911d402Screen Shot 2017-07-31 at 12.31.45 AM.png1502299915152'
-  },
-  {
-    typer: 'Alex Latif',
-    typerId: 'fgfgfjgk',
-    typerPhoto: 'https://s3-us-west-1.amazonaws.com/walnut-test/598b4634733b59030911d402Screen Shot 2017-07-31 at 12.31.45 AM.png1502299915152'
-  }
-];
-
-
+import { Picker } from 'emoji-mart';
 
 class ModalInstance extends React.Component {
   constructor(props) {
@@ -44,7 +30,8 @@ class ModalInstance extends React.Component {
       unread: 0,
       // TODO conversation.filter((conv) => conv._id === this.props.postData._id).length > 0
       isInConversation: false,
-      modalOpen: false
+      modalOpen: false,
+      emojiIsOpen: false
     };
     this.scrollToBottom = this.scrollToBottom.bind(this);
   }
@@ -85,6 +72,9 @@ class ModalInstance extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.emojiIsOpen !== nextState.emojiIsOpen) {
+      return true;
+    }
     if((this.state.messages.length === nextState.messages.length) && this.state.modalOpen) {
       return false;
     }
@@ -145,7 +135,7 @@ class ModalInstance extends React.Component {
   findEnter() {
     $('#messageInput').keypress( (event) => {
       if(event.which === 13) {
-        this.handleClick(this.props.postData.postId);
+        this.handleClick(this.props.postData.postId, null);
         return false; // prevent duplicate submission
       }
       return null;
@@ -292,7 +282,7 @@ class ModalInstance extends React.Component {
   }
 
   handleClose() {
-    this.setState({modalOpen: false})
+    this.setState({modalOpen: false});
     if (this.state.user) {
       const updates = {};
       updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
@@ -331,6 +321,16 @@ class ModalInstance extends React.Component {
     firebaseApp.database().ref().update(updates);
   }
 
+  addEmoji(emoj) {
+    console.log('this is the emoji', emoj.native);
+    this.setState({emojiIsOpen: false});
+    // this.handleClick(this.props.postData.postId, emoj.native);
+  }
+
+  openEmojiPicker() {
+    this.setState({emojiIsOpen: !this.state.emojiIsOpen});
+  }
+
   render() {
     return (
       <Modal onOpen={() => {this.startListen(this.props.postData); this.watchForTypers();}}
@@ -346,6 +346,26 @@ class ModalInstance extends React.Component {
         </div>}
         closeIcon="close"
         >
+        {this.state.emojiIsOpen ? <div className="emojiDiv">
+          <Picker set="emojione"
+            onClick={(emoj) => this.addEmoji(emoj)}
+            title="Pick your emoji…" emoji="point_up"
+            className="emojiContainer"
+            emojiSize={24}
+            perLine={9}
+            skin={1}
+            style={{
+              width: '299px',
+              height: '190px',
+              overflowY: 'scroll',
+              marginLeft: '232px',
+              marginTop: '10px;',
+              backgroundColor: 'black',
+              padding: '4px'
+            }}
+            set="apple"
+            autoFocus={false} />
+        </div> : null}
         <Modal.Header className="modalHeader">
           <NestedPostModal postData={this.props.postData}
                            currentUser={this.props.currentUser}/>
@@ -429,7 +449,7 @@ class ModalInstance extends React.Component {
               )}
             </div>
             <div className="actions">
-              <Icon size="big" name="smile"  className="emojiPicker"/>
+              <Icon onClick={() => this.openEmojiPicker()} size="big" name="smile"  className="emojiPicker"/>
             </div>
           </div>
           <ModalTextBox handleChange={(e) => this.handleChange(e)} findEnter={() =>this.findEnter()} />
