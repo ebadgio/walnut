@@ -18,10 +18,25 @@ import adminApp from '../firebaseAdmin';
     adminApp.auth().verifyIdToken(req.body.token)
     .then(function(decodedToken) {
       var uid = decodedToken.uid;
-      // console.log('uid', uid);
+
+      let useFname = '';
+      req.body.fname.split(' ').forEach((word) => {
+          const firstLetter = word.substr(0, 1).toUpperCase();
+          const rest = word.substr(1);
+          useFname += (firstLetter + rest + ' ');
+      });
+
+      let useLname = '';
+      req.body.fname.split(' ').forEach((word) => {
+          const firstLetter = word.substr(0, 1).toUpperCase();
+          const rest = word.substr(1);
+          useLname += (firstLetter + rest + ' ');
+      });
+
+
       var new_user = new User({
         firebaseId: uid,
-        fullName: req.body.fname + ' ' + req.body.lname,
+        fullName: useFname.trim() + ' ' + useLname.trim(),
         username: req.body.username,
         portfolio: [
           {name: 'media', data: []},
