@@ -7,11 +7,17 @@ import firebaseApp from '../../../client/firebase';
 import adminApp from '../../firebaseAdmin';
 
 router.post('/post', (req, res) => {
-  const tagModels = req.body.newTags.map((filter) =>
-        new Tag({
-          name: filter
-        })
-    );
+  const tagModels = req.body.newTags.map((filter) => {
+    let use = '';
+    filter.split(' ').forEach((word) => {
+      const firstLetter = word.substr(0, 1).toUpperCase();
+      const rest = word.substr(1);
+      use += (firstLetter + rest + ' ');
+    });
+    return new Tag({
+      name: use.trim()
+    });
+  });
   let savedTags;
   let newTags;
   Promise.all(tagModels.map((tag) => tag.save()))
@@ -223,7 +229,7 @@ router.post('/about', (req, res) => {
              let addr;
              req.body.colleges.forEach((college) => {
               //  if (college.attendedFor === 'Undergraduate' && !addr) {
-                 addr = college.name.split(' ').join('+');
+               addr = college.name.split(' ').join('+');
               //  }
              });
              const locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addr + '&key=' + process.env.LOCATION_API;

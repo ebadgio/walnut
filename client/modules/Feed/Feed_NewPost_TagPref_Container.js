@@ -21,7 +21,7 @@ class TagPref extends React.Component {
   handleSelectChange(obj) {
     // if (value.trim().length > 0) {
     this.setState({obj});
-    console.log(obj);
+    console.log('obj', obj);
     if (obj) {
       const options = obj.value.replace(/\W/g, '');
       console.log('hehehehehhehehe', options);
@@ -82,7 +82,7 @@ class TagPref extends React.Component {
         {this.props.tags || this.props.newtags ?
           this.props.tags.concat(this.props.newtags).map((filter, index) => (
               <div key={index} className="tag">
-                <text className="hashtag"># {filter.name}</text>
+                <text className="hashtag"># {filter.name ? filter.name : filter}</text>
                 <Icon className="topicRemove" name="delete" onClick={() => this.props.handleRemove(filter)} />
               </div>
               )) :
@@ -96,7 +96,16 @@ class TagPref extends React.Component {
               className="searchTags"
               clearable={false}
               value={this.state.value}
-              options={this.props.otherFilters.map((tag) => {
+              options={this.props.otherFilters.filter((tagger) => {
+                let use = true;
+                this.props.tags.concat(this.props.newTags).forEach((top) => {
+                  if (typeof(top) === 'object') {
+                    if (top.name === tagger.name) use = false;
+                  }
+                  if (top === tagger.name) use = false;
+                });
+                return use;
+              }).map((tag) => {
                 return {value: tag.name, label: '#' + tag.name};
               })}
               onChange={(e) => this.handleSelectChange(e)}
