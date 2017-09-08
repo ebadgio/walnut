@@ -31,8 +31,16 @@ class LinkPreview extends React.Component {
             });
   }
 
+  validURL(str) {
+    const regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+    if (!regex.test(str)) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
-    const bool = Object.keys(this.state.meta).length > 0;
+    const validURL = this.validURL(this.state.meta.image);
     const opts = {
       height: '60px',
       width: '100px',
@@ -42,11 +50,11 @@ class LinkPreview extends React.Component {
     };
     return (
             <div ref="myRef" className="linkPrevComment">
-                {(this.state.youtube === '') ?
+        {((this.state.youtube === '') && (validURL && this.state.meta.description && this.state.meta.title)) ?
                     <div className="lineLeftComment"></div> : null
                 }
                 <div className="linkPreviewCommentWrapper">
-                  {(!bool || !this.state.meta.image || !this.state.meta.description) ?
+                  {(validURL && this.state.meta.description && this.state.meta.title) ?
                         <div className="linkPreviewComment">
                             <a href={this.state.meta.url}><h3 className="linkTitleComment">{this.state.meta.title}</h3></a><br />
                             <p className="linkDescComment">{this.state.meta.description}</p><br />

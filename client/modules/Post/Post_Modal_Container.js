@@ -170,7 +170,7 @@ class ModalInstance extends React.Component {
       const message = {
         author: this.state.user.displayName,
         authorId: this.state.user.uid,
-        content: useBody,
+        content: this.state.commentBody,
         createdAt: new Date(),
         authorPhoto: this.props.currentUser.pictureURL
       };
@@ -211,7 +211,7 @@ class ModalInstance extends React.Component {
   }
 
   startListen(data) {
-    this.setState({modalOpen: true})
+    this.setState({modalOpen: true});
     const updates = {};
     const user = firebaseApp.auth().currentUser;
     this.setState({user: user});

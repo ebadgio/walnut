@@ -5,28 +5,7 @@ import MediaAttachment from './Post_Media_Attachment.js';
 import LinkPreview from './LinkPreview';
 import './Post.css';
 import Lightbox from 'react-images';
-import Linkify from 'linkifyjs/react';
 import {Divider} from 'semantic-ui-react';
-
-const defaults = {
-  attributes: null,
-  className: 'linkified',
-  defaultProtocol: 'http',
-  events: null,
-  format: (value) => {
-    return value;
-  },
-  formatHref: (href) => {
-    return href;
-  },
-  ignoreTags: [],
-  nl2br: false,
-  tagName: 'a',
-  target: {
-    url: '_blank'
-  },
-  validate: true
-};
 
 
 
@@ -41,12 +20,38 @@ class Post extends React.Component {
       pdfModalData: '',
       page: 1,
       pages: 100,
-      urls: []
+      urls: [],
+      messageBody: '',
+      messageBody1: '',
+      messageBody2: '',
+      newLink: '',
+      urlName: ''
     };
   }
   componentWillMount() {
     const urls = this.urlFinder(this.props.postData.content);
     this.setState({urls: urls});
+    if (urls.length !== 0) {
+      const idx = this.props.postData.content.indexOf(urls[0]);
+      const newBody1 = this.props.postData.content.substr(0, idx);
+      const newBody2 = this.props.postData.content.substr((idx + urls[0].length), this.props.postData.content.length);
+      const newLink = urls[0];
+      console.log('post body', newBody1, newBody2);
+      this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink, urlName: this.urlNamer(newLink)});
+    } else {
+      this.setState({ messageBody: this.props.postData.content });
+    }
+  }
+
+  urlNamer(url) {
+    const arr = url.split('/')[2].split('.');
+    let name = '';
+    if (arr.length === 2) {
+      name = arr[0];
+    } else {
+      name = arr[1];
+    }
+    return name;
   }
 
   urlFinder(text) {
@@ -136,7 +141,9 @@ class Post extends React.Component {
         </div>
         <div className="postDescription">
           <div className="postInnerContent">
-            <Linkify tagName="p" options={defaults}>{this.props.postData.content}</Linkify>
+            {this.state.messageBody ? this.state.messageBody :
+            <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName}</a> {this.state.messageBody2}</div>
+            }
           </div>
         </div>
 

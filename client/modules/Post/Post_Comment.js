@@ -83,27 +83,42 @@ class Comment extends React.Component {
     this.state = {
       useDate: '',
       urls: [],
-      messageBody: ''
+      messageBody: '',
+      messageBody1: '',
+      messageBody2: '',
+      newLink: '',
+      urlName: ''
     };
   }
 
   componentWillMount() {
+    console.log('this is the content at the start', this.props.content);
     this.setState({ useDate: this.getUseDate(this.props.createdAt) });
     const urls = this.urlFinder(this.props.content);
     this.setState({ urls: urls });
     if (urls.length !== 0) {
       const idx = this.props.content.indexOf(urls[0]);
-      const newBody = this.props.content.substr(idx, 1);
-      if(newBody.length < 1) {
-        this.setState({ messageBody: this.props.content });
-      } else {
-        console.log('spliced string', newBody, idx);
-        this.setState({ messageBody: newBody });
-      }
+      const newBody1 = this.props.content.substr(0, idx);
+      const newBody2 = this.props.content.substr((idx + urls[0].length), this.props.content.length);
+      const newLink = urls[0];
+      console.log('post body', newBody1, newBody2);
+      this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink, urlName: this.urlNamer(newLink) });
     } else {
-      this.setState({messageBody: this.props.content});
+      this.setState({ messageBody: this.props.content });
     }
   }
+
+  urlNamer(url) {
+    const arr = url.split('/')[2].split('.');
+    let name = '';
+    if (arr.length === 2) {
+      name = arr[0];
+    } else {
+      name = arr[1];
+    }
+    return name;
+  }
+
 
   urlFinder(text) {
     const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
@@ -152,7 +167,6 @@ class Comment extends React.Component {
 
 
   render() {
-
     console.log('this is re rendering', this.state.messageBody);
     const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreviewComment url={url} />) : [];
     const useDate = this.getUseDate(this.props.createdAt);
@@ -165,7 +179,9 @@ class Comment extends React.Component {
             <Card className="commentCardYou">
               <Card.Content className="messageContent">
                 <Card.Description className="messageDescription" style={{color: '#fff'}}>
-                  <Linkify tagName="p" options={defaults}>{this.state.messageBody}</Linkify>
+                    {this.state.messageBody ? this.state.messageBody :
+                      <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName}</a> {this.state.messageBody2}</div>
+                    }
                 </Card.Description>
                 {urlPrev.length > 0 ? urlPrev[0] : null}
               </Card.Content>
