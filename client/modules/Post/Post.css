@@ -133,13 +133,13 @@
 }
 
 .tag {
-    background-color: #fff;
+    background-color: #3a3a3a;
     color: #5bc0e3;
-    border-radius: 27px;
+    border-radius: 3px;
     padding-top: 4px;
     padding-bottom: 4px;
     font-weight: bold;
-    border: solid 1px;
+    /* border: solid 1px;*/
     padding-left: 10px;
     padding-right: 10px;
     display: inline-block;
