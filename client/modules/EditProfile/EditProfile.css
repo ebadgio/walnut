@@ -67,8 +67,20 @@
 .uploadButton, .saveButton {
     background: #fafafa !important;
     color: #3a3a3a !important;
+    margin-top: 32px !important;
+    margin-left: 47px !important;
 }
 
 .uploadButton:hover, .saveButton:hover {
     color: #5bc0e3 !important;
+    margin-top: 32px !important;
+    margin-left: 47px !important;
+}
+
+.rightInfo {
+    margin-left: 19px;
+}
+
+.infoOuter {
+    display: flex
 }

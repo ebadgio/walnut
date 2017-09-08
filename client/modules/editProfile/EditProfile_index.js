@@ -92,9 +92,9 @@ class EditProfile extends React.Component {
               console.log(err);
               alert('failed uploaded!');
             }
-            console.log('finally at the front', res.body);
+            console.log('finally at the front', res.body.url);
             this.setState({ file: ''});
-            this.props.refreshUser({ user: res.body.user});
+            this.props.refreshUrl({ user: res.body.url});
           });
   }
 
@@ -122,63 +122,71 @@ class EditProfile extends React.Component {
             <div className="editCard">
                 <Form onSubmit={this.handleSubmit.bind(this)}>
                     {/* insert profile pic here */}
-                    <div className="field">
-                            <label className="editCardLabel">Hometown</label>
-                            <PlacesAutocomplete inputProps={inputPropsHome} onSelect={this.handleChangeHome} />
-                        </div>
-                    {/* education section */}
-                    <h4>Education</h4>
-                    <Divider />
+                    <div className="infoOuter">
+                      <div className="leftInfo">
+                        <h4>Location</h4>
+                        <Divider />
                         <div className="field">
-                            <label className="editCardLabel">Current School (or most recent if graduated)</label>
-                            <Input name="College"
-                                   placeholder="ex. University of Pennsylvania"
-                                   value={this.state.school}
-                                   onChange={this.handleChangeSchool.bind(this)}/>
-                        </div>
-                        <div className="field">
-                            <div className="fields">
-                            <div className="ten wide field">
-                                <label className="editCardLabel">Concentration</label>
-                                <Input name="Concentration"
-                                       placeholder="ex. Computer Science"
-                                       value={this.state.concentration}
-                                       onChange={this.handleChangeConcentration.bind(this)}/>
+                                <label className="editCardLabel">Hometown</label>
+                                <PlacesAutocomplete inputProps={inputPropsHome} onSelect={this.handleChangeHome} />
                             </div>
-                            <div className="six wide field">
-                                <label className="editCardLabel">Graduation Year</label>
-                                {/* <input type="text" name="Graduation" placeholder="ex. 2020"
-                                onChange={this.handleChangeGraduation.bind(this)}/> */}
-                                {/* <YearSelect year={'2000'} handleSelect={this.handleChangeGraduation.bind(this)} /> */}
-                                <Dropdown id="graduation" placeholder={this.state.graduation ? this.state.graduation : 'ex. 2020'} fluid selection onChange={this.handleChangeGraduation.bind(this)}
-                                options={options}/>
+                        {/* education section */}
+                        <h4>Education</h4>
+                        <Divider />
+                            <div className="field">
+                                <label className="editCardLabel">Current School (or most recent if graduated)</label>
+                                <Input name="College"
+                                       placeholder="ex. University of Pennsylvania"
+                                       value={this.state.school}
+                                       onChange={this.handleChangeSchool.bind(this)}/>
                             </div>
+                            <div className="field">
+                                <div className="fields">
+                                <div className="ten wide field">
+                                    <label className="editCardLabel">Concentration</label>
+                                    <Input name="Concentration"
+                                           placeholder="ex. Computer Science"
+                                           value={this.state.concentration}
+                                           onChange={this.handleChangeConcentration.bind(this)}/>
+                                </div>
+                                <div className="six wide field">
+                                    <label className="editCardLabel">Graduation Year</label>
+                                    {/* <input type="text" name="Graduation" placeholder="ex. 2020"
+                                    onChange={this.handleChangeGraduation.bind(this)}/> */}
+                                    {/* <YearSelect year={'2000'} handleSelect={this.handleChangeGraduation.bind(this)} /> */}
+                                    <Dropdown id="graduation" placeholder={this.state.graduation ? this.state.graduation : 'ex. 2020'} fluid selection onChange={this.handleChangeGraduation.bind(this)}
+                                    options={options}/>
+                                </div>
+                                </div>
                             </div>
-                        </div>
-                    <h4>Occupation</h4>
-                    <Divider />
-                        <div className="field">
-                            <label className="editCardLabel">Position</label>
-                            <Input type="text" name="Position" placeholder="ex. Software Engineer"
-                            value={this.state.position}
-                            onChange={this.handleChangePosition.bind(this)}/>
-                        </div>
-                        <div className="field">
-                            <label className="editCardLabel">Company</label>
-                            <input type="text" name="Company" placeholder="ex. Google"
-                            value={this.state.company}
-                            onChange={this.handleChangeCompany.bind(this)}/>
-                        </div>
-                        <div className="field">
-                            <label className="editCardLabel">Location</label>
-                            <PlacesAutocomplete inputProps={inputProps} onSelect={this.handleChangeLocation} />
-                        </div>
-                    <span>
-                    <Button className="saveButton" type="submit" onClick={() => this.setState({saved: true})}>Save</Button>
-                    {this.state.saved ?
-                    <div style={{color: 'black'}}>Your changes have been saved!</div>
-                    : null}
-                    </span>
+                      </div>
+                      <div className="rightInfo">
+                          <h4>Occupation</h4>
+                          <Divider />
+                          <div className="field">
+                              <label className="editCardLabel">Position</label>
+                              <Input type="text" name="Position" placeholder="ex. Software Engineer"
+                              value={this.state.position}
+                              onChange={this.handleChangePosition.bind(this)}/>
+                          </div>
+                          <div className="field">
+                              <label className="editCardLabel">Company</label>
+                              <input type="text" name="Company" placeholder="ex. Google"
+                              value={this.state.company}
+                              onChange={this.handleChangeCompany.bind(this)}/>
+                          </div>
+                          <div className="field">
+                              <label className="editCardLabel">Location</label>
+                              <PlacesAutocomplete inputProps={inputProps} onSelect={this.handleChangeLocation} />
+                          </div>
+                         <span>
+                           <Button className="saveButton" type="submit" onClick={() => this.setState({ saved: true })}>Save</Button>
+                           {this.state.saved ?
+                             <div style={{ color: 'black' }}>Your changes have been saved!</div>
+                             : null}
+                         </span>
+                      </div>
+                    </div>
                 </Form>
             </div>
             <div className="editProfilePic">
@@ -213,7 +221,7 @@ EditProfile.propTypes = {
   saveAbout: PropTypes.func,
   location: PropTypes.string,
   profilePic: PropTypes.string,
-  refreshUser: PropTypes.func,
+  refreshUrl: PropTypes.func,
   fullName: PropTypes.string,
   contact: PropTypes.object
 };
@@ -235,7 +243,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   saveAbout: (about) => saveAboutThunk(about)(dispatch),
-  refreshUser: (user) => dispatch({ type: 'GET_USER_DATA_DONE', user: user})
+  refreshUrl: (url) => dispatch({ type: 'GET_USER_PIC', url: url})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);

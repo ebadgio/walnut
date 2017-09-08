@@ -41,7 +41,7 @@ router.post('/upload/profile', upload.single('profile'), (req, res) => {
     })
     .then((user) => {
       console.log('end of upload', user);
-      res.json({user: user});
+      res.json({url: user.pictureURL});
     })
     .catch((error) => console.log('error in aws db save', error));
 });

@@ -153,6 +153,11 @@ const userReducer = (state = userObj, action) => {
       return userObj;
     case 'LOGOUT_ERROR':
       return state;
+    case 'GET_USER_PIC':
+      return {
+        ...state,
+        pictureURL: action.url.user
+      };
     default:
       return state;
   }
