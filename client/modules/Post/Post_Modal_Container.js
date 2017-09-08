@@ -43,7 +43,8 @@ class ModalInstance extends React.Component {
       c: 0,
       unread: 0,
       // TODO conversation.filter((conv) => conv._id === this.props.postData._id).length > 0
-      isInConversation: false
+      isInConversation: false,
+      modalOpen: false
     };
     this.scrollToBottom = this.scrollToBottom.bind(this);
   }
@@ -84,10 +85,7 @@ class ModalInstance extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // TODO: shallow array comparison
-    console.log('should comparison', this.state.messages, nextState);
-    if(this.state.messages.length === nextState.messages.length) {
-      console.log('inside comparison');
+    if((this.state.messages.length === nextState.messages.length) && this.state.modalOpen) {
       return false;
     }
     return true;
@@ -213,6 +211,7 @@ class ModalInstance extends React.Component {
   }
 
   startListen(data) {
+    this.setState({modalOpen: true})
     const updates = {};
     const user = firebaseApp.auth().currentUser;
     this.setState({user: user});
@@ -293,6 +292,7 @@ class ModalInstance extends React.Component {
   }
 
   handleClose() {
+    this.setState({modalOpen: false})
     if (this.state.user) {
       const updates = {};
       updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = null;

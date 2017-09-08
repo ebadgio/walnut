@@ -152,8 +152,8 @@ class Comment extends React.Component {
 
 
   render() {
-    // TODO: shouldComponentUpdate needs to move to here
-    console.log('this is re rendering');
+
+    console.log('this is re rendering', this.state.messageBody);
     const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreviewComment url={url} />) : [];
     const useDate = this.getUseDate(this.props.createdAt);
     if (this.props.authorId === firebaseApp.auth().currentUser.uid) {
