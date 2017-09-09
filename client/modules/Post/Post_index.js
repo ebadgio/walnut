@@ -173,7 +173,7 @@ class Post extends React.Component {
           </div>))}
         </div>
         <div></div>
-        <ModalContainer postData={this.props.postData} currentUser={this.props.currentUser}/>
+        <ModalContainer postData={this.props.postData}/>
       </div>
     </div>
     );
