@@ -23,6 +23,7 @@ class LinkPreview extends React.Component {
     })
     .then((response) => {
       if (this.refs.myRef) {
+        console.log('metadata', response.data.meta);
         this.setState({ meta: response.data.meta});
       }
     })
@@ -31,8 +32,16 @@ class LinkPreview extends React.Component {
     });
   }
 
+  validURL(str) {
+    const regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+    if (!regex.test(str)) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
-    const bool = Object.keys(this.state.meta).length > 0;
+    const validURL = this.validURL(this.state.meta.image);
     const opts = {
       height: '270',
       width: '513',
@@ -42,11 +51,11 @@ class LinkPreview extends React.Component {
     };
     return (
       <div ref="myRef" className="linkPrev">
-        {(this.state.youtube === '') ?
+        {((this.state.youtube === '') && (validURL && this.state.meta.description && this.state.meta.title)) ?
           <div className="lineLeft"></div> : null
         }
         <div className="linkPreviewWrapper">
-          {(bool && this.state.meta.image && this.state.meta.description) ?
+          {(validURL && this.state.meta.description && this.state.meta.title) ?
           <div className="linkPreview">
               <a href={this.state.meta.url}><h3 className="linkTitle">{this.state.meta.title}</h3></a><br />
               <p className="linkDesc">{this.state.meta.description}</p><br />

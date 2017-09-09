@@ -293,9 +293,11 @@
 
 .followedPostsBox{
     margin: 40px 0px 10px 5px;
-    height: 45vh;
+    height: 355px;
     overflow-y: auto;
     overflow-x: hidden;
+    margin-right: 0px;
+    margin-left: 15px;
     clear: both;
 }
 
