@@ -1,6 +1,3 @@
-/**
- * Created by ebadgio on 8/8/17.
- */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Post from './Post_index';

@@ -642,3 +642,17 @@ iframe {
 .actions {
     margin-bottom: 3px;
 }
+
+.attachFileIconModal:hover {
+    color: #5bc0e3 !important;
+}
+
+.attachFileIconModal {
+    cursor: pointer;
+    color: #fff !important;
+}
+
+#fileSubmit{
+    margin-top: 10px;
+    width: 80px;
+}

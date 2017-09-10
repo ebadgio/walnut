@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TagPrefContainer from './Feed_NewPost_TagPref_Container';
 import newPostThunk from '../../thunks/post_thunks/newPostThunk';
-import newTagThunk from '../../thunks/post_thunks/newTagThunk';
 import ReactUploadFile from 'react-upload-file';
 import { Icon, Button, TextArea, Form, Divider } from 'semantic-ui-react';
 import superagent from 'superagent';
@@ -133,11 +132,11 @@ class NewPostContainer extends React.Component {
         </div>
           <Divider />
           <div className="row newPostFooter">
-            <ReactUploadFile
+             {/* <ReactUploadFile
               className="fileUpload"
               style={{width: '80px', height: '40px'}}
               chooseFileButton={<Icon className="attachFileIcon" name="attach" size="large" />}
-              options={optionsForUpload}/>
+              options={optionsForUpload}/> */}
               {(this.state.file !== '') ?
               <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}
               onChange={(e) => this.changeFileName(e.target.value)}/>
