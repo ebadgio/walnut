@@ -82,7 +82,7 @@ class TagPref extends React.Component {
         {this.props.tags || this.props.newtags ?
           this.props.tags.concat(this.props.newtags).map((filter, index) => (
               <div key={index} className="tag">
-                <text className="hashtag"># {filter.name ? filter.name : filter}</text>
+                <text className="hashtag"># {filter.name ? filter.name : filter.toUpperCase()}</text>
                 <Icon className="topicRemove" name="delete" onClick={() => this.props.handleRemove(filter)} />
               </div>
               )) :

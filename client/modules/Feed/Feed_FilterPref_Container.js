@@ -41,10 +41,10 @@ class FilterPrefContainer extends React.Component {
     console.log(this.props.otherFilters);
     // const newPostBox = document.getElementById('newPostBox');
     // newPostBox.scrollIntoView(true);
-    window.scrollTo(0, 0);
     const send = this.props.otherFilters.filter((filter) => filter.name === value);
     this.props.addFilters(send);
     this.props.toggleTempChecked(this.props.useFilters.concat(send).map((filt) => filt._id));
+    window.scrollTo(0, 0);
   }
 
   selectOptions() {

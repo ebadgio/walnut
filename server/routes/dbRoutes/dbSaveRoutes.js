@@ -8,16 +8,13 @@ import adminApp from '../../firebaseAdmin';
 
 router.post('/post', (req, res) => {
   const tagModels = req.body.newTags.map((filter) => {
-    let use = '';
-    filter.split(' ').forEach((word) => {
-      const firstLetter = word.substr(0, 1).toUpperCase();
-      const rest = word.substr(1);
-      use += (firstLetter + rest + ' ');
-    });
-    return new Tag({
-      name: use.trim()
-    });
+    console.log(filter);
+    return new Tag(
+      {
+        name: filter.toUpperCase()
+      });
   });
+  console.log(tagModels);
   let savedTags;
   let newTags;
   Promise.all(tagModels.map((tag) => tag.save()))
