@@ -8,6 +8,7 @@ import toggleFilterCheckedThunk from '../../thunks/toggleFilterCheckedThunk';
 import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
 import toggleTempFilterCheckedThunk from '../../thunks/toggleTempFilterCheckedThunk';
 import { Icon, Label } from 'semantic-ui-react';
+import $ from 'jquery';
 
 class FilterPrefContainer extends React.Component {
   constructor(props) {
@@ -36,8 +37,11 @@ class FilterPrefContainer extends React.Component {
   }
 
   handleSelectChange(value) {
-    console.log(value);
+    console.log('selected', value);
     console.log(this.props.otherFilters);
+    // const newPostBox = document.getElementById('newPostBox');
+    // newPostBox.scrollIntoView(true);
+    window.scrollTo(0, 0);
     const send = this.props.otherFilters.filter((filter) => filter.name === value);
     this.props.addFilters(send);
     this.props.toggleTempChecked(this.props.useFilters.concat(send).map((filt) => filt._id));
@@ -77,6 +81,9 @@ class FilterPrefContainer extends React.Component {
     const newState = this.props.useFilters.filter((f) => filter.name !== f.name);
     this.props.handleRemove(newState);
     this.props.toggleTempChecked(newState.map((filt) => filt._id));
+    // const newPostBox = document.getElementById('newPostBox');
+    // newPostBox.scrollIntoView(true);
+    window.scrollTo(0, 0);
     // this.props.toggleChecked(filter._id);
   }
 

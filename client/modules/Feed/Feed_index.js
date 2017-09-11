@@ -68,7 +68,7 @@ class Feed extends React.Component {
       );
     }
     return (
-        <div className="Feed_Wrapper">
+        <div className="Feed_Wrapper" id="FeedWrapper">
           <NewPostContainer />
           <InfiniteScroll
               className="banterScroller"
