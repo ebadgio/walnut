@@ -34,7 +34,7 @@ class AttachmentPreviewComment extends React.Component {
                 <div className="mediaDownloadAttachment">
                     <Card className="downloadCardComment" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
                         <Icon id="mediaIcon" name="file pdf outline" size="huge" />
-                        <p className="downloadFileName">{this.props.attachment.name}</p>
+                        <p className="downloadFileNameComment">{this.props.attachment.name}</p>
                         {this.state.hoverDownloadCard ?
                             <div className="pdfIcons">
                                 <a href={this.props.attachment.url} target="pdf-frame"><Icon className="viewButtonPDF" name="eye" size="big" /></a>
@@ -50,7 +50,7 @@ class AttachmentPreviewComment extends React.Component {
                 <div className="mediaDownloadAttachment">
                     <Card className="downloadCardComment" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
                         <Icon id="mediaIcon" name="file video outline" size="huge" />
-                        <p className="downloadFileName">{this.props.attachment.name}</p>
+                        <p className="downloadFileNameComment">{this.props.attachment.name}</p>
                         {this.state.hoverDownloadCard ? <Icon onClick={() => this.downloadS3(this.props.attachment.url, this.props.attachment.name)} className="downloadButton" name="cloud download" size="big" /> : null}
                     </Card>ki
         </div>
@@ -61,7 +61,7 @@ class AttachmentPreviewComment extends React.Component {
                 <div className="mediaDownloadAttachment">
                     <Card className="downloadCardComment" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
                         <Icon id="mediaIcon" name="file code outline" size="huge" />
-                        <p className="downloadFileName">{this.props.attachment.name}</p>
+                        <p className="downloadFileNameComment">{this.props.attachment.name}</p>
                         {this.state.hoverDownloadCard ? <Icon onClick={() => this.downloadS3(this.props.attachment.url, this.props.attachment.name)} className="downloadButton" name="cloud download" size="big" /> : null}
                     </Card>
                 </div>
@@ -71,7 +71,7 @@ class AttachmentPreviewComment extends React.Component {
             <div className="mediaDownloadAttachment">
                 <Card className="downloadCardComment" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
                     <Icon id="mediaIcon" name="file outline" size="huge" className="downloadFileIcon" />
-                    <p className="downloadFileName">{this.props.attachment.name}</p>
+                    <p className="downloadFileNameComment">{this.props.attachment.name}</p>
                     {this.state.hoverDownloadCard ? <Icon onClick={() => this.downloadS3(this.props.attachment.url, this.props.attachment.name)} className="downloadButton" name="cloud download" size="big" /> : null}
                 </Card>
             </div>

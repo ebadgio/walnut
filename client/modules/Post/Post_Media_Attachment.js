@@ -36,12 +36,12 @@ class MediaAttachment extends React.Component {
             <Card className="downloadCard" onMouseEnter={() => this.toggleDownloadHover()} onMouseLeave={() => this.toggleDownloadHover()}>
             <Icon id="mediaIcon" name="file pdf outline" size="huge"/>
             <p className="downloadFileName">{this.props.data.name}</p>
-               {this.state.hoverDownloadCard ?
-            <div className="pdfIcons">
-              <a href={this.props.data.url} target="pdf-frame"><Icon className="viewButtonPDF" name="eye" size="big" /></a>
-              <a href={this.props.data.url} download><Icon className="downloadButtonPDF" name="cloud download" size="big" /></a>
-            </div>
-              : null }
+                {this.state.hoverDownloadCard ?
+             <div className="pdfIcons">
+               <a href={this.props.data.url} target="pdf-frame"><Icon className="viewButtonPDF" name="eye" size="big" /></a>
+               <a href={this.props.data.url} download><Icon className="downloadButtonPDF" name="cloud download" size="big" /></a>
+             </div>
+               : null }
             </Card>
           </div>
       );
