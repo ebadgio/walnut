@@ -27,7 +27,7 @@ import adminApp from '../firebaseAdmin';
       });
 
       let useLname = '';
-      req.body.fname.split(' ').forEach((word) => {
+      req.body.lname.split(' ').forEach((word) => {
           const firstLetter = word.substr(0, 1).toUpperCase();
           const rest = word.substr(1);
           useLname += (firstLetter + rest + ' ');

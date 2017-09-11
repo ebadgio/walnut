@@ -652,7 +652,9 @@ iframe {
 .typingRow {
     height: 100%;
     width: 100%;
-    min-height: 40px;
+    min-height: 43px;
+    display: flex;
+    padding-bottom: 4px;
 }
 
 .emojiPicker {
