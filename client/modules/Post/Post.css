@@ -2,7 +2,6 @@
     margin-right: 10px;
     margin-left: 10px;
     overflow: hidden;
-    max-height: 240px;
 }
 
 .lightBoxImage {
@@ -154,6 +153,7 @@
 }
 
 .scrollContentClass {
+    max-height: calc(65vh) !important;
     display: flex !important;
     flex-direction: column !important;
     padding-bottom: 5px !important;
@@ -549,8 +549,10 @@ iframe {
     height: auto;
     min-height: initial;
     width: 100%;
-    object-fit: contain;
-    object-position: 0 -100px;
+    cursor: pointer;
+    object-fit: cover;
+    object-position: 0 0;
+    max-height: 500px;
 }
 
 .postDivider {
@@ -612,7 +614,7 @@ iframe {
 .linkDescComment {
     font-size: 10px;
     margin-bottom: 0px !important;
-    height: 66px;
+    color: #fff;
 }
 
 .lineLeftComment {
@@ -685,4 +687,8 @@ iframe {
     width: 250px !important;
     flex-direction: row !important;
     padding: 1% !important;
+}
+
+.linkPreviewComment a{
+    color: #3a3a3a;
 }

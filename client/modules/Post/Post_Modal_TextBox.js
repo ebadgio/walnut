@@ -269,7 +269,7 @@ class ModalTextBox extends React.Component {
                 placeholder="Give your two cents..."
                 value={this.state.commentBody}
                 onChange={(e) => { this.handleChange(e); this.findEnter(); }}
-                rows={3}
+                rows={2}
             />
         </Form>
       </div>

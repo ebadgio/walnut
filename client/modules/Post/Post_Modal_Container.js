@@ -18,7 +18,7 @@ class ModalInstance extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const user = firebaseApp.auth().currentUser;
     this.setState({ user: user });
     const membersRef = firebaseApp.database().ref('/members/' + this.props.postData.postId);
