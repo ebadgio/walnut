@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, Card, Icon } from 'semantic-ui-react';
+import { Card, Icon } from 'semantic-ui-react';
 import './Post.css';
 import fileDownload from 'react-file-download';
+import Lightbox from 'react-images';
 
 class AttachmentPreviewComment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hoverDownloadCard: false
+      hoverDownloadCard: false,
+      lightBoxData: ''
     };
   }
 
@@ -21,11 +23,20 @@ class AttachmentPreviewComment extends React.Component {
     fileDownload(url, name);
   }
 
+  renderLightBox(data) {
+    this.setState({ lightBoxData: data });
+  }
+
+  closeLightbox() {
+    this.setState({ lightBoxData: '' });
+    console.log('this is closed', this.state.lightBoxData);
+  }
+
   whatShouldIRender() {
     if (this.props.attachment.type === 'image/jpeg' || this.props.attachment.type === 'image/png') {
       return (
                 <div className="imageAttachmentComment" >
-                    <img className="postImage" onClick={() => this.props.renderLightBox(this.props.data)} size="medium" src={this.props.attachment.url} />
+                    <img className="postImage" onClick={() => this.renderLightBox(this.props.attachment)} size="medium" src={this.props.attachment.url} />
                 </div>
             );
     }
@@ -83,6 +94,14 @@ class AttachmentPreviewComment extends React.Component {
     console.log('am rendering incorrectly');
     return (
             <div>
+            <Lightbox
+                images={[{
+                  src: this.state.lightBoxData.url,
+                  caption: this.state.lightBoxData.name
+                }]}
+                isOpen={this.state.lightBoxData !== ''}
+                onClose={() => this.closeLightbox()}
+            />
                 {snippet}
             </div>
         );
