@@ -16,6 +16,25 @@ class FollowedPostsContainer extends React.Component {
     };
   }
 
+
+  componentWillMount() {
+    console.log('my conversation map', this.props.myConversations);
+    // TODO: map each post to get their unreads in its own object
+    // TODO: for loop through array and if they have unreads put it in its own array 
+    // TODO: .sort on unreads and then concat the two array and use that in the maps
+    // TODO: eventually my convs must be sorted by last unread
+    // const userId = firebaseApp.auth().currentUser.uid;
+    // firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.postData.postId).on('value', snapshotB => {
+    //   const unreadCount = snapshotB.val();
+    //   if (!isNaN(unreadCount)) {
+    //     if (unreadCount > 0) {
+    //       this.setState({ unread: unreadCount });
+    //       console.log('unread set to true');
+    //     }
+    //   }
+    // });
+  }
+
   onOpen() {
     if (this.props.currentUser) {
       const followsRef = firebaseApp.database().ref('/follows/' + this.props.currentUser.firebaseId + '/' + this.props.currentCommunity);

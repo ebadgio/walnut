@@ -39,6 +39,8 @@ class ModalMessages extends React.Component {
     };
     updates['/members/' + this.props.postData.postId + '/' + this.props.user.uid] = member;
     firebaseApp.database().ref().update(updates);
+
+    // TODO: this needs to change upper scope unreads
       // unread messages stuff
     firebaseApp.database().ref('/unreads/' + this.props.user.uid + '/' + this.props.postData.postId).set(0);
     this.setState({ unread: 0 });

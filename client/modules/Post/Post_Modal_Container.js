@@ -55,6 +55,7 @@ class ModalInstance extends React.Component {
   }
 
   render() {
+    console.log('unread messages total ?', this.state.unread);
     return (
       <Modal
              size={'small'}
@@ -72,7 +73,7 @@ class ModalInstance extends React.Component {
           <ModalHeader members={this.state.members} membersCount={this.state.membersCount} user={this.state.user} postData={this.props.postData}/>
         </Modal.Header>
         <Modal.Content scrolling className="scrollContentClass">
-          <PostModalMessages user={this.state.user} commentBody={this.state.commentBody} postData={this.props.postData} />
+          <PostModalMessages user={this.state.user} postData={this.props.postData} />
         </Modal.Content>
         <Modal.Actions className="modalActions">
           <ModalTextBox user={this.state.user} members={this.state.members} postData={this.props.postData} handleChange={(e) => this.handleChange(e)} findEnter={() =>this.findEnter()} />
