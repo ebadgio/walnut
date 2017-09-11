@@ -133,7 +133,7 @@ class NewPostContainer extends React.Component {
         </div>
           <Divider />
           <div className="row newPostFooter">
-               <ReactUploadFile
+            <ReactUploadFile
               className="fileUpload"
               style={{width: '80px', height: '40px'}}
               chooseFileButton={<Icon className="attachFileIcon" name="attach" size="large" />}
