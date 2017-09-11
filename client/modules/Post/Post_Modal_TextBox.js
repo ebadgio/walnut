@@ -8,6 +8,9 @@ import $ from 'jquery';
 import _ from 'underscore';
 import uuidv4 from 'uuid/v4';
 import { Picker } from 'emoji-mart';
+import ReactUploadFile from 'react-upload-file';
+import FileModal from './Post_Modal_File_Uploader.js';
+import superagent from 'superagent';
 
 class ModalTextBox extends React.Component {
   constructor(props) {
@@ -15,7 +18,17 @@ class ModalTextBox extends React.Component {
     this.state = {
       commentBody: '',
       typers: [],
-      emojiIsOpen: false
+      emojiIsOpen: false,
+      file: '',
+      optionsForUploadModal: {
+        baseUrl: 'xxx',
+        multiple: false,
+        accept: 'image/*',
+        didChoose: (files) => {
+          console.log('inside comment upload');
+          this.handleUploadModal(files[0]);
+        },
+      }
     };
   }
 
@@ -80,65 +93,78 @@ class ModalTextBox extends React.Component {
   findEnter() {
     $('#messageInput').keypress((event) => {
       if (event.which === 13) {
-        this.handleClick(this.props.postData.postId, null);
-        return false; // prevent duplicate submission
+        if (this.state.commentBody.length > 0) {
+          this.handleClick(this.props.postData.postId, null);
+          return false; // prevent duplicate submission
+        }
       }
       return null;
     });
   }
 
-  handleClick(id) {
+  handleClick(id, attachment) {
     const updates = {};
+    let message;
     updates['/typers/' + this.props.postData.postId + '/' + this.props.user.uid] = null;
     firebaseApp.database().ref().update(updates);
-    if (this.state.commentBody.length > 0) {
-      const commentBody = this.state.commentBody;
-      const split = commentBody.split(' ');
-      split.forEach((word, idx) => {
-        if (word.length > 31) {
-          const firstHalf = word.slice(0, 32);
-          const secondHalf = word.slice(32);
-          split[idx] = firstHalf + '\n' + secondHalf;
-        }
-      });
-      const useBody = split.join(' ');
-      const message = {
+    // const commentBody = this.state.commentBody;
+    // const split = commentBody.split(' ');
+    // split.forEach((word, idx) => {
+    //   if (word.length > 31) {
+    //     const firstHalf = word.slice(0, 32);
+    //     const secondHalf = word.slice(32);
+    //     split[idx] = firstHalf + '\n' + secondHalf;
+    //   }
+    // });
+    // const useBody = split.join(' ');
+    if(attachment) {
+      message = {
         author: this.props.user.displayName,
         authorId: this.props.user.uid,
         content: this.state.commentBody,
         createdAt: new Date(),
-        authorPhoto: this.props.currentUser.pictureURL
+        authorPhoto: this.props.currentUser.pictureURL,
+        attachment: attachment
       };
-
-      let temp = {};
-      firebaseApp.database().ref('/followGroups/' + this.props.postData.postId).once('value', snapshot => {
-        console.log('these people are following the post', snapshot.val());
-        const followers = Object.keys(snapshot.val());
-        const memberIds = this.props.members.map(member => member.uid);
-        followers.forEach(follower => {
-          let unreadCount = firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId);
-          console.log('got in here?', memberIds, follower, snapshot.val()[follower]);
-          if (snapshot.val()[follower] && !memberIds.includes(follower)) {
-            firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId).once('value', snapshotB => {
-              let unreadCount = snapshotB.val();
-              console.log('unreadCount', snapshotB.val());
-              temp['/unreads/' + follower + '/' + this.props.postData.postId] = !isNaN(unreadCount) ? unreadCount + 1 : 1;
-              firebaseApp.database().ref().update(temp);
-            });
-          }
-        });
-      });
-      // notification stuff ends here
-      this.setState({ commentBody: '', prevBody: '' });
-      const update = {};
-      const newMessageKey = firebaseApp.database().ref().child('messages').push().key;
-      update['/messages/' + id + '/' + newMessageKey] = message;
-      firebaseApp.database().ref().update(update);
-      const messagesCountRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
-      messagesCountRef.transaction((currentValue) => {
-        return (currentValue || 0) + 1;
-      });
+    } else {
+      message = {
+        author: this.props.user.displayName,
+        authorId: this.props.user.uid,
+        content: this.state.commentBody,
+        createdAt: new Date(),
+        authorPhoto: this.props.currentUser.pictureURL,
+        attachment: ''
+      };
     }
+
+    let temp = {};
+    firebaseApp.database().ref('/followGroups/' + this.props.postData.postId).once('value', snapshot => {
+      console.log('these people are following the post', snapshot.val());
+      const followers = Object.keys(snapshot.val());
+      const memberIds = this.props.members.map(member => member.uid);
+      followers.forEach(follower => {
+        let unreadCount = firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId);
+        console.log('got in here?', memberIds, follower, snapshot.val()[follower]);
+        if (snapshot.val()[follower] && !memberIds.includes(follower)) {
+          firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId).once('value', snapshotB => {
+            let unreadCount = snapshotB.val();
+            console.log('unreadCount', snapshotB.val());
+            temp['/unreads/' + follower + '/' + this.props.postData.postId] = !isNaN(unreadCount) ? unreadCount + 1 : 1;
+            firebaseApp.database().ref().update(temp);
+          });
+        }
+      });
+    });
+    // notification stuff ends here
+    this.setState({ commentBody: '', prevBody: '' });
+    const update = {};
+    const newMessageKey = firebaseApp.database().ref().child('messages').push().key;
+    update['/messages/' + id + '/' + newMessageKey] = message;
+    firebaseApp.database().ref().update(update);
+    const messagesCountRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
+    messagesCountRef.transaction((currentValue) => {
+      return (currentValue || 0) + 1;
+    });
     const elem = document.getElementById('messageInput');
     elem.value = '';
   }
@@ -153,9 +179,38 @@ class ModalTextBox extends React.Component {
     this.setState({ emojiIsOpen: !this.state.emojiIsOpen });
   }
 
+  handleUploadModal(file) {
+    console.log('iniside here');
+    this.setState({file: file});
+  }
+
+  handleFileClose() {
+    this.setState({file: ''});
+  }
+
+  handleAwsUpload(body) {
+    this.setState({commentBody: body});
+    console.log('file uploader text', body);
+    superagent.post('/aws/upload/comment')
+      .attach('attach', this.state.file)
+      .end((err, res) => {
+        if (err) {
+          console.log(err);
+          alert('failed uploaded!');
+        }
+        console.log('file upload response', res.body);
+        this.handleClick(this.props.postData.postId, res.body.attachment);
+        this.setState({file: ''});
+      });
+  }
+
   render() {
     return (
       <div className="textBoxDiv">
+        <FileModal
+        handleFileSubmit={(body) => this.handleAwsUpload(body)}
+        handleFileClose={()=>this.handleFileClose()}
+        fileName={this.state.file.name} />
       {this.state.emojiIsOpen ?
         <div className="emojiDiv">
           <Picker set="emojione"
@@ -195,6 +250,15 @@ class ModalTextBox extends React.Component {
             )}
           </div>
           <div className="actions">
+            <ReactUploadFile
+              className="fileUploadModal"
+              chooseFileButton={<Icon className="attachFileIconModal" name="attach" size="large" />}
+              options={this.state.optionsForUploadModal} />
+            {/* {(this.state.file !== '') ?
+              <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}
+                onChange={(e) => this.changeFileName(e.target.value)} />
+              :
+              null} */}
             <Icon onClick={() => this.openEmojiPicker()} size="big" name="smile" className="emojiPicker" />
           </div>
         </div>

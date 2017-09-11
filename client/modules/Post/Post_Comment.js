@@ -5,6 +5,7 @@ import './Post.css';
 import firebaseApp from '../../firebase';
 import Linkify from 'linkifyjs/react';
 import LinkPreviewComment from './LinkPreviewComment';
+import AttachmentPreviewComment from './Post_Modal_Attachement';
 
 const dateStuff = {
   months: {
@@ -167,6 +168,7 @@ class Comment extends React.Component {
 
 
   render() {
+    console.log('attachement in comment', this.props.attachment);
     console.log('this is re rendering', this.state.messageBody);
     const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreviewComment url={url} />) : [];
     const useDate = this.getUseDate(this.props.createdAt);
@@ -184,6 +186,7 @@ class Comment extends React.Component {
                     }
                 </Card.Description>
                 {urlPrev.length > 0 ? urlPrev[0] : null}
+              {this.props.attachment !== '' ? <AttachmentPreviewComment attachment={this.props.attachment}/> : null}
               </Card.Content>
             </Card>
           </div>
@@ -211,6 +214,8 @@ class Comment extends React.Component {
                 <Card.Description className="messageDescription" style={{color: '#fff'}}>
                   <Linkify tagName="p" options={defaults}>{this.state.messageBody}</Linkify>
                 </Card.Description>
+                {urlPrev.length > 0 ? urlPrev[0] : null}
+                {this.props.attachment !== '' ? <AttachmentPreviewComment attachment={this.props.attachment} /> : null}
               </Card.Content>
             </Card>
           </div>}
@@ -231,6 +236,7 @@ Comment.propTypes = {
   authorId: PropTypes.string,
   authorPhoto: PropTypes.string,
   id: PropTypes.string,
+  attachment: PropTypes.object
 };
 
 export default Comment;

@@ -137,6 +137,7 @@ class ModalMessages extends React.Component {
   }
 
   render() {
+    console.log('attachment in messages', this.state.messages);
     return (
         <InfiniteScroll
             pageStart={0}
@@ -157,6 +158,7 @@ class ModalMessages extends React.Component {
                     authorPhoto={message.authorPhoto}
                     currentUser={this.props.currentUser}
                     authorId={message.authorId}
+                    attachment={message.attachment}
                 />
             ))}
         </InfiniteScroll>

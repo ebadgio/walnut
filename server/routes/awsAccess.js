@@ -239,5 +239,15 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
   .catch((error) => console.log('error in aws db save', error));
 });
 
+router.post('/upload/comment', upload.single('attach'), (req, res) => {
+  console.log('upload', req.file);
+  const attachment = {
+    name: req.file.originalname,
+    url: req.file.location,
+    type: req.file.mimetype,
+  };
+  res.json({attachment: attachment});
+});
+
 
 module.exports = router;

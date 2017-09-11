@@ -645,6 +645,50 @@ iframe {
     margin-bottom: 3px;
 }
 
-.linkPreviewComment a {
+.attachFileIconModal:hover {
+    color: #5bc0e3 !important;
+}
+
+.attachFileIconModal {
+    cursor: pointer;
+    color: #fff !important;
+}
+
+#fileSubmit{
+    margin-top: 10px;
+    width: 80px;
+}
+
+.imageAttachmentComment{    
+    margin-right: 10px;
+    margin-left: 10px;
+    overflow: hidden;
+    max-height: 160px;
+}
+
+/* .postImageComment{
+    height: auto;
+    min-height: initial;
+    width: 100%;
+    object-fit: contain;
+    object-position: 0 -100px;
+}
+
+.mediaDownloadAttachmentComment{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+} */
+
+.downloadCardComment {
+    width: 250px !important;
+    flex-direction: row !important;
+    padding: 1% !important;
+}
+
+.linkPreviewComment a{
     color: #3a3a3a;
 }
