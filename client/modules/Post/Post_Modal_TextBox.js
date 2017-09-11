@@ -19,7 +19,16 @@ class ModalTextBox extends React.Component {
       commentBody: '',
       typers: [],
       emojiIsOpen: false,
-      file: ''
+      file: '',
+      optionsForUploadModal: {
+        baseUrl: 'xxx',
+        multiple: false,
+        accept: 'image/*',
+        didChoose: (files) => {
+          console.log('inside comment upload');
+          this.handleUploadModal(files[0]);
+        },
+      }
     };
   }
 
@@ -196,14 +205,6 @@ class ModalTextBox extends React.Component {
   }
 
   render() {
-    const optionsForUploadModal = {
-      baseUrl: 'xxx',
-      multiple: false,
-      didChoose: (files) => {
-        console.log('file looks like this', files[0]);
-        this.handleUploadModal(files[0]);
-      },
-    };
     return (
       <div className="textBoxDiv">
         <FileModal
@@ -251,9 +252,8 @@ class ModalTextBox extends React.Component {
           <div className="actions">
             <ReactUploadFile
               className="fileUploadModal"
-              style={{ width: '80px', height: '40px' }}
               chooseFileButton={<Icon className="attachFileIconModal" name="attach" size="large" />}
-              options={optionsForUploadModal} />
+              options={this.state.optionsForUploadModal} />
             {/* {(this.state.file !== '') ?
               <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}
                 onChange={(e) => this.changeFileName(e.target.value)} />

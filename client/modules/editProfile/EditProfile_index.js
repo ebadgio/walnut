@@ -7,8 +7,6 @@ import saveAboutThunk from '../../thunks/profile_thunks/saveAboutThunk';
 import './EditProfile.css';
 import superagent from 'superagent';
 import ReactUploadFile from 'react-upload-file';
-import DirectoryCard from '../Directory/Directory_Card';
-
 
 const options = [{text: 2010, value: 2010}, {text: 2011, value: 2011}, {text: 2012, value: 2012},
     {text: 2013, value: 2013}, {text: 2014, value: 2014}, {text: 2015, value: 2015},
@@ -114,6 +112,7 @@ class EditProfile extends React.Component {
       multiple: false,
       accept: 'image/*',
       didChoose: (files) => {
+        console.log('inside edit profile upload');
         this.handleUpload(files[0]);
       },
     };

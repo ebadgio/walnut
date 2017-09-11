@@ -22,7 +22,15 @@ class NewPostContainer extends React.Component {
     this.state = {
       postBody: '',
       newFileName: null,
-      file: ''
+      file: '',
+      optionsForUpload: {
+        baseUrl: 'xxx',
+        multiple: false,
+        didChoose: (files) => {
+          console.log('inside new post upload');
+          this.handleUpload(files[0]);
+        },
+      }
     };
   }
 
@@ -103,13 +111,6 @@ class NewPostContainer extends React.Component {
   }
 
   render() {
-    const optionsForUpload = {
-      baseUrl: 'xxx',
-      multiple: false,
-      didChoose: (files) => {
-        this.handleUpload(files[0]);
-      },
-    };
     return (
       <div className="newPost">
         <div className="row newPostContent">
@@ -132,11 +133,11 @@ class NewPostContainer extends React.Component {
         </div>
           <Divider />
           <div className="row newPostFooter">
-             {/* <ReactUploadFile
+               <ReactUploadFile
               className="fileUpload"
               style={{width: '80px', height: '40px'}}
               chooseFileButton={<Icon className="attachFileIcon" name="attach" size="large" />}
-              options={optionsForUpload}/> */}
+              options={this.state.optionsForUpload}/>
               {(this.state.file !== '') ?
               <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}
               onChange={(e) => this.changeFileName(e.target.value)}/>
