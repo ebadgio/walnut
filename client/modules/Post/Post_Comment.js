@@ -7,56 +7,7 @@ import Linkify from 'linkifyjs/react';
 import LinkPreviewComment from './LinkPreviewComment';
 import AttachmentPreviewComment from './Post_Modal_Attachement';
 
-const dateStuff = {
-  months: {
-    Jan: 'January',
-    Feb: 'February',
-    Mar: 'March',
-    Apr: 'April',
-    May: 'May',
-    Jun: 'June',
-    Jul: 'July',
-    Aug: 'August',
-    Sep: 'September',
-    Oct: 'October',
-    Nov: 'November',
-    Dec: 'December'
-  },
-  days: {
-    '01': '1st',
-    '02': '2nd',
-    '03': '3rd',
-    '04': '4th',
-    '05': '5th',
-    '06': '6th',
-    '07': '7th',
-    '08': '8th',
-    '09': '9th',
-    '10': '10th',
-    '11': '11th',
-    '12': '12th',
-    '13': '13th',
-    '14': '14th',
-    '15': '15th',
-    '16': '16th',
-    '17': '17th',
-    '18': '18th',
-    '19': '19th',
-    '20': '20th',
-    '21': '21st',
-    '22': '22nd',
-    '23': '23rd',
-    '24': '24th',
-    '25': '25th',
-    '26': '26th',
-    '27': '27th',
-    '28': '28th',
-    '29': '29th',
-    '30': '30th',
-    '31': '31st',
-  }
-
-};
+import dateStuff from '../../dateStuff';
 
 const defaults = {
   attributes: null,
@@ -93,7 +44,7 @@ class Comment extends React.Component {
   }
 
   componentWillMount() {
-    console.log('this is the content at the start', this.props.content);
+    // console.log('this is the content at the start', this.props.content);
     this.setState({ useDate: this.getUseDate(this.props.createdAt) });
     const urls = this.urlFinder(this.props.content);
     this.setState({ urls: urls });
@@ -168,8 +119,8 @@ class Comment extends React.Component {
 
 
   render() {
-    console.log('attachement in comment', this.props.attachment);
-    console.log('this is re rendering', this.state.messageBody);
+    // console.log('attachement in comment', this.props.attachment);
+    // console.log('this is re rendering', this.state.messageBody);
     const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreviewComment url={url} />) : [];
     const useDate = this.getUseDate(this.props.createdAt);
     if (this.props.authorId === firebaseApp.auth().currentUser.uid) {

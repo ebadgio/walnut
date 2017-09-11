@@ -224,17 +224,15 @@ class ModalTextBox extends React.Component {
               width: '299px',
               height: '190px',
               overflowY: 'scroll',
-              marginLeft: '285px',
-              marginTop: '29px;',
-              backgroundColor: 'black',
-              padding: '4px'
+              backgroundColor: '#3a3a3a',
+              padding: '4px',
+              borderRadius: '6px'
             }}
             set="apple"
             autoFocus={false} />
         </div>
          : null}
-        <div className="iconBar">
-          <div className="typing">
+          <div className="typingRow">
             {this.state.typers.map((typer) =>
               <div key={uuidv4()} className="typerGroup">
                 <Popup
@@ -249,12 +247,23 @@ class ModalTextBox extends React.Component {
               </div>
             )}
           </div>
-          <div className="actions">
+        <div className="inputWrapper">
+          <Form className="textBoxForm">
+              <TextArea
+                  id="messageInput"
+                  autoHeight
+                  placeholder="Give your two cents..."
+                  value={this.state.commentBody}
+                  onChange={(e) => { this.handleChange(e); this.findEnter(); }}
+                  rows={2}
+              />
+          </Form>
+          <div className="actionsTextBox">
             <ReactUploadFile
-              className="fileUploadModal"
-              chooseFileButton={<Icon className="attachFileIconModal" name="attach" size="large" />}
-              options={this.state.optionsForUploadModal} />
-            {/* {(this.state.file !== '') ?
+                className="fileUploadModal"
+                chooseFileButton={<Icon className="attachFileIconModal" name="attach" size="large" />}
+                options={this.state.optionsForUploadModal} />
+              {/* {(this.state.file !== '') ?
               <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}
                 onChange={(e) => this.changeFileName(e.target.value)} />
               :
@@ -262,16 +271,6 @@ class ModalTextBox extends React.Component {
             <Icon onClick={() => this.openEmojiPicker()} size="big" name="smile" className="emojiPicker" />
           </div>
         </div>
-        <Form className="textBoxForm">
-            <TextArea
-                id="messageInput"
-                autoHeight
-                placeholder="Give your two cents..."
-                value={this.state.commentBody}
-                onChange={(e) => { this.handleChange(e); this.findEnter(); }}
-                rows={2}
-            />
-        </Form>
       </div>
         );
   }
