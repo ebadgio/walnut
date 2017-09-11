@@ -27,7 +27,7 @@ class ModalHeader extends React.Component {
 
   render() {
     return (
-            <div className="postHeader">
+            <div className="postHeaderModal">
                 <NestedPostModal postData={this.props.postData}
                     currentUser={this.props.currentUser} />
                 <Popup

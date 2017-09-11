@@ -71,7 +71,7 @@ class ModalInstance extends React.Component {
         <Modal.Header className="modalHeader">
           <ModalHeader members={this.state.members} membersCount={this.state.membersCount} user={this.state.user} postData={this.props.postData}/>
         </Modal.Header>
-        <Modal.Content scrolling className="scrollContentClass">
+        <Modal.Content scrolling className="scrollContentClass" id="scrolling">
           <PostModalMessages user={this.state.user} commentBody={this.state.commentBody} postData={this.props.postData} />
         </Modal.Content>
         <Modal.Actions className="modalActions">
