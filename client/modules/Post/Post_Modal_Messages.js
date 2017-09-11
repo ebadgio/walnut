@@ -77,7 +77,7 @@ class ModalMessages extends React.Component {
         // $('.scrolling').scrollTop(50000);
     const elem = document.getElementById(id);
     if (elem) {
-      elem.scrollIntoView();
+      elem.scrollIntoView({behavior: 'smooth'});
       this.setState({ hitBottom: true, c: this.state.c + 1 });
     } else {
             // $('.scrolling').scrollTop(100000);

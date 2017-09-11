@@ -112,7 +112,7 @@ class NewPostContainer extends React.Component {
 
   render() {
     return (
-      <div className="newPost">
+      <div className="newPost" id="newPostBox">
         <div className="row newPostContent">
           <Form className="newPostForm">
             <TextArea
