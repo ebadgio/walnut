@@ -21,6 +21,7 @@ class ModalInstance extends React.Component {
   componentDidMount() {
     const user = firebaseApp.auth().currentUser;
     this.setState({ user: user });
+    // BUG ON MISSING DISPLAY NAME
     const membersRef = firebaseApp.database().ref('/members/' + this.props.postData.postId);
     membersRef.on('value', (snapshot) => {
       const peeps =  _.values(snapshot.val());
