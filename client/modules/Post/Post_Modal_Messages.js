@@ -22,7 +22,8 @@ class ModalMessages extends React.Component {
     this.handleClose = this.handleClose.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    console.log('messages box mounted!');
     this.startListen(this.props.postData);
   }
 
@@ -57,7 +58,7 @@ class ModalMessages extends React.Component {
             firstKey: Object.keys(snapshot.val())[0],
             firstId: ID,
             hasMore: true,
-            hitBottom: true
+            hitBottom: false
           });
           if (this.state.c === 0 || send[send.length - 1].authorId === this.props.user.uid) {
             this.scrollToBottom(bottomID);
@@ -74,8 +75,13 @@ class ModalMessages extends React.Component {
   scrollToBottom(id) {
         // $('.scrolling').scrollTop(50000);
     const elem = document.getElementById(id);
+    const scrolling = document.getElementById('scrolling');
+    console.log('TRYING TO HIT BOTTOM', elem);
     if (elem) {
-      elem.scrollIntoView({behavior: 'smooth'});
+      console.log('scroll height', elem.scrollHeight);
+      console.log('scrolling', scrolling.scrollTop);
+      console.log('client height', scrolling.clientHeight);
+      elem.scrollIntoView();
       this.setState({ hitBottom: true, c: this.state.c + 1 });
     } else {
             // $('.scrolling').scrollTop(100000);
@@ -92,21 +98,22 @@ class ModalMessages extends React.Component {
         // const elmnt = document.getElementById(this.state.firstId);
         // console.log('first ID', this.state.firstId, elmnt);
     const oldId = this.state.firstId;
-    if (this.state.hitBottom) {
+    if (this.state.hitBottom && !this.state.wait) {
       if (data.postId) {
         const messagesRef = firebaseApp.database().ref('/messages/' + data.postId).orderByKey()
-                    .endAt(this.state.firstKey).limitToLast(15);
+                    .endAt(this.state.firstKey).limitToLast(20);
         messagesRef.once('value', (snapshot) => {
           const newOnes = _.values(snapshot.val());
           newOnes.pop();
           const concat = newOnes.concat(this.state.messages);
           const more = newOnes.length > 0;
           const newId = (newOnes.length > 0) ? newOnes[0].authorId + '' + newOnes[0].content : '';
-          this.setState({ messages: concat, firstKey: Object.keys(snapshot.val())[0], firstId: newId, hitBottom: false, hasMore: more });
+          this.setState({ messages: concat, firstKey: Object.keys(snapshot.val())[0], firstId: newId, hitBottom: false, hasMore: more, wait: true });
                     // const scrollAmount = newOnes.length * 90 + 90;
           if (newId) {
             this.scrollToBottom(oldId);
           }
+          setTimeout(() => {this.setState({wait: false});}, 750);
         });
       } else {
         console.log('missing postData load more');
@@ -137,32 +144,44 @@ class ModalMessages extends React.Component {
   }
 
   render() {
-    console.log('attachment in messages', this.state.messages);
     return (
         <InfiniteScroll
             pageStart={0}
-            loadMore={() => { this.loadMore(this.props.postData); }}
+            loadMore={() => this.loadMore(this.props.postData)}
             hasMore={this.state.hasMore}
             isReverse
-            threshold={25}
+            threshold={50}
             loader={<Loader active inline="centered" />}
             useWindow={false}
         >
-            {this.state.messages.map((message) => (
-                <Comment
-                    id={message.authorId + '' + message.content}
-                    key={uuidv4()}
-                    name={message.author}
-                    createdAt={message.createdAt}
-                    content={message.content}
-                    authorPhoto={message.authorPhoto}
-                    currentUser={this.props.currentUser}
-                    authorId={message.authorId}
-                    attachment={message.attachment}
-                />
-            ))}
+            {/* {this.state.messages.length > 0 ? this.state.messages.map((message) => (*/}
+                {/* <Comment*/}
+                    {/* id={message.authorId + '' + message.content}*/}
+                    {/* key={uuidv4()}*/}
+                    {/* name={message.author}*/}
+                    {/* createdAt={message.createdAt}*/}
+                    {/* content={message.content}*/}
+                    {/* authorPhoto={message.authorPhoto}*/}
+                    {/* currentUser={this.props.currentUser}*/}
+                    {/* authorId={message.authorId}*/}
+                    {/* attachment={message.attachment}*/}
+                {/* />*/}
+            {/* )) : <p className="noMoreMessages">No messages to display...</p>}*/}
+          {this.state.messages.map((message) => (
+            <Comment
+                id={message.authorId + '' + message.content}
+                key={uuidv4()}
+                name={message.author}
+                createdAt={message.createdAt}
+                content={message.content}
+                authorPhoto={message.authorPhoto}
+                currentUser={this.props.currentUser}
+                authorId={message.authorId}
+                attachment={message.attachment}
+            />
+          ))}
         </InfiniteScroll>
-        );
+    );
   }
 }
 ModalMessages.propTypes = {

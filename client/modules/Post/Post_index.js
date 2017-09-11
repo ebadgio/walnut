@@ -6,8 +6,7 @@ import LinkPreview from './LinkPreview';
 import './Post.css';
 import Lightbox from 'react-images';
 import {Divider} from 'semantic-ui-react';
-
-
+import dateStuff from '../../dateStuff';
 
 class Post extends React.Component {
   constructor(props) {
@@ -27,6 +26,7 @@ class Post extends React.Component {
       newLink: '',
       urlName: ''
     };
+    this.getUseDate = this.getUseDate.bind(this);
   }
   componentWillMount() {
     const urls = this.urlFinder(this.props.postData.content);
@@ -41,6 +41,46 @@ class Post extends React.Component {
     } else {
       this.setState({ messageBody: this.props.postData.content });
     }
+  }
+
+  componentDidMount() {
+    this.setState({timeStamp: this.getUseDate(this.props.postData.createdAt)});
+  }
+
+  getUseDate(dateObj) {
+    if (dateObj) {
+      const now = new Date().toString().slice(4, 24).split(' ');
+      const date = new Date(dateObj);
+      const dateString = date.toString().slice(4, 24);
+      const split = dateString.split(' ');
+      const useMonth = dateStuff.months[split[0]];
+      const useDay = dateStuff.days[split[1]];
+      const timeArr = split[3].split(':');
+      let time;
+      let hour;
+      let isPM;
+      if (parseInt(timeArr[0], 10) > 12) {
+        hour = parseInt(timeArr[0], 10) - 12;
+        isPM = true;
+      } else {
+        if (parseInt(timeArr[0], 10) === 0) {
+          hour = 12;
+        } else {
+          hour = parseInt(timeArr[0], 10);
+        }
+      }
+      const min = timeArr[1];
+      if (isPM) {
+        time = hour + ':' + min + 'PM';
+      } else {
+        time = hour + ':' + min + 'AM';
+      }
+      if (now[2] !== split[2]) {
+        return useMonth + ' ' + useDay + ', ' + split[2] + ' ' + time;
+      }
+      return useMonth + ' ' + useDay + ', ' + time;
+    }
+    return '-';
   }
 
   urlNamer(url) {
@@ -137,6 +177,7 @@ class Post extends React.Component {
           </div>
           <div className="postHeader">
             <h3 className="postHeaderUser">{this.props.postData.username}</h3>
+            <p className="postTimeStamp">{this.state.timeStamp}</p>
           </div>
         </div>
         <div className="postDescription">
