@@ -342,7 +342,6 @@
     font-size: 12px;
     font-weight: bold;
     word-break: break-word;
-    width: 268px;
 }
 
 .downloadFileIcon {
@@ -370,7 +369,7 @@
 }
 
 .ui.card.commentCardYou {
-    background-color: #4CC1FC;
+    background-color: #59B7C5;;
     box-shadow: none;
     margin:0 10px 5px 10px;
     clear: both;
@@ -523,7 +522,7 @@ iframe {
 .typersContainer {
     padding: 4px !important;
     display: inline-flex !important;
-    min-height: 47px;
+    min-height: 50px;
 }
 
 .typerGroup {
@@ -733,9 +732,9 @@ iframe {
     border: 1px solid #b3b5c1 !important;
 }
 
-/*.downloadCarComment:hover {*/
-    /*box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;*/
-/*}*/
+.downloadCarComment:hover {
+    box-shadow: 0 1px 2px 1px rgba(34, 36, 38, 0.15) !important;
+}
 
 .linkPreviewComment a{
     color: #3a3a3a;
@@ -777,3 +776,8 @@ body ::-webkit-scrollbar-thumb {
 .fileuploadmodal {
     max-width: 26px !important;
 }
+
+.ui.dimmer {
+    background-color: rgba(0, 0, 0, 0.80);
+}
+
