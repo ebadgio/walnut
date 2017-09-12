@@ -166,6 +166,7 @@
 }
 
 .scrollContentClass {
+    height: calc(65vh) !important;
     max-height: calc(65vh) !important;
     display: flex !important;
     flex-direction: column !important;
