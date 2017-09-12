@@ -13,6 +13,7 @@ class ModalMessages extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: {},
       messages: [],
       hitBottom: false,
       c: 0
@@ -23,8 +24,25 @@ class ModalMessages extends React.Component {
   }
 
   componentDidMount() {
-    console.log('messages box mounted!');
-    this.startListen(this.props.postData);
+    const user = firebaseApp.auth().currentUser;
+    console.log('messages box mounted!', user);
+    this.setState({user: user, postData: this.props.postData});
+    setTimeout(() => this.startListen(this.props.postData), 500);
+    window.addEventListener('beforeunload', (ev) => {
+      ev.preventDefault();
+      if (this.state.user) {
+        const updates2 = {};
+        updates2['/members/' + this.props.postData.postId + '/' + user.uid] = null;
+        firebaseApp.database().ref().update(updates2);
+      }
+    });
+    setInterval(() => {
+      if (this.props.postData.postId !== this.state.postData.postId) {
+        console.log('difference found');
+        this.startListen(this.props.postData);
+        this.setState({postData: this.props.postData});
+      }
+    }, 500);
   }
 
   componentWillUnmount() {
@@ -34,14 +52,15 @@ class ModalMessages extends React.Component {
   startListen(data) {
     const updates = {};
     const member = {
-      name: this.props.user.displayName,
+      name: this.state.user.displayName,
       avatar: this.props.currentUser.pictureURL,
-      uid: this.props.user.uid
+      uid: this.state.user.uid
     };
-    updates['/members/' + this.props.postData.postId + '/' + this.props.user.uid] = member;
+    updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = member;
     firebaseApp.database().ref().update(updates);
+      // TODO: move this too the post index, my conversation and sidebar didmount
       // unread messages stuff
-    firebaseApp.database().ref('/unreads/' + this.props.user.uid + '/' + this.props.postData.postId).set(0);
+    firebaseApp.database().ref('/unreads/' + this.state.user.uid + '/' + this.props.postData.postId).set(0);
     this.setState({ unread: 0 });
       // unread stuff ends
 
@@ -60,7 +79,7 @@ class ModalMessages extends React.Component {
             hasMore: true,
             hitBottom: false
           });
-          if (this.state.c === 0 || send[send.length - 1].authorId === this.props.user.uid) {
+          if (this.state.c === 0 || send[send.length - 1].authorId === this.state.user.uid) {
             this.scrollToBottom(bottomID);
           }
         } else {
@@ -124,13 +143,13 @@ class ModalMessages extends React.Component {
   }
 
   handleClose() {
-    if (this.props.user) {
+    if (this.state.user) {
       const updates = {};
-      updates['/members/' + this.props.postData.postId + '/' + this.props.user.uid] = null;
+      updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
       firebaseApp.database().ref().update(updates);
 
       const updatesEx = {};
-      updatesEx['/typers/' + this.props.postData.postId + '/' + this.props.user.uid] = null;
+      updatesEx['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
       firebaseApp.database().ref().update(updatesEx);
 
       this.setState({
@@ -185,11 +204,12 @@ class ModalMessages extends React.Component {
   }
 }
 ModalMessages.propTypes = {
-  postData: PropTypes.object,
   currentUser: PropTypes.object,
-  user: PropTypes.object
+  user: PropTypes.object,
+  postData: PropTypes.object
 };
 const mapStateToProps = (state) => ({
-  currentUser: state.userReducer
+  currentUser: state.userReducer,
+  postData: state.modalReducer.postData
 });
 export default connect(mapStateToProps, null)(ModalMessages);

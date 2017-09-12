@@ -472,11 +472,7 @@ iframe {
 }
 
 .inModalUsers {
-    margin-left: 20px;
-}
-
-.modalHeader {
-    display: -webkit-inline-box !important;
+    /* margin-left: 150px;*/
 }
 
 #messageInput{
@@ -512,7 +508,7 @@ iframe {
 }
 
 .joinConversation {
-    margin-left: 210px;
+    /* margin-left: 75px;*/
 }
 
 .joinButton {
@@ -731,10 +727,10 @@ iframe {
     padding: 1% !important;
     box-shadow: none !important;
     background: #FAFAFA !important;
-    border: 1px solid #b3b5c1 !important;
+
 }
 
-.downloadCarComment:hover {
+.downloadCardComment:hover {
     box-shadow: 0 1px 2px 1px rgba(34, 36, 38, 0.15) !important;
 }
 
@@ -759,7 +755,8 @@ iframe {
     display: flex;
     align-items: center;
     height: 46px;
-    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
 }
 
 body ::-webkit-scrollbar-thumb {
@@ -780,6 +777,55 @@ body ::-webkit-scrollbar-thumb {
 }
 
 .ui.dimmer {
-    background-color: rgba(0, 0, 0, 0.80);
+    background-color: rgba(0, 0, 0, 0.82);
 }
 
+.visible.transition.postModal {
+    display: flex !important;
+}
+
+.postModalSidebar {
+    flex: 1;
+    padding: 0 !important;
+}
+
+.postModalMain {
+    flex: 3;
+}
+
+.SideBarPosts {
+    width: 90%;
+    height: 79vh;
+    overflow-y: auto;
+}
+
+.topActions {
+    height: 10vh;
+    padding-top: 6%;
+}
+
+.SideBarHeader {
+    font-size: 20px;
+    font-weight: bold;
+    color: #FAFAFA;
+    margin-bottom: 0 !important;
+}
+
+.SideBarHeaderDivider {
+    margin-top: 0 !important;
+    width: 50% !important;
+}
+
+body ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 8px;
+}
+
+.closingButton {
+    /* margin-left: 40px;*/
+    cursor: pointer;
+}
+
+.closingButton:hover {
+    color: #5bc0e3 !important;
+}

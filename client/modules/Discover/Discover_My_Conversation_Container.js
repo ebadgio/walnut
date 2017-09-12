@@ -16,7 +16,28 @@ class FollowedPostsContainer extends React.Component {
     };
   }
 
-  onOpen() {
+
+  componentWillMount() {
+    console.log('my conversation map', this.props.myConversations);
+    // TODO: map each post to get their unreads in its own object
+    // TODO: for loop through array and if they have unreads put it in its own array
+    // TODO: .sort on unreads and then concat the two array and use that in the maps
+    // TODO: eventually my convs must be sorted by last unread
+    // pass down the unreds so only 1 read from firebase is done
+    // start listen for typers like in post modal messages
+    // const userId = firebaseApp.auth().currentUser.uid;
+    // firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.postData.postId).on('value', snapshotB => {
+    //   const unreadCount = snapshotB.val();
+    //   if (!isNaN(unreadCount)) {
+    //     if (unreadCount > 0) {
+    //       this.setState({ unread: unreadCount });
+    //       console.log('unread set to true');
+    //     }
+    //   }
+    // });
+  }
+
+  componentDidMount() {
     if (this.props.currentUser) {
       const followsRef = firebaseApp.database().ref('/follows/' + this.props.currentUser.firebaseId + '/' + this.props.currentCommunity);
       followsRef.on('value', (snapshot) => {
@@ -34,6 +55,11 @@ class FollowedPostsContainer extends React.Component {
     }
   }
 
+
+  componentWillReceiveProps(nextProps) {
+  }
+
+
   toggleVisibility() {
     this.setState({ visible: !this.state.visible });
   }
@@ -45,7 +71,7 @@ class FollowedPostsContainer extends React.Component {
          <Sidebar animation="overlay"
                   direction="right"
                   visible={this.state.visible}>
-           <Button icon onClick={() => this.toggleVisibility()} className="minifyButton">
+           <Button icon onClick={() => {this.toggleVisibility();}} className="minifyButton">
              <Icon name="chevron circle down"
                    size="large"
              />

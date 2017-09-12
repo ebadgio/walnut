@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Popup } from 'semantic-ui-react';
-import './Discover.css';
+import { connect} from 'react-redux';
+import { Card, Popup, Icon } from 'semantic-ui-react';
 import Linkify from 'linkifyjs/react';
-import ModalContainer from '../Post/Post_Modal_Container';
+import dateStuff from '../../dateStuff';
+import firebaseApp from '../../firebase';
+import _ from 'underscore';
 
 const defaults = {
   attributes: null,
@@ -22,12 +24,97 @@ const defaults = {
   target: {
     url: '_blank'
   },
+  members: [],
+  membersCount: 0,
+  unread: 0,
   validate: true
 };
 
 class ConversationCard extends React.Component {
   constructor() {
     super();
+    this.state = {
+    };
+  }
+
+  componentDidMount() {
+    const user = firebaseApp.auth().currentUser;
+    this.setState({ user: user, timeStamp: this.getUseDate(this.props.data.createdAt)});
+    const membersRef = firebaseApp.database().ref('/members/' + this.props.data.postId);
+    membersRef.on('value', (snapshot) => {
+      const peeps =  _.values(snapshot.val());
+      const members = peeps.filter((peep) => typeof (peep) === 'object');
+      this.setState({membersCount: members.length, members: members});
+    });
+    const countRef = firebaseApp.database().ref('/counts/' + this.props.data.postId + '/count');
+    countRef.on('value', (snapshot) => {
+      this.setState({count: snapshot.val()});
+    });
+        // notification stuff
+
+    // TODO: if open is true set unreads to null and state to null
+    // TODO: if open is false read unreads and set state accordingly
+    const userId = firebaseApp.auth().currentUser.uid;
+    firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.data.postId).on('value', snapshotB => {
+      const unreadCount =  snapshotB.val();
+      if (!isNaN(unreadCount)) {
+        if (unreadCount > 0) {
+          this.setState({unread: unreadCount});
+          console.log('unread set to true');
+        } else {
+          this.setState({unread: 0});
+        }
+      }
+    });
+  }
+
+  getUseDate(dateObj) {
+    if (dateObj) {
+      const now = new Date().toString().slice(4, 24).split(' ');
+      const date = new Date(dateObj);
+      const dateString = date.toString().slice(4, 24);
+      const split = dateString.split(' ');
+      const useMonth = dateStuff.months[split[0]];
+      const useDay = dateStuff.days[split[1]];
+      const timeArr = split[3].split(':');
+      let time;
+      let hour;
+      let isPM;
+      if (parseInt(timeArr[0], 10) > 12) {
+        hour = parseInt(timeArr[0], 10) - 12;
+        isPM = true;
+      } else {
+        if (parseInt(timeArr[0], 10) === 0) {
+          hour = 12;
+        } else {
+          hour = parseInt(timeArr[0], 10);
+        }
+      }
+      const min = timeArr[1];
+      if (isPM) {
+        time = hour + ':' + min + 'PM';
+      } else {
+        time = hour + ':' + min + 'AM';
+      }
+      if (now[2] !== split[2]) {
+        return useMonth + ' ' + useDay + ', ' + split[2] + ' ' + time;
+      }
+      return useMonth + ' ' + useDay + ', ' + time;
+    }
+    return '-';
+  }
+
+  switching() {
+    const updates = {};
+    updates['/members/' + this.props.data.postId + '/' + this.state.user.uid] = null;
+    firebaseApp.database().ref().update(updates);
+
+    const updatesEx = {};
+    updatesEx['/typers/' + this.props.data.postId + '/' + this.state.user.uid] = null;
+    firebaseApp.database().ref().update(updatesEx);
+
+    this.props.toggleModal(this.props.data);
+    // TODO: set unreads to 0
   }
 
   render() {
@@ -47,9 +134,12 @@ class ConversationCard extends React.Component {
                        content={<Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify>}/> :
                       <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify> }
                 <div className="conversationFootnote">
-                  <ModalContainer mini
-                                  postData={this.props.data}
-                                  currentUser={this.props.user} />
+                  <div className="commentDiv">
+                    <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
+                    <Icon size="big" name="users" className="usersIconMini" />
+                    <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
+                    <Icon size="big" name="comments" className="commentIconMini" onClick={() => this.switching()} />
+                  </div>
                 </div>
               </Card.Content>
             </Card>
@@ -60,7 +150,13 @@ class ConversationCard extends React.Component {
 
 ConversationCard.propTypes = {
   data: PropTypes.object,
-  user: PropTypes.object
+  user: PropTypes.object,
+  toggleModal: PropTypes.func
 };
 
-export default ConversationCard;
+const mapDispatchToProps = (dispatch) => ({
+  toggleModal: (postData) => dispatch({type: 'TOGGLE_DATA', newPostData: postData})
+});
+
+
+export default connect(null, mapDispatchToProps)(ConversationCard);
