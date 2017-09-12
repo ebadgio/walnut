@@ -45,7 +45,7 @@ class FollowedPostsContainer extends React.Component {
          <Sidebar animation="overlay"
                   direction="right"
                   visible={this.state.visible}>
-           <Button icon onClick={() => {this.toggleVisibility()}} className="minifyButton">
+           <Button icon onClick={() => this.toggleVisibility()} className="minifyButton">
              <Icon name="chevron circle down"
                    size="large"
              />

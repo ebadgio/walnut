@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 var connect = process.env.MONGODB_URI;
 var User = require('./models/models').User;
 var cors = require('cors');
-var compression = require('compression')
+var compression = require('compression');
 import AdminApp from './firebaseAdmin';
 var CryptoJS = require("crypto-js");
 
