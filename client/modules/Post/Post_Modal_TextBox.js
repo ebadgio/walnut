@@ -16,6 +16,7 @@ class ModalTextBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: {},
       commentBody: '',
       typers: [],
       emojiIsOpen: false,
@@ -33,7 +34,9 @@ class ModalTextBox extends React.Component {
   }
 
 
-  componentWillMount() {
+  componentDidMount() {
+    const user = firebaseApp.auth().currentUser;
+    this.setState({user: user});
     this.watchForTypers();
     this.startListen();
   }
@@ -52,17 +55,17 @@ class ModalTextBox extends React.Component {
           if (this.state.did === 0) {
             const updaters = {};
             const typeInfo = {
-              typer: this.props.user.displayName,
-              typerId: this.props.user.uid,
+              typer: this.state.user.displayName,
+              typerId: this.state.user.uid,
               typerPhoto: this.props.currentUser.pictureURL
             };
-            updaters['/typers/' + this.props.postData.postId + '/' + this.props.user.uid] = typeInfo;
+            updaters['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = typeInfo;
             firebaseApp.database().ref().update(updaters);
           }
           this.setState({ prevBody: this.state.commentBody, did: 1 });
         } else {
           const updatesEx = {};
-          updatesEx['/typers/' + this.props.postData.postId + '/' + this.props.user.uid] = null;
+          updatesEx['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
           firebaseApp.database().ref().update(updatesEx);
           this.setState({ did: 0 });
         }
@@ -78,7 +81,7 @@ class ModalTextBox extends React.Component {
         const pairs = _.pairs(snapshot.val());
         const typers = pairs.filter((pair) => pair[1])
           .map((typer) => typer[1])
-          .filter((obj) => obj.typerId !== this.props.user.uid);
+          .filter((obj) => obj.typerId !== this.state.user.uid);
         this.setState({ typers: typers });
       } else {
         this.setState({ typers: [] });
@@ -105,7 +108,7 @@ class ModalTextBox extends React.Component {
   handleClick(id, attachment) {
     const updates = {};
     let message;
-    updates['/typers/' + this.props.postData.postId + '/' + this.props.user.uid] = null;
+    updates['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
     firebaseApp.database().ref().update(updates);
     // const commentBody = this.state.commentBody;
     // const split = commentBody.split(' ');
@@ -119,8 +122,8 @@ class ModalTextBox extends React.Component {
     // const useBody = split.join(' ');
     if(attachment) {
       message = {
-        author: this.props.user.displayName,
-        authorId: this.props.user.uid,
+        author: this.state.user.displayName,
+        authorId: this.state.user.uid,
         content: this.state.commentBody,
         createdAt: new Date(),
         authorPhoto: this.props.currentUser.pictureURL,
@@ -128,8 +131,8 @@ class ModalTextBox extends React.Component {
       };
     } else {
       message = {
-        author: this.props.user.displayName,
-        authorId: this.props.user.uid,
+        author: this.state.user.displayName,
+        authorId: this.state.user.uid,
         content: this.state.commentBody,
         createdAt: new Date(),
         authorPhoto: this.props.currentUser.pictureURL,
@@ -228,7 +231,6 @@ class ModalTextBox extends React.Component {
               padding: '4px',
               borderRadius: '6px'
             }}
-            set="apple"
             autoFocus={false} />
         </div>
          : null}

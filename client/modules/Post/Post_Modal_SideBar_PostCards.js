@@ -5,6 +5,7 @@ import { Card, Popup, Icon } from 'semantic-ui-react';
 import Linkify from 'linkifyjs/react';
 import dateStuff from '../../dateStuff';
 import firebaseApp from '../../firebase';
+import ModalContainer from '../Post/Post_Modal_Container';
 import _ from 'underscore';
 
 const defaults = {
@@ -33,8 +34,6 @@ const defaults = {
 class ConversationCard extends React.Component {
   constructor() {
     super();
-    this.state = {
-    };
   }
 
   componentDidMount() {
@@ -99,45 +98,33 @@ class ConversationCard extends React.Component {
     return '-';
   }
 
-  switching() {
-    const updates = {};
-    updates['/members/' + this.props.data.postId + '/' + this.state.user.uid] = null;
-    firebaseApp.database().ref().update(updates);
-
-    const updatesEx = {};
-    updatesEx['/typers/' + this.props.data.postId + '/' + this.state.user.uid] = null;
-    firebaseApp.database().ref().update(updatesEx);
-
-    this.props.toggleModal(this.props.data);
-  }
-
   render() {
     return (
-        <div className="myConversationCard">
-            <Card className="miniPostCard">
-              <Card.Content className="conversationCardContent">
-                <div className="conversationCardHeader">
-                  <div className="conversationCardWrapper">
-                    <img className="conversationCardUserImage" src={this.props.data.pictureURL} />
-                  </div>
-                    <h3 className="conversationCardHeaderUser">{this.props.data.username}</h3>
-                </div>
-                  {this.props.data.content.split(' ').length > 4 ? <Popup inverted
-                       hoverable
-                       trigger={<p className="conversationCardBody">{this.props.data.content.split(' ').slice(0, 4).join(' ') + '...'}</p>}
-                       content={<Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify>}/> :
-                      <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify> }
-                <div className="conversationFootnote">
-                  <div className="commentDiv">
-                    <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
-                    <Icon size="big" name="users" className="usersIconMini" />
-                    <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
-                    <Icon size="big" name="comments" className="commentIconMini" onClick={() => this.switching()} />
-                  </div>
-                </div>
-              </Card.Content>
-            </Card>
-        </div>
+            <div className="myConversationCard">
+                <Card className="miniPostCard">
+                    <Card.Content className="conversationCardContent">
+                        <div className="conversationCardHeader">
+                            <div className="conversationCardWrapper">
+                                <img className="conversationCardUserImage" src={this.props.data.pictureURL} />
+                            </div>
+                            <h3 className="conversationCardHeaderUser">{this.props.data.username}</h3>
+                        </div>
+                        {this.props.data.content.split(' ').length > 4 ? <Popup inverted
+                                                                                hoverable
+                                                                                trigger={<p className="conversationCardBody">{this.props.data.content.split(' ').slice(0, 4).join(' ') + '...'}</p>}
+                                                                                content={<Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify>}/> :
+                            <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify> }
+                        <div className="conversationFootnote">
+                            <div className="commentDiv">
+                                <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
+                                <Icon size="big" name="users" className="usersIconMini" />
+                                <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
+                                <Icon size="big" name="comments" className="commentIconMini" onClick={() => this.props.openModal(this.props.data)} />
+                            </div>
+                        </div>
+                    </Card.Content>
+                </Card>
+            </div>
         );
   }
 }
@@ -145,11 +132,11 @@ class ConversationCard extends React.Component {
 ConversationCard.propTypes = {
   data: PropTypes.object,
   user: PropTypes.object,
-  toggleModal: PropTypes.func
+  openModal: PropTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleModal: (postData) => dispatch({type: 'TOGGLE_DATA', newPostData: postData})
+  openModal: (postData) => dispatch({type: 'MAKE_OPEN', postData: postData})
 });
 
 

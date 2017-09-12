@@ -107,6 +107,7 @@
 .myConversationCard {
   border-radius: 3px !important;
   margin-bottom: 5px !important;
+    margin-right: 5px !important;
 }
 
 .tagContainerConversation {
@@ -155,6 +156,10 @@
     background: none !important;
     box-shadow: none !important;
     border: solid 1px #fafafa !important;
+}
+
+.miniPostCard:hover {
+    background: rgba(0, 0, 0, 0.40) !important;
 }
 
 .itemGroupOnline {

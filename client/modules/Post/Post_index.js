@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect} from 'react-redux';
 import ModalContainer from './Post_Modal_Container';
 import MediaAttachment from './Post_Media_Attachment.js';
 import LinkPreview from './LinkPreview';
 import './Post.css';
 import Lightbox from 'react-images';
-import {Divider} from 'semantic-ui-react';
+import {Divider, Icon} from 'semantic-ui-react';
 import dateStuff from '../../dateStuff';
+import firebaseApp from '../../firebase';
+import _ from 'underscore';
 
 class Post extends React.Component {
   constructor(props) {
@@ -24,7 +27,9 @@ class Post extends React.Component {
       messageBody1: '',
       messageBody2: '',
       newLink: '',
-      urlName: ''
+      urlName: '',
+      members: [],
+      unread: 0
     };
     this.getUseDate = this.getUseDate.bind(this);
   }
@@ -44,7 +49,29 @@ class Post extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({timeStamp: this.getUseDate(this.props.postData.createdAt)});
+    const user = firebaseApp.auth().currentUser;
+    this.setState({ user: user, timeStamp: this.getUseDate(this.props.postData.createdAt)});
+    const membersRef = firebaseApp.database().ref('/members/' + this.props.postData.postId);
+    membersRef.on('value', (snapshot) => {
+      const peeps =  _.values(snapshot.val());
+      const members = peeps.filter((peep) => typeof (peep) === 'object');
+      this.setState({membersCount: members.length, members: members});
+    });
+    const countRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
+    countRef.on('value', (snapshot) => {
+      this.setState({count: snapshot.val()});
+    });
+      // notification stuff
+    const userId = firebaseApp.auth().currentUser.uid;
+    firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.postData.postId).on('value', snapshotB => {
+      const unreadCount =  snapshotB.val();
+      if (!isNaN(unreadCount)) {
+        if (unreadCount > 0) {
+          this.setState({unread: unreadCount});
+          console.log('unread set to true');
+        }
+      }
+    });
   }
 
   getUseDate(dateObj) {
@@ -214,7 +241,12 @@ class Post extends React.Component {
           </div>))}
         </div>
         <div></div>
-        <ModalContainer postData={this.props.postData}/>
+        <div className="commentDiv">
+          <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
+          <Icon size="big" name="users" className="usersIcon" />
+          <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
+          <Icon size="big" name="comments" className="commentIcon" onClick={() => this.props.openModal(this.props.postData)} />
+        </div>
       </div>
     </div>
     );
@@ -224,6 +256,12 @@ Post.propTypes = {
   postData: PropTypes.object,
   newLike: PropTypes.func,
   currentUser: PropTypes.object,
-  nested: PropTypes.bool
+  nested: PropTypes.bool,
+  openModal: PropTypes.func
 };
-export default Post;
+
+const mapDispatchToProps = (dispatch) => ({
+  openModal: (postData) => dispatch({type: 'MAKE_OPEN', postData: postData})
+});
+
+export default connect(null, mapDispatchToProps)(Post);

@@ -16,7 +16,7 @@ import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
 import Online from './Discover_Online';
 import FollowedPostsContainer from './Discover_My_Conversation_Container';
 import WalnutLoader from '../App/App_WalnutLoader';
-
+import ModalContainer from '../Post/Post_Modal_Container';
 
 class Home extends React.Component {
   constructor() {
@@ -54,6 +54,7 @@ class Home extends React.Component {
           <Online/>
           <Feed id="Feed"/>
           <FollowedPostsContainer/>
+          <ModalContainer />
         </div>
     );
   }
