@@ -121,14 +121,15 @@ class ConversationCard extends React.Component {
     return (
         <div className="myConversationCard">
             <Card className="miniPostCard">
-              <Card.Content className="conversationCardContent">
+              <Card.Content className="conversationCardContent" onClick={() => this.switching()} >
                 <div className="conversationCardHeader">
                   <div className="conversationCardWrapper">
                     <img className="conversationCardUserImage" src={this.props.data.pictureURL} />
                   </div>
                     <h3 className="conversationCardHeaderUser">{this.props.data.username}</h3>
                 </div>
-                  {this.props.data.content.split(' ').length > 4 ? <Popup inverted
+                  {this.props.data.content.split(' ').length > 4 ?
+                  <Popup inverted
                        hoverable
                        trigger={<p className="conversationCardBody">{this.props.data.content.split(' ').slice(0, 4).join(' ') + '...'}</p>}
                        content={<Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify>}/> :
@@ -138,7 +139,7 @@ class ConversationCard extends React.Component {
                     <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
                     <Icon size="big" name="users" className="usersIconMini" />
                     <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
-                    <Icon size="big" name="comments" className="commentIconMini" onClick={() => this.switching()} />
+                    <Icon size="big" name="comments" className="commentIconMini"/>
                   </div>
                 </div>
               </Card.Content>

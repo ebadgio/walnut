@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import TagPrefContainer from './Feed_NewPost_TagPref_Container';
 import newPostThunk from '../../thunks/post_thunks/newPostThunk';
 import $ from 'jquery';
-import { Icon, Button, TextArea, Form, Divider } from 'semantic-ui-react';
+import { Icon, Button, TextArea, Form, Divider, Popup } from 'semantic-ui-react';
 import superagent from 'superagent';
 import './Feed.css';
 
@@ -79,8 +79,8 @@ class NewPostContainer extends React.Component {
         this.setState({ postBody: '', file: ''});
         this.props.clearPostTag();
       } else {
-        // TODO: pop up on empty post
-        alert('Oops, post is empty');
+        this.setState({emptyBody: true});
+        setTimeout(() => this.setState({emptyBody: false}), 2000);
       }
     }
   }
@@ -102,10 +102,15 @@ class NewPostContainer extends React.Component {
     }
   }
 
+  removePopup() {
+    this.setState({emptyBody: false});
+  }
+
   render() {
     return (
       <div className="newPost" id="newPostBox">
         <div className="row newPostContent">
+          {this.state.emptyBody ? <div className="popUpNoBody"><h4>Please type a new conversation</h4></div> : null}
           <Form className="newPostForm">
             <TextArea
               id="textarea1"
@@ -113,6 +118,7 @@ class NewPostContainer extends React.Component {
               placeholder="What's on your mind?"
               minRows={2}
               onChange={(e) => this.handleChange(e)}
+              onClick={() => this.removePopup()}
               />
           </Form>
         </div>
