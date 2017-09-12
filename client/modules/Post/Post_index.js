@@ -62,6 +62,9 @@ class Post extends React.Component {
       this.setState({count: snapshot.val()});
     });
       // notification stuff
+
+    // TODO: if open is true set unreads to null and state to null
+    // TODO: if open is false read unreads and set state accordingly
     const userId = firebaseApp.auth().currentUser.uid;
     firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.postData.postId).on('value', snapshotB => {
       const unreadCount =  snapshotB.val();
