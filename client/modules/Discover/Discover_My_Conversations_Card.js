@@ -61,6 +61,8 @@ class ConversationCard extends React.Component {
         if (unreadCount > 0) {
           this.setState({unread: unreadCount});
           console.log('unread set to true');
+        } else {
+          this.setState({unread: 0});
         }
       }
     });
@@ -112,6 +114,7 @@ class ConversationCard extends React.Component {
     firebaseApp.database().ref().update(updatesEx);
 
     this.props.toggleModal(this.props.data);
+    // TODO: set unreads to 0
   }
 
   render() {

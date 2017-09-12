@@ -140,10 +140,12 @@ class ModalTextBox extends React.Component {
       };
     }
 
+    // notifications set up
     let temp = {};
     firebaseApp.database().ref('/followGroups/' + this.props.postData.postId).once('value', snapshot => {
       console.log('these people are following the post', snapshot.val());
       const followers = Object.keys(snapshot.val());
+      console.log('followers', followers);
       const memberIds = this.props.members.map(member => member.uid);
       followers.forEach(follower => {
         let unreadCount = firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId);

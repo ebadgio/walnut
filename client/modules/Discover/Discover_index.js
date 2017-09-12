@@ -4,19 +4,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Feed from '../Feed/Feed_index';
 import LeftSideBar from './Discover_Left_Sidebar_Container';
-import RightSideBar from './Discover_Right_Sidebar_Container';
-import ConversationCard from './Discover_My_Conversations_Card';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
-import {Sidebar, Button, Icon, Sticky, Loader} from 'semantic-ui-react';
-import firebaseApp from '../../firebase';
-import _ from 'underscore';
-import uuidv4 from 'uuid/v4';
 import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
 import Online from './Discover_Online';
 import FollowedPostsContainer from './Discover_My_Conversation_Container';
-import WalnutLoader from '../App/App_WalnutLoader';
 import ModalContainer from '../Post/Post_Modal_Container';
+import firebaseApp from '../../firebase';
+import _ from 'underscore';
 
 class Home extends React.Component {
   constructor() {
@@ -87,7 +82,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getConvos: (convos) => getMyConvosThunk(convos)(dispatch),
+  getConvos: (convos) => dispatch(getMyConvosThunk(convos)),
   addIds: (iDs) => dispatch({type: 'ADD_IDS', iDs: iDs}),
   getDiscoverContent: () => dispatch(discoverLoadThunk()),
   getDiscoverRefresh: (lastRefresh) => dispatch(discoverRefreshThunk(lastRefresh)),

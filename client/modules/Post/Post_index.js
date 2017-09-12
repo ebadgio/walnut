@@ -72,6 +72,8 @@ class Post extends React.Component {
         if (unreadCount > 0) {
           this.setState({unread: unreadCount});
           console.log('unread set to true');
+        } else {
+          this.setState({ unread: 0 });
         }
       }
     });
@@ -196,6 +198,10 @@ class Post extends React.Component {
     this.setState({downloadUrl: ''});
   }
 
+  changeUnreads() {
+    // TODO: unreads to 0
+  }
+
   render() {
     const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreview url={url} />) : [];
     return (
@@ -248,7 +254,7 @@ class Post extends React.Component {
           <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
           <Icon size="big" name="users" className="usersIcon" />
           <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
-          <Icon size="big" name="comments" className="commentIcon" onClick={() => this.props.openModal(this.props.postData)} />
+          <Icon size="big" name="comments" className="commentIcon" onClick={() => {this.props.openModal(this.props.postData); this.changeUnreads();}} />
         </div>
       </div>
     </div>

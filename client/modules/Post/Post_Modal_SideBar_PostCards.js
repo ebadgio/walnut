@@ -5,7 +5,6 @@ import { Card, Popup, Icon } from 'semantic-ui-react';
 import Linkify from 'linkifyjs/react';
 import dateStuff from '../../dateStuff';
 import firebaseApp from '../../firebase';
-import ModalContainer from '../Post/Post_Modal_Container';
 import _ from 'underscore';
 
 const defaults = {
@@ -36,34 +35,34 @@ class ConversationCard extends React.Component {
     super();
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const user = firebaseApp.auth().currentUser;
-    this.setState({ user: user, timeStamp: this.getUseDate(this.props.data.createdAt)});
+    this.setState({ user: user, timeStamp: this.getUseDate(this.props.data.createdAt) });
     const membersRef = firebaseApp.database().ref('/members/' + this.props.data.postId);
     membersRef.on('value', (snapshot) => {
-      const peeps =  _.values(snapshot.val());
+      const peeps = _.values(snapshot.val());
       const members = peeps.filter((peep) => typeof (peep) === 'object');
-      this.setState({membersCount: members.length, members: members});
+      this.setState({ membersCount: members.length, members: members });
     });
     const countRef = firebaseApp.database().ref('/counts/' + this.props.data.postId + '/count');
     countRef.on('value', (snapshot) => {
-      this.setState({count: snapshot.val()});
+      this.setState({ count: snapshot.val() });
     });
-        // notification stuff
 
-    // TODO: if open is true set unreads to null and state to null
-    // TODO: if open is false read unreads and set state accordingly
     const userId = firebaseApp.auth().currentUser.uid;
     firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.data.postId).on('value', snapshotB => {
-      const unreadCount =  snapshotB.val();
+      const unreadCount = snapshotB.val();
       if (!isNaN(unreadCount)) {
         if (unreadCount > 0) {
-          this.setState({unread: unreadCount});
+          this.setState({ unread: unreadCount });
           console.log('unread set to true');
+        } else {
+          this.setState({ unread: 0 });
         }
       }
     });
   }
+
 
   getUseDate(dateObj) {
     if (dateObj) {
@@ -101,6 +100,10 @@ class ConversationCard extends React.Component {
     return '-';
   }
 
+  changeUnreads() {
+    // TODO: unreads to 0
+  }
+
   render() {
     return (
             <div className="myConversationCard">
@@ -122,7 +125,7 @@ class ConversationCard extends React.Component {
                                 <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
                                 <Icon size="big" name="users" className="usersIconMini" />
                                 <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
-                                <Icon size="big" name="comments" className="commentIconMini" onClick={() => this.props.openModal(this.props.data)} />
+                                <Icon size="big" name="comments" className="commentIconMini" onClick={() => {this.props.openModal(this.props.data); this.changeUnreads();}} />
                             </div>
                         </div>
                     </Card.Content>

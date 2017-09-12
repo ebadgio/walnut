@@ -15,7 +15,6 @@ class ModalInstance extends React.Component {
     super(props);
     this.state = {
       members: [],
-      unread: 0,
       emojiIsOpen: false
     };
   }
@@ -43,7 +42,7 @@ class ModalInstance extends React.Component {
             <ModalHeader members={this.state.members} membersCount={this.state.membersCount} postData={this.props.postData}/>
           </Modal.Header>
           <Modal.Content scrolling className="scrollContentClass" id="scrolling">
-            <PostModalMessages commentBody={this.state.commentBody} />
+            <PostModalMessages />
           </Modal.Content>
           <Modal.Actions className="modalActions">
             <ModalTextBox members={this.state.members} postData={this.props.postData} handleChange={(e) => this.handleChange(e)} findEnter={() =>this.findEnter()} />

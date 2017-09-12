@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import firebaseApp from '../../firebase';
-import _ from 'underscore';
 import uuidv4 from 'uuid/v4';
-import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
 import ConversationCard from '../Discover/Discover_My_Conversations_Card';
 import { Divider } from 'semantic-ui-react';
 
@@ -16,25 +14,33 @@ class ModalSideBar extends React.Component {
   }
 
   componentDidMount() {
-    console.log('SIDEBAR MOUNTED', this.props);
-    if (this.props.open) {
-      if (this.props.currentUser) {
-        const followsRef = firebaseApp.database().ref('/follows/' + this.props.currentUser.firebaseId + '/' + this.props.currentCommunity);
-        followsRef.on('value', (snapshot) => {
-          if (snapshot.val()) {
-            console.log('got snapshot', snapshot.val());
-            const follows = _.pairs(snapshot.val());
-                      // this will filter down to only those postIds which are mapped to true
-            const myConvs = follows.filter((follow) => follow[1]).map((fol) => fol[0]);
-            if (myConvs) {
-              console.log('myConvs', myConvs);
-              this.props.getConvos(myConvs);
-              this.props.addIds(myConvs);
-            }
+    console.log('my conversation map', this.props.myConversations);
+    const userId = firebaseApp.auth().currentUser.uid;
+    const mappedConversations = this.props.myConversations.map((convo) => {
+      firebaseApp.database().ref('/unreads/' + userId + '/' + convo.postId).on('value', snapshotB => {
+        const unreadCount = snapshotB.val();
+        console.log('unread count', unreadCount);
+        if (!isNaN(unreadCount)) {
+          console.log('inside a return object');
+          if (unreadCount > 0) {
+            return {
+              ...convo,
+              unreadCount: unreadCount
+            };
+          } else {
+            return {
+              ...convo,
+              unreadCount: 0
+            };
           }
-        });
-      }
-    }
+        }
+      });
+    });
+    console.log('mapped conversation with unread', mappedConversations);
+    // TODO: map each post to get their unreads in its own object
+    // TODO: for loop through array and if they have unreads put it in its own array
+    // TODO: .sort on unreads and then concat the two array and use that in the maps
+    // TODO: eventually my convs must be sorted by last unread
   }
 
   render() {
@@ -74,7 +80,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getConvos: (convos) => getMyConvosThunk(convos)(dispatch),
   addIds: (iDs) => dispatch({type: 'ADD_IDS', iDs: iDs})
 });
 

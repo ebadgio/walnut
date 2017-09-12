@@ -1,6 +1,3 @@
-/**
- * Created by ebadgio on 8/15/17.
- */
 import axios from 'axios';
 import URL from '../../info';
 
