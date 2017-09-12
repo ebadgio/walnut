@@ -84,3 +84,7 @@
 .infoOuter {
     display: flex
 }
+
+#fileInputEditprofile {
+    display: none
+}

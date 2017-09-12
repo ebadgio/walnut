@@ -108,7 +108,7 @@ class ConversationCard extends React.Component {
     return (
             <div className="myConversationCard">
                 <Card className="miniPostCard">
-                    <Card.Content className="conversationCardContent">
+                  <Card.Content className="conversationCardContent" onClick={() => { this.props.openModal(this.props.data); this.changeUnreads(); }}>
                         <div className="conversationCardHeader">
                             <div className="conversationCardWrapper">
                                 <img className="conversationCardUserImage" src={this.props.data.pictureURL} />
@@ -125,7 +125,7 @@ class ConversationCard extends React.Component {
                                 <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
                                 <Icon size="big" name="users" className="usersIconMini" />
                                 <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
-                                <Icon size="big" name="comments" className="commentIconMini" onClick={() => {this.props.openModal(this.props.data); this.changeUnreads();}} />
+                                <Icon size="big" name="comments" className="commentIconMini" />
                             </div>
                         </div>
                     </Card.Content>

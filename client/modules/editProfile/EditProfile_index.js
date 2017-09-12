@@ -6,7 +6,7 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 import saveAboutThunk from '../../thunks/profile_thunks/saveAboutThunk';
 import './EditProfile.css';
 import superagent from 'superagent';
-import ReactUploadFile from 'react-upload-file';
+import $ from 'jquery';
 
 const options = [{text: 2010, value: 2010}, {text: 2011, value: 2011}, {text: 2012, value: 2012},
     {text: 2013, value: 2013}, {text: 2014, value: 2014}, {text: 2015, value: 2015},
@@ -77,9 +77,9 @@ class EditProfile extends React.Component {
     this.setState({company: e.target.value});
   }
 
-  handleUpload(file) {
-    console.log('this is the file', file);
-    this.setState({ file: file });
+  upload() {
+    const myFile = $('#fileInputEditprofile').prop('files');
+    this.setState({ file: myFile[0] });
   }
 
   saveImage() {
@@ -106,15 +106,6 @@ class EditProfile extends React.Component {
       value: this.state.location,
       onChange: this.handleChangeLocation,
       placeholder: 'ex. Mountain View'
-    };
-    const optionsForUpload = {
-      baseUrl: 'xxx',
-      multiple: false,
-      accept: 'image/*',
-      didChoose: (files) => {
-        console.log('inside edit profile upload');
-        this.handleUpload(files[0]);
-      },
     };
     return (
         <div className="editPage">
@@ -192,9 +183,8 @@ class EditProfile extends React.Component {
                 <div className="profilePicBox">
                    <img src={this.props.profilePic} className="proPic" />
                 </div>
-                <ReactUploadFile
-                    chooseFileButton={<Icon className="editPicButton" size="big" name="edit" />}
-                    options={optionsForUpload} />
+                <Icon id="fileUploadEditprofile" onClick={() => $('#fileInputEditprofile').trigger('click')} className="editPicButton" size="big" name="edit"  />
+                <input id="fileInputEditprofile" type="file" onChange={() => this.upload()} />
                 {this.state.file ? <Button className="uploadButton" onClick={() => { this.saveImage(); }}>Upload</Button> : <p></p>}
             </div>
             {/* <DirectoryCard*/}

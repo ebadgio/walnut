@@ -87,6 +87,7 @@ class Navbar extends React.Component {
       return (
             <div className="row" id="navBar">
               <Link className="navBarHome" to={'/walnuthome'} onClick={() => {
+                this.props.setHomeTrue()
                 this.handleClick(1);
                 this.setState({isOpen: true});
                 this.props.clearDirectory();
@@ -283,7 +284,8 @@ Navbar.propTypes = {
   history: PropTypes.object,
   user: PropTypes.string,
   updateCommunity: PropTypes.func,
-  clearDirectory: PropTypes.func
+  clearDirectory: PropTypes.func,
+  setHomeTrue: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -298,7 +300,8 @@ const mapDispatchToProps = (dispatch) => ({
   changeTab: (tab) => dispatch({type: 'CHANGE_NAVBAR_TAB', tab: tab}),
   onLogout: (his) => dispatch(signOutThunk(his)),
   updateCommunity: (img, title, oldT, newT, admins) => dispatch(updateCommunity(img, title, oldT, newT, admins)),
-  clearDirectory: () => dispatch({type: 'DIRECTORY_FRESH'})
+  clearDirectory: () => dispatch({type: 'DIRECTORY_FRESH'}),
+  setHomeTrue: () => dispatch({ type: 'WALNUT_READY'})
 });
 
 
