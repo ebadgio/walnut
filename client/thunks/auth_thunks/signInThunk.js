@@ -20,11 +20,10 @@ const signInThunk = (email, password, redirect) => (dispatch) => {
       })
       .then((res) => {
         dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
-        setTimeout(() => dispatch({type: 'WALNUT_READY'}), 1500);
-        // redirect('/community/' + res.data.user.currentCommunity.title.split(' ').join('') + '/discover');
-        // history.replace('/');
-        // console.log('history', history);
-        // axios.get(URL);
+        axios.get(URL + 'auth/userinreq')
+        .then(() => {
+          dispatch({ type: 'WALNUT_READY' });
+        });
       });
     })
   .catch(function(error) {
