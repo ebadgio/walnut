@@ -119,7 +119,7 @@ router.post('/upload/community', upload.single('community'), (req, res) => {
 
 router.post('/upload/post', upload.single('attach'), (req, res) => {
   console.log('upload', req.file);
-  console.log(req.body);
+  console.log(req);
   // console.log(JSON.parse(req.body.tags));
   console.log('thththththththththt', req.body.lastRefresh);
   let newTags;

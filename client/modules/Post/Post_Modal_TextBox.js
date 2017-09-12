@@ -8,9 +8,9 @@ import $ from 'jquery';
 import _ from 'underscore';
 import uuidv4 from 'uuid/v4';
 import { Picker } from 'emoji-mart';
-import ReactUploadFile from 'react-upload-file';
 import FileModal from './Post_Modal_File_Uploader.js';
 import superagent from 'superagent';
+import URL from '../../info';
 
 class ModalTextBox extends React.Component {
   constructor(props) {
@@ -21,15 +21,6 @@ class ModalTextBox extends React.Component {
       typers: [],
       emojiIsOpen: false,
       file: '',
-      optionsForUploadModal: {
-        baseUrl: 'xxx',
-        multiple: false,
-        accept: 'image/*',
-        didChoose: (files) => {
-          console.log('inside comment upload');
-          this.handleUploadModal(files[0]);
-        },
-      }
     };
   }
 
@@ -195,7 +186,7 @@ class ModalTextBox extends React.Component {
 
   handleAwsUpload(body) {
     this.setState({commentBody: body});
-    console.log('file uploader text', body);
+    console.log('file uploader text', body, this.state.file);
     superagent.post('/aws/upload/comment')
       .attach('attach', this.state.file)
       .end((err, res) => {
@@ -207,6 +198,11 @@ class ModalTextBox extends React.Component {
         this.handleClick(this.props.postData.postId, res.body.attachment);
         this.setState({file: ''});
       });
+  }
+
+  upload() {
+    const myFile = $('#fileInputConversation').prop('files');
+    this.setState({ file: myFile[0]});
   }
 
   render() {
@@ -263,15 +259,8 @@ class ModalTextBox extends React.Component {
               />
           </Form>
           <div className="actionsTextBox">
-            <ReactUploadFile
-                className="fileUploadModal"
-                chooseFileButton={<Icon className="attachFileIconModal" name="attach" size="large" />}
-                options={this.state.optionsForUploadModal} />
-              {/* {(this.state.file !== '') ?
-              <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}
-                onChange={(e) => this.changeFileName(e.target.value)} />
-              :
-              null} */}
+            <Icon id="fileUploadConversation" onClick={() => $('#fileInputConversation').trigger('click')} className="attachFileIconModal" name="attach" size="large"/>
+            <input id="fileInputConversation" type="file" onChange={() => this.upload()} />
             <Icon onClick={() => this.openEmojiPicker()} size="big" name="smile" className="emojiPicker" />
           </div>
         </div>

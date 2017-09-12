@@ -727,7 +727,7 @@ iframe {
     padding: 1% !important;
     box-shadow: none !important;
     background: #FAFAFA !important;
-
+    border: 1px solid #b3b5c1 !important;
 }
 
 .downloadCardComment:hover {
@@ -828,4 +828,12 @@ body ::-webkit-scrollbar {
 
 .closingButton:hover {
     color: #5bc0e3 !important;
+}
+
+#fileInputConversation {
+    display: none
+}
+
+#fileUploadConversation {
+    margin-right: 9px !important
 }

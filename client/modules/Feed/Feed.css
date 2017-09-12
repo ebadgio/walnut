@@ -266,3 +266,7 @@
 .postLoader {
     margin-top: 59px !important;
 }
+
+#fileInputNewpost {
+    display: none
+}

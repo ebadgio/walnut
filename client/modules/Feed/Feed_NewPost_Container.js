@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TagPrefContainer from './Feed_NewPost_TagPref_Container';
 import newPostThunk from '../../thunks/post_thunks/newPostThunk';
-import ReactUploadFile from 'react-upload-file';
+import $ from 'jquery';
 import { Icon, Button, TextArea, Form, Divider } from 'semantic-ui-react';
 import superagent from 'superagent';
 import './Feed.css';
@@ -23,14 +23,6 @@ class NewPostContainer extends React.Component {
       postBody: '',
       newFileName: null,
       file: '',
-      optionsForUpload: {
-        baseUrl: 'xxx',
-        multiple: false,
-        didChoose: (files) => {
-          console.log('inside new post upload');
-          this.handleUpload(files[0]);
-        },
-      }
     };
   }
 
@@ -87,15 +79,15 @@ class NewPostContainer extends React.Component {
         this.setState({ postBody: '', file: ''});
         this.props.clearPostTag();
       } else {
+        // TODO: pop up on empty post
         alert('Oops, post is empty');
       }
     }
-    // this.props.handleClose();
   }
 
-  handleUpload(file) {
-    console.log(file);
-    this.setState({file: file});
+  upload() {
+    const myFile = $('#fileInputNewpost').prop('files');
+    this.setState({ file: myFile[0] });
   }
 
   changeFileName(name) {
@@ -133,11 +125,8 @@ class NewPostContainer extends React.Component {
         </div>
           <Divider />
           <div className="row newPostFooter">
-            <ReactUploadFile
-              className="fileUpload"
-              style={{width: '80px', height: '40px'}}
-              chooseFileButton={<Icon className="attachFileIcon" name="attach" size="large" />}
-              options={this.state.optionsForUpload}/>
+            <Icon id="fileUploadNewpost" onClick={() => $('#fileInputNewpost').trigger('click')} className="attachFileIcon" name="attach" size="large" />
+            <input id="fileInputNewpost" type="file" onChange={() => this.upload()} />
               {(this.state.file !== '') ?
               <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}
               onChange={(e) => this.changeFileName(e.target.value)}/>
