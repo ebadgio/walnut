@@ -7,7 +7,6 @@ import firebaseApp from '../../../client/firebase';
 import adminApp from '../../firebaseAdmin';
 
 router.get('/user', (req, res) => {
-  console.log('user', req.user);
   User.findById(req.user._id)
       .populate('communities')
       .populate('currentCommunity')
@@ -16,8 +15,6 @@ router.get('/user', (req, res) => {
         populate: {path: 'admins defaultTags users'},
       })
       .then((response) => {
-        console.log('inside /db/user');
-        console.log(response);
         res.json({data: response});
       })
       .catch((err) => {
@@ -27,7 +24,6 @@ router.get('/user', (req, res) => {
 });
 
 router.post('/create/community', (req, res) => {
-  console.log('this is the backend route', req.body.otherTags);
   let userEnd;
   let commEnd;
   const tagModels = req.body.otherTags.map((filter) =>
@@ -104,7 +100,6 @@ router.post('/join/community', (req, res) => {
             user.communities.push(req.body.communityId);
           }
           user.currentCommunity = req.body.communityId;
-          console.log('comm id', req.body.communityId);
           const commPref = user.preferences.filter((pref) => pref.community === req.body.communityId);
           if (commPref.length === 0 || commPref[0].pref.length === 0) {
             const pref = {
@@ -135,14 +130,11 @@ router.post('/join/community', (req, res) => {
 });
 
 router.post('/toggle/community', (req, res) => {
-  console.log(req.body);
   User.findById(req.user._id)
         .then((user) => {
-          console.log('user', user);
           user.currentCommunity = req.body.communityId;
           const tmp = user.preferences.filter((pref) =>
                 (pref.community === req.body.communityId));
-          console.log(tmp);
           user.communityPreference = tmp[0].pref;
           user.markModified('currentCommunity');
           user.markModified('communityPreference');
@@ -217,14 +209,12 @@ router.post('/toggle/community', (req, res) => {
 router.post('/toggle/checked', (req, res) => {
   User.findById(req.user._id)
         .then((response) => {
-          console.log(response);
           if (response.communityPreference.includes(req.body.tagId)) {
             const tmpPref = response.preferences.filter((pref) =>(pref.community.toString() === req.user.currentCommunity.toString()))[0].pref;
             response.preferences.filter((pref) =>(pref.community.toString() === req.user.currentCommunity.toString()))[0].pref.splice(tmpPref.indexOf(req.body.tagId), 1);
           } else {
             response.preferences.filter((pref) => (pref.community.toString() === req.user.currentCommunity.toString()))[0].pref.push(req.body.tagId);
           }
-          console.log(response.preferences[0].pref);
           response.communityPreference = response.preferences.filter((pref) => (pref.community.toString() === req.user.currentCommunity.toString()))[0].pref;
           response.markModified('communityPreference');
           response.markModified('preferences');
@@ -240,7 +230,6 @@ router.post('/toggle/checked', (req, res) => {
                 })
                 .then((user) => {
                   let posts = [];
-                  console.log('user obj', user.communityPreference);
                   const filter = user.communityPreference.length > 0 ? { tags: { $in: user.communityPreference }, community: user.currentCommunity } : { community: user.currentCommunity };
                   Post.find(filter)
                         .limit(10)

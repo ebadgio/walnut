@@ -38,12 +38,10 @@ class Login extends React.Component {
     this.setState({rEmail: e.target.value});
   }
   fbLogin() {
-    console.log('worked');
     this.props.fbLogin();
   }
 
   googleLogin() {
-    console.log('worked');
     this.props.googleLogin();
   }
 
@@ -74,7 +72,6 @@ class Login extends React.Component {
     if (this.state.rEmail) {
       const self = this;
       firebase.auth().sendPasswordResetEmail(this.state.rEmail).then(() => {
-        console.log('email is sent');
         self.setState({isChanging: true});
         setTimeout(() => {
           self.setState({isChanging: false});

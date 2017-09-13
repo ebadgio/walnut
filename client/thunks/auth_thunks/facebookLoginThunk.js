@@ -8,10 +8,8 @@ const facebookLoginThunk = (dispatch) => {
   firebaseApp.auth().signInWithPopup(provider).then(function(result) {
     const token = result.credential.accessToken;
     const user = result.user;
-    console.log(result, token, user);
     firebase.auth().currentUser.getToken(true)
     .then(function(idToken) {
-      console.log('idToken', idToken);
       axios.post(URL + '/auth/facebook', {
         token: idToken
       }).catch(function(error) {

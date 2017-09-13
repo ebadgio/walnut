@@ -3,10 +3,8 @@ import URL from '../../info';
 
 const getMyConvosThunk = (convos) => (dispatch) => {
   const param = convos.join('+');
-  console.log('params frontend', param);
   axios.get(URL + 'db/get/myconversations/' + param)
     .then((response) => {
-      console.log(response, response.data.posts);
       dispatch({type: 'GET_MY_CONVOS_DONE', posts: response.data.posts });
     })
     .catch((error) => {

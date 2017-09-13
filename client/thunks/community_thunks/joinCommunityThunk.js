@@ -7,7 +7,6 @@ const joinCommunityThunk = (id) => (dispatch) => {
     communityId: id
   })
     .then((response) => {
-      console.log('front end response', response);
       dispatch({type: 'GET_USER_DATA_DONE', user: response.data.user});
     })
     .catch((err) => {

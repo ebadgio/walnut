@@ -468,3 +468,10 @@ button.ui.button > input {
     }
 }
 
+#fileInputEditComm {
+    display: none
+}
+
+#fileInputNewComm {
+    display: none
+}

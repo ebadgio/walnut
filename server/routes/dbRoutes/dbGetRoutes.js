@@ -30,7 +30,6 @@ router.get('/app', (req, res) => {
 });
 
 router.get('/allcommunities', (req, res) => {
-  console.log('hehehehehhe');
   Community.find()
       .then((communities) => {
         res.json({data: communities});
@@ -93,7 +92,6 @@ router.get('/discoverinfo', (req, res) => {
 });
 
 router.get('/discoverrefresh', (req, res) => {
-  console.log('date comparison', new Date() > new Date(req.query.lastRefresh));
   const filters = JSON.parse(req.query.filters);
   let filter;
   let posts = [];
@@ -132,7 +130,6 @@ router.get('/discoverrefresh', (req, res) => {
 });
 
 router.get('/next10', (req, res) => {
-  console.log(req.query.filters);
   const filters = JSON.parse(req.query.filters);
   Community.findById(req.user.currentCommunity)
         .populate('defaultTags')

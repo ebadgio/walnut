@@ -40,7 +40,6 @@ class Directory extends React.Component {
   }
 
   handleChange(value) {
-    // console.log('it works!', value);
     const substring = (value ? value : '').toLowerCase();
     const filteredCards = this.props.users.filter((user) => {return user.fullName.toLowerCase().includes(substring);});
     this.setState({query: substring});

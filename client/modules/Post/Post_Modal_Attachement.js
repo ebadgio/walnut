@@ -19,7 +19,6 @@ class AttachmentPreviewComment extends React.Component {
   }
 
   downloadS3(url, name) {
-    console.log('url download', url, name);
     fileDownload(url, name);
   }
 
@@ -29,7 +28,6 @@ class AttachmentPreviewComment extends React.Component {
 
   closeLightbox() {
     this.setState({ lightBoxData: '' });
-    console.log('this is closed', this.state.lightBoxData);
   }
 
   whatShouldIRender() {
@@ -91,7 +89,6 @@ class AttachmentPreviewComment extends React.Component {
 
   render() {
     const snippet = this.whatShouldIRender();
-    console.log('am rendering incorrectly');
     return (
             <div>
             <Lightbox

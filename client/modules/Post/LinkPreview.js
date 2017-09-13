@@ -23,7 +23,6 @@ class LinkPreview extends React.Component {
     })
     .then((response) => {
       if (this.refs.myRef) {
-        console.log('metadata', response.data.meta);
         this.setState({ meta: response.data.meta});
       }
     })

@@ -69,13 +69,11 @@ SuperCluster.prototype = {
     },
 
     getClusters: function (bbox, zoom) {
-        console.log(this.poins);
         var tree = this.trees[this._limitZoom(zoom)];
         var ids = tree.range(lngX(bbox[0]), latY(bbox[3]), lngX(bbox[2]), latY(bbox[1]));
         var clusters = [];
         for (var i = 0; i < ids.length; i++) {
             var c = tree.points[ids[i]];
-            console.log( this.points[c.id]);
             clusters.push(c.numPoints ? getClusterJSON(c) : this.points[c.id]);
         }
         return clusters;

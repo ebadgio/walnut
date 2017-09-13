@@ -134,17 +134,13 @@ class ModalTextBox extends React.Component {
     // notifications set up
     let temp = {};
     firebaseApp.database().ref('/followGroups/' + this.props.postData.postId).once('value', snapshot => {
-      console.log('these people are following the post', snapshot.val());
       const followers = Object.keys(snapshot.val());
-      console.log('followers', followers);
       const memberIds = this.props.members.map(member => member.uid);
       followers.forEach(follower => {
         let unreadCount = firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId);
-        console.log('got in here?', memberIds, follower, snapshot.val()[follower]);
         if (snapshot.val()[follower] && !memberIds.includes(follower)) {
           firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId).once('value', snapshotB => {
             let unreadCount = snapshotB.val();
-            console.log('unreadCount', snapshotB.val());
             temp['/unreads/' + follower + '/' + this.props.postData.postId] = !isNaN(unreadCount) ? unreadCount + 1 : 1;
             firebaseApp.database().ref().update(temp);
           });
@@ -166,7 +162,6 @@ class ModalTextBox extends React.Component {
   }
 
   addEmoji(emoj) {
-    console.log('this is the emoji', emoj.native);
     this.setState({ emojiIsOpen: false, commentBody: this.state.commentBody + emoj.native});
     // this.handleClick(this.props.postData.postId, emoj.native);
   }
@@ -176,7 +171,6 @@ class ModalTextBox extends React.Component {
   }
 
   handleUploadModal(file) {
-    console.log('iniside here');
     this.setState({file: file});
   }
 
@@ -186,7 +180,6 @@ class ModalTextBox extends React.Component {
 
   handleAwsUpload(body) {
     this.setState({commentBody: body});
-    console.log('file uploader text', body, this.state.file);
     superagent.post('/aws/upload/comment')
       .attach('attach', this.state.file)
       .end((err, res) => {
@@ -194,7 +187,6 @@ class ModalTextBox extends React.Component {
           console.log(err);
           alert('failed uploaded!');
         }
-        console.log('file upload response', res.body);
         this.handleClick(this.props.postData.postId, res.body.attachment);
         this.setState({file: ''});
       });

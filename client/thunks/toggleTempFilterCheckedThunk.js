@@ -9,7 +9,6 @@ const toggleFilterCheckedThunk = (useFilters) => (dispatch) => {
     useFilters: useFilters
   })
         .then((response) => {
-          console.log('backend response', response);
           if (response.data.hasMore) {
             dispatch({type: 'HAS_MORE'});
           } else {

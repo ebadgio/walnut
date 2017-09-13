@@ -8,21 +8,17 @@ import adminApp from '../../firebaseAdmin';
 
 router.post('/post', (req, res) => {
   const tagModels = req.body.newTags.map((filter) => {
-    console.log(filter);
     return new Tag(
       {
         name: filter.toUpperCase()
       });
   });
-  console.log(tagModels);
   let savedTags;
   let newTags;
   Promise.all(tagModels.map((tag) => tag.save()))
   .then((values) => {
     newTags = values.map((v) => v._id);
     savedTags = newTags.concat(req.body.postTags);
-    console.log('it is here !!!!!!!!!');
-    console.log(savedTags);
     const newPost = new Post({
       content: req.body.postBody,
       createdAt: new Date(),
@@ -253,7 +249,6 @@ router.post('/about', (req, res) => {
              globalResponse.location.homeTown = [jsonp.geometry.location.lng,
              jsonp.geometry.location.lat];
            }
-           console.log('user global save about', globalResponse);
            return globalResponse.save();
          })
           .then((savedUser) => {

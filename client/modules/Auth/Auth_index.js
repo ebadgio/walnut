@@ -25,9 +25,7 @@ class Auth extends React.Component {
       if (user && !user.emailVerified) {
         const timer = setInterval(() => {
           user.reload();
-          console.log(user);
           if (user.emailVerified) {
-            console.log('it is verified !!!!!');
             this.props.onVerified();
             history.replace('/walnuthome');
             clearInterval(timer);
@@ -40,7 +38,6 @@ class Auth extends React.Component {
         // history.push('/walnuthome');
       } else {
         if (user.emailVerified) {
-          console.log('calling this get User');
           this.props.getUser();
           const isUserInCommunity = localStorage.getItem('isUserInCommunity');
           if (this.props.isCreated && !isUserInCommunity) {

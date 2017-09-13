@@ -5,7 +5,6 @@ import axios from 'axios';
 import URL from '../../info';
 
 const getUsersThunk = () => (dispatch) => {
-  console.log('got to thunk');
   axios.get(URL + 'db/get/allusers')
     .then((response) => {
     //   console.log('response.data', response.data);

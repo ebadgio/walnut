@@ -83,7 +83,10 @@ app.use(session({
 }));
 
 app.use(function(req, res, next) {
-  console.log('this is inside the use', req.session.userMToken);
+  console.log('use function', req.session.userMToken);
+  if(req.user) {
+    next()
+  }
   if (req.session.userMToken) {
     // const mongoIdByte = CryptoJS.AES.decrypt(req.session.userMToken.toString(), 'secret');
     // const mongoId = mongoIdByte.toString(CryptoJS.enc.Utf8);
@@ -100,16 +103,11 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res, next) {
-  console.log('a');
   if (!req.user) {
-    console.log('b');
     res.redirect('/login')
   } 
   else {
-    console.log('d');
-    console.log(req.user);
     if (req.user.currentCommunity) {
-      console.log('c');
       User.findById(req.user._id)
           .populate('currentCommunity')
           .then((user) => {
@@ -118,14 +116,12 @@ app.get('/', function(req, res, next) {
           })
     }
     else {
-      console.log('e');
       res.redirect('/walnuthome')
     }
   }
 });
 
 app.post('/auth/logout', function(req, res) {
-    console.log('logged out before destroy', req.session);
     mongoStore.destroy(req.session.id, function() {
       req.session.destroy();
       res.json({success:true});

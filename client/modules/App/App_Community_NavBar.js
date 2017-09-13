@@ -37,7 +37,6 @@ class Navbar extends React.Component {
   }
 
   navBarChoice() {
-    console.log('this is the window loc', window.location.href.split('/')[window.location.href.split('/').length - 1] );
     if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'discover') {
       this.setState({ pos: 1 });
     } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'directory') {

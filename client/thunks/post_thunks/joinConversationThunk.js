@@ -6,8 +6,6 @@ const joinConversationThunk = (postId) => (dispatch) => {
     postId: postId,
   })
     .then((response) => {
-        // dispatch get user data refresh only with new conversations populated
-      console.log('front end save response', response.data.success);
     })
     .catch((err)=> {
       console.log('error inside join conversation thunk', err);

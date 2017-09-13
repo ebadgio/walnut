@@ -5,7 +5,6 @@ import URL from '../../info';
 const discoverRefreshThunk = (lastRefresh, filters) => (dispatch) => {
   axios.get(URL + 'db/get/discoverrefresh?lastRefresh=' + lastRefresh + '&filters=' + JSON.stringify(filters))
     .then((response) => {
-      console.log('discover refresh thunk response', response);
       dispatch({
         type: 'GET_DISCOVER_DATA_REFRESH',
         posts: response.data.posts,

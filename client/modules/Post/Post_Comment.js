@@ -53,7 +53,6 @@ class Comment extends React.Component {
       const newBody1 = this.props.content.substr(0, idx);
       const newBody2 = this.props.content.substr((idx + urls[0].length), this.props.content.length);
       const newLink = urls[0];
-      console.log('post body', newBody1, newBody2);
       this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink, urlName: this.urlNamer(newLink) });
     } else {
       this.setState({ messageBody: this.props.content });

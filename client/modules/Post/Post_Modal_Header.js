@@ -20,7 +20,6 @@ class ModalHeader extends React.Component {
 
   componentDidMount() {
     const user = firebaseApp.auth().currentUser;
-    console.log('setting user to state', user);
     this.setState({user: user});
     const membersRef = firebaseApp.database().ref('/members/' + this.props.postData.postId);
     membersRef.on('value', (snapshot) => {
@@ -33,11 +32,9 @@ class ModalHeader extends React.Component {
 
 
   joinConversation() {
-    console.log('inside here! firebase connection');
     const updates = {};
     updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = true;
     updates['/followGroups/' + this.props.postData.postId + '/' + this.state.user.uid] = true;
-    console.log('updates', updates);
     firebaseApp.database().ref().update(updates);
   }
 

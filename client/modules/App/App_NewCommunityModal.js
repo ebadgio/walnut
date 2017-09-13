@@ -1,11 +1,9 @@
-/**
- * Created by ebadgio on 8/10/17.
- */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
 import { Label, Input, Modal, Button, Icon } from 'semantic-ui-react';
-import ReactUploadFile from 'react-upload-file';
+import $ from 'jquery';
 import superagent from 'superagent';
 import { connect } from 'react-redux';
 
@@ -50,7 +48,6 @@ class NewCommunityModal extends React.Component {
             console.log(err);
             alert('failed uploaded!');
           }
-          console.log('return on front end for aws create', res.body);
           this.props.updateUser(res.body.user);
           this.props.updateCommunities(res.body.communities);
           this.setState({ open: false, titleValue: '', otherTags: [] });
@@ -61,15 +58,6 @@ class NewCommunityModal extends React.Component {
     }
   }
 
-  handleUpload(file) {
-    // TODO: front end picture preview upload
-    console.log('this is the file', file);
-    this.setState({file: file});
-    const reader = new FileReader();
-    const url = reader.readAsDataURL(file);
-    console.log('cheeky url', url, reader.result);
-  }
-
   saveImage() {
     superagent.post('/aws/upload/community')
     .attach('community', this.state.file)
@@ -78,20 +66,16 @@ class NewCommunityModal extends React.Component {
         console.log(err);
         alert('failed uploaded!');
       }
-      console.log('got to the end of it all');
       this.setState({pic: res.body.pictureURL, file: {}});
     });
   }
 
+  upload() {
+    const myFile = $('#fileInputNewComm').prop('files');
+    this.setState({ file: myFile[0] });
+  }
+
   render() {
-    const optionsForUpload = {
-      baseUrl: 'xxx',
-      multiple: false,
-      accept: 'image/*',
-      didChoose: (files) => {
-        this.handleUpload(files[0]);
-      },
-    };
     return (
         <Modal size={'small'}
                basic
@@ -106,10 +90,8 @@ class NewCommunityModal extends React.Component {
             <Modal.Content scrolling>
                 {/* <img className="communityImgUpload" src={'http://www.sessionlogs.com/media/icons/defaultIcon.png'} /> */}
                     <div id="communityUploaderCreate">
-                      <ReactUploadFile
-                          style={{width: '80px', height: '40px'}}
-                          chooseFileButton={<Button icon="plus" />}
-                          options={optionsForUpload}/>
+                      <Icon id="fileUploadNewComm" onClick={() => $('#fileInputNewComm').trigger('click')} className="editPicButton" size="big" name="edit" />
+                      <input id="fileInputNewComm" type="file" onChange={() => this.upload()} />
                     </div>
                 <Input
                        className="titleInput"

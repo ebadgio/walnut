@@ -46,7 +46,6 @@ class WalnutHomeContainer extends React.Component {
   }
 
   handleSubmit(image, titleValue, defaultFilters) {
-    console.log('filters in handle submit ', defaultFilters);
     this.props.createCommunity(image, titleValue, defaultFilters);
     // window.location.reload();
   }

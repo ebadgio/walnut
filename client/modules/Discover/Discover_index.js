@@ -23,24 +23,15 @@ class Home extends React.Component {
 
   componentDidMount() {
     const urls = this.props.location.pathname;
-    console.log(urls);
     localStorage.setItem('url', urls);
     sessionStorage.setItem('url', urls);
     localStorage.setItem('home', urls);
     if (this.props.isReady && (this.props.posts.length === 0)) {
-      console.log('in here');
       this.props.getDiscoverContent();
     } else {
       this.props.getDiscoverRefresh(this.props.lastRefresh, this.props.useFilters);
     }
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   console.log('yoyoyoyoyo');
-  //   if (nextProps.isReady && !this.props.isReady) {
-  //     this.props.getDiscoverContent();
-  //   }
-  // }
 
   render() {
     return (

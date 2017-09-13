@@ -1,11 +1,9 @@
 
-// COMMUNITY ADMIN MODAL
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
 import { Label, Input, Modal, Button, Icon, List } from 'semantic-ui-react';
-import ReactUploadFile from 'react-upload-file';
+import $ from 'jquery';
 import superagent from 'superagent';
 import Select from 'react-select';
 
@@ -55,7 +53,6 @@ class EditCommunityModal extends React.Component {
               console.log(err);
               alert('failed uploaded!');
             }
-            console.log(res.body.pictureURL);
             this.props.handleUpdate(res.body.pictureURL, this.state.titleValue, oldTags, newTags, this.state.admins);
           });
       } else {
@@ -65,8 +62,9 @@ class EditCommunityModal extends React.Component {
     }
   }
 
-  handleUpload(file) {
-    this.setState({file: file});
+  upload() {
+    const myFile = $('#fileInputEditComm').prop('files');
+    this.setState({ file: myFile[0] });
   }
 
   saveImage() {
@@ -84,7 +82,6 @@ class EditCommunityModal extends React.Component {
   handleAdmin(user) {
     if (this.state.admins.length > 1) {
       const newState = this.state.admins.filter((u) => u._id !== user._id);
-      console.log(newState);
       this.setState({admins: newState});
     }
   }
@@ -105,15 +102,6 @@ class EditCommunityModal extends React.Component {
   }
 
   render() {
-    const optionsForUpload = {
-      baseUrl: 'xxx',
-      multiple: false,
-      accept: 'image/*',
-      didChoose: (files) => {
-        console.log(files);
-        this.handleUpload(files[0]);
-      },
-    };
     return (
         <Modal size={'small'}
                basic
@@ -125,10 +113,8 @@ class EditCommunityModal extends React.Component {
             </Modal.Header>
             <Modal.Content scrolling>
                 <img className="communityImgUpload" src={this.state.image} />
-                    <ReactUploadFile
-                        style={{width: '80px', height: '40px'}}
-                        chooseFileButton={<Button icon="plus" />}
-                        options={optionsForUpload}/>
+                <Icon id="fileUploadEditComm" onClick={() => $('#fileInputEditComm').trigger('click')} className="editPicButton" size="big" name="edit" />
+                <input id="fileInputEditComm" type="file" onChange={() => this.upload()} />
                         {this.state.file ? <button value="save" onClick={() => {this.saveImage();}}>Upload</button> : <p></p>}
                 <Input
                        className="titleInput"
