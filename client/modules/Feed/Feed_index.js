@@ -10,10 +10,13 @@ import newLikeThunk from '../../thunks/post_thunks/newLikeThunk';
 import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
 import NewPostContainer from './Feed_NewPost_Container.js';
 import './Feed.css';
+import $ from 'jquery';
 import { Loader, Button, Modal, Icon, Header } from 'semantic-ui-react';
 
 
 let refresh;
+let scrollPos;
+let shouldRefire = true;
 const curScroll = 0;
 
 class Feed extends React.Component {
@@ -27,16 +30,33 @@ class Feed extends React.Component {
     };
   }
 
+  componentDidMount() {
+    scrollPos = setInterval(() => { window.addEventListener('scroll', this.handleScroll()); }, 1000);
+  }
+
   componentWillUnmount() {
     clearInterval(refresh);
+    clearInterval(scrollPos);
   }
 
-  mofoMouseOver() {
-    refresh = setInterval(() => { this.props.getRefresh(this.props.lastRefresh, this.props.useFilters); }, 5000);
-  }
-
-  mofoMouseOff() {
-    clearInterval(refresh);
+  handleScroll() {
+    const winHeight = $(window).height();
+    const docHeight = $(document).height();
+    const value = $(window).scrollTop();
+    const max = docHeight - winHeight;
+    const percent = (value / max) * 100;
+    console.log('window scroll %', percent);
+    if(percent > 22) {
+      console.log('killed refresh');
+      shouldRefire = true;
+      clearInterval(refresh);
+    } else {
+      if(shouldRefire) {
+        console.log('restarted restarted');
+        shouldRefire = false;
+        refresh = setInterval(() => { console.log('inside the set interval'); this.props.getRefresh(this.props.lastRefresh, this.props.useFilters); }, 10000);
+      }
+    }
   }
 
   toggleFilterPref() {
@@ -80,7 +100,6 @@ class Feed extends React.Component {
               loader={<Loader active inline="centered" />}
               useWindow
           >
-            <div className="deMofoSaviour" onMouseOver={() => this.mofoMouseOver()} onMouseLeave={() => this.mofoMouseOff()}></div>
               {this.props.data.posts.map((post) => (
                   <Post ref="card"
                         key={post.postId}
