@@ -81,6 +81,7 @@
 }
 
 .conversationCardContent {
+    cursor: pointer;
     color: #fafafa !important;
   padding: 6px !important;
   padding-bottom: 0px !important;
@@ -160,6 +161,7 @@
 
 .miniPostCard:hover {
     background: rgba(0, 0, 0, 0.40) !important;
+    border: solid 1px #5bc0e3 !important;
 }
 
 .itemGroupOnline {
