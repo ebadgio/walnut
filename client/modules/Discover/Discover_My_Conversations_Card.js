@@ -105,6 +105,7 @@ class ConversationCard extends React.Component {
   }
 
   switching() {
+    this.props.handleSelect();
     const updates = {};
     updates['/members/' + this.props.data.postId + '/' + this.state.user.uid] = null;
     firebaseApp.database().ref().update(updates);
@@ -152,7 +153,8 @@ class ConversationCard extends React.Component {
 ConversationCard.propTypes = {
   data: PropTypes.object,
   user: PropTypes.object,
-  toggleModal: PropTypes.func
+  toggleModal: PropTypes.func,
+  handleSelect: PropTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => ({

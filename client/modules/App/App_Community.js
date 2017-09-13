@@ -44,7 +44,7 @@ class Community extends React.Component {
         );
     }
     return (
-      <WalnutLoader />
+      <WalnutLoader community />
     );
   }
 }

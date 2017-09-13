@@ -159,6 +159,12 @@
     border: solid 1px #fafafa !important;
 }
 
+.miniPostCardCurrent {
+    background: rgba(0, 0, 0, 0.40) !important;
+    border: solid 1px #5bc0e3 !important;
+    box-shadow: none !important
+}
+
 .miniPostCard:hover {
     background: rgba(0, 0, 0, 0.40) !important;
     border: solid 1px #5bc0e3 !important;

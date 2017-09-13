@@ -384,12 +384,16 @@ button.ui.button > input {
 
 .walnutHead {
     color: #3a3a3a;
+    text-align: center;
     font-size: -webkit-xxx-large;
 }
 
+.loadingCommunity {
+    text-align: center;
+    color: #3a3a3a;
+}
+
 .loadingContainer {
-    display: flex;
-    justify-content: center;
     height: 300px;
     width: 300px;
 }
