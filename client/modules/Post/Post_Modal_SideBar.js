@@ -14,33 +14,6 @@ class ModalSideBar extends React.Component {
   }
 
   componentDidMount() {
-    console.log('my conversation map', this.props.myConversations);
-    const userId = firebaseApp.auth().currentUser.uid;
-    const mappedConversations = this.props.myConversations.map((convo) => {
-      firebaseApp.database().ref('/unreads/' + userId + '/' + convo.postId).on('value', snapshotB => {
-        const unreadCount = snapshotB.val();
-        console.log('unread count', unreadCount);
-        if (!isNaN(unreadCount)) {
-          console.log('inside a return object');
-          if (unreadCount > 0) {
-            return {
-              ...convo,
-              unreadCount: unreadCount
-            };
-          } else {
-            return {
-              ...convo,
-              unreadCount: 0
-            };
-          }
-        }
-      });
-    });
-    console.log('mapped conversation with unread', mappedConversations);
-    // TODO: map each post to get their unreads in its own object
-    // TODO: for loop through array and if they have unreads put it in its own array
-    // TODO: .sort on unreads and then concat the two array and use that in the maps
-    // TODO: eventually my convs must be sorted by last unread
   }
 
   render() {

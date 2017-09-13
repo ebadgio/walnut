@@ -18,7 +18,7 @@ class FollowedPostsContainer extends React.Component {
 
 
   componentWillMount() {
-    console.log('my conversation map', this.props.myConversations);
+    // console.log('my conversation map', this.props.myConversations);
     // TODO: map each post to get their unreads in its own object
     // TODO: for loop through array and if they have unreads put it in its own array
     // TODO: .sort on unreads and then concat the two array and use that in the maps
@@ -38,6 +38,7 @@ class FollowedPostsContainer extends React.Component {
   }
 
   componentDidMount() {
+    console.log('yes');
     if (this.props.currentUser) {
       const followsRef = firebaseApp.database().ref('/follows/' + this.props.currentUser.firebaseId + '/' + this.props.currentCommunity);
       followsRef.on('value', (snapshot) => {
@@ -53,10 +54,6 @@ class FollowedPostsContainer extends React.Component {
         }
       });
     }
-  }
-
-
-  componentWillReceiveProps(nextProps) {
   }
 
 
@@ -87,7 +84,7 @@ class FollowedPostsContainer extends React.Component {
          </Sidebar>
          <Sidebar.Pusher>
            <div className="rightContainer">
-             <Button onClick={() => {this.toggleVisibility(); this.onOpen();}} className="followedPostsButton">
+             <Button onClick={() => {this.toggleVisibility(); }} className="followedPostsButton">
                Followed Posts
              </Button>
            </div>
