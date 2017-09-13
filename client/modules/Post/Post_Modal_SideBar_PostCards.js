@@ -33,9 +33,10 @@ const defaults = {
 class ConversationCard extends React.Component {
   constructor() {
     super();
+    this.state = {};
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const user = firebaseApp.auth().currentUser;
     this.setState({ user: user, timeStamp: this.getUseDate(this.props.data.createdAt) });
     const membersRef = firebaseApp.database().ref('/members/' + this.props.data.postId);
@@ -100,15 +101,11 @@ class ConversationCard extends React.Component {
     return '-';
   }
 
-  changeUnreads() {
-    // TODO: unreads to 0
-  }
-
   render() {
     return (
             <div className="myConversationCard">
-                <Card className="miniPostCard">
-                  <Card.Content className="conversationCardContent" onClick={() => { this.props.openModal(this.props.data); this.changeUnreads(); }}>
+                <Card className={this.props.current ? 'miniPostCardCurrent' : 'miniPostCard'}>
+                  <Card.Content className="conversationCardContent" onClick={() => { this.props.openModal(this.props.data); }}>
                         <div className="conversationCardHeader">
                             <div className="conversationCardWrapper">
                                 <img className="conversationCardUserImage" src={this.props.data.pictureURL} />
@@ -138,7 +135,8 @@ class ConversationCard extends React.Component {
 ConversationCard.propTypes = {
   data: PropTypes.object,
   user: PropTypes.object,
-  openModal: PropTypes.func
+  openModal: PropTypes.func,
+  current: PropTypes.bool
 };
 
 const mapDispatchToProps = (dispatch) => ({

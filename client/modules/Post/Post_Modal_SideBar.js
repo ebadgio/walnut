@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import firebaseApp from '../../firebase';
 import uuidv4 from 'uuid/v4';
-import ConversationCard from '../Discover/Discover_My_Conversations_Card';
+import SideBarConversationCard from './Post_Modal_SideBar_PostCards';
 import { Divider } from 'semantic-ui-react';
 
 class ModalSideBar extends React.Component {
@@ -26,9 +26,11 @@ class ModalSideBar extends React.Component {
                 <div className="SideBarPosts">
                 {(this.props.myConversations && this.props.myConversations.length > 0) ?
                         this.props.myConversations.map((conv) =>
-                            <ConversationCard data={conv}
-                                              key={uuidv4()}
-                                              user={this.props.currentUser}/>
+                            <SideBarConversationCard
+                                data={conv}
+                                current={conv.postId === this.props.postData.postId}
+                                key={uuidv4()}
+                                user={this.props.currentUser}/>
                         )
                     : null}
                 </div>
@@ -43,12 +45,14 @@ ModalSideBar.propTypes = {
   currentCommunity: PropTypes.object,
   getConvos: PropTypes.func,
   addIds: PropTypes.func,
+  postData: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
   myConversations: state.conversationReducer.convos,
   currentCommunity: state.conversationReducer.current,
   currentUser: state.userReducer,
+  postData: state.modalReducer.postData,
   open: state.modalReducer.open
 });
 

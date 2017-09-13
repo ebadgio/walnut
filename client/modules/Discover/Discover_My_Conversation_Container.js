@@ -61,6 +61,9 @@ class FollowedPostsContainer extends React.Component {
     this.setState({ visible: !this.state.visible });
   }
 
+  handleSelect() {
+    this.setState({ visible: false });
+  }
 
   render() {
     return (
@@ -78,6 +81,7 @@ class FollowedPostsContainer extends React.Component {
                    {this.props.myConversations.map((conv) =>
                        <ConversationCard data={conv}
                                          key={uuidv4()}
+                                         handleSelect={() => this.handleSelect()}
                                          user={this.props.currentUser}/>
                      )}
                </div> : <div className="followedPostsBox"></div>}

@@ -39,6 +39,13 @@ class ModalMessages extends React.Component {
     setInterval(() => {
       if (this.props.postData.postId !== this.state.postData.postId) {
         console.log('difference found');
+        const updates = {};
+        updates['/members/' + this.state.postData.postId + '/' + user.uid] = null;
+        firebaseApp.database().ref().update(updates);
+        console.log('trying to remove', updates);
+        const updatesEx = {};
+        updatesEx['/typers/' + this.state.postData.postId + '/' + user.uid] = null;
+        firebaseApp.database().ref().update(updatesEx);
         this.startListen(this.props.postData);
         this.setState({postData: this.props.postData});
       }
@@ -72,17 +79,28 @@ class ModalMessages extends React.Component {
           const send = _.values(snapshot.val());
           const ID = send[0].authorId + '' + send[0].content;
           const bottomID = send[send.length - 1].authorId + '' + send[send.length - 1].content;
-          this.setState({
-            messages: send,
-            firstKey: Object.keys(snapshot.val())[0],
-            firstId: ID,
-            hasMore: true,
-            hitBottom: false
-          });
+          if (send.length > 19) {
+            this.setState({
+              messages: send,
+              firstKey: Object.keys(snapshot.val())[0],
+              firstId: ID,
+              hasMore: true,
+              hitBottom: false
+            });
+          } else {
+            this.setState({
+              messages: send,
+              firstKey: Object.keys(snapshot.val())[0],
+              firstId: ID,
+              hasMore: false,
+              hitBottom: true
+            });
+          }
           if (this.state.c === 0 || send[send.length - 1].authorId === this.state.user.uid) {
             this.scrollToBottom(bottomID);
           }
         } else {
+          this.setState({messages: [], hitBottom: true, hasMore: false});
           console.log('no snapshot val :(');
         }
       });
