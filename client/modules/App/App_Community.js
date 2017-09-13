@@ -30,8 +30,8 @@ class Community extends React.Component {
   }
 
   render() {
-    if (this.props.isReady) {
-        return (
+    if (this.props.isReady && this.props.currentUser.fullName) {
+      return (
             <div>
                 <NavBar/>
                 <Switch>
@@ -53,11 +53,13 @@ class Community extends React.Component {
 Community.propTypes = {
   isReady: PropTypes.bool,
   updateLocation: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
+  currentUser: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
   isReady: state.discoverReducer.isReady,
+  currentUser: state.userReducer
 });
 
 

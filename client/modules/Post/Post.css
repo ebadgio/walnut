@@ -278,13 +278,13 @@
 }
 
 .commentIconMini {
-    cursor: pointer;
+    /* cursor: pointer;*/
     color: #FAFAFA !important;
 }
 
-.commentIconMini:hover {
-    color: #5bc0e3 !important;
-}
+/*.commentIconMini:hover {*/
+    /*color: #5bc0e3 !important;*/
+/*}*/
 
 .commentIcon:hover {
     color: #5bc0e3 !important;
@@ -735,9 +735,9 @@ iframe {
     box-shadow: 0 1px 2px 1px rgba(34, 36, 38, 0.15) !important;
 }
 
-.linkPreviewComment a{
-    color: #3a3a3a;
-}
+/*.linkPreviewComment a{*/
+    /*color: #3a3a3a;*/
+/*}*/
 
 .postTimeStamp {
     height: 14px;
