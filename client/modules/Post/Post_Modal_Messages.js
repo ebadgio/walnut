@@ -7,6 +7,7 @@ import {  Loader } from 'semantic-ui-react';
 import firebaseApp from '../../firebase';
 import uuidv4 from 'uuid/v4';
 import _ from 'underscore';
+import $ from 'jquery';
 import InfiniteScroll from 'react-infinite-scroller';
 
 class ModalMessages extends React.Component {
@@ -54,6 +55,14 @@ class ModalMessages extends React.Component {
   }
 
   startListen(data) {
+    $(document).keyup((event) => {
+      if (event.keyCode === 27) {
+        console.log('trying to press escape');
+        this.handleClose();
+        this.props.closeModal();
+      }
+      return null;
+    });
     const updates = {};
     const member = {
       name: this.state.user.displayName,
@@ -216,10 +225,16 @@ class ModalMessages extends React.Component {
 ModalMessages.propTypes = {
   currentUser: PropTypes.object,
   user: PropTypes.object,
-  postData: PropTypes.object
+  postData: PropTypes.object,
+  closeModal: PropTypes.func
 };
 const mapStateToProps = (state) => ({
   currentUser: state.userReducer,
-  postData: state.modalReducer.postData
+  postData: state.modalReducer.postData,
 });
-export default connect(mapStateToProps, null)(ModalMessages);
+
+const mapDispatchToProps = (dispatch) => ({
+  closeModal: () => dispatch({type: 'MAKE_CLOSED'})
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalMessages);

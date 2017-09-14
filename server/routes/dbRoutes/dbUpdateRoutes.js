@@ -104,7 +104,7 @@ router.post('/removeportfoliotabs', (req, res) => {
 router.post('/community', (req, res) => {
   const tagModels = req.body.newFilters.map((filter) =>
         new Tag({
-          name: filter
+          name: filter.toUpperCase()
         })
     ).concat(req.body.oldFilters);
   Promise.all(tagModels.map((tag) => tag.save()))

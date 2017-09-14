@@ -28,7 +28,7 @@ router.post('/create/community', (req, res) => {
   let commEnd;
   const tagModels = req.body.otherTags.map((filter) =>
         new Tag({
-          name: filter
+          name: filter.toUpperCase()
         })
     );
   Promise.all(tagModels.map((tag) => tag.save()))
