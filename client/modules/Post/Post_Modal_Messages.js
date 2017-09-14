@@ -55,13 +55,15 @@ class ModalMessages extends React.Component {
   }
 
   startListen(data) {
-    $(document).keyup((event) => {
-      if (event.keyCode === 27) {
-        console.log('trying to press escape testing');
-        this.handleClose();
-        this.props.closeModal();
-      }
-      return null;
+    $(document).ready(() => {
+      $(document).keyup((event) => {
+        if (event.keyCode === 27) {
+          console.log('trying to press escape testing');
+          this.handleClose();
+          this.props.closeModal();
+        }
+        return null;
+      });
     });
     const updates = {};
     const member = {
