@@ -142,6 +142,9 @@
 .tagContainer {
     margin-left: 10px;
     width: 400px;
+    display: flex;
+    max-height: 50px;
+    overflow: hidden;
 }
 
 .tag {
@@ -157,6 +160,7 @@
     display: inline-block;
     margin-right: 5px;
     margin-bottom: 5px;
+    min-width: fit-content;
 }
 
 .hashtag {
