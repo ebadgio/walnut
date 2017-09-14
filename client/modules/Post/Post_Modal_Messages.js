@@ -60,7 +60,6 @@ class ModalMessages extends React.Component {
         console.log('trying to press escape testing');
         this.handleClose();
         this.props.closeModal();
-        console.log('trying to press escape testing');
       }
       return null;
     });
@@ -163,7 +162,6 @@ class ModalMessages extends React.Component {
   }
 
   handleClose() {
-    console.log('trying to press escape testing');
     if (this.state.user) {
       const updates = {};
       updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
