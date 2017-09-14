@@ -72,7 +72,7 @@ class FollowedPostsContainer extends React.Component {
                   direction="right"
                   visible={this.state.visible}>
            <Button icon onClick={() => {this.toggleVisibility();}} className="minifyButton">
-             <Icon name="chevron circle down"
+             <Icon name="chevron circle right"
                    size="large"
              />
            </Button>

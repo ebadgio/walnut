@@ -120,7 +120,7 @@ class NewCommunityModal extends React.Component {
                     Add Default Topics:
                 </div>
                 <ul>
-                    {this.state.otherTags.map((filter, idx) => <li key={idx}>#{' '}{filter}</li>)}
+                    {this.state.otherTags.map((filter, idx) => <li key={idx}>#{' '}{filter.toUpperCase()}</li>)}
                 </ul>
                 <Input labelPosition="left"
                        type="text"

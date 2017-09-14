@@ -4,7 +4,6 @@ import './Post.css';
 import { connect} from 'react-redux';
 import { Icon, Modal } from 'semantic-ui-react';
 import firebaseApp from '../../firebase';
-import _ from 'underscore';
 import PostModalMessages from './Post_Modal_Messages.js';
 import ModalTextBox from './Post_Modal_TextBox';
 import ModalHeader from './Post_Modal_Header.js';
@@ -59,7 +58,8 @@ ModalInstance.propTypes = {
   startListen: PropTypes.func,
   joinConversation: PropTypes.func,
   mini: PropTypes.bool,
-  modalOpen: PropTypes.bool
+  modalOpen: PropTypes.bool,
+  closeModal: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -68,6 +68,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  closeModal: () => dispatch({type: 'MAKE_CLOSED'})
 });
 
 

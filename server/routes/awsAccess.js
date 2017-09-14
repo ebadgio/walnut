@@ -62,7 +62,7 @@ router.post('/upload/community', upload.single('community'), (req, res) => {
   let commEnd;
   const tagModels = tags.map((filter) =>
     new Tag({
-      name: filter
+      name: filter.toUpperCase()
     })
   );
   Promise.all(tagModels.map((tag) => tag.save()))
@@ -137,7 +137,7 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
   }
   const tagModels = newTags.map((filter) =>
     new Tag({
-      name: filter
+      name: filter.toUpperCase()
     })
   );
   if (req.body.tags) {
