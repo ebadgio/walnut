@@ -351,6 +351,11 @@ button.ui.button > input {
 #communityUploaderCreate {
     margin-right: 100px;
     margin-bottom: 23px;
+    cursor: pointer;
+}
+
+#communityUploaderCreate:hover {
+    color: #5bc0e3 !important;
 }
 
 .closingIcon {
