@@ -14,20 +14,26 @@ class ModalHeader extends React.Component {
     this.state = {
       user: {},
       members: [],
+      postData: {},
       membersCount: 0
     };
   }
 
   componentDidMount() {
     const user = firebaseApp.auth().currentUser;
-    console.log('setting user to state', user);
     this.setState({user: user});
-    const membersRef = firebaseApp.database().ref('/members/' + this.props.postData.postId);
-    membersRef.on('value', (snapshot) => {
-      const peeps =  _.values(snapshot.val());
-      const members = peeps.filter((peep) => typeof (peep) === 'object');
-      this.setState({membersCount: members.length, members: members});
-    });
+    setInterval(() => {
+      console.log('here', this.props.postData, this.state.postData);
+      if (this.props.postData.postId !== this.state.postData.postId) {
+        console.log('they different in head');
+        const membersRef = firebaseApp.database().ref('/members/' + this.props.postData.postId);
+        membersRef.on('value', (snapshot) => {
+          const peeps =  _.values(snapshot.val());
+          const members = peeps.filter((peep) => typeof (peep) === 'object');
+          this.setState({membersCount: members.length, members: members, postData: this.props.postData});
+        });
+      }
+    }, 1000);
   }
 
 
@@ -109,7 +115,8 @@ ModalHeader.propTypes = {
 };
 const mapStateToProps = (state) => ({
   myConvoIds: state.conversationReducer.iDs,
-  currentUser: state.userReducer
+  currentUser: state.userReducer,
+  postData: state.modalReducer.postData
 });
 const mapDispatchToProps = (dispatch) => ({
   joinConversation: (postId) => dispatch(joinConversationThunk(postId)),

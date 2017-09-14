@@ -276,7 +276,8 @@ ModalTextBox.propTypes = {
   user: PropTypes.object
 };
 const mapStateToProps = (state) => ({
-  currentUser: state.userReducer
+  currentUser: state.userReducer,
+  postData: state.modalReducer.postData
 });
 
 export default connect(mapStateToProps, null)(ModalTextBox);
