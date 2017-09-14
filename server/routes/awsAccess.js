@@ -32,7 +32,6 @@ const upload = multer({
 });
 
 router.post('/upload/profile', upload.single('profile'), (req, res) => {
-  console.log('this is the profile pic from the upload', req.file);
   User.findById(req.user._id)
     .then((user) => {
       const url = req.file.location;
@@ -40,21 +39,17 @@ router.post('/upload/profile', upload.single('profile'), (req, res) => {
       return user.save();
     })
     .then((user) => {
-      console.log('end of upload', user);
       res.json({url: user.pictureURL});
     })
     .catch((error) => console.log('error in aws db save', error));
 });
 
 router.post('/upload/community', upload.single('community'), (req, res) => {
-  console.log('inside the aws backend', typeof(req.body.otherTags), req.file);
   let tags;
   if (!req.body.otherTags) {
     tags = [];
-    console.log('no tags', tags);
   } else if (typeof(req.body.otherTags) === 'string') {
     tags = [req.body.otherTags];
-    console.log('1 tag', tags);
   } else {
     tags = req.body.otherTags;
   }
@@ -108,7 +103,6 @@ router.post('/upload/community', upload.single('community'), (req, res) => {
       return Community.find();
     })
     .then((communities) => {
-      console.log('made it to the end of the backend before response');
       res.json({ user: userEnd, communities: communities });
     })
     .catch((err) => {
@@ -118,10 +112,6 @@ router.post('/upload/community', upload.single('community'), (req, res) => {
 });
 
 router.post('/upload/post', upload.single('attach'), (req, res) => {
-  console.log('upload', req.file);
-  console.log(req);
-  // console.log(JSON.parse(req.body.tags));
-  console.log('thththththththththt', req.body.lastRefresh);
   let newTags;
   let newt;
   let tags;
@@ -172,7 +162,6 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
     return newPost.save();
   })
   .then((post) => {
-    console.log(post);
     let posts = [];
     let filters;
     if (req.body.useFilters) {
@@ -228,7 +217,6 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
       return com.save();
     })
     .then((result) => {
-      console.log(posts);
       res.json({ posts: posts, lastRefresh: new Date(), otherTags: result.otherTags});
     })
     .catch((er) => {
@@ -240,7 +228,6 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
 });
 
 router.post('/upload/comment', upload.single('attach'), (req, res) => {
-  console.log('upload', req.file);
   const attachment = {
     name: req.file.originalname,
     url: req.file.location,

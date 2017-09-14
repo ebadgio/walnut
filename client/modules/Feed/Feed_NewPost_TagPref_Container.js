@@ -21,10 +21,8 @@ class TagPref extends React.Component {
   handleSelectChange(obj) {
     // if (value.trim().length > 0) {
     this.setState({obj});
-    console.log('obj', obj);
     if (obj) {
       const options = obj.value.replace(/\W/g, '');
-      console.log('hehehehehhehehe', options);
       const send = this.props.otherFilters.filter((filter) => options === filter.name);
       if (send.length === 0) {
         this.props.addNewTags(options);
@@ -46,16 +44,13 @@ class TagPref extends React.Component {
 
   handleNew(value) {
     event.preventDefault();
-    console.log('this.state.value', this.state.value);
     // make sure not to have empty strings
     if (value) {
       const options = this.state.value.map((obj) => {return obj.value.replace(/\W/g, '');});
-      console.log('hehehehehhehehe', options);
       // const options = this.state.value.split(',');
       // send is an array that only includes the objects that are being added
       options.forEach((newTag) => {
         const send = this.props.otherFilters.filter((filter) => newTag === filter.name);
-        console.log('here', send);
         if (send.length === 0) {
           this.props.newTagThunk(newTag);
         } else {

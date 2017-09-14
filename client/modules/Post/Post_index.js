@@ -41,7 +41,6 @@ class Post extends React.Component {
       const newBody1 = this.props.postData.content.substr(0, idx);
       const newBody2 = this.props.postData.content.substr((idx + urls[0].length), this.props.postData.content.length);
       const newLink = urls[0];
-      console.log('post body', newBody1, newBody2);
       this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink, urlName: this.urlNamer(newLink)});
     } else {
       this.setState({ messageBody: this.props.postData.content });
@@ -71,7 +70,6 @@ class Post extends React.Component {
       if (!isNaN(unreadCount)) {
         if (unreadCount > 0) {
           this.setState({unread: unreadCount});
-          console.log('unread set to true');
         } else {
           this.setState({ unread: 0 });
         }
@@ -155,7 +153,6 @@ class Post extends React.Component {
 
   closeLightbox() {
     this.setState({lightBoxData: ''});
-    console.log('this is closed', this.state.lightBoxData);
   }
 
   renderPdfModal(data) {

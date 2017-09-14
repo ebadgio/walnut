@@ -43,9 +43,7 @@ class Register extends React.Component {
 
   register(e) {
     e.preventDefault();
-    console.log(this.state);
     if (this.state.fName && this.state.lName && this.state.email && this.state.password) {
-      console.log('it is sent');
       this.props.emailRegistration(this.state.fName, this.state.lName, this.state.email, this.state.password);
     }
   }

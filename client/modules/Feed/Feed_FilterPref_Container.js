@@ -37,8 +37,6 @@ class FilterPrefContainer extends React.Component {
   }
 
   handleSelectChange(value) {
-    console.log('selected', value);
-    console.log(this.props.otherFilters);
     // const newPostBox = document.getElementById('newPostBox');
     // newPostBox.scrollIntoView(true);
     const send = this.props.otherFilters.filter((filter) => filter.name === value);
@@ -70,8 +68,6 @@ class FilterPrefContainer extends React.Component {
     const indxs = this.props.useFilters.map((filter) => findWithAttr(this.props.otherFilters, 'name', filter.name));
     const arrFilt = this.props.otherFilters.slice();
     indxs.forEach((indx) => arrFilt.splice(indx, 1));
-    console.log('this should be the tagg');
-    console.log(arrFilt);
     return arrFilt.map((tag) => {
       return {value: tag.name, label: '#' + tag.name};
     });

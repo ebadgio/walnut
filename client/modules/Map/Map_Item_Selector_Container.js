@@ -11,7 +11,6 @@ class MapItemSelectorContainer extends React.Component {
   }
 
   render() {
-    console.log(this.props.category);
     return(
             <div className="iconWrapper">
                 <div className={this.props.category === 'live' ? 'iconSelectorWrapper1' : 'iconSelectorWrapper2'}><Icon name="clock" onClick={() => this.handleClick('live')} /></div>

@@ -18,7 +18,6 @@ class MediaAttachment extends React.Component {
   }
 
   downloadS3(url, name) {
-    console.log('url download', url, name);
     fileDownload(url, name);
   }
 

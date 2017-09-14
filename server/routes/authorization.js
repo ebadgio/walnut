@@ -54,10 +54,8 @@ import adminApp from '../firebaseAdmin';
       });
       return new_user.save()
       .then((doc) => {
-        console.log(doc._id);
         // const token = CryptoJS.AES.encrypt(doc._id.toString(), 'secret').toString();
         req.session.userMToken = doc._id;
-        console.log(req.session, 'doc register', doc);
         res.send({success: true, user: doc});
       })
       .catch((err) => {
@@ -71,11 +69,9 @@ import adminApp from '../firebaseAdmin';
 
   router.post('/login', function(req, res) {
     // req.session.userToken = req.body.token;
-    console.log('you are trying to login', req.session);
     adminApp.auth().verifyIdToken(req.body.token)
     .then(function(decodedToken) {
       var uid = decodedToken.uid;
-      console.log('uid', uid);
       return User.findOne({firebaseId: uid})
       .then((user) => {
         user.password = req.body.password;
@@ -91,11 +87,11 @@ import adminApp from '../firebaseAdmin';
         ]
         return User.populate(doc, opts)
         .then((populated) => {
-          console.log(populated._id);
           // const token = CryptoJS.AES.encrypt(populated._id.toString(), 'secret').toString();
           req.session.userMToken = populated._id;
           req.session.save(function(err) {console.log(err);});
-          console.log(req.session, 'pop login', populated);
+          console.log('req.session token', req.session.userMToken);
+          req.user = populated;
           res.send({success: true, user: populated});
         })
       })
@@ -113,15 +109,14 @@ import adminApp from '../firebaseAdmin';
       adminApp.auth().verifyIdToken(req.body.token)
           .then(function (decodedToken) {
               var uid = decodedToken.uid;
-              console.log('uid here: ', uid);
               res.status(200);
           }).catch((error) => {
           console.log('error', error);
       })
   });
 
-  router.get('userinreq', (req, res) => {
-    console.log('req.user in backend', req.user)
+  router.get('/userinreq', (req, res) => {
+    console.log('req.user', req.user);
     res.json({success: true})
   })
 

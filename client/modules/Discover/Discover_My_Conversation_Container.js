@@ -38,12 +38,10 @@ class FollowedPostsContainer extends React.Component {
   }
 
   componentDidMount() {
-    console.log('yes');
     if (this.props.currentUser) {
       const followsRef = firebaseApp.database().ref('/follows/' + this.props.currentUser.firebaseId + '/' + this.props.currentCommunity);
       followsRef.on('value', (snapshot) => {
         if (snapshot.val()) {
-          console.log('got snapshot', snapshot.val());
           const follows = _.pairs(snapshot.val());
           // this will filter down to only those postIds which are mapped to true
           const myConvs = follows.filter((follow) => follow[1]).map((fol) => fol[0]);

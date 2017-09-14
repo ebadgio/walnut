@@ -6,13 +6,11 @@ import URL from '../../info';
 const signInThunk = (email, password, redirect) => (dispatch) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then(result => {
-    console.log('RESULT HERE', result);
     if (!result.emailVerified) {
       dispatch({type: 'GET_USER_VERIFY_ERROR', email: email, password: password});
     }
     result.getIdToken(/* forceRefresh */ true)
     .then((idToken) => {
-      console.log('the fucking token', idToken);
       axios.post(URL + 'auth/login', {
         token: idToken,
         email: email,
@@ -20,10 +18,8 @@ const signInThunk = (email, password, redirect) => (dispatch) => {
       })
       .then((res) => {
         dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
-        axios.get(URL + 'auth/userinreq')
-        .then(() => {
-          dispatch({ type: 'WALNUT_READY' });
-        });
+        dispatch({ type: 'WALNUT_READY' });
+        setTimeout(dispatch({ type: 'WALNUT_READY' }), 5000);
       });
     })
   .catch(function(error) {

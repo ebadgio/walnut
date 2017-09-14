@@ -6,13 +6,10 @@ import URL from '../../info';
 
 const updateUserCommunityThunk = (community) => (dispatch) => {
   dispatch({type: 'HOLD_DISCOVER'});
-  console.log('yeyeryeyeyeyeyeyeyeyeyey', community._id);
   axios.post(URL + 'db/toggle/community', {
     communityId: community._id
   })
     .then((response) => {
-      console.log(community);
-      console.log(response.data);
       // TODO: same dispatch user reducer to update currentConversation
       dispatch({type: 'GET_USER_DATA_DONE', user: response.data.data});
       dispatch({

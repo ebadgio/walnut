@@ -5,7 +5,6 @@ import axios from 'axios';
 import URL from '../../info';
 
 const saveAboutThunk = (about) => (dispatch) => {
-  console.log('save about thunk', about);
   axios.post(URL + 'db/save/about', {
     colleges: about.colleges,
     schools: about.schools,
@@ -13,7 +12,6 @@ const saveAboutThunk = (about) => (dispatch) => {
     placesLived: about.places
   })
     .then((response) => {
-      console.log('response', response);
       // dispatch({type: 'GET_USER_DATA_DONE', user: response.data.user});
     })
     .catch((err) =>{

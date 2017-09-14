@@ -107,14 +107,10 @@ router.post('/community', (req, res) => {
           name: filter
         })
     ).concat(req.body.oldFilters);
-  console.log(tagModels);
   Promise.all(tagModels.map((tag) => tag.save()))
         .then((values) => {
-          console.log(values);
-          console.log('yoyoyoyoyo');
           Community.findById(req.user.currentCommunity)
           .then((community) => {
-            console.log(community);
             community.title = req.body.title;
             community.image = req.body.image;
             community.admins = req.body.admins;
@@ -122,7 +118,6 @@ router.post('/community', (req, res) => {
             return community.save();
           })
           .then(() => {
-            console.log('you are about to go back');
             res.json({success: true});
           });
         })

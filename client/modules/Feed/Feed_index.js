@@ -17,7 +17,6 @@ import { Loader, Button, Modal, Icon, Header } from 'semantic-ui-react';
 let refresh;
 let scrollPos;
 let shouldRefire = true;
-const curScroll = 0;
 
 class Feed extends React.Component {
   constructor(props) {
@@ -45,16 +44,13 @@ class Feed extends React.Component {
     const value = $(window).scrollTop();
     const max = docHeight - winHeight;
     const percent = (value / max) * 100;
-    console.log('window scroll %', percent);
     if(percent > 22) {
-      console.log('killed refresh');
       shouldRefire = true;
       clearInterval(refresh);
     } else {
       if(shouldRefire) {
-        console.log('restarted restarted');
         shouldRefire = false;
-        refresh = setInterval(() => { console.log('inside the set interval'); this.props.getRefresh(this.props.lastRefresh, this.props.useFilters); }, 10000);
+        refresh = setInterval(() => { this.props.getRefresh(this.props.lastRefresh, this.props.useFilters); }, 30000);
       }
     }
   }
@@ -64,7 +60,6 @@ class Feed extends React.Component {
   }
 
   _loadMore() {
-    console.log('called _loadMore()');
     if (this.props.lastRefresh) {
       this.props.getNext10(this.props.data.posts.length, this.props.lastRefresh, this.props.useFilters);
     }

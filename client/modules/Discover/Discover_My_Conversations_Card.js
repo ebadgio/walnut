@@ -60,7 +60,6 @@ class ConversationCard extends React.Component {
       if (!isNaN(unreadCount)) {
         if (unreadCount > 0) {
           this.setState({unread: unreadCount});
-          console.log('unread set to true');
         } else {
           this.setState({unread: 0});
         }

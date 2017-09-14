@@ -8,7 +8,7 @@ import Directory from '../Directory/Directory_index';
 import NavBar from './App_Community_NavBar';
 import MapContainer from '../Map/Map_index';
 import updateLocationThunk from '../../thunks/map_thunks/updateLocationThunk';
-import EditProfile from '../EditProfile/EditProfile_index';
+// import EditProfile from '../Editprofile/EditProfile_index';
 import WalnutLoader from './App_WalnutLoader';
 
 class Community extends React.Component {
@@ -38,7 +38,7 @@ class Community extends React.Component {
                     <Route path="/community/:communityName/directory" component={Directory}/>
                     <Route path="/community/:communityName/map" component={MapContainer}/>
                     <Route path="/community/:communityName/discover" component={Discover}/>
-                    <Route path="/community/:communityName/editProfile" component={EditProfile}/>
+                    {/* <Route path="/community/:communityName/editProfile" component={EditProfile}/> */}
                 </Switch>
             </div>
         );

@@ -6,7 +6,7 @@ const verificationThunk = (email, password) => (dispatch) => {
     return firebase.auth().currentUser.sendEmailVerification();
   })
   .then(() => {
-    console.log('emial should be sent soon');
+    console.log('email should be sent soon');
   })
   .catch(() => {
     console.log('this is error');

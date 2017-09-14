@@ -25,7 +25,6 @@ class ModalMessages extends React.Component {
 
   componentDidMount() {
     const user = firebaseApp.auth().currentUser;
-    console.log('messages box mounted!', user);
     this.setState({user: user, postData: this.props.postData});
     setTimeout(() => this.startListen(this.props.postData), 500);
     window.addEventListener('beforeunload', (ev) => {
@@ -38,11 +37,9 @@ class ModalMessages extends React.Component {
     });
     setInterval(() => {
       if (this.props.postData.postId !== this.state.postData.postId) {
-        console.log('difference found');
         const updates = {};
         updates['/members/' + this.state.postData.postId + '/' + user.uid] = null;
         firebaseApp.database().ref().update(updates);
-        console.log('trying to remove', updates);
         const updatesEx = {};
         updatesEx['/typers/' + this.state.postData.postId + '/' + user.uid] = null;
         firebaseApp.database().ref().update(updatesEx);
@@ -75,7 +72,6 @@ class ModalMessages extends React.Component {
       const messagesRef = firebaseApp.database().ref('/messages/' + data.postId).orderByKey().limitToLast(20);
       messagesRef.on('value', (snapshot) => {
         if (snapshot.val()) {
-          console.log('still coming', snapshot.val());
           const send = _.values(snapshot.val());
           const ID = send[0].authorId + '' + send[0].content;
           const bottomID = send[send.length - 1].authorId + '' + send[send.length - 1].content;
@@ -113,11 +109,7 @@ class ModalMessages extends React.Component {
         // $('.scrolling').scrollTop(50000);
     const elem = document.getElementById(id);
     const scrolling = document.getElementById('scrolling');
-    console.log('TRYING TO HIT BOTTOM', elem);
     if (elem) {
-      console.log('scroll height', elem.scrollHeight);
-      console.log('scrolling', scrolling.scrollTop);
-      console.log('client height', scrolling.clientHeight);
       elem.scrollIntoView();
       this.setState({ hitBottom: true, c: this.state.c + 1 });
     } else {

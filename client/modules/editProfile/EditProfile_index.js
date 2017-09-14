@@ -38,7 +38,6 @@ class EditProfile extends React.Component {
   }
 
   handleSubmit(e) {
-    console.log('hello');
     e.preventDefault();
     this.props.saveAbout({
       colleges: [{
@@ -90,7 +89,6 @@ class EditProfile extends React.Component {
               console.log(err);
               alert('failed uploaded!');
             }
-            console.log('finally at the front', res.body.url);
             this.setState({ file: ''});
             this.props.refreshUrl({ user: res.body.url});
           });

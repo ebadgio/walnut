@@ -10,13 +10,11 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
       displayName: firstname + ' ' + lastname
     })
     .then(() => {
-      console.log(result);
       return firebaseApp.auth().currentUser.sendEmailVerification();
     })
     .then(() => {
       result.getIdToken(/* forceRefresh */ true)
           .then(function(idToken) {
-            console.log('idToken', idToken);
             axios.post(URL + 'auth/signup', {
               token: idToken,
               fname: firstname,
@@ -25,7 +23,6 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
               password: password
             })
               .then((res) => {
-                console.log('register thunk', res);
                 dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
                 setTimeout(() => dispatch({type: 'WALNUT_READY'}), 1500);
               })
