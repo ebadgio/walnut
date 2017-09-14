@@ -56,7 +56,7 @@ class ModalMessages extends React.Component {
 
   startListen(data) {
     $(document).ready(() => {
-      $(document).keyup((event) => {
+      $('body').on('keyup', (event) => {
         if (event.keyCode === 27) {
           console.log('trying to press escape testing');
           this.handleClose();
