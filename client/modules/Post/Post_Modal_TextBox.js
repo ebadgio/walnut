@@ -131,27 +131,22 @@ class ModalTextBox extends React.Component {
       };
     }
 
-    // notifications set up
-    let temp = {};
+    // unread messages set up
     firebaseApp.database().ref('/followGroups/' + this.props.postData.postId).once('value', snapshot => {
       console.log('these people are following the post', snapshot.val());
       const followers = Object.keys(snapshot.val());
       console.log('followers', followers);
       const memberIds = this.props.members.map(member => member.uid);
-      followers.forEach(follower => {
-        let unreadCount = firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId);
-        console.log('got in here?', memberIds, follower, snapshot.val()[follower]);
-        if (snapshot.val()[follower] && !memberIds.includes(follower)) {
-          firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId).once('value', snapshotB => {
-            let unreadCount = snapshotB.val();
-            console.log('unreadCount', snapshotB.val());
-            temp['/unreads/' + follower + '/' + this.props.postData.postId] = !isNaN(unreadCount) ? unreadCount + 1 : 1;
-            firebaseApp.database().ref().update(temp);
-          });
-        }
+      followers.filter(fol => (memberIds.indexOf(fol) === -1 && fol !== this.state.user.uid)).forEach(follower => {
+        const unreadsCountRef = firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId );
+        unreadsCountRef.transaction((currentValue) => {
+          return (currentValue || 0) + 1;
+        });
       });
     });
-    // notification stuff ends here
+    // unread stuff ends here
+
+
     this.setState({ commentBody: '', prevBody: '' });
     const update = {};
     const newMessageKey = firebaseApp.database().ref().child('messages').push().key;

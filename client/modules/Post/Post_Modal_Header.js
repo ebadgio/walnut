@@ -23,9 +23,9 @@ class ModalHeader extends React.Component {
     const user = firebaseApp.auth().currentUser;
     this.setState({user: user});
     setInterval(() => {
-      console.log('here', this.props.postData, this.state.postData);
+      // console.log('here', this.props.postData, this.state.postData);
       if (this.props.postData.postId !== this.state.postData.postId) {
-        console.log('they different in head');
+        // console.log('they different in head');
         const membersRef = firebaseApp.database().ref('/members/' + this.props.postData.postId);
         membersRef.on('value', (snapshot) => {
           const peeps =  _.values(snapshot.val());
@@ -49,8 +49,8 @@ class ModalHeader extends React.Component {
 
   leaveConversation() {
     const updates = {};
-    updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = false;
-    updates['/followGroups/' + this.props.postData.postId + '/' + this.state.user.uid] = false;
+    updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = null;
+    updates['/followGroups/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
     firebaseApp.database().ref().update(updates);
   }
 

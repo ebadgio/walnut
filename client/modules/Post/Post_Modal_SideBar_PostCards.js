@@ -33,7 +33,10 @@ const defaults = {
 class ConversationCard extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      unreads: 0,
+      isFollowing: false
+    };
   }
 
   componentDidMount() {
@@ -47,19 +50,16 @@ class ConversationCard extends React.Component {
     });
     const countRef = firebaseApp.database().ref('/counts/' + this.props.data.postId + '/count');
     countRef.on('value', (snapshot) => {
-      this.setState({ count: snapshot.val() });
+      if (snapshot.val()) {
+        this.setState({count: snapshot.val()});
+      }
     });
 
-    const userId = firebaseApp.auth().currentUser.uid;
-    firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.data.postId).on('value', snapshotB => {
-      const unreadCount = snapshotB.val();
-      if (!isNaN(unreadCount)) {
-        if (unreadCount > 0) {
-          this.setState({ unread: unreadCount });
-          console.log('unread set to true');
-        } else {
-          this.setState({ unread: 0 });
-        }
+    // Unreads stuff
+    firebaseApp.database().ref('/unreads/' + user.uid + '/' + this.props.data.postId).on('value', snapshotB => {
+      const unreadCount =  snapshotB.val();
+      if (!isNaN(unreadCount) && unreadCount !== null) {
+        this.setState({unreads: unreadCount});
       }
     });
   }
@@ -118,7 +118,12 @@ class ConversationCard extends React.Component {
                                                                                 content={<Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify>}/> :
                             <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify> }
                     <div className="conversationFootnote">
-                        <span className="commentNumMini">{this.state.count}{' messages'}</span>
+                        <div className="messageInfoGroupMini">
+                          <span className="commentNumMini">{this.state.count}{' messages'}</span>
+                          <span className={this.state.unreads > 0 ? 'isUnreadMini' : 'noUnreadMini'}>
+                            {this.state.unreads}{' unread'}
+                          </span>
+                        </div>
                         <div className="commentDiv">
                             <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
                             <Icon size="large" name="users" className="usersIconMini" />
