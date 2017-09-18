@@ -18,7 +18,6 @@ const signInThunk = (email, password, redirect) => (dispatch) => {
       })
       .then((res) => {
         dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
-        dispatch({ type: 'WALNUT_READY' });
         setTimeout(dispatch({ type: 'WALNUT_READY' }), 5000);
       });
     })

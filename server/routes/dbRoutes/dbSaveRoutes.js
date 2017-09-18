@@ -85,7 +85,8 @@ router.post('/post', (req, res) => {
       return com.save();
     })
     .then((result) => {
-      res.json({ posts: posts, lastRefresh: new Date(), otherTags: result.otherTags });
+      console.log('user', req.user);
+      res.json({ posts: posts, lastRefresh: new Date(), otherTags: result.otherTags, postId: r._id, userComm: req.user.currentCommunity});
     })
     .catch((err) => {
       console.log('error in new post not aws refresh', err);
