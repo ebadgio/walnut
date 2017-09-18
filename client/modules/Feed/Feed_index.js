@@ -45,14 +45,11 @@ class Feed extends React.Component {
     const value = $(window).scrollTop();
     const max = docHeight - winHeight;
     const percent = (value / max) * 100;
-    console.log('window scroll %', percent);
     if(percent > 22) {
-      console.log('killed refresh');
       shouldRefire = true;
       clearInterval(refresh);
     } else {
       if(shouldRefire) {
-        console.log('restarted restarted');
         shouldRefire = false;
         refresh = setInterval(() => { console.log('inside the set interval'); this.props.getRefresh(this.props.lastRefresh, this.props.useFilters); }, 10000);
       }

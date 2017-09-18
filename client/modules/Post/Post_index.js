@@ -29,7 +29,8 @@ class Post extends React.Component {
       newLink: '',
       urlName: '',
       members: [],
-      unread: 0
+      unread: 0,
+      count: 0
     };
     this.getUseDate = this.getUseDate.bind(this);
   }
@@ -241,6 +242,9 @@ class Post extends React.Component {
           />
       </div>
 
+      <span className="commentNum">
+            {this.state.count}{' messages'}
+      </span>
       <Divider className="postDivider" fitted />
       <div className="postFootnote">
         <div className="tagContainer">
@@ -252,9 +256,14 @@ class Post extends React.Component {
         <div></div>
         <div className="commentDiv">
           <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
-          <Icon size="big" name="users" className="usersIcon" />
-          <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
-          <Icon size="big" name="comments" className="commentIcon" onClick={() => {this.props.openModal(this.props.postData); this.changeUnreads();}} />
+          <div className="membersGroup">
+            <Icon size="big" name="users" className="usersIcon" />
+            <p className="membersText">Active</p>
+          </div>
+          <div className="messagesGroup">
+            <Icon size="big" name="comments" className="commentIcon" onClick={() => {this.props.openModal(this.props.postData); this.changeUnreads();}} />
+            <p className="messageText">Chat</p>
+          </div>
         </div>
       </div>
     </div>

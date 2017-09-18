@@ -135,12 +135,11 @@ class ConversationCard extends React.Component {
                        trigger={<p className="conversationCardBody">{this.props.data.content.split(' ').slice(0, 4).join(' ') + '...'}</p>}
                        content={<Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify>}/> :
                       <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify> }
-                <div className="conversationFootnote">
+                  <div className="conversationFootnote">
+                  <span className="commentNumMini">{this.state.count}{' messages'}</span>
                   <div className="commentDiv">
                     <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
-                    <Icon size="big" name="users" className="usersIconMini" />
-                    <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
-                    <Icon size="big" name="comments" className="commentIconMini"/>
+                    <Icon size="large" name="users" className="usersIconMini" />
                   </div>
                 </div>
               </Card.Content>

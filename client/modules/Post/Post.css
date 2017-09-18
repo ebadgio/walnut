@@ -277,8 +277,7 @@
 }
 
 .commentIcon {
-    cursor: pointer;
-    color: #3a3a3a !important;
+    text-decoration: none !important;
 }
 
 .commentIconMini {
@@ -290,16 +289,18 @@
     /*color: #5bc0e3 !important;*/
 /*}*/
 
-.commentIcon:hover {
-    color: #5bc0e3 !important;
-}
 
 .commentNum {
-    color: #4CC1FC;
-    margin-left: 10px;
-    margin-top: 4px;
-    margin-right: 3px;
-    font-weight: bold;
+    color: #b3b5c1;
+    font-size: smaller;
+    margin-right: 12px;
+    margin-left: auto;
+}
+
+.commentNumMini {
+    color: #b3b5c1;
+    font-size: 8px;
+    margin-right: 12px;
 }
 
 
@@ -587,12 +588,39 @@ iframe {
 }
 
 .usersIcon {
-    color: #3a3a3a;
+    margin-right: 0px !important;
+    color: #5d5d5d;
+    margin-left: .1em !important;
 }
 
 .usersIconMini {
     color: #FAFAFA;
 }
+
+.membersGroup {
+    margin-right: 15px;
+}
+
+.membersText {
+    text-align: center;
+    color: #5d5d5d;
+}
+
+.messagesGroup {
+    margin-right: 5px;
+    color: #5d5d5d !important;
+    cursor: pointer;
+}
+
+.messagesGroup:hover {
+    color: #5bc0e3 !important;
+}
+
+.messageText {
+    text-align: center;
+}
+
+
 
 .Select-control {
     border: 1px solid !important;
