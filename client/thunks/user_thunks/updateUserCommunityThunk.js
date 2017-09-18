@@ -21,7 +21,7 @@ const updateUserCommunityThunk = (community) => (dispatch) => {
         posts: response.data.posts,
         lastRefresh: response.data.lastRefresh
       });
-      setTimeout(dispatch({type: 'DISCOVER_READY'}), 1000);
+      setTimeout(() => dispatch({type: 'DISCOVER_READY'}), 1000);
     })
     .catch((err) =>{
       console.log('error in newTag', err);
