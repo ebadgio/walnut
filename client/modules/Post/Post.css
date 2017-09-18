@@ -213,6 +213,41 @@
     margin-bottom: 10px;
 }
 
+.isFollowingGroup {
+    color: #b3b5c1;
+    display: flex;
+    flex-direction: row;
+    max-height: 20px;
+    padding: 3px;
+    margin-top: 5px;
+    margin-right: 60px;
+    margin-left: auto;
+}
+
+.iconFollowing {
+    align-self: center !important;
+    font-size: 1em !important;
+}
+
+.followingText {
+    font-size: small;
+    font-weight: bold;
+}
+
+.postFollowButton {
+    padding: 3px !important;
+    color: #b3b5c1 !important;
+    background-color: #fff !important;
+    height: 20px !important;
+    margin-left: auto !important;
+    margin-right: 74px !important;
+    margin-top: 5px !important;
+}
+
+.postFollowButton:hover {
+    color: #5bc0e3 !important;
+}
+
 .postUser {
     display: flex;
     flex-direction: row;
@@ -277,8 +312,7 @@
 }
 
 .commentIcon {
-    cursor: pointer;
-    color: #3a3a3a !important;
+    text-decoration: none !important;
 }
 
 .commentIconMini {
@@ -290,18 +324,50 @@
     /*color: #5bc0e3 !important;*/
 /*}*/
 
-.commentIcon:hover {
-    color: #5bc0e3 !important;
-}
 
 .commentNum {
-    color: #4CC1FC;
-    margin-left: 10px;
-    margin-top: 4px;
-    margin-right: 3px;
-    font-weight: bold;
+    color: #b3b5c1;
+    font-size: smaller;
+    margin-right: 12px;
+    margin-left: auto;
 }
 
+.noUnread {
+    color: #b3b5c1;
+    font-size: smaller;
+    margin-right: 12px;
+    margin-left: auto;
+}
+
+.isUnread {
+    color: #f45b69;
+    font-size: smaller;
+    margin-right: 12px;
+    margin-left: auto;
+}
+.noUnreadMini {
+    color: #b3b5c1;
+    font-size: 8px;
+    margin-right: 12px;
+}
+
+.isUnreadMini {
+    color: #f45b69;
+    font-size: 8px;
+    margin-right: 12px;
+}
+
+.commentNumMini {
+    color: #b3b5c1;
+    font-size: 8px;
+    margin-right: 12px;
+}
+
+.messageInfoGroupMini {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
 
 .commentNumUn {
     color: #bc3e3e;
@@ -587,12 +653,39 @@ iframe {
 }
 
 .usersIcon {
-    color: #3a3a3a;
+    margin-right: 0px !important;
+    color: #5d5d5d;
+    margin-left: .1em !important;
 }
 
 .usersIconMini {
     color: #FAFAFA;
 }
+
+.membersGroup {
+    margin-right: 15px;
+}
+
+.membersText {
+    text-align: center;
+    color: #5d5d5d;
+}
+
+.messagesGroup {
+    margin-right: 5px;
+    color: #5d5d5d !important;
+    cursor: pointer;
+}
+
+.messagesGroup:hover {
+    color: #5bc0e3 !important;
+}
+
+.messageText {
+    text-align: center;
+}
+
+
 
 .Select-control {
     border: 1px solid !important;

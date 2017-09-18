@@ -43,6 +43,9 @@ class ModalTextBox extends React.Component {
     // });
     // console.log('me', user, sendArray);
     // if(second === 1) {
+    // TODO: old const
+    // TODO: start listen
+    // TODO: interval
     const messagesRef = firebaseApp.database().ref('/messages/' + this.props.postData.postId).orderByKey().limitToLast(20);
     messagesRef.on('value', (snapshot) => {
       if (snapshot.val()) {
@@ -157,23 +160,20 @@ class ModalTextBox extends React.Component {
       };
     }
 
-    // notifications set up
-    let temp = {};
+    // unread messages set up
     firebaseApp.database().ref('/followGroups/' + this.props.postData.postId).once('value', snapshot => {
       const followers = Object.keys(snapshot.val());
-      const memberIds = this.state.members.map(member => member.uid);
-      followers.forEach(follower => {
-        let unreadCount = firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId);
-        if (snapshot.val()[follower] && !memberIds.includes(follower)) {
-          firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId).once('value', snapshotB => {
-            let unreadCount = snapshotB.val();
-            temp['/unreads/' + follower + '/' + this.props.postData.postId] = !isNaN(unreadCount) ? unreadCount + 1 : 1;
-            firebaseApp.database().ref().update(temp);
-          });
-        }
+      console.log('followers', followers);
+      const memberIds = this.props.members.map(member => member.uid);
+      followers.filter(fol => (memberIds.indexOf(fol) === -1 && fol !== this.state.user.uid)).forEach(follower => {
+        const unreadsCountRef = firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId );
+        unreadsCountRef.transaction((currentValue) => {
+          return (currentValue || 0) + 1;
+        });
       });
     });
-    // notification stuff ends here
+    // unread stuff ends here
+
     this.setState({ commentBody: '', prevBody: '' });
     const update = {};
     const newMessageKey = firebaseApp.database().ref().child('messages').push().key;
@@ -290,10 +290,12 @@ class ModalTextBox extends React.Component {
 ModalTextBox.propTypes = {
   postData: PropTypes.object,
   currentUser: PropTypes.object,
-  user: PropTypes.object
+  user: PropTypes.object,
+  members: PropTypes.array
 };
 const mapStateToProps = (state) => ({
-  currentUser: state.userReducer
+  currentUser: state.userReducer,
+  postData: state.modalReducer.postData
 });
 
 export default connect(mapStateToProps, null)(ModalTextBox);

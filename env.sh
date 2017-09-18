@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 export MONGODB_URI="mongodb://test:test@ds031975.mlab.com:31975/omidisamazing"
 export SECRET="hellohello"
 export FACEBOOK_APP_ID="122787418334954"
