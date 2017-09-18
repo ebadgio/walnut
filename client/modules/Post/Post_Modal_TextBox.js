@@ -10,7 +10,10 @@ import uuidv4 from 'uuid/v4';
 import { Picker } from 'emoji-mart';
 import FileModal from './Post_Modal_File_Uploader.js';
 import superagent from 'superagent';
-import URL from '../../info';
+import Notification from 'react-web-notification';
+import ifvisible from 'ifvisible.js';
+
+let sendArray;
 
 class ModalTextBox extends React.Component {
   constructor(props) {
@@ -30,6 +33,29 @@ class ModalTextBox extends React.Component {
     this.setState({user: user});
     this.watchForTypers();
     this.startListen();
+    // console.log('entered this only once');
+    // let second = 0;
+    // const membersRef = firebaseApp.database().ref('/members/' + this.props.postData.postId);
+    // membersRef.on('value', (snapshot) => {
+    //   const peeps = _.values(snapshot.val());
+    //   const members = peeps.filter((peep) => typeof (peep) === 'object');
+    //   sendArray = members.filter((m) => m.uid !== user.uid).map((mem) => mem.uid);
+    // });
+    // console.log('me', user, sendArray);
+    // if(second === 1) {
+    const messagesRef = firebaseApp.database().ref('/messages/' + this.props.postData.postId).orderByKey().limitToLast(20);
+    messagesRef.on('value', (snapshot) => {
+      if (snapshot.val()) {
+        const send = _.values(snapshot.val());
+        const newMessage = send[send.length - 1];
+        console.log('inside here', newMessage);
+        if (newMessage.authorId !== user.uid) {
+          console.log('other user');
+        }
+      }
+    });
+    // }
+    // second = 1;
   }
 
   componentWillUnMount() {
@@ -135,7 +161,7 @@ class ModalTextBox extends React.Component {
     let temp = {};
     firebaseApp.database().ref('/followGroups/' + this.props.postData.postId).once('value', snapshot => {
       const followers = Object.keys(snapshot.val());
-      const memberIds = this.props.members.map(member => member.uid);
+      const memberIds = this.state.members.map(member => member.uid);
       followers.forEach(follower => {
         let unreadCount = firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId);
         if (snapshot.val()[follower] && !memberIds.includes(follower)) {
@@ -264,7 +290,6 @@ class ModalTextBox extends React.Component {
 ModalTextBox.propTypes = {
   postData: PropTypes.object,
   currentUser: PropTypes.object,
-  members: PropTypes.array,
   user: PropTypes.object
 };
 const mapStateToProps = (state) => ({

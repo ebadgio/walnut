@@ -44,7 +44,7 @@ class ModalInstance extends React.Component {
             <PostModalMessages />
           </Modal.Content>
           <Modal.Actions className="modalActions">
-            <ModalTextBox members={this.state.members} postData={this.props.postData} handleChange={(e) => this.handleChange(e)} findEnter={() =>this.findEnter()} />
+            <ModalTextBox postData={this.props.postData} handleChange={(e) => this.handleChange(e)} findEnter={() =>this.findEnter()} />
           </Modal.Actions>
         </div>
       </Modal>
