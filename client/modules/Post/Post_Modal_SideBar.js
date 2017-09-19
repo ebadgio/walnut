@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import firebaseApp from '../../firebase';
 import uuidv4 from 'uuid/v4';
 import SideBarConversationCard from './Post_Modal_SideBar_PostCards';
 import { Divider } from 'semantic-ui-react';

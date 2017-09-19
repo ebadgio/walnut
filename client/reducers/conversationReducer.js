@@ -1,6 +1,3 @@
-/**
- * Created by ebadgio on 8/16/17.
- */
 const conversationReducer = (state = { current: '', convos: [], iDs: []}, action) => {
   switch(action.type) {
     case 'GET_MY_CONVOS_DONE':

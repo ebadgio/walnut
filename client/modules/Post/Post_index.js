@@ -6,7 +6,7 @@ import MediaAttachment from './Post_Media_Attachment.js';
 import LinkPreview from './LinkPreview';
 import './Post.css';
 import Lightbox from 'react-images';
-import {Divider, Icon} from 'semantic-ui-react';
+import {Divider, Icon, Button} from 'semantic-ui-react';
 import dateStuff from '../../dateStuff';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
@@ -29,7 +29,9 @@ class Post extends React.Component {
       newLink: '',
       urlName: '',
       members: [],
-      unread: 0
+      count: 0,
+      unreads: 0,
+      isFollowing: false
     };
     this.getUseDate = this.getUseDate.bind(this);
   }
@@ -58,21 +60,26 @@ class Post extends React.Component {
     });
     const countRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
     countRef.on('value', (snapshot) => {
-      this.setState({count: snapshot.val()});
+      if (snapshot.val()) {
+        this.setState({count: snapshot.val()});
+      }
     });
-      // notification stuff
 
-    // TODO: if open is true set unreads to null and state to null
-    // TODO: if open is false read unreads and set state accordingly
-    const userId = firebaseApp.auth().currentUser.uid;
-    firebaseApp.database().ref('/unreads/' + userId + '/' + this.props.postData.postId).on('value', snapshotB => {
+    const followsRef = firebaseApp.database().ref('/follows/' + user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' +  this.props.postData.postId);
+    followsRef.on('value', (snapshot) => {
+      if (snapshot.val()) {
+        this.setState({isFollowing: true});
+      } else {
+        this.setState({isFollowing: false});
+      }
+    });
+
+    // unreads stuff
+    firebaseApp.database().ref('/unreads/' + user.uid + '/' + this.props.postData.postId).on('value', snapshotB => {
       const unreadCount =  snapshotB.val();
-      if (!isNaN(unreadCount)) {
-        if (unreadCount > 0) {
-          this.setState({unread: unreadCount});
-        } else {
-          this.setState({ unread: 0 });
-        }
+      console.log('unreads', unreadCount);
+      if (!isNaN(unreadCount) && unreadCount !== null) {
+        this.setState({unreads: unreadCount});
       }
     });
   }
@@ -159,6 +166,21 @@ class Post extends React.Component {
     this.setState({pdfModalData: data});
   }
 
+  joinConversation() {
+    const updates = {};
+    updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = true;
+    updates['/followGroups/' + this.props.postData.postId + '/' + this.state.user.uid] = true;
+    firebaseApp.database().ref().update(updates);
+  }
+
+  // Don't delete, will use it eventually
+  leaveConversation() {
+    const updates = {};
+    updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = null;
+    updates['/followGroups/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
+    firebaseApp.database().ref().update(updates);
+  }
+
   closeModal() {
     this.setState({ pdfUrl: '', page: 1 });
   }
@@ -195,9 +217,9 @@ class Post extends React.Component {
     this.setState({downloadUrl: ''});
   }
 
-  changeUnreads() {
-    // TODO: unreads to 0
-  }
+  // changeUnreads() {
+  //   // TODO: unreads to 0
+  // }
 
   render() {
     const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreview url={url} />) : [];
@@ -212,6 +234,13 @@ class Post extends React.Component {
             <h3 className="postHeaderUser">{this.props.postData.username}</h3>
             <p className="postTimeStamp">{this.state.timeStamp}</p>
           </div>
+            {this.state.isFollowing ? <div className="isFollowingGroup">
+              <Icon name="checkmark" className="iconFollowing" size={'small'} />
+              <p className="followingText">Following</p>
+            </div> : <Button className="postFollowButton" onClick={() => this.joinConversation()}>
+              <Icon name="plus" />
+              Follow
+            </Button>}
         </div>
         <div className="postDescription">
           <div className="postInnerContent">
@@ -238,6 +267,12 @@ class Post extends React.Component {
           />
       </div>
 
+      <span className="commentNum">
+            {this.state.count}{' messages'}
+      </span>
+      {this.state.isFollowing ? <span className={this.state.unreads > 0 ? 'isUnread' : 'noUnread'}>
+            {this.state.unreads}{' unread'}
+      </span> : null}
       <Divider className="postDivider" fitted />
       <div className="postFootnote">
         <div className="tagContainer">
@@ -249,9 +284,14 @@ class Post extends React.Component {
         <div></div>
         <div className="commentDiv">
           <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
-          <Icon size="big" name="users" className="usersIcon" />
-          <span className={(this.state.unread > 0) ? 'commentNumUn' : 'commentNum'}>{this.state.unread > 0 ? this.state.unread : this.state.count}</span>
-          <Icon size="big" name="comments" className="commentIcon" onClick={() => {this.props.openModal(this.props.postData); this.changeUnreads();}} />
+          <div className="membersGroup">
+            <Icon size="big" name="users" className="usersIcon" />
+            <p className="membersText">Active</p>
+          </div>
+          <div className="messagesGroup">
+            <Icon size="big" name="comments" className="commentIcon" onClick={() => {this.props.openModal(this.props.postData);}} />
+            <p className="messageText">Chat</p>
+          </div>
         </div>
       </div>
     </div>

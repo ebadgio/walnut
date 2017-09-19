@@ -38,13 +38,13 @@ class ModalInstance extends React.Component {
         </Modal.Content>
         <div className="postModalMain">
           <Modal.Header className="modalHeader">
-            <ModalHeader members={this.state.members} membersCount={this.state.membersCount} postData={this.props.postData}/>
+            <ModalHeader members={this.state.members} membersCount={this.state.membersCount} />
           </Modal.Header>
           <Modal.Content scrolling className="scrollContentClass" id="scrolling">
             <PostModalMessages />
           </Modal.Content>
           <Modal.Actions className="modalActions">
-            <ModalTextBox members={this.state.members} postData={this.props.postData} handleChange={(e) => this.handleChange(e)} findEnter={() =>this.findEnter()} />
+            <ModalTextBox members={this.state.members} handleChange={(e) => this.handleChange(e)} findEnter={() =>this.findEnter()} />
           </Modal.Actions>
         </div>
       </Modal>

@@ -217,7 +217,7 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
       return com.save();
     })
     .then((result) => {
-      res.json({ posts: posts, lastRefresh: new Date(), otherTags: result.otherTags});
+      res.json({ posts: posts, lastRefresh: new Date(), otherTags: result.otherTags, postId: post._id, userComm: req.user.currentCommunity});
     })
     .catch((er) => {
       console.log('eror in aws save fetching recent posts', er);
