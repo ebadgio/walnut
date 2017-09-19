@@ -10,7 +10,8 @@ import uuidv4 from 'uuid/v4';
 import { Picker } from 'emoji-mart';
 import FileModal from './Post_Modal_File_Uploader.js';
 import superagent from 'superagent';
-import URL from '../../info';
+import NotificationContainer from './Notification';
+
 
 class ModalTextBox extends React.Component {
   constructor(props) {
@@ -131,23 +132,20 @@ class ModalTextBox extends React.Component {
       };
     }
 
-    // notifications set up
-    let temp = {};
+    // unread messages set up
     firebaseApp.database().ref('/followGroups/' + this.props.postData.postId).once('value', snapshot => {
       const followers = Object.keys(snapshot.val());
+      console.log('followers', followers);
       const memberIds = this.props.members.map(member => member.uid);
-      followers.forEach(follower => {
-        let unreadCount = firebaseApp.database().ref('/unreads/' + member.uid + '/' + this.props.postData.postId);
-        if (snapshot.val()[follower] && !memberIds.includes(follower)) {
-          firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId).once('value', snapshotB => {
-            let unreadCount = snapshotB.val();
-            temp['/unreads/' + follower + '/' + this.props.postData.postId] = !isNaN(unreadCount) ? unreadCount + 1 : 1;
-            firebaseApp.database().ref().update(temp);
-          });
-        }
+      followers.filter(fol => (memberIds.indexOf(fol) === -1 && fol !== this.state.user.uid)).forEach(follower => {
+        const unreadsCountRef = firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId );
+        unreadsCountRef.transaction((currentValue) => {
+          return (currentValue || 0) + 1;
+        });
       });
     });
-    // notification stuff ends here
+    // unread stuff ends here
+
     this.setState({ commentBody: '', prevBody: '' });
     const update = {};
     const newMessageKey = firebaseApp.database().ref().child('messages').push().key;
@@ -200,6 +198,7 @@ class ModalTextBox extends React.Component {
   render() {
     return (
       <div className="textBoxDiv">
+        <NotificationContainer postData={this.props.postData} />
         <FileModal
         handleFileSubmit={(body) => this.handleAwsUpload(body)}
         handleFileClose={()=>this.handleFileClose()}
@@ -264,11 +263,12 @@ class ModalTextBox extends React.Component {
 ModalTextBox.propTypes = {
   postData: PropTypes.object,
   currentUser: PropTypes.object,
-  members: PropTypes.array,
-  user: PropTypes.object
+  user: PropTypes.object,
+  members: PropTypes.array
 };
 const mapStateToProps = (state) => ({
-  currentUser: state.userReducer
+  currentUser: state.userReducer,
+  postData: state.modalReducer.postData
 });
 
 export default connect(mapStateToProps, null)(ModalTextBox);

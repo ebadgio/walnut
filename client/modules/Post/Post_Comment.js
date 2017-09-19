@@ -116,6 +116,12 @@ class Comment extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    // TODO: comments re render block
+    console.log('preventing comments form updating');
+    return false;
+  }
+
 
   render() {
     // console.log('attachement in comment', this.props.attachment);

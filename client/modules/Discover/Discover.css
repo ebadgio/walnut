@@ -119,14 +119,13 @@
 }
 
 .conversationFootnote {
-    float: right;
     margin-right: 5px;
     display: flex;
     flex-direction: row;
     height: 40px;
+    justify-content: space-between;
     align-items: center;
     overflow: hidden;
-    margin-left: 143px;
 }
 
 .imageWrapperOnline {

@@ -9,12 +9,14 @@ import $ from 'jquery';
 import { Icon, Button, TextArea, Form, Divider, Popup } from 'semantic-ui-react';
 import superagent from 'superagent';
 import './Feed.css';
+import firebaseApp from '../../firebase';
 
 // TODO input that takes in content of post with # dropdown selector
 // input is string # is array
 // TODO post button dispatches newPost
 // userPost is the string that gets updated in reducer
 
+let user;
 
 class NewPostContainer extends React.Component {
   constructor(props) {
@@ -25,6 +27,12 @@ class NewPostContainer extends React.Component {
       file: '',
     };
   }
+
+
+  componentDidMount() {
+    user = firebaseApp.auth().currentUser;
+  }
+
 
   addTags(tag) {
     if (this.props.postTags.filter((t) => t._id === tag._id).length === 0) {
@@ -65,6 +73,10 @@ class NewPostContainer extends React.Component {
           console.log(err);
           alert('failed uploaded!');
         }
+        const updates = {};
+        updates['/follows/' + user.uid + '/' + res.body.userComm + '/' + res.body.postId] = true;
+        updates['/followGroups/' + res.body.postId + '/' + user.uid] = true;
+        firebaseApp.database().ref().update(updates);
         this.props.clearPostTag();
         const elem = document.getElementById('textarea1');
         elem.value = '';

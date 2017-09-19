@@ -71,14 +71,20 @@ class ModalMessages extends React.Component {
     };
     updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = member;
     firebaseApp.database().ref().update(updates);
-      // TODO: move this too the post index, my conversation and sidebar didmount
-      // unread messages stuff
-    firebaseApp.database().ref('/unreads/' + this.state.user.uid + '/' + this.props.postData.postId).set(0);
-    this.setState({ unread: 0 });
-      // unread stuff ends
+
+
+    const followsRef = firebaseApp.database().ref('/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' +  data.postId);
+    followsRef.on('value', (snapshot) => {
+      if (snapshot.val()) {
+        const unreadsCountRef = firebaseApp.database().ref('/unreads/' + this.state.user.uid + '/' + this.props.postData.postId);
+        unreadsCountRef.transaction((currentValue) => {
+          return 0;
+        });
+      }
+    });
 
     if (data.postId) {
-      const messagesRef = firebaseApp.database().ref('/messages/' + data.postId).orderByKey().limitToLast(20);
+      const messagesRef = firebaseApp.database().ref('/messages/' + this.props.postData.postId).orderByKey().limitToLast(20);
       messagesRef.on('value', (snapshot) => {
         if (snapshot.val()) {
           const send = _.values(snapshot.val());
