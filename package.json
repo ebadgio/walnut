@@ -60,7 +60,6 @@
     "google-locations": "^0.2.0",
     "history": "^4.6.3",
     "html-webpack-plugin": "^2.28.0",
-    "ifvisible.js": "^1.0.6",
     "image-webpack-loader": "^3.3.1",
     "karma-scss-preprocessor": "^2.0.0",
     "linkifyjs": "^2.1.4",

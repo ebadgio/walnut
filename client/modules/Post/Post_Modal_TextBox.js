@@ -10,10 +10,8 @@ import uuidv4 from 'uuid/v4';
 import { Picker } from 'emoji-mart';
 import FileModal from './Post_Modal_File_Uploader.js';
 import superagent from 'superagent';
-import Notification from 'react-web-notification';
-import ifvisible from 'ifvisible.js';
+import NotificationContainer from './Notification';
 
-let sendArray;
 
 class ModalTextBox extends React.Component {
   constructor(props) {
@@ -24,7 +22,6 @@ class ModalTextBox extends React.Component {
       typers: [],
       emojiIsOpen: false,
       file: '',
-      ignore: true
     };
   }
 
@@ -34,32 +31,6 @@ class ModalTextBox extends React.Component {
     this.setState({user: user});
     this.watchForTypers();
     this.startListen();
-
-    // desktop banners
-    const messagesRef = firebaseApp.database().ref('/messages/' + this.props.postData.postId).orderByKey().limitToLast(20);
-    messagesRef.on('value', (snapshot) => {
-      if (snapshot.val()) {
-        const send = _.values(snapshot.val());
-        const newMessage = send[send.length - 1];
-        console.log('inside here', newMessage);
-        if (newMessage.authorId !== user.uid) {
-          console.log('other user', this.props.postData.postId);
-          this.setState({
-            title: newMessage.author,
-            options: {
-              body: newMessage.content,
-              lang: 'en',
-              dir: 'ltr',
-              icon: 'https://s3-us-west-1.amazonaws.com/walnut-test/walnutlogo1.png',
-              // sound: './sound.mp3'
-            },
-            ignore: false
-          });
-        }
-      }
-    });
-    // }
-    // second = 1;
   }
 
   componentWillUnMount() {
@@ -227,12 +198,7 @@ class ModalTextBox extends React.Component {
   render() {
     return (
       <div className="textBoxDiv">
-        <Notification
-          ignore={this.state.ignore && this.state.title === ''}
-          timeout={5000}
-          title={this.state.title}
-          options={this.state.options}
-        />
+        <NotificationContainer postData={this.props.postData} />
         <FileModal
         handleFileSubmit={(body) => this.handleAwsUpload(body)}
         handleFileClose={()=>this.handleFileClose()}
