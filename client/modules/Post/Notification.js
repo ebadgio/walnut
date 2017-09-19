@@ -14,7 +14,6 @@ class NotificationContainer extends React.Component {
 
   componentDidMount() {
     const user = firebaseApp.auth().currentUser;
-    // desktop banners
     const messagesRef = firebaseApp.database().ref('/messages/' + this.props.postData.postId).orderByKey().limitToLast(20);
     messagesRef.on('value', (snapshot) => {
       if (snapshot.val()) {
@@ -29,8 +28,7 @@ class NotificationContainer extends React.Component {
               body: newMessage.content,
               lang: 'en',
               dir: 'ltr',
-              icon: 'https://s3-us-west-1.amazonaws.com/walnut-test/walnutlogo1.png',
-              // sound: './sound.mp3'
+              icon: 'https://s3-us-west-1.amazonaws.com/walnut-test/walnutlogo1.png'
             },
             ignore: false
           });

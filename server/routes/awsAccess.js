@@ -236,5 +236,9 @@ router.post('/upload/comment', upload.single('attach'), (req, res) => {
   res.json({attachment: attachment});
 });
 
+router.post('/upload/communitypicture', upload.single('community'), (req, res) => {
+  res.json({ pictureURL: req.file.location });
+});
+
 
 module.exports = router;
