@@ -69,14 +69,14 @@ class ModalMessages extends React.Component {
       avatar: this.props.currentUser.pictureURL,
       uid: this.state.user.uid
     };
-    updates['/members/' + data.postId + '/' + this.state.user.uid] = member;
+    updates['/members/' + this.props.postData.postId + '/' + this.state.user.uid] = member;
     firebaseApp.database().ref().update(updates);
 
 
     const followsRef = firebaseApp.database().ref('/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' +  data.postId);
     followsRef.on('value', (snapshot) => {
       if (snapshot.val()) {
-        const unreadsCountRef = firebaseApp.database().ref('/unreads/' + this.state.user.uid + '/' + data.postId);
+        const unreadsCountRef = firebaseApp.database().ref('/unreads/' + this.state.user.uid + '/' + this.props.postData.postId);
         unreadsCountRef.transaction((currentValue) => {
           return 0;
         });
@@ -84,7 +84,7 @@ class ModalMessages extends React.Component {
     });
 
     if (data.postId) {
-      const messagesRef = firebaseApp.database().ref('/messages/' + data.postId).orderByKey().limitToLast(20);
+      const messagesRef = firebaseApp.database().ref('/messages/' + this.props.postData.postId).orderByKey().limitToLast(20);
       messagesRef.on('value', (snapshot) => {
         if (snapshot.val()) {
           const send = _.values(snapshot.val());

@@ -24,6 +24,7 @@ class ModalTextBox extends React.Component {
       typers: [],
       emojiIsOpen: false,
       file: '',
+      ignore: true
     };
   }
 
@@ -33,19 +34,8 @@ class ModalTextBox extends React.Component {
     this.setState({user: user});
     this.watchForTypers();
     this.startListen();
-    // console.log('entered this only once');
-    // let second = 0;
-    // const membersRef = firebaseApp.database().ref('/members/' + this.props.postData.postId);
-    // membersRef.on('value', (snapshot) => {
-    //   const peeps = _.values(snapshot.val());
-    //   const members = peeps.filter((peep) => typeof (peep) === 'object');
-    //   sendArray = members.filter((m) => m.uid !== user.uid).map((mem) => mem.uid);
-    // });
-    // console.log('me', user, sendArray);
-    // if(second === 1) {
-    // TODO: old const
-    // TODO: start listen
-    // TODO: interval
+
+    // desktop banners
     const messagesRef = firebaseApp.database().ref('/messages/' + this.props.postData.postId).orderByKey().limitToLast(20);
     messagesRef.on('value', (snapshot) => {
       if (snapshot.val()) {
@@ -53,7 +43,18 @@ class ModalTextBox extends React.Component {
         const newMessage = send[send.length - 1];
         console.log('inside here', newMessage);
         if (newMessage.authorId !== user.uid) {
-          console.log('other user');
+          console.log('other user', this.props.postData.postId);
+          this.setState({
+            title: newMessage.author,
+            options: {
+              body: newMessage.content,
+              lang: 'en',
+              dir: 'ltr',
+              icon: 'https://s3-us-west-1.amazonaws.com/walnut-test/walnutlogo1.png',
+              // sound: './sound.mp3'
+            },
+            ignore: false
+          });
         }
       }
     });
@@ -226,6 +227,12 @@ class ModalTextBox extends React.Component {
   render() {
     return (
       <div className="textBoxDiv">
+        <Notification
+          ignore={this.state.ignore && this.state.title === ''}
+          timeout={5000}
+          title={this.state.title}
+          options={this.state.options}
+        />
         <FileModal
         handleFileSubmit={(body) => this.handleAwsUpload(body)}
         handleFileClose={()=>this.handleFileClose()}
