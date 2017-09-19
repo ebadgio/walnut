@@ -17,7 +17,8 @@ class Register extends React.Component {
       email: '',
       password: '',
       repeat: '',
-      failed: false
+      failed: false,
+      passwordFail: false
     };
   }
 
@@ -43,7 +44,10 @@ class Register extends React.Component {
 
   register(e) {
     e.preventDefault();
-    if (this.state.fName && this.state.lName && this.state.email && this.state.password) {
+    if (this.state.password !== this.state.repeat) {
+      this.setState({passwordFail: true});
+    }
+    if (this.state.fName && this.state.lName && this.state.email && this.state.password === this.state.repeat) {
       this.props.emailRegistration(this.state.fName, this.state.lName, this.state.email, this.state.password);
     }
   }
@@ -63,6 +67,15 @@ class Register extends React.Component {
                   </Message.Content>
                 </Message> :
                 null
+            }
+            {this.state.passwordFail ?
+              <Message icon>
+                <Icon name="warning sign" />
+                <Message.Content>
+                  <Message.Header>Passwords don't match </Message.Header>
+                  </Message.Content>
+              </Message> :
+              null
             }
           <Form>
             <Form.Field>
