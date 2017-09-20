@@ -267,8 +267,8 @@
 }
 
 .postUserImage {
-    max-width: 100%;
-    min-height: 100%;
+    max-width: 105%;
+    min-height: inherit;
     object-fit: cover;
     margin: auto;
 }
@@ -450,7 +450,8 @@
 }
 
 .messageContent {
-    padding: 5px 9px 5px 9px !important;
+    padding: 5px 9px 5px 12px !important;
+    line-height: 1.3em !important;
 }
 
 .messageNameYou {
@@ -473,14 +474,16 @@
     margin-left: 10px;
     margin-top: 10px;
     margin-right: 8px;
-    background-color: red;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
+    min-width: 36px;
+    min-height: 36px;
+    max-width: 36px;
+    max-height: 36px;
+    border-radius: 100%;
     display: flex;
     overflow: hidden;
     align-self: flex-end;
     margin-bottom: 5px;
+    background: none !important;
 }
 
 .linkPreview {

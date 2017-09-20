@@ -168,7 +168,7 @@ class Comment extends React.Component {
             <Card className="commentCardOther">
               <Card.Content className="messageContent">
                 <Card.Description className="messageDescription" style={{color: '#fff'}}>
-                  <Linkify tagName="p" options={defaults}>{this.state.messageBody}</Linkify>
+                  <Linkify tagName="div" options={defaults}>{this.state.messageBody}</Linkify>
                 </Card.Description>
                 {urlPrev.length > 0 ? urlPrev[0] : null}
                 {this.props.attachment !== '' ? <AttachmentPreviewComment attachment={this.props.attachment} /> : null}
