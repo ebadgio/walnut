@@ -34,6 +34,7 @@ class ConversationCard extends React.Component {
   constructor() {
     super();
     this.state = {
+      numFollowers: 0,
     };
   }
 
@@ -58,6 +59,15 @@ class ConversationCard extends React.Component {
       const unreadCount =  snapshotB.val();
       if (!isNaN(unreadCount) && unreadCount !== null) {
         this.setState({unreads: unreadCount});
+      }
+    });
+
+    // Getting # followers of this post
+    const followersRef = firebaseApp.database().ref('/followGroups/' + this.props.data.postId);
+    followersRef.on('value', (snapshot) => {
+      if (snapshot.val()) {
+        const followers = Object.keys(snapshot.val());
+        this.setState({numFollowers: followers.length});
       }
     });
   }
@@ -131,6 +141,9 @@ class ConversationCard extends React.Component {
                       <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify> }
                   <div className="conversationFootnote">
                     <div className="messageInfoGroupMini">
+                      <span className="followNumMini">
+                        {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
+                      </span>
                       <span className="commentNumMini">{this.state.count}{' messages'}</span>
                       <span className={this.state.unreads > 0 ? 'isUnreadMini' : 'noUnreadMini'}>
                         {this.state.unreads}{' unread'}

@@ -280,4 +280,20 @@ router.get('/myconversations/:postIds', (req, res) => {
   });
 });
 
+router.get('/followers/:followUserIds', (req, res) => {
+  const userIds = req.params.followUserIds.split('+');
+  console.log('in backend Followers', userIds);
+  User.find({ firebaseId: { $in: userIds}})
+    .then((userArr) => {
+      console.log('in backend Followers', userArr);
+      const followers = userArr.map((userObj) => {
+        return {
+          userId: userObj._id,
+          avatar: userObj.pictureURL,
+          fullName: userObj.fullName
+        };});
+      res.json({followers: followers});
+    });
+});
+
 module.exports = router;
