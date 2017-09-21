@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import joinConversationThunk from '../../thunks/post_thunks/joinConversationThunk';
+import getPostFollowersThunk from '../../thunks/post_thunks/getPostFollowers';
 import './Post.css';
-import { Icon, Button, Popup } from 'semantic-ui-react';
+import { Icon, Button, Popup, Divider } from 'semantic-ui-react';
 import firebaseApp from '../../firebase';
 import NestedPostModal from './Nested_Post_Modal';
 import _ from 'underscore';
@@ -32,8 +33,17 @@ class ModalHeader extends React.Component {
           const members = peeps.filter((peep) => typeof (peep) === 'object');
           this.setState({membersCount: members.length, members: members, postData: this.props.postData});
         });
+
+        // Getting # followers of this post
+        const followersRef = firebaseApp.database().ref('/followGroups/' + this.props.postData.postId);
+        followersRef.on('value', (snapshot) => {
+          if (snapshot.val()) {
+            const followers = Object.keys(snapshot.val());
+            this.props.getPostFollowers(followers);
+          }
+        });
       }
-    }, 1000);
+    }, 500);
   }
 
 
@@ -81,6 +91,27 @@ class ModalHeader extends React.Component {
                     </div>
                 }
               <Popup
+                  className="followersPopup"
+                  trigger={<Icon.Group className="followIconGroup" size="big">
+                    <Icon name="user" />
+                    <Icon corner
+                          inverted
+                          className="feedIcon"
+                          style={{left: '50%'}}
+                          name="feed" />
+                  </Icon.Group>}
+                  content={<div><h3>Followers</h3><Divider inverted />{this.props.postFollowers.map((follower) => <div className="followerGroup">
+                    <div className="imageWrapperOnline">
+                        <img className="postUserImage" src={follower.avatar} />
+                      </div>
+                    <div className="onlineName">{follower.fullName}</div>
+                  </div>)}</div>}
+                  position="right center"
+                  inverted
+                  hoverable
+                  size={'small'}
+              />
+              <Popup
                   className="membersPopup"
                   trigger={<div className="inModalUsers">
                     <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
@@ -109,14 +140,18 @@ ModalHeader.propTypes = {
   user: PropTypes.object,
   members: PropTypes.array,
   membersCount: PropTypes.number,
-  closeModal: PropTypes.func
+  closeModal: PropTypes.func,
+  postFollowers: PropTypes.array,
+  getPostFollowers: PropTypes.func
 };
 const mapStateToProps = (state) => ({
   myConvoIds: state.conversationReducer.iDs,
   currentUser: state.userReducer,
-  postData: state.modalReducer.postData
+  postData: state.modalReducer.postData,
+  postFollowers: state.modalReducer.postFollowers
 });
 const mapDispatchToProps = (dispatch) => ({
+  getPostFollowers: (followerIds) => dispatch(getPostFollowersThunk(followerIds)),
   joinConversation: (postId) => dispatch(joinConversationThunk(postId)),
   closeModal: () => dispatch({type: 'MAKE_CLOSED'})
 });

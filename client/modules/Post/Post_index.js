@@ -31,6 +31,7 @@ class Post extends React.Component {
       members: [],
       count: 0,
       unreads: 0,
+      numFollowers: 0,
       isFollowing: false
     };
     this.getUseDate = this.getUseDate.bind(this);
@@ -65,6 +66,7 @@ class Post extends React.Component {
       }
     });
 
+    // Determining if this user follows this post
     const followsRef = firebaseApp.database().ref('/follows/' + user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' +  this.props.postData.postId);
     followsRef.on('value', (snapshot) => {
       if (snapshot.val()) {
@@ -74,11 +76,21 @@ class Post extends React.Component {
       }
     });
 
+    // Getting # followers of this post
+    const followersRef = firebaseApp.database().ref('/followGroups/' + this.props.postData.postId);
+    followersRef.on('value', (snapshot) => {
+      if (snapshot.val()) {
+        const followers = Object.keys(snapshot.val());
+        this.setState({numFollowers: followers.length});
+      }
+    });
+
+
     // unreads stuff
     firebaseApp.database().ref('/unreads/' + user.uid + '/' + this.props.postData.postId).on('value', snapshotB => {
       const unreadCount =  snapshotB.val();
       console.log('unreads', unreadCount);
-      if (!isNaN(unreadCount) && unreadCount !== null) {
+      if (!(this.props.currentModalData.postId === this.props.postData.postId) && !isNaN(unreadCount) && unreadCount !== null) {
         this.setState({unreads: unreadCount});
       }
     });
@@ -98,6 +110,9 @@ class Post extends React.Component {
       let isPM;
       if (parseInt(timeArr[0], 10) > 12) {
         hour = parseInt(timeArr[0], 10) - 12;
+        isPM = true;
+      } else if (parseInt(timeArr[0], 10) === 12) {
+        hour = 12;
         isPM = true;
       } else {
         if (parseInt(timeArr[0], 10) === 0) {
@@ -266,13 +281,17 @@ class Post extends React.Component {
           onClose={() => this.closeLightbox()}
           />
       </div>
-
-      <span className="commentNum">
-            {this.state.count}{' messages'}
-      </span>
-      {this.state.isFollowing ? <span className={this.state.unreads > 0 ? 'isUnread' : 'noUnread'}>
-            {this.state.unreads}{' unread'}
-      </span> : null}
+      <div className="statsGroup">
+        <span className="followNum">
+              {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
+        </span>
+        <span className="commentNum">
+              {this.state.count}{' messages'}
+        </span>
+        {this.state.isFollowing ? <span className={this.state.unreads > 0 ? 'isUnread' : 'noUnread'}>
+              {this.state.unreads}{' unread'}
+        </span> : null}
+      </div>
       <Divider className="postDivider" fitted />
       <div className="postFootnote">
         <div className="tagContainer">
@@ -303,11 +322,16 @@ Post.propTypes = {
   newLike: PropTypes.func,
   currentUser: PropTypes.object,
   nested: PropTypes.bool,
-  openModal: PropTypes.func
+  openModal: PropTypes.func,
+  currentModalData: PropTypes.object
 };
 
 const mapDispatchToProps = (dispatch) => ({
   openModal: (postData) => dispatch({type: 'MAKE_OPEN', postData: postData})
 });
 
-export default connect(null, mapDispatchToProps)(Post);
+const mapStateToProps = (state) => ({
+  currentModalData: state.modalReducer.postData
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post);

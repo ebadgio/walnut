@@ -125,13 +125,6 @@
     margin-right: 15px
 }
 
-.postUserImage {
-    max-width: 100%;
-    min-height: 100%;
-    object-fit: cover;
-    margin: auto;
-}
-
 .logoutText {
     margin-top: 10px;
 }

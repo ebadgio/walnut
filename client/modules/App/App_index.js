@@ -19,7 +19,6 @@ class App extends React.Component {
           <Switch>
             <Route path="/walnuthome" component={WalnutHomeContainer}/>
             <Route path="/community" render={() => <Community history={history} />} />
-            {/* <Route path="/editprofile" component={EditProfile} /> */}
           </Switch>
         </div>
     );

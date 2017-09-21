@@ -267,8 +267,8 @@
 }
 
 .postUserImage {
-    max-width: 100%;
-    min-height: 100%;
+    max-width: 105%;
+    min-height: inherit;
     object-fit: cover;
     margin: auto;
 }
@@ -324,19 +324,28 @@
     /*color: #5bc0e3 !important;*/
 /*}*/
 
+.statsGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
 
 .commentNum {
     color: #b3b5c1;
     font-size: smaller;
     margin-right: 12px;
-    margin-left: auto;
+}
+
+.followNum {
+    color: #b3b5c1;
+    font-size: smaller;
+    margin-right: 12px;
 }
 
 .noUnread {
     color: #b3b5c1;
     font-size: smaller;
     margin-right: 12px;
-    margin-left: auto;
 }
 
 .isUnread {
@@ -358,6 +367,12 @@
 }
 
 .commentNumMini {
+    color: #b3b5c1;
+    font-size: 8px;
+    margin-right: 12px;
+}
+
+.followNumMini {
     color: #b3b5c1;
     font-size: 8px;
     margin-right: 12px;
@@ -386,8 +401,6 @@
 
 .commentDiv {
     font-size: smaller;
-    margin-left: 40px;
-    margin-left: 53px;
     color: #313D4D !important;
     display: flex;
     margin-right: 10px;
@@ -450,7 +463,8 @@
 }
 
 .messageContent {
-    padding: 5px 9px 5px 9px !important;
+    padding: 5px 12px 5px 12px !important;
+    line-height: 1.3em !important;
 }
 
 .messageNameYou {
@@ -473,14 +487,16 @@
     margin-left: 10px;
     margin-top: 10px;
     margin-right: 8px;
-    background-color: red;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
+    min-width: 36px;
+    min-height: 36px;
+    max-width: 36px;
+    max-height: 36px;
+    border-radius: 100%;
     display: flex;
     overflow: hidden;
     align-self: flex-end;
     margin-bottom: 5px;
+    background: none !important;
 }
 
 .linkPreview {
@@ -628,8 +644,8 @@ iframe {
 
 .membersPopup {
     max-width: 300px !important;
-    max-height: 100px !important;
-    overflow-x: auto !important;
+    max-height: 200px !important;
+    overflow: auto !important;
 }
 
 .unfollowText {
@@ -934,4 +950,23 @@ body ::-webkit-scrollbar {
 
 #fileUploadConversation {
     margin-right: 9px !important
+}
+
+.followerGroup {
+    display: flex;
+}
+
+.followIconGroup {
+    color: #5d5d5d;
+}
+
+.feedIcon {
+    text-shadow: none !important;
+    color: #5bc0e3 !important;
+}
+
+.followersPopup {
+    max-width: 300px !important;
+    max-height: 200px !important;
+    overflow: auto !important;
 }
