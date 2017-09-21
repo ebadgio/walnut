@@ -11,22 +11,30 @@ const defaultState = {
   username: ''
 };
 
-const modalReducer = (state = {postdata: defaultState, open: false}, action) => {
+const modalReducer = (state = {postData: defaultState, postFollowers: [], open: false}, action) => {
   switch(action.type) {
     case 'MAKE_OPEN':
       return {
+        ...state,
         postData: action.postData,
         open: true
       };
     case 'MAKE_CLOSED':
       return {
+        postFollowers: [],
         postData: defaultState,
         open: false
       };
     case 'TOGGLE_DATA':
       return {
+        ...state,
         postData: action.newPostData,
         open: true
+      };
+    case 'GET_FOLLOWERS_DONE':
+      return {
+        ...state,
+        postFollowers: action.followers
       };
     default:
       return state;
