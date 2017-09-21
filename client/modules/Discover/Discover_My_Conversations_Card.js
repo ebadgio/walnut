@@ -67,7 +67,9 @@ class ConversationCard extends React.Component {
     followersRef.on('value', (snapshot) => {
       if (snapshot.val()) {
         const followers = Object.keys(snapshot.val());
-        this.setState({numFollowers: followers.length});
+        const num = followers.length;
+        this.props.sumUnreads(this.props.data.postId, num);
+        this.setState({numFollowers: num});
       }
     });
   }
@@ -165,7 +167,8 @@ ConversationCard.propTypes = {
   data: PropTypes.object,
   user: PropTypes.object,
   toggleModal: PropTypes.func,
-  handleSelect: PropTypes.func
+  handleSelect: PropTypes.func,
+  sumUnreads: PropTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => ({
