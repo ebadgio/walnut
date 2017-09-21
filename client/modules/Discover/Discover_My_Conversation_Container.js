@@ -13,7 +13,10 @@ class FollowedPostsContainer extends React.Component {
   constructor() {
     super();
     this.state = {
+      unreadsGroup: {},
+      total: 0
     };
+    this.sumUnreads = this.sumUnreads.bind(this);
   }
 
 
@@ -63,6 +66,13 @@ class FollowedPostsContainer extends React.Component {
     this.setState({ visible: false });
   }
 
+  sumUnreads(id, num) {
+    const group = this.state.unreadsGroup;
+    group[id] = num;
+    const total = _.values(group).reduce((sum, val) => sum + val);
+    this.setState({unreadsGroup: group, unreadsSum: total});
+  }
+
   render() {
     return (
        <Sidebar.Pushable className="followedPostsPushable">
@@ -80,6 +90,7 @@ class FollowedPostsContainer extends React.Component {
                        <ConversationCard data={conv}
                                          key={uuidv4()}
                                          handleSelect={() => this.handleSelect()}
+                                         sumUnreads={() => this.sumUnreads()}
                                          user={this.props.currentUser}/>
                      )}
                </div> : <div className="followedPostsBox"></div>}
@@ -88,6 +99,7 @@ class FollowedPostsContainer extends React.Component {
            <div className="rightContainer">
              <Button onClick={() => {this.toggleVisibility(); }} className="followedPostsButton">
                Followed Posts
+               <span className={this.state.total > 0 ? 'isUnread' : 'noUnread'}>{this.state.total}{' total unread messages'}</span>
              </Button>
            </div>
          </Sidebar.Pusher>
