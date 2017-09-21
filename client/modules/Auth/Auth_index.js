@@ -72,7 +72,6 @@ class Auth extends React.Component {
           {/* <Route path="/community" render={() => (<Community history={history} />)} /> */}
           <Route path="/community" component={Community} />
           <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
         </Switch>
       </Router>
     );
