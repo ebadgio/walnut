@@ -68,7 +68,7 @@ class ConversationCard extends React.Component {
       if (snapshot.val()) {
         const followers = Object.keys(snapshot.val());
         const num = followers.length;
-        this.props.sumUnreads(this.props.data.postId, num);
+        // this.props.sumUnreads(this.props.data.postId, num);
         this.setState({numFollowers: num});
       }
     });
