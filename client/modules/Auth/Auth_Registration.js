@@ -53,7 +53,7 @@ class Register extends React.Component {
   render() {
     return (
       <div className="registerCard">
-        <h1>Register</h1>
+        <h1>New User?</h1>
           {!this.props.isVerified ?
               <Message icon>
                 <Icon name="circle notched" loading />
@@ -114,7 +114,7 @@ class Register extends React.Component {
               value={this.state.repeat}
               onChange={(e) => this.handleRepeatChange(e)} />
           </Form.Field>
-          <Button className="authButtonsRegister" onClick={(e) => { this.register(e); }}>Register</Button>
+          <Button className="authButtons" onClick={(e) => { this.register(e); }}>Register</Button>
         </Form>
       </div>
 
