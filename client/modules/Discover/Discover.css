@@ -202,9 +202,8 @@
 
 .onlineTab {
     cursor: pointer !important;
-    border: 1px solid !important;
-    border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
-    border-radius: 3px !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
     width: 30vh;
     height: auto;
     position: fixed !important;
@@ -213,9 +212,6 @@
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     margin-left: 20px !important;
-    margin-bottom: 0 !important;
-    border-bottom-left-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
     border-bottom: none !important;
     color: #3a3a3a !important;
 
@@ -300,8 +296,10 @@
     width: 200px !important;
     min-width: 120px !important;
     border-right: none !important;
-    border-top-right-radius: 0px !important;
-    border-bottom-right-radius: 0px !important;
+    /*border-top-right-radius: 0px !important;*/
+    /*border-bottom-right-radius: 0px !important;*/
+    border-radius: 0 !important;
+    box-shadow: none !important;
 }
 
 .followedPostsSegment:hover {

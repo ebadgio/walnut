@@ -208,7 +208,11 @@
 }
 
 .postSegment {
+    margin-top: 3px !important;
     padding: .5em .5em !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(34,36,38,.15) !important;
+    border-radius: 0 !important;
 }
 
 .postContent {

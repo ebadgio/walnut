@@ -10,7 +10,10 @@
 }
 
 .newPostSegment {
+    border-bottom: 1px solid rgba(34,36,38,.15);
     margin-top: 20px !important;
+    border: none !important;
+    border-radius: 0 !important;
 }
 
 .uploadButtonIcon {
@@ -28,11 +31,12 @@
 
 .Feed_Wrapper {
     width: 513px;
-    background-color: #FAFAFA;
     position: absolute;
     left: 50%;
     margin-top: 6vh;
     transform: translate(-50%);
+    border-right: 1px solid rgba(34,36,38,.15);
+    border-left: 1px solid rgba(34,36,38,.15);
 }
 
 .newPostFooter {
