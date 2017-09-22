@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ConversationCard from './Discover_My_Conversations_Card';
-import { Loader, Sidebar, Button, Icon  } from 'semantic-ui-react';
+import { Loader, Sidebar, Button, Icon, Segment  } from 'semantic-ui-react';
 import './Discover.css';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
@@ -96,10 +96,10 @@ class FollowedPostsContainer extends React.Component {
          </Sidebar>
          <Sidebar.Pusher>
            <div className="rightContainer">
-             <Button onClick={() => {this.toggleVisibility(); }} className="followedPostsButton">
+             <Segment onClick={() => {this.toggleVisibility(); }} className="followedPostsSegment">
                Followed Posts
                {/* <span className={this.state.total > 0 ? 'isUnreadDisc' : 'noUnreadDisc'}>{this.state.total}{' total unread messages'}</span>*/}
-             </Button>
+             </Segment>
            </div>
          </Sidebar.Pusher>
        </Sidebar.Pushable>

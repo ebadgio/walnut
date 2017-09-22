@@ -207,6 +207,10 @@
     /* box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;*/
 }
 
+.postSegment {
+    padding: .5em .5em !important;
+}
+
 .postContent {
     display: flex;
     flex-direction: column;
@@ -298,7 +302,7 @@
     font-family: Avenir Next;	
     font-size: 16px;
     line-height: 25px;
-    margin-left: 3%;
+    margin-left: 2%;
     margin-bottom: 15px;
     margin-top: 5px;
 }

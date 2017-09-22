@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import TagPrefContainer from './Feed_NewPost_TagPref_Container';
 import newPostThunk from '../../thunks/post_thunks/newPostThunk';
 import $ from 'jquery';
-import { Icon, Button, TextArea, Form, Divider, Popup } from 'semantic-ui-react';
+import { Icon, Button, TextArea, Form, Divider, Popup, Segment } from 'semantic-ui-react';
 import superagent from 'superagent';
 import './Feed.css';
 import firebaseApp from '../../firebase';
@@ -120,7 +120,7 @@ class NewPostContainer extends React.Component {
 
   render() {
     return (
-      <div className="newPost" id="newPostBox">
+      <Segment className="newPostSegment">
         <div className="row newPostContent">
           {this.state.emptyBody ? <div className="popUpNoBody"><h4>Please type a new conversation</h4></div> : null}
           <Form className="newPostForm">
@@ -157,7 +157,7 @@ class NewPostContainer extends React.Component {
                 </Button.Content>
               </Button>
           </div>
-      </div>
+      </Segment>
     );
   }
 }

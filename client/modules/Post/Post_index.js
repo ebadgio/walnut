@@ -6,7 +6,7 @@ import MediaAttachment from './Post_Media_Attachment.js';
 import LinkPreview from './LinkPreview';
 import './Post.css';
 import Lightbox from 'react-images';
-import {Divider, Icon, Button} from 'semantic-ui-react';
+import {Divider, Icon, Button, Segment} from 'semantic-ui-react';
 import dateStuff from '../../dateStuff';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
@@ -239,81 +239,81 @@ class Post extends React.Component {
   render() {
     const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreview url={url} />) : [];
     return (
-      <div className="postOuter">
-      <div className="postContent">
-        <div className="postUser">
-          <div className="imageWrapperPost">
-              <img className="postUserImage" src={this.props.postData.pictureURL} />
+      <Segment className="postSegment">
+        <div className="postContent">
+          <div className="postUser">
+            <div className="imageWrapperPost">
+                <img className="postUserImage" src={this.props.postData.pictureURL} />
+            </div>
+            <div className="postHeader">
+              <h3 className="postHeaderUser">{this.props.postData.username}</h3>
+              <p className="postTimeStamp">{this.state.timeStamp}</p>
+            </div>
+              {this.state.isFollowing ? <div className="isFollowingGroup">
+                <Icon name="checkmark" className="iconFollowing" size={'small'} />
+                <p className="followingText">Following</p>
+              </div> : <Button className="postFollowButton" onClick={() => this.joinConversation()}>
+                <Icon name="plus" />
+                Follow
+              </Button>}
           </div>
-          <div className="postHeader">
-            <h3 className="postHeaderUser">{this.props.postData.username}</h3>
-            <p className="postTimeStamp">{this.state.timeStamp}</p>
+          <div className="postDescription">
+            <div className="postInnerContent">
+              {this.state.messageBody ? this.state.messageBody :
+              <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName}</a> {this.state.messageBody2}</div>
+              }
+            </div>
           </div>
-            {this.state.isFollowing ? <div className="isFollowingGroup">
-              <Icon name="checkmark" className="iconFollowing" size={'small'} />
-              <p className="followingText">Following</p>
-            </div> : <Button className="postFollowButton" onClick={() => this.joinConversation()}>
-              <Icon name="plus" />
-              Follow
-            </Button>}
-        </div>
-        <div className="postDescription">
-          <div className="postInnerContent">
-            {this.state.messageBody ? this.state.messageBody :
-            <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName}</a> {this.state.messageBody2}</div>
-            }
-          </div>
-        </div>
 
-        {urlPrev.length > 0 ? urlPrev[0] : null}
+          {urlPrev.length > 0 ? urlPrev[0] : null}
 
-        {(this.props.postData.attachment.name !== '') ?
-        <MediaAttachment data={this.props.postData.attachment}
-        renderLightBox={(data) => this.renderLightBox(data)}
-        renderPdfModal={(data) => this.renderPdfModal(data)}/>
-        : null}
-        <Lightbox
-          images={[{
-            src: this.state.lightBoxData.url,
-            caption: this.state.lightBoxData.name
-          }]}
-          isOpen={this.state.lightBoxData !== ''}
-          onClose={() => this.closeLightbox()}
-          />
-      </div>
-      <div className="statsGroup">
-        <span className="followNum">
-              {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
-        </span>
-        <span className="commentNum">
-              {this.state.count}{' messages'}
-        </span>
-        {this.state.isFollowing ? <span className={this.state.unreads > 0 ? 'isUnread' : 'noUnread'}>
-              {this.state.unreads}{' unread'}
-        </span> : null}
-      </div>
-      <Divider className="postDivider" fitted />
-      <div className="postFootnote">
-        <div className="tagContainer">
-          {this.props.postData.tags.map((tag, index) => (
-          <div key={index} className="tag">
-            <text className="hashtag">#{' ' + tag.name}</text>
-          </div>))}
+          {(this.props.postData.attachment.name !== '') ?
+          <MediaAttachment data={this.props.postData.attachment}
+          renderLightBox={(data) => this.renderLightBox(data)}
+          renderPdfModal={(data) => this.renderPdfModal(data)}/>
+          : null}
+          <Lightbox
+            images={[{
+              src: this.state.lightBoxData.url,
+              caption: this.state.lightBoxData.name
+            }]}
+            isOpen={this.state.lightBoxData !== ''}
+            onClose={() => this.closeLightbox()}
+            />
         </div>
-        <div></div>
-        <div className="commentDiv">
-          <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
-          <div className="membersGroup">
-            <Icon size="big" name="users" className="usersIcon" />
-            <p className="membersText">Active</p>
+        <div className="statsGroup">
+          <span className="followNum">
+                {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
+          </span>
+          <span className="commentNum">
+                {this.state.count}{' messages'}
+          </span>
+          {this.state.isFollowing ? <span className={this.state.unreads > 0 ? 'isUnread' : 'noUnread'}>
+                {this.state.unreads}{' unread'}
+          </span> : null}
+        </div>
+        <Divider className="postDivider" fitted />
+        <div className="postFootnote">
+          <div className="tagContainer">
+            {this.props.postData.tags.map((tag, index) => (
+            <div key={index} className="tag">
+              <text className="hashtag">#{' ' + tag.name}</text>
+            </div>))}
           </div>
-          <div className="messagesGroup">
-            <Icon size="big" name="comments" className="commentIcon" onClick={() => {this.props.openModal(this.props.postData);}} />
-            <p className="messageText">Chat</p>
+          <div></div>
+          <div className="commentDiv">
+            <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
+            <div className="membersGroup">
+              <Icon size="big" name="users" className="usersIcon" />
+              <p className="membersText">Active</p>
+            </div>
+            <div className="messagesGroup">
+              <Icon size="big" name="comments" className="commentIcon" onClick={() => {this.props.openModal(this.props.postData);}} />
+              <p className="messageText">Chat</p>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </Segment>
     );
   }
 }

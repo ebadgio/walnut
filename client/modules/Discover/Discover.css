@@ -209,6 +209,7 @@
     height: auto;
     position: fixed !important;
     bottom: 0;
+    background: #fff !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     margin-left: 20px !important;
@@ -290,6 +291,21 @@
     min-width: 150px !important;
     display: flex !important;
     flex-direction: column;
+}
+
+.followedPostsSegment {
+    cursor: pointer !important;
+    font-weight: bold;
+    color: #3a3a3a !important;
+    width: 200px !important;
+    min-width: 120px !important;
+    border-right: none !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+
+.followedPostsSegment:hover {
+    color: #5bc0e3 !important;
 }
 
 .followedPostsButton:hover {
