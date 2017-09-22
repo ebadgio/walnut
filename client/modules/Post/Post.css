@@ -148,14 +148,11 @@
 }
 
 .tag {
-    background-color: #3a3a3a;
-    color: #5bc0e3;
+    color: #568ea3;
     border-radius: 3px;
     padding-top: 4px;
     padding-bottom: 4px;
     font-weight: bold;
-    /* border: solid 1px;*/
-    padding-left: 10px;
     padding-right: 10px;
     display: inline-block;
     margin-right: 5px;
@@ -164,7 +161,6 @@
 }
 
 .hashtag {
-    color: #5bc0e3;
     font-size: 12px;
     line-height: 19px;
 }
@@ -196,7 +192,6 @@
 }
 
 .postOuter {
-    background-color: #fff;
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
@@ -208,11 +203,19 @@
 }
 
 .postSegment {
+
     margin-top: 3px !important;
     padding: .5em .5em !important;
     border: none !important;
     border-bottom: 1px solid rgba(34,36,38,.15) !important;
     border-radius: 0 !important;
+    /*transition: padding 0.5s ease;*/
+}
+
+.postSegment:hover {
+    background: #FAFAFA !important;
+    /*padding-top: 1.5em !important;*/
+    /*padding-bottom: 1.5em !important;*/
 }
 
 .postContent {

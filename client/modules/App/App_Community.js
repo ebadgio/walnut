@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Discover from '../Discover/Discover_index';
 import Directory from '../Directory/Directory_index';
-import NavBar from './App_Community_NavBar';
+import NavBar from './App_Nav_Temp';
 import MapContainer from '../Map/Map_index';
 import updateLocationThunk from '../../thunks/map_thunks/updateLocationThunk';
-import EditProfile from '../Editprofile/EditProfile_index';
+import EditProfile from '../EditProfile/EditProfile_index';
 import WalnutLoader from './App_WalnutLoader';
 
 class Community extends React.Component {

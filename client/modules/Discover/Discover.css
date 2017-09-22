@@ -190,7 +190,7 @@
 }
 
 .minifyButton {
-    background: #3a3a3a !important;
+    background: #292f36 !important;
     color: #FAFAFA !important;
     float: right !important;
     margin: 0 0 15px 0 !important;
@@ -208,17 +208,18 @@
     height: auto;
     position: fixed !important;
     bottom: 0;
-    background: #fff !important;
+    border: none !important;
+    background: #a6b1e1 !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
     margin-left: 20px !important;
-    border-bottom: none !important;
-    color: #3a3a3a !important;
+    color: #fff !important;
+    transition: background-color 0.35s ease;
 
 }
 
 .onlineTab:hover {
-    color: #5bc0e3 !important;
+    background-color: #bbbdf6 !important;
 }
 
 .discoverOnlineTitle {
@@ -241,7 +242,7 @@
 }
 
 .ui.bottom.sidebar {
-    background: #3a3a3a;
+    background: #292f36;
     width: 30vh !important;
     margin-left: 20px !important;
     height: auto!important;
@@ -292,18 +293,19 @@
 .followedPostsSegment {
     cursor: pointer !important;
     font-weight: bold;
-    color: #3a3a3a !important;
+    color: #fff !important;
     width: 200px !important;
     min-width: 120px !important;
     border-right: none !important;
-    /*border-top-right-radius: 0px !important;*/
-    /*border-bottom-right-radius: 0px !important;*/
+    border: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
+    background-color: #424874 !important;
+    transition: background-color 0.35s ease;
 }
 
 .followedPostsSegment:hover {
-    color: #5bc0e3 !important;
+    background-color: #353765 !important;
 }
 
 .followedPostsButton:hover {
@@ -346,7 +348,7 @@
     height: 60vh !important;
     margin-top: 9vh !important;
     width: 40vh !important;
-    background: #3a3a3a;
+    background: #292f36;
     border-top-left-radius: 3px !important;
     border-bottom-left-radius: 3px !important;
 }
