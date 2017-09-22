@@ -10,6 +10,8 @@ import firebase from 'firebase';
 import verificationThunk from '../../thunks/auth_thunks/verificationThunk';
 import './Auth.css';
 
+// TODO: component login
+
 
 class Login extends React.Component {
   constructor() {
@@ -185,7 +187,7 @@ class Login extends React.Component {
             className="registerShowButton"
             onMouseOver={() => this.setState({ buttonBig: true })}
             onMouseOut={() => this.setState({ buttonBig: false})}
-            size={this.state.buttonBig ? 'huge' : 'medium'}
+            size={this.state.buttonBig ? 'massive' : 'huge'}
             >Sign Up</Button> : null}
           {this.state.registerClose ? null : <RegistrationContainer /> }
           <div className="introTextDiv">
