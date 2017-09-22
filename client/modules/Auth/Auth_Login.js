@@ -24,7 +24,8 @@ class Login extends React.Component {
       vopen: false,
       isChanging: false,
       isSendingEmailForV: false,
-      registerClose: true
+      registerClose: true,
+      buttonBig: false
     };
   }
 
@@ -94,7 +95,7 @@ class Login extends React.Component {
   render() {
     return (
         <div className="loginPage">
-          <img className="backgroundImage" src="https://s3-us-west-1.amazonaws.com/walnut-test/back2.png"/>
+          <img className="backgroundImageLogin" src="https://s3-us-west-1.amazonaws.com/walnut-test/back1.png"/>
           <div className="row" id="navBarLogin">
             <div className="walnutTitleLoginDiv">
               <h1 className="walnutTitleLogin">Walnut</h1>
@@ -178,8 +179,25 @@ class Login extends React.Component {
               </Form>
             </div>
           </div>
-          {this.state.registerClose ? <Button onClick={() => this.setState({ registerClose: false })} className="registerShowButton">Sign Up</Button> : null}
+          {this.state.registerClose ?
+          <Button
+            onClick={() => this.setState({ registerClose: false })}
+            className="registerShowButton"
+            onMouseOver={() => this.setState({ buttonBig: true })}
+            onMouseOut={() => this.setState({ buttonBig: false})}
+            size={this.state.buttonBig ? 'huge' : 'medium'}
+            >Sign Up</Button> : null}
           {this.state.registerClose ? null : <RegistrationContainer /> }
+          <div className="introTextDiv">
+            <h1 className="introTextTitle">walnut network</h1>
+            <h2 className="introTextBlurb">a conversation tool for communities </h2>
+            <p className="introText">join a community</p>
+            <p className="introText">... or create one</p>
+            <p className="introText">start a conversation</p>
+            <p className="introText">tag it by topics for it to be discovered by others</p>
+            <p className="introText">follow conversations to get notified and remain updated by the ones that matter to you</p>
+            <p className="introText">it's like a forum centred around communities but its just on steroids!</p>
+          </div>
         </div>
     );
   }
