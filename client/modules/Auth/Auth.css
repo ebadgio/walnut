@@ -24,6 +24,10 @@
     border-radius: 5px;
     width:440px;
     color: #5bc0e3 !important;
+    position: absolute !important;
+    top: 149px !important;
+    right: 67px !important;
+
 }
 
 .registerPage {
@@ -36,7 +40,8 @@
 }
 
 .authLabels {
-    color: #FAFAFA !important;
+    color: #3a3a3a !important;
+    margin-left: 16px !important;
 }
 
 .authButtons {
@@ -44,6 +49,77 @@
     color: #3a3a3a !important;
 }
 
+.authLabelsRegister {
+    color: #fafafa !important;
+}
+
 .authButtons:hover {
     color: #5bc0e3 !important;
+}
+
+#navBarLogin {
+    width: 100%;
+    position: fixed;
+    z-index: 300;
+    display: flex;
+    height: 168px;
+    background-color: #FAFAFA;
+    border-bottom: solid 1px;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.loginForm {
+    display: flex;
+}
+
+.inputLogin {
+    margin-left: 20px !important;
+}
+
+.walnutTitleLoginDiv {
+    margin-bottom: 20px;
+}
+
+.registerShowButton {
+    position: absolute !important;
+    top: 358px !important;
+    right: 200px !important;
+    background-color: #5bc0e3 !important;
+    color: #fff !important;
+}
+
+.backgroundImageLogin {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 10px;
+    filter: brightness(40%);
+}
+
+.introTextDiv {
+    position: absolute;
+    margin-top: 369px;
+    color: white;
+    width: 402px;
+    left: 125px;
+    height: auto;
+}
+
+.introTextTitle {
+    font-size: 56px;
+    margin-top: 57px !important;
+}
+
+.introTextBlurb {
+    margin-bottom: 100px;
+    color: #5bc0e3;
+    margin-bottom: 61px;
+}
+
+.introText {
+    font-size: 20px;
+    width: 463px;
 }

@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
-import { Button, Input, Form, Modal, Message, Icon} from 'semantic-ui-react';
+import RegistrationContainer from './Auth_Registration.js';
+import { Button, Input, Form, Modal, Message } from 'semantic-ui-react';
 import facebookLoginThunk from '../../thunks/auth_thunks/facebookLoginThunk';
 import googleLoginThunk from '../../thunks/auth_thunks/googleLoginThunk';
 import signInThunk from '../../thunks/auth_thunks/signInThunk';
 import firebase from 'firebase';
 import verificationThunk from '../../thunks/auth_thunks/verificationThunk';
 import './Auth.css';
+
 
 class Login extends React.Component {
   constructor() {
@@ -22,7 +23,9 @@ class Login extends React.Component {
       open: false,
       vopen: false,
       isChanging: false,
-      isSendingEmailForV: false
+      isSendingEmailForV: false,
+      registerClose: true,
+      buttonBig: false
     };
   }
 
@@ -92,31 +95,34 @@ class Login extends React.Component {
   render() {
     return (
         <div className="loginPage">
-          {this.state.isChanging ?
-            <Message
-              success
-              header="Email will be sent soon"
-              content="Please follow the email"
-            /> :
-            null
-          }
-          {this.state.isSendingEmailForV ?
-            <Message
-              success
-              header="Email will be sent soon"
-              content="Please verify your account"
-            /> :
-            null
-          }
-          <div className="loginCard">
-            <h1>Login</h1>
-            <div className="loginBox">
+          <img className="backgroundImageLogin" src="https://s3-us-west-1.amazonaws.com/walnut-test/back1.png"/>
+          <div className="row" id="navBarLogin">
+            <div className="walnutTitleLoginDiv">
+              <h1 className="walnutTitleLogin">Walnut</h1>
+            </div>
+            <div className="loginForm">
+              {this.state.isChanging ?
+                <Message
+                  success
+                  header="Email will be sent soon"
+                  content="Please follow the email"
+                /> :
+                null
+              }
+              {this.state.isSendingEmailForV ?
+                <Message
+                  success
+                  header="Email will be sent soon"
+                  content="Please verify your account"
+                /> :
+                null
+              }
               {this.props.isError ?
-                  <Message negative>
-                    <Message.Header>Oops something went wrong</Message.Header>
-                    <p>Check your email and password again</p>
-                  </Message> :
-                  null
+                <Message negative>
+                  <Message.Header>Oops something went wrong</Message.Header>
+                  <p>Check your email and password again</p>
+                </Message> :
+                null
               }
               {this.props.isVerified ?
                 null :
@@ -126,8 +132,8 @@ class Login extends React.Component {
                   <Button onClick={() => this.vopen()}>Send Verification Email</Button>
                 </Message>
               }
-              <Form>
-                <Form.Field>
+              <Form className="loginForm">
+                <Form.Field className="inputLogin">
                   <label className="authLabels">Email</label>
                   <input
                     placeholder="enter email"
@@ -136,7 +142,7 @@ class Login extends React.Component {
                     onChange={(e) => this.handleEmailChange(e)}
                     value={this.state.emailVal} />
                 </Form.Field>
-                <Form.Field>
+                <Form.Field className="inputLogin">
                   <label className="authLabels">Password</label>
                   <input
                     type="password"
@@ -145,17 +151,17 @@ class Login extends React.Component {
                     onChange={(e) => this.handlePasswordChange(e)}
                     value={this.state.passwordVal} />
                 </Form.Field>
-                <Button onClick={(e) => { this.regLogin(e); }} className="authButtons" type="submit">Submit</Button>
-                <Button onClick={() => this.open()} className="authButtons" icon="help" labelPosition="right" content="Forgot Password"/>
+                <Button onClick={(e) => { this.regLogin(e); }} className="authButtons" type="submit">Log In</Button>
+                <Button onClick={() => this.open()} className="authButtons" labelPosition="right" content="Forgot Password" />
                 <Modal size={'mini'} basic open={this.state.open} onClose={() => this.close()}>
                   <Modal.Header>
                     Reset the password
                   </Modal.Header>
                   <Modal.Content>
-                    <Input label="Email" onChange={(e) => this.handleResetEmailChange(e)}/>
+                    <Input label="Email" onChange={(e) => this.handleResetEmailChange(e)} />
                   </Modal.Content>
                   <Modal.Actions>
-                    <Button className="authButtons" icon="mail forward" labelPosition="right" content="Verify" onClick={() => {this.handleReset(); this.close();}} />
+                    <Button className="authButtons" icon="mail forward" labelPosition="right" content="Verify" onClick={() => { this.handleReset(); this.close(); }} />
                   </Modal.Actions>
                 </Modal>
                 <Modal size={'mini'} basic open={this.state.vopen} onClose={() => this.vclose()}>
@@ -163,17 +169,34 @@ class Login extends React.Component {
                     Reset the password
                   </Modal.Header>
                   <Modal.Content>
-                    <Form.Input label="Email" placeholder="Type Your Email" onChange={(e) => this.setState({vemail: e.target.value})}/>
-                    <Form.Input label="Password" placeholder="Type Your Password" onChange={(e) => this.setState({vpassword: e.target.value})}/>
+                    <Form.Input label="Email" placeholder="Type Your Email" onChange={(e) => this.setState({ vemail: e.target.value })} />
+                    <Form.Input label="Password" placeholder="Type Your Password" onChange={(e) => this.setState({ vpassword: e.target.value })} />
                   </Modal.Content>
                   <Modal.Actions>
-                    <Button className="authButtons" positive icon="checkmark" labelPosition="right" content="Reset" onClick={() => {this.handleVerification(); this.vclose();}} />
+                    <Button className="authButtons" positive icon="checkmark" labelPosition="right" content="Reset" onClick={() => { this.handleVerification(); this.vclose(); }} />
                   </Modal.Actions>
                 </Modal>
               </Form>
-              <h2>New user?</h2>
-              <Link to="/register">Go to Registration</Link>
             </div>
+          </div>
+          {this.state.registerClose ?
+          <Button
+            onClick={() => this.setState({ registerClose: false })}
+            className="registerShowButton"
+            onMouseOver={() => this.setState({ buttonBig: true })}
+            onMouseOut={() => this.setState({ buttonBig: false})}
+            size={this.state.buttonBig ? 'huge' : 'medium'}
+            >Sign Up</Button> : null}
+          {this.state.registerClose ? null : <RegistrationContainer /> }
+          <div className="introTextDiv">
+            <h1 className="introTextTitle">walnut network</h1>
+            <h2 className="introTextBlurb">a conversation tool for communities </h2>
+            <p className="introText">join a community</p>
+            <p className="introText">... or create one</p>
+            <p className="introText">start a conversation</p>
+            <p className="introText">tag it by topics for it to be discovered by others</p>
+            <p className="introText">follow conversations to get notified and remain updated by the ones that matter to you</p>
+            <p className="introText">it's like a forum centred around communities but its just on steroids!</p>
           </div>
         </div>
     );
