@@ -2,13 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import RegistrationContainer from './Auth_Registration.js';
-import { Button, Input, Form, Modal, Message } from 'semantic-ui-react';
+import { Button, Step, Input, Form, Modal, Message } from 'semantic-ui-react';
 import facebookLoginThunk from '../../thunks/auth_thunks/facebookLoginThunk';
 import googleLoginThunk from '../../thunks/auth_thunks/googleLoginThunk';
 import signInThunk from '../../thunks/auth_thunks/signInThunk';
 import firebase from 'firebase';
 import verificationThunk from '../../thunks/auth_thunks/verificationThunk';
 import './Auth.css';
+
+// TODO: component login
 
 
 class Login extends React.Component {
@@ -95,7 +97,6 @@ class Login extends React.Component {
   render() {
     return (
         <div className="loginPage">
-          <img className="backgroundImageLogin" src="https://s3-us-west-1.amazonaws.com/walnut-test/back1.png"/>
           <div className="row" id="navBarLogin">
             <div className="walnutTitleLoginDiv">
               <h1 className="walnutTitleLogin">Walnut</h1>
@@ -136,23 +137,23 @@ class Login extends React.Component {
                 <Form.Field className="inputLogin">
                   <label className="authLabels">Email</label>
                   <input
-                    placeholder="enter email"
                     type="text"
                     name="email"
+                    className="loginInputs"
                     onChange={(e) => this.handleEmailChange(e)}
                     value={this.state.emailVal} />
                 </Form.Field>
-                <Form.Field className="inputLogin">
+                <Form.Field className="inputLoginPassword">
                   <label className="authLabels">Password</label>
                   <input
                     type="password"
-                    placeholder="enter password"
                     name="password"
+                    className="loginInputs"
                     onChange={(e) => this.handlePasswordChange(e)}
                     value={this.state.passwordVal} />
+                  <Button onClick={() => this.open()} className="forgotPassword" labelPosition="right" content="Forgot Password?" />
                 </Form.Field>
                 <Button onClick={(e) => { this.regLogin(e); }} className="authButtons" type="submit">Log In</Button>
-                <Button onClick={() => this.open()} className="authButtons" labelPosition="right" content="Forgot Password" />
                 <Modal size={'mini'} basic open={this.state.open} onClose={() => this.close()}>
                   <Modal.Header>
                     Reset the password
@@ -179,13 +180,13 @@ class Login extends React.Component {
               </Form>
             </div>
           </div>
-          {this.state.registerClose ?
+          {/* {this.state.registerClose ?
           <Button
             onClick={() => this.setState({ registerClose: false })}
             className="registerShowButton"
             onMouseOver={() => this.setState({ buttonBig: true })}
             onMouseOut={() => this.setState({ buttonBig: false})}
-            size={this.state.buttonBig ? 'huge' : 'medium'}
+            size={this.state.buttonBig ? 'massive' : 'huge'}
             >Sign Up</Button> : null}
           {this.state.registerClose ? null : <RegistrationContainer /> }
           <div className="introTextDiv">
@@ -197,7 +198,18 @@ class Login extends React.Component {
             <p className="introText">tag it by topics for it to be discovered by others</p>
             <p className="introText">follow conversations to get notified and remain updated by the ones that matter to you</p>
             <p className="introText">it's like a forum centred around communities but its just on steroids!</p>
-          </div>
+          </div> */}
+          <RegistrationContainer />
+          <h2 className="introTextBlurb">A conversation tool for communities.</h2>
+          <img className="backgroundImageLogin" src="https://s3-us-west-1.amazonaws.com/walnut-test/1672187-poster-1280-geo-hacker-905x509.jpg" />
+          <img className="landingImageSmall" src="http://images.clipartpanda.com/connection-clipart-yearbook-connection-md.png"/>
+          <Step.Group size="mini" className="loginSteps">
+            <Step active icon="id badge" title="Sign Up" description="Start a new account with us" />
+
+            <Step icon="universal access" title="Create" description="Get your community online!" />
+
+            <Step icon="cogs" title="Engage" description="Increase community engagement" />
+          </Step.Group>
         </div>
     );
   }

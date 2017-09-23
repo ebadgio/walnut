@@ -90,7 +90,7 @@ class Post extends React.Component {
     firebaseApp.database().ref('/unreads/' + user.uid + '/' + this.props.postData.postId).on('value', snapshotB => {
       const unreadCount =  snapshotB.val();
       console.log('unreads', unreadCount);
-      if (!(this.props.currentModalData.postId === this.props.postData.postId) && !isNaN(unreadCount) && unreadCount !== null) {
+      if (!isNaN(unreadCount) && unreadCount !== null) {
         this.setState({unreads: unreadCount});
       }
     });
