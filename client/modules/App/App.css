@@ -299,9 +299,9 @@ button.ui.button > input {
     color: white !important;
 }
 
-.ui.dropdown .menu {
-    left: -62% !important;
-}
+/*.ui.dropdown .menu {*/
+    /*left: -62% !important;*/
+/*}*/
 
 .ui.pointing.dropdown>.menu:after {
     box-shadow: none !important;

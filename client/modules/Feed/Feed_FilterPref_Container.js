@@ -7,7 +7,7 @@ import Select from 'react-select';
 import toggleFilterCheckedThunk from '../../thunks/toggleFilterCheckedThunk';
 import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
 import toggleTempFilterCheckedThunk from '../../thunks/toggleTempFilterCheckedThunk';
-import { Icon, Label } from 'semantic-ui-react';
+import { Icon, Label, Dropdown } from 'semantic-ui-react';
 import $ from 'jquery';
 
 class FilterPrefContainer extends React.Component {
@@ -87,8 +87,8 @@ class FilterPrefContainer extends React.Component {
     const filters = this.props.useFilters;
     const options = this.selectOptions();
     return (
-      <div>
-        <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
+      <div className="topicContainer">
+        <div id="choice_form" onSubmit={this.handleSubmit}>
           {filters ?
             filters.map((filter, index) => (
               <div key={index} className="tag">
@@ -99,17 +99,17 @@ class FilterPrefContainer extends React.Component {
            :
             null
           }
-        </form>
-        <form>
-          <Select
-            name="form-field-name"
-            value={this.state.value}
-            multi simpleValue
-            placeholder="Filter by topic(s)..."
-            options={options}
-            onChange={this.handleSelectChange.bind(this)}
-          />
-        </form>
+        </div>
+        <Dropdown
+          className="topicSelectorDiscover"
+          search
+          icon="search"
+          selection
+          value={this.state.value}
+          placeholder="Filter by topic(s)..."
+          options={options}
+          onChange={this.handleSelectChange.bind(this)}
+        />
       </div>
     );
   }

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Feed from '../Feed/Feed_index';
 // import LeftSideBar from './Discover_Left_Sidebar_Container';
+import TopicContainer from '../Feed/Feed_FilterPref_Container';
 import LeftSideContainer from './Discover_Left_Side_Container';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
@@ -38,6 +39,7 @@ class Home extends React.Component {
     return (
         <div className="row" id="Discover">
           <LeftSideContainer />
+          <TopicContainer />
           <Feed id="Feed"/>
           {/* <FollowedPostsContainer/>*/}
           <ModalContainer />

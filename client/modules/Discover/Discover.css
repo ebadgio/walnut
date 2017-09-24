@@ -16,8 +16,8 @@
 .LeftSidebar_Container {
     position: fixed;
     z-index: 200;
-    width: 50vh;
-    min-width: 35vh;
+    width: 25%;
+    min-width: 250px;
     border-right: 1px solid rgba(34, 36, 38, 0.15);
     height: 94vh;
     margin-top: 6.5vh;
@@ -371,6 +371,32 @@
 
 .Select span:hover {
     border-color: #5bc0e3 transparent transparent !important;
+}
+
+#choice_form {
+
+}
+
+.topicContainer {
+    position: fixed;
+    width: 75%;
+    top: 0;
+    right: 0;
+    margin-top: 43px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+    background: #fff;
+}
+
+.topicSelectorDiscover {
+    margin-top: 0 !important;
+    width: 200px !important;
+    margin-right: 10px !important;
+    margin-left: 10px !important;
+    right: 0 !important;
+    position: absolute !important;
 }
 
 /*@media (max-width: 950px) {*/
