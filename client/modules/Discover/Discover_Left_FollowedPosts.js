@@ -14,7 +14,8 @@ class FollowedPostsContainer extends React.Component {
     super();
     this.state = {
       unreadsGroup: {},
-      total: 0
+      total: 0,
+      visible: false
     };
         // this.sumUnreads = this.sumUnreads.bind(this);
   }
@@ -75,35 +76,22 @@ class FollowedPostsContainer extends React.Component {
 
   render() {
     return (
-            <Sidebar.Pushable className="followedPostsPushable">
-              <Sidebar animation="overlay"
-                       direction="right"
-                       visible={this.state.visible}>
-                <Button icon onClick={() => {this.toggleVisibility();}} className="minifyButton">
-                  <Icon name="chevron circle right"
-                        size="large"
-                  />
-                </Button>
-                  {(this.props.myConversations && this.props.myConversations.length > 0) ?
-                      <div className="followedPostsBox">
-                          {this.props.myConversations.map((conv) =>
-                              <ConversationCard data={conv}
-                                                key={uuidv4()}
-                                                handleSelect={() => this.handleSelect()}
-                                                user={this.props.currentUser}/>
-                          )}
-                      </div> : <div className="followedPostsBox"></div>}
-              </Sidebar>
-              <Sidebar.Pusher>
-                <div className="rightContainer">
-                  <Segment onClick={() => {this.toggleVisibility(); }} className="followedPostsSegment">
-                    Followed Posts
-                      {/* <span className={this.state.total > 0 ? 'isUnreadDisc' : 'noUnreadDisc'}>{this.state.total}{' total unread messages'}</span>*/}
-                  </Segment>
-                </div>
-              </Sidebar.Pusher>
-            </Sidebar.Pushable>
-        );
+        <div className="followedPostsGroup">
+            <Segment onClick={() => {this.toggleVisibility(); }} className="followedPostsSegment">
+                <Icon name={this.state.visible ? 'chevron down' : 'chevron left'} className="leftChevronIcon"/>
+                Followed Posts
+            </Segment>
+            {(this.props.myConversations && this.props.myConversations.length > 0 && this.state.visible) ?
+                 <div className="leftSideBox">
+                     {this.props.myConversations.map((conv) =>
+                         <ConversationCard data={conv}
+                                           key={uuidv4()}
+                                           handleSelect={() => this.handleSelect()}
+                                           user={this.props.currentUser}/>
+                     )}
+                 </div> : null}
+        </div>
+    );
   }
 }
 
@@ -127,3 +115,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FollowedPostsContainer);
+
+
+

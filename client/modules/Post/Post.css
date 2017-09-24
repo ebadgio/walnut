@@ -980,3 +980,33 @@ body ::-webkit-scrollbar {
     max-height: 200px !important;
     overflow: auto !important;
 }
+
+.conversationCardContentModal {
+    cursor: pointer;
+    color: #fafafa !important;
+    padding: 6px !important;
+    padding-bottom: 0px !important;
+}
+
+.myConversationCardModal {
+    border-radius: 3px !important;
+    margin-bottom: 5px !important;
+    margin-right: 5px !important;
+}
+
+.miniPostCardModal {
+    background: none !important;
+    box-shadow: none !important;
+    border: solid 1px #fafafa !important;
+}
+
+.miniPostCardModalCurrent {
+    background: rgba(0, 0, 0, 0.40) !important;
+    border: solid 1px #5bc0e3 !important;
+    box-shadow: none !important
+}
+
+.miniPostCardModal:hover {
+    background: rgba(0, 0, 0, 0.40) !important;
+    border: solid 1px #5bc0e3 !important;
+}

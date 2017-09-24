@@ -3,12 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Feed from '../Feed/Feed_index';
-import LeftSideBar from './Discover_Left_Sidebar_Container';
+// import LeftSideBar from './Discover_Left_Sidebar_Container';
+import LeftSideContainer from './Discover_Left_Side_Container';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
 import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
 import Online from './Discover_Online';
-import FollowedPostsContainer from './Discover_My_Conversation_Container';
+// import FollowedPostsContainer from './Discover_My_Conversation_Container';
 import ModalContainer from '../Post/Post_Modal_Container';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
@@ -36,10 +37,9 @@ class Home extends React.Component {
   render() {
     return (
         <div className="row" id="Discover">
-          <LeftSideBar/>
-          <Online/>
+          <LeftSideContainer />
           <Feed id="Feed"/>
-          <FollowedPostsContainer/>
+          {/* <FollowedPostsContainer/>*/}
           <ModalContainer />
         </div>
     );

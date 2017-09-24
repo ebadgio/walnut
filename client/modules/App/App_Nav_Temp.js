@@ -101,22 +101,24 @@ class Navbar extends React.Component {
             </div>
 
             <div className="navBarLinks">
-                    <Link className="discoverTab" to={'/community/' + title + '/discover'}>
+                    <Link className={this.state.pos === 1 ? 'discoverTabActive' : 'discoverTab'} to={'/community/' + title + '/discover'}>
                         <div className="navBarLink" onClick={() => {
                           this.handleClick(1);
                           this.setState({isOpen: true});
                           this.navBarChoiceArt(1);
                         }}>
-                            <Icon name="browser" size="large" className="discoverIcon"/>
+                            <Icon name="browser" size="large" className="discoverIcon" />
                         </div>
                     </Link>
                     <div className="verticalDivider"></div>
-                    <div className="navUser">
-                        <div className="imageWrapperNav">
-                            <img className="postUserImage" src={this.props.pictureURL}/>
-                        </div>
-                        {this.props.fullName.split(' ')[0]}
-                    </div>
+                    <Link className="navUser"
+                          to={'/community/' + title + '/editprofile'}
+                          onClick={() => this.setState({pos: 0})}>
+                            <div className="imageWrapperNav">
+                                <img className="postUserImage" src={this.props.pictureURL}/>
+                            </div>
+                            {this.props.fullName.split(' ')[0]}
+                    </Link>
                     <Dropdown
                         className="menuDropdown"
                         floating

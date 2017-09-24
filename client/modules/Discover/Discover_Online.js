@@ -70,62 +70,31 @@ class Online extends React.Component {
   }
 
   render() {
-    // return (
-    //   <div className="LeftSidebar_Online">
-    //     <div className="discoverTitleBox">
-    //         <div className="onlineInline">
-    //             <div className="onlineCircle"></div>
-    //             <h1 className="discoverTitle">Online</h1>
-    //         </div>
-    //         <div className="discoverTitleLine"></div>
-    //         <Item.Group className="itemGroupOnline">
-    //             {this.state.people.map(person => (
-    //                 <Item>
-    //                     <Item.Content verticalAlign="middle">
-    //                             <div className="imageWrapperOnline">
-    //                                 <img className="postUserImage" src={person.pictureURL} />
-    //                             </div>
-    //                         <div className="onlineName">{person.name}</div>
-    //                     </Item.Content>
-    //                 </Item>
-    //             ))}
-    //         </Item.Group>
-    //     </div>
-    //   </div>
-    // );
     return (
-      <Sidebar.Pushable className="onlinePushable">
-        <Sidebar className="onlineSidebar"
-                 animation="push"
-                 direction="bottom"
-                 visible={this.state.visible}>
-          <Button icon onClick={() => this.toggleVisibility()} className="minifyButton">
-            <Icon name="chevron circle down"
-                  size="large"
-            />
-          </Button>
-          <Item.Group className="itemGroupOnline">
-            {this.state.people.map(person => (
-              <Item>
-                <Item.Content verticalAlign="middle">
-                  <div className="imageWrapperOnline">
-                    <img className="postUserImage" src={person.pictureURL} />
-                  </div>
-                  <div className="onlineName">{person.name}</div>
-                </Item.Content>
-              </Item>
-            ))}
-          </Item.Group>
-        </Sidebar>
-        <Sidebar.Pusher>
-            {!this.state.visible ? <Segment className="onlineTab" onClick={() => this.toggleVisibility()}>
+        <div className="onlineGroup">
+            <Segment className="onlineTab" onClick={() => this.toggleVisibility()}>
+            <Icon name={this.state.visible ? 'chevron down' : 'chevron left'} className="leftChevronIcon"/>
             <div className="onlineInline">
               <div className="onlineCircle"></div>
               <p className="discoverOnlineTitle">Online</p>
             </div>
-          </Segment> : null}
-        </Sidebar.Pusher>
-      </Sidebar.Pushable>
+          </Segment>
+          {this.state.visible ?
+              <div className="leftSideBox">
+                <Item.Group className="itemGroupOnline">
+                    {this.state.people.map(person => (
+                        <Item>
+                          <Item.Content verticalAlign="middle">
+                            <div className="imageWrapperOnline">
+                              <img className="postUserImage" src={person.pictureURL} />
+                            </div>
+                            <div className="onlineName">{person.name}</div>
+                          </Item.Content>
+                        </Item>
+                    ))}
+                </Item.Group>
+              </div> : null}
+        </div>
     );
   }
 }

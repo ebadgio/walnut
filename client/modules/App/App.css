@@ -241,7 +241,7 @@
 
 .communityImage {
     max-width: 100%;
-    max-height: auto;
+    height: auto;
     object-fit: contain;
     margin: auto;
 }
@@ -479,6 +479,7 @@ button.ui.button > input {
 
 .ellipsis.vertical.icon {
     font-size: 2em;
+    color: #a3938b;
 }
 
 .navUser {
@@ -497,6 +498,11 @@ button.ui.button > input {
     height: 38px;
 }
 
+.navUser:hover {
+    color: #292f36;
+    background: #ebebeb;
+}
+
 .navBarLink {
 
 }
@@ -504,10 +510,21 @@ button.ui.button > input {
 .discoverTab {
     height: 100%;
     margin-right: 10px;
-    margin-top: 5px;im
+    margin-top: 5px;
     color: #343A4C;
 }
 
-.discoverTab:hover {
+.discoverTabActive {
+    height: 100%;
+    margin-right: 10px;
+    margin-top: 5px;
     color: #94B0DA;
+}
+
+.discoverTab:hover, .discoverTabActive:hover {
+    color: #94B0DA;
+}
+
+.profileLink {
+
 }
