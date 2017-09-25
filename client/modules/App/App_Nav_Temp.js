@@ -121,7 +121,6 @@ class Navbar extends React.Component {
                     </Link>
                     <Dropdown
                         className="menuDropdown"
-                        floating
                         icon="ellipsis vertical">
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => {
