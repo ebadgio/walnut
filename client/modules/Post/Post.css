@@ -209,11 +209,11 @@
     border-radius: 0 !important;
 }
 
-.postSegment:hover {
-    background: #FAFAFA !important;
-    /*padding-top: 1.5em !important;*/
-    /*padding-bottom: 1.5em !important;*/
-}
+/*.postSegment:hover {*/
+    /*background: #FAFAFA !important;*/
+    /*!*padding-top: 1.5em !important;*!*/
+    /*!*padding-bottom: 1.5em !important;*!*/
+/*}*/
 
 .postContent {
     display: flex;
@@ -416,6 +416,7 @@
     font-size: smaller;
     color: #313D4D !important;
     display: flex;
+    margin-left: auto;
     margin-right: 10px;
 }
 
@@ -704,6 +705,8 @@ iframe {
     margin-right: 5px;
     color: #5d5d5d !important;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .messagesGroup:hover {
@@ -711,6 +714,7 @@ iframe {
 }
 
 .messageText {
+    font-weight: 500;
     text-align: center;
 }
 
