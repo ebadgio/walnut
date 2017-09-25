@@ -136,7 +136,7 @@ class Comment extends React.Component {
           <div className="userGroupYou">
             <Card className="commentCardYou">
               <Card.Content className="messageContent">
-                <Card.Description className="messageDescription" style={{color: '#fff'}}>
+                <Card.Description className="messageDescriptionYou">
                     {this.state.messageBody ? this.state.messageBody :
                       <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName}</a> {this.state.messageBody2}</div>
                     }
@@ -167,7 +167,7 @@ class Comment extends React.Component {
           <div className="messageNameOther">{this.props.name ? this.props.name.split(' ')[0] : ''}</div>
             <Card className="commentCardOther">
               <Card.Content className="messageContent">
-                <Card.Description className="messageDescription" style={{color: '#fff'}}>
+                <Card.Description className="messageDescriptionOther">
                   <Linkify tagName="div" options={defaults}>{this.state.messageBody}</Linkify>
                 </Card.Description>
                 {urlPrev.length > 0 ? urlPrev[0] : null}
