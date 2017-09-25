@@ -9,13 +9,6 @@
     border-color: #e5e6e9 #dfe0e4 #d0d1d5;
 }
 
-.newPostSegment {
-    border-bottom: 1px solid rgba(34,36,38,.15);
-    margin-top: 20px !important;
-    border: none !important;
-    border-radius: 0 !important;
-}
-
 .uploadButtonIcon {
     font-size: 30px !important;
 } 
@@ -32,12 +25,12 @@
 .Feed_Wrapper {
     width: 513px;
     position: absolute;
-    left: 70%;
+    left: 65%;
     margin-top: 100px;
     transform: translate(-50%);
-    border: 1px solid rgba(34, 36, 38, 0.15);
-    z-index: -1 !important;
+    /*border: 1px solid rgba(34, 36, 38, 0.15);*/
 }
+
 
 .newPostFooter {
     display: flex;
@@ -296,3 +289,56 @@
     position: absolute;
     margin-top: 37px;;
 }
+
+.currentView {
+    margin-left: 10px;
+    color: #b3b5c1;
+    margin-right: 15px;
+}
+
+.allTopics {
+    color: #b3b5c1;
+}
+
+.newPostTrigger {
+    position: fixed !important;
+    bottom: 2%;
+    left: 27%;
+    background-color: #568ea3 !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    transition: background-color 0.35s ease;
+    cursor: pointer;
+}
+
+.newPostTrigger:hover {
+    background-color: #3f8ea3 !important;
+}
+
+.newPostSegment {
+    margin-top: 20px !important;
+    border-radius: 0 !important;
+    position: fixed !important;
+    bottom: 11%;
+    z-index: 1000;
+    box-shadow: -4px 5px 2px 0 rgba(34, 36, 38, 0.15) !important;
+    left: 5%;
+}
+
+.newPostDimmer {
+    opacity: .5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+}
+
+i.circular.icon {
+    padding-left: 17px !important;
+    padding-top: 15px !important;
+
+}
+
+

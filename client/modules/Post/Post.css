@@ -151,12 +151,11 @@
     color: #568ea3;
     border-radius: 3px;
     padding-top: 4px;
-    padding-bottom: 4px;
+    padding-bottom: 2px;
     font-weight: bold;
     padding-right: 10px;
     display: inline-block;
     margin-right: 5px;
-    margin-bottom: 5px;
     min-width: fit-content;
 }
 
@@ -206,10 +205,8 @@
 
     margin-top: 3px !important;
     padding: .5em .5em !important;
-    border: none !important;
-    border-bottom: 1px solid rgba(34,36,38,.15) !important;
+    box-shadow: none !important;
     border-radius: 0 !important;
-    /*transition: padding 0.5s ease;*/
 }
 
 .postSegment:hover {
@@ -339,6 +336,12 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+}
+
+.activeNum {
+    color: #85C7F2;
+    font-size: smaller;
+    margin-right: 12px;
 }
 
 .commentNum {

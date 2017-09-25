@@ -73,7 +73,7 @@ class Online extends React.Component {
     return (
         <div className="onlineGroup">
             <Segment className="onlineTab" onClick={() => this.toggleVisibility()}>
-            <Icon name={this.state.visible ? 'chevron down' : 'chevron left'} className="leftChevronIcon"/>
+            <Icon name={this.state.visible ? 'chevron down' : 'chevron right'} className="leftChevronIcon"/>
             <div className="onlineInline">
               <div className="onlineCircle"></div>
               <p className="discoverOnlineTitle">Online</p>

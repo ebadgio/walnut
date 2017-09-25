@@ -6,6 +6,7 @@ import Feed from '../Feed/Feed_index';
 // import LeftSideBar from './Discover_Left_Sidebar_Container';
 import TopicContainer from '../Feed/Feed_FilterPref_Container';
 import LeftSideContainer from './Discover_Left_Side_Container';
+import NewPostContainer from '../Feed/Feed_NewPost_Container';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
 import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
@@ -41,7 +42,7 @@ class Home extends React.Component {
           <LeftSideContainer />
           <TopicContainer />
           <Feed id="Feed"/>
-          {/* <FollowedPostsContainer/>*/}
+          <NewPostContainer />
           <ModalContainer />
         </div>
     );

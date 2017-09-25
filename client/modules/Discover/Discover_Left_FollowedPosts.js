@@ -78,7 +78,7 @@ class FollowedPostsContainer extends React.Component {
     return (
         <div className="followedPostsGroup">
             <Segment onClick={() => {this.toggleVisibility(); }} className="followedPostsSegment">
-                <Icon name={this.state.visible ? 'chevron down' : 'chevron left'} className="leftChevronIcon"/>
+                <Icon name={this.state.visible ? 'chevron down' : 'chevron right'} className="leftChevronIcon"/>
                 Followed Posts
             </Segment>
             {(this.props.myConversations && this.props.myConversations.length > 0 && this.state.visible) ?

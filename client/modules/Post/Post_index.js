@@ -282,6 +282,9 @@ class Post extends React.Component {
             />
         </div>
         <div className="statsGroup">
+          <span className="activeNum">
+            {this.state.membersCount > 0 ? this.state.membersCount + ' active' : null}
+          </span>
           <span className="followNum">
                 {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
           </span>
@@ -302,13 +305,13 @@ class Post extends React.Component {
           </div>
           <div></div>
           <div className="commentDiv">
-            <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
-            <div className="membersGroup">
-              <Icon size="big" name="users" className="usersIcon" />
-              <p className="membersText">Active</p>
-            </div>
+            {/* <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>*/}
+            {/* <div className="membersGroup">*/}
+              {/* <Icon size="big" name="users" className="usersIcon" />*/}
+              {/* <p className="membersText">Active</p>*/}
+            {/* </div>*/}
             <div className="messagesGroup">
-              <Icon size="big" name="comments" className="commentIcon" onClick={() => {this.props.openModal(this.props.postData);}} />
+              <Icon size="big" name="comments outline" className="commentIcon" onClick={() => {this.props.openModal(this.props.postData);}} />
               <p className="messageText">Chat</p>
             </div>
           </div>

@@ -308,7 +308,6 @@
 
 .followedPostsGroup {
     width: 100%;
-    margin-top: 50px;
 }
 
 .leftSideBox{
@@ -374,11 +373,14 @@
 }
 
 #choice_form {
-
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .topicContainer {
     position: fixed;
+    z-index: 300;
     width: 75%;
     top: 0;
     right: 0;
@@ -392,7 +394,7 @@
 
 .topicSelectorDiscover {
     margin-top: 0 !important;
-    width: 200px !important;
+    width: 250px !important;
     margin-right: 10px !important;
     margin-left: 10px !important;
     right: 0 !important;

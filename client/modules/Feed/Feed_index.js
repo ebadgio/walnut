@@ -74,7 +74,6 @@ class Feed extends React.Component {
     if (this.props.data.isFetching || !this.props.isReady) {
       return (
         <div className="Feed_Wrapper">
-          <NewPostContainer />
           {[...Array(10)].map(() =>
             <div className="emptyLoaders">
               <Loader className="postLoader" active inline="centered" />
@@ -84,7 +83,6 @@ class Feed extends React.Component {
     }
     return (
         <div className="Feed_Wrapper" id="FeedWrapper">
-          <NewPostContainer />
           <InfiniteScroll
               className="banterScroller"
               id="banterScroller"

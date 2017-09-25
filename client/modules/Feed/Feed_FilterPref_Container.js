@@ -18,6 +18,7 @@ class FilterPrefContainer extends React.Component {
       value: [],
       useFilters: []
     };
+    this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
   handleSubmit(e) {
@@ -36,9 +37,11 @@ class FilterPrefContainer extends React.Component {
     return val;
   }
 
-  handleSelectChange(value) {
+  handleSelectChange(e, { value }) {
     // const newPostBox = document.getElementById('newPostBox');
     // newPostBox.scrollIntoView(true);
+    e.preventDefault();
+    const elem = document.getElementById('dropdownTopic');
     const send = this.props.otherFilters.filter((filter) => filter.name === value);
     this.props.addFilters(send);
     this.props.toggleTempChecked(this.props.useFilters.concat(send).map((filt) => filt._id));
@@ -84,31 +87,33 @@ class FilterPrefContainer extends React.Component {
   }
 
   render() {
-    const filters = this.props.useFilters;
     const options = this.selectOptions();
     return (
       <div className="topicContainer">
         <div id="choice_form" onSubmit={this.handleSubmit}>
-          {filters ?
-            filters.map((filter, index) => (
+          <span className="currentView">Currently viewing posts including: </span>
+          {this.props.useFilters.length > 0 ?
+            this.props.useFilters.map((filter, index) => (
               <div key={index} className="tag">
                 <text className="hashtag"># {filter.name}</text>
                 <Icon className="topicRemove" name="delete" onClick={() => this.handleRemove(filter)} />
               </div>
               ))
            :
-            null
+            <span className="allTopics">All Topics</span>
           }
         </div>
         <Dropdown
+          defaultValue={''}
+          searchInput={'value'}
+          id="dropdownTopic"
           className="topicSelectorDiscover"
           search
           icon="search"
           selection
-          value={this.state.value}
           placeholder="Filter by topic(s)..."
           options={options}
-          onChange={this.handleSelectChange.bind(this)}
+          onChange={this.handleSelectChange}
         />
       </div>
     );
