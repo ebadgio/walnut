@@ -148,23 +148,18 @@
 }
 
 .tag {
-    background-color: #3a3a3a;
-    color: #5bc0e3;
+    color: #568ea3;
     border-radius: 3px;
     padding-top: 4px;
-    padding-bottom: 4px;
+    padding-bottom: 2px;
     font-weight: bold;
-    /* border: solid 1px;*/
-    padding-left: 10px;
     padding-right: 10px;
     display: inline-block;
     margin-right: 5px;
-    margin-bottom: 5px;
     min-width: fit-content;
 }
 
 .hashtag {
-    color: #5bc0e3;
     font-size: 12px;
     line-height: 19px;
 }
@@ -196,7 +191,6 @@
 }
 
 .postOuter {
-    background-color: #fff;
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
@@ -205,6 +199,20 @@
     border: 1px solid;
     border-color: #e5e6e9 #dfe0e4 #d0d1d5;
     /* box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;*/
+}
+
+.postSegment {
+
+    margin-top: 3px !important;
+    padding: .5em .5em !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+.postSegment:hover {
+    background: #FAFAFA !important;
+    /*padding-top: 1.5em !important;*/
+    /*padding-bottom: 1.5em !important;*/
 }
 
 .postContent {
@@ -298,7 +306,7 @@
     font-family: Avenir Next;	
     font-size: 16px;
     line-height: 25px;
-    margin-left: 3%;
+    margin-left: 2%;
     margin-bottom: 15px;
     margin-top: 5px;
 }
@@ -328,6 +336,12 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+}
+
+.activeNum {
+    color: #85C7F2;
+    font-size: smaller;
+    margin-right: 12px;
 }
 
 .commentNum {
@@ -968,4 +982,34 @@ body ::-webkit-scrollbar {
     max-width: 300px !important;
     max-height: 200px !important;
     overflow: auto !important;
+}
+
+.conversationCardContentModal {
+    cursor: pointer;
+    color: #fafafa !important;
+    padding: 6px !important;
+    padding-bottom: 0px !important;
+}
+
+.myConversationCardModal {
+    border-radius: 3px !important;
+    margin-bottom: 5px !important;
+    margin-right: 5px !important;
+}
+
+.miniPostCardModal {
+    background: none !important;
+    box-shadow: none !important;
+    border: solid 1px #fafafa !important;
+}
+
+.miniPostCardModalCurrent {
+    background: rgba(0, 0, 0, 0.40) !important;
+    border: solid 1px #5bc0e3 !important;
+    box-shadow: none !important
+}
+
+.miniPostCardModal:hover {
+    background: rgba(0, 0, 0, 0.40) !important;
+    border: solid 1px #5bc0e3 !important;
 }

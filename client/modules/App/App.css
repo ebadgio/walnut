@@ -2,13 +2,12 @@
 #navBar {
     width: 100%;
     position: fixed;
-    z-index: 300;
+    z-index: 301;
     display: flex;
     height: 43px;
-    background-color: #FAFAFA;
-    border-bottom: solid 1px;
-    border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
-    box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
+    background-color: #fff;
+    border-bottom: 1px solid rgba(34,36,38,.15);
+    /*box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);*/
 }
 
 .logoHolder {
@@ -32,9 +31,10 @@
 
 .navBarLinks {
     display: flex;
+    flex-direction: row;
     width: auto;
-    left: 40%;
-    right: auto;
+    justify-content: space-between;
+    right: 0;
     position: absolute;
     margin-top: 7px;
 }
@@ -85,20 +85,12 @@
     align-self: center;
 }
 
-.navBarLink {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 14vh;
-}
-
 .navbarLinkOn {
     cursor: pointer !important;
     font-weight: bold;
     margin-bottom: 9px;
     color: #5bc0e3 !important;
-    background-color: #FAFAFA !important;
+    background-color: #fff !important;
     padding-top: 2px !important;
     text-align: center;
 }
@@ -106,7 +98,7 @@
 .navbarLinkOff {
     cursor: pointer !important;
     color: #3A3A3A;
-    background-color: #FAFAFA !important;
+    background-color: #fff !important;
     padding-top: 8px !important;
     font-weight: bold;
     padding-bottom: 8px !important;
@@ -249,14 +241,12 @@
 
 .communityImage {
     max-width: 100%;
-    max-height: auto;
+    height: auto;
     object-fit: contain;
     margin: auto;
 }
 
 .imageWrapperNav {
-    margin-left: 10px;
-    margin-top: 6px;
     min-width: 32px;
     min-height: 32px;
     max-height: 32px;
@@ -264,7 +254,7 @@
     border-radius: 50%;
     display: flex;
     overflow: hidden;
-    margin-right: 15px
+    margin-right: 10px
 }
 
 .profileDropdown {
@@ -309,9 +299,9 @@ button.ui.button > input {
     color: white !important;
 }
 
-.ui.dropdown .menu {
-    left: -62% !important;
-}
+/*.ui.dropdown .menu {*/
+    /*left: -62% !important;*/
+/*}*/
 
 .ui.pointing.dropdown>.menu:after {
     box-shadow: none !important;
@@ -365,11 +355,6 @@ button.ui.button > input {
     border-color: #5bc0e3 transparent transparent !important;
 }
 
-.verticalDivider {
-    width: 1px;
-    background: #3a3a3a;
-    height: 30px;
-}
 
 .walnutLoading {
     background: #fafafa;
@@ -424,8 +409,8 @@ button.ui.button > input {
     margin-right: 5px;
     margin-left: 10px;
     color: #3a3a3a;
-    right: 20%;
-    position: absolute !important;
+    margin-top: 7px !important;
+
 }
 
 .menuDropdown:hover {
@@ -472,4 +457,74 @@ button.ui.button > input {
 
 #fileInputNewComm {
     display: none
+}
+
+.verticalDivider {
+    border-right: 1px solid rgba(34, 36, 38, 0.15);
+    height: 30px;
+    width: 0;
+}
+
+.discoverIcon {
+    margin: 0 !important;
+}
+
+.mapIcon {
+
+}
+
+.directoryIcon {
+
+}
+
+.ellipsis.vertical.icon {
+    font-size: 2em;
+    color: #a3938b;
+}
+
+.navUser {
+    color: #292f36;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-left: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    display: flex;
+    font-weight: bold;
+    margin-top: -5px;
+    align-items: center;
+    flex-direction: row;
+    margin-right: 10px;
+    height: 38px;
+}
+
+.navUser:hover {
+    color: #292f36;
+    background: #ebebeb;
+}
+
+.navBarLink {
+
+}
+
+.discoverTab {
+    height: 100%;
+    margin-right: 10px;
+    margin-top: 5px;
+    color: #343A4C;
+}
+
+.discoverTabActive {
+    height: 100%;
+    margin-right: 10px;
+    margin-top: 5px;
+    color: #94B0DA;
+}
+
+.discoverTab:hover, .discoverTabActive:hover {
+    color: #94B0DA;
+}
+
+.profileLink {
+
 }
