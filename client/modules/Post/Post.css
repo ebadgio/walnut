@@ -119,9 +119,6 @@
     box-shadow: 0 1px 2px 1px rgba(34, 36, 38, 0.15) !important;
 }
 
-.ui.dimmer {
-    background-color: rgba(0, 0, 0, 0.95);
-}
 
 .downloadConfirm:hover {
     color: blue;
@@ -148,23 +145,18 @@
 }
 
 .tag {
-    background-color: #3a3a3a;
-    color: #5bc0e3;
+    color: #568ea3;
     border-radius: 3px;
     padding-top: 4px;
-    padding-bottom: 4px;
+    padding-bottom: 2px;
     font-weight: bold;
-    /* border: solid 1px;*/
-    padding-left: 10px;
     padding-right: 10px;
     display: inline-block;
     margin-right: 5px;
-    margin-bottom: 5px;
     min-width: fit-content;
 }
 
 .hashtag {
-    color: #5bc0e3;
     font-size: 12px;
     line-height: 19px;
 }
@@ -195,17 +187,11 @@
     margin-right: auto;
 }
 
-.postOuter {
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    border-radius: 3px;
-    width: 513.67px;
-    border: 1px solid;
-    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
-    /* box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;*/
-}
+/*.postSegment:hover {*/
+    /*background: #FAFAFA !important;*/
+    /*!*padding-top: 1.5em !important;*!*/
+    /*!*padding-bottom: 1.5em !important;*!*/
+/*}*/
 
 .postContent {
     display: flex;
@@ -298,7 +284,7 @@
     font-family: Avenir Next;	
     font-size: 16px;
     line-height: 25px;
-    margin-left: 3%;
+    margin-left: 2%;
     margin-bottom: 15px;
     margin-top: 5px;
 }
@@ -328,6 +314,12 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+}
+
+.activeNum {
+    color: #85C7F2;
+    font-size: smaller;
+    margin-right: 12px;
 }
 
 .commentNum {
@@ -402,6 +394,7 @@
     font-size: smaller;
     color: #313D4D !important;
     display: flex;
+    margin-left: auto;
     margin-right: 10px;
 }
 
@@ -432,7 +425,7 @@
 }
 
 .ui.card.commentCardOther {
-    background-color: #C0BFC4;
+    background-color: #e8e8e8;
     box-shadow: none;
     margin: 0 10px 5px 5px;
     clear:both;
@@ -442,13 +435,11 @@
 }
 
 .messageGroupOther {
-    float: left;
-    margin-right: 300px;
+    /*margin-right: 300px;*/
 }
 
 .messageGroupYou {
-    float: right;
-    margin-left: 300px;
+    margin-left: auto;
 }
 
 .ui.card.commentCardYou {
@@ -474,8 +465,8 @@
 
 .messageNameOther {
     float:left;
-    padding-left: 20px;
-    color: #9e9e9e;
+    padding-left: 17px;
+    color: rgba(0, 0, 0, .40);
 }
 
 
@@ -564,10 +555,10 @@ iframe {
 #messageInput{
     border-color: transparent!important;
     background-color: transparent!important;
-    padding: 0!important;
+    padding: 2px!important;
     box-shadow: none!important;
     border-radius: 0!important;
-    color: rgba(255,255,255,.9);
+    color: #3a3a3a !important;
 }
 
 .previewPdf {
@@ -632,7 +623,7 @@ iframe {
     border-bottom-right-radius: 0 !important;
     border-top-right-radius: 0 !important;
     border-radius: 5px;
-    padding: 10px;
+    padding: 5px;
     width: 90%;
 }
 
@@ -690,6 +681,8 @@ iframe {
     margin-right: 5px;
     color: #5d5d5d !important;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .messagesGroup:hover {
@@ -697,6 +690,7 @@ iframe {
 }
 
 .messageText {
+    font-weight: 500;
     text-align: center;
 }
 
@@ -768,10 +762,7 @@ iframe {
 
 .emojiPicker {
     cursor: pointer;
-}
-
-.emojiPicker:hover {
-    color: #4CC1FC;
+    color: #b3b5c1;
 }
 
 .emojiDiv {
@@ -797,13 +788,9 @@ iframe {
     padding-bottom: 5px;
 }
 
-.attachFileIconModal:hover {
-    color: #5bc0e3 !important;
-}
-
 .attachFileIconModal {
     cursor: pointer;
-    color: #fff !important;
+    color: #b3b5c1 !important;
 }
 
 #fileSubmit{
@@ -883,6 +870,7 @@ body ::-webkit-scrollbar-thumb {
 .inputWrapper {
     display: inline-flex;
     width:100%;
+    border-top: 1px solid rgba(34,36,38,.15);
 }
 
 .fileuploadmodal {
@@ -968,4 +956,83 @@ body ::-webkit-scrollbar {
     max-width: 300px !important;
     max-height: 200px !important;
     overflow: auto !important;
+}
+
+.conversationCardContentModal {
+    cursor: pointer;
+    color: #fafafa !important;
+    padding: 6px !important;
+    padding-bottom: 0px !important;
+}
+
+.myConversationCardModal {
+    border-radius: 3px !important;
+    margin-bottom: 5px !important;
+    margin-right: 5px !important;
+}
+
+.miniPostCardModal {
+    background: none !important;
+    box-shadow: none !important;
+    border: solid 1px #fafafa !important;
+}
+
+.miniPostCardModalCurrent {
+    background: rgba(0, 0, 0, 0.40) !important;
+    border: solid 1px #5bc0e3 !important;
+    box-shadow: none !important
+}
+
+.miniPostCardModal:hover {
+    background: rgba(0, 0, 0, 0.40) !important;
+    border: solid 1px #5bc0e3 !important;
+}
+
+.postOuter {
+    margin-bottom: 15px !important;
+}
+
+.postSegment {
+    margin-bottom: 0 !important;
+    margin-top: 3px !important;
+    padding: .5em .5em !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+.postSegmentDrawerOpen {
+    margin-bottom: 0 !important;
+    margin-top: 3px !important;
+    padding: .5em .5em !important;
+    border-radius: 0 !important;
+    box-shadow: 0 1px 6px 0 rgba(34,36,38,.15) !important;
+}
+
+.postDrawer {
+    background: none !important;
+    border-top: none !important;
+    margin-top: 0 !important;
+    width: 100% !important;
+    min-height: 200px !important;
+    height: auto !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+.messagesBox {
+    padding-top: 10px;
+    min-height: 300px !important;
+    max-height: 300px !important;
+    width: 100%;
+    overflow-y: scroll;
+    height: auto !important;
+}
+
+.messageDescriptionYou {
+    color: #fff !important;
+}
+
+.messageDescriptionOther {
+    color: #231f20 !important;
 }

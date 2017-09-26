@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect} from 'react-redux';
-import { Card, Popup, Icon } from 'semantic-ui-react';
+import { Card, Popup, Icon, Segment } from 'semantic-ui-react';
 import Linkify from 'linkifyjs/react';
 import dateStuff from '../../dateStuff';
 import firebaseApp from '../../firebase';
@@ -126,40 +126,38 @@ class ConversationCard extends React.Component {
 
   render() {
     return (
-        <div className="myConversationCard">
-            <Card className="miniPostCard">
-              <Card.Content className="conversationCardContent" onClick={() => this.switching()} >
-                <div className="conversationCardHeader">
-                  <div className="conversationCardWrapper">
-                    <img className="conversationCardUserImage" src={this.props.data.pictureURL} />
-                  </div>
-                    <h3 className="conversationCardHeaderUser">{this.props.data.username}</h3>
+        <Segment className="miniPostCard">
+          <div className="conversationCardContent" onClick={() => this.switching()} >
+            <div className="conversationCardHeader">
+              <div className="conversationCardWrapper">
+                <img className="conversationCardUserImage" src={this.props.data.pictureURL} />
+              </div>
+                <h3 className="conversationCardHeaderUser">{this.props.data.username}</h3>
+            </div>
+              {this.props.data.content.split(' ').length > 4 ?
+              <Popup inverted
+                   hoverable
+                   trigger={<p className="conversationCardBody">{this.props.data.content.split(' ').slice(0, 4).join(' ') + '...'}</p>}
+                   content={<Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify>}/> :
+                  <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify> }
+              <div className="conversationFootnote">
+                <div className="messageInfoGroupMini">
+                  <span className="followNumMini">
+                    {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
+                  </span>
+                  <span className="commentNumMini">{this.state.count}{' messages'}</span>
+                  <span className={this.state.unreads > 0 ? 'isUnreadMini' : 'noUnreadMini'}>
+                    {this.state.unreads}{' unread'}
+                  </span>
                 </div>
-                  {this.props.data.content.split(' ').length > 4 ?
-                  <Popup inverted
-                       hoverable
-                       trigger={<p className="conversationCardBody">{this.props.data.content.split(' ').slice(0, 4).join(' ') + '...'}</p>}
-                       content={<Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify>}/> :
-                      <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify> }
-                  <div className="conversationFootnote">
-                    <div className="messageInfoGroupMini">
-                      <span className="followNumMini">
-                        {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
-                      </span>
-                      <span className="commentNumMini">{this.state.count}{' messages'}</span>
-                      <span className={this.state.unreads > 0 ? 'isUnreadMini' : 'noUnreadMini'}>
-                        {this.state.unreads}{' unread'}
-                      </span>
-                    </div>
-                    <div className="commentDiv">
-                      <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
-                      <Icon size="large" name="users" className="usersIconMini" />
-                    </div>
+                <div className="commentDiv">
+                  <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
+                  <Icon size="large" name="users" className="usersIconMini" />
                 </div>
-              </Card.Content>
-            </Card>
-        </div>
-        );
+            </div>
+          </div>
+        </Segment>
+      );
   }
 }
 

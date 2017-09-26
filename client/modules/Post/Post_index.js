@@ -6,10 +6,12 @@ import MediaAttachment from './Post_Media_Attachment.js';
 import LinkPreview from './LinkPreview';
 import './Post.css';
 import Lightbox from 'react-images';
-import {Divider, Icon, Button} from 'semantic-ui-react';
+import {Divider, Icon, Button, Segment} from 'semantic-ui-react';
 import dateStuff from '../../dateStuff';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
+import PostDrawer from './PostDrawer/PostDrawer_index';
+import getPostFollowersThunk from '../../thunks/post_thunks/getPostFollowers';
 
 class Post extends React.Component {
   constructor(props) {
@@ -32,6 +34,7 @@ class Post extends React.Component {
       count: 0,
       unreads: 0,
       numFollowers: 0,
+      showDrawer: false,
       isFollowing: false
     };
     this.getUseDate = this.getUseDate.bind(this);
@@ -81,6 +84,7 @@ class Post extends React.Component {
     followersRef.on('value', (snapshot) => {
       if (snapshot.val()) {
         const followers = Object.keys(snapshot.val());
+        this.props.getPostFollowers(followers);
         this.setState({numFollowers: followers.length});
       }
     });
@@ -236,84 +240,102 @@ class Post extends React.Component {
   //   // TODO: unreads to 0
   // }
 
+  toggleDrawer() {
+    const before = this.state.showDrawer;
+    this.setState({showDrawer: !this.state.showDrawer});
+
+    // trying to stop it from making the page jump, it only works sometimes tho so i commented it out
+    // if (!before) {
+    //   this.getPlace();
+    // }
+  }
+
+  getPlace() {
+    const elem = document.getElementById('commentDiv');
+    elem.scrollIntoView({block: 'center'});
+  }
+
   render() {
     const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreview url={url} />) : [];
     return (
       <div className="postOuter">
-      <div className="postContent">
-        <div className="postUser">
-          <div className="imageWrapperPost">
-              <img className="postUserImage" src={this.props.postData.pictureURL} />
-          </div>
-          <div className="postHeader">
-            <h3 className="postHeaderUser">{this.props.postData.username}</h3>
-            <p className="postTimeStamp">{this.state.timeStamp}</p>
-          </div>
-            {this.state.isFollowing ? <div className="isFollowingGroup">
-              <Icon name="checkmark" className="iconFollowing" size={'small'} />
-              <p className="followingText">Following</p>
-            </div> : <Button className="postFollowButton" onClick={() => this.joinConversation()}>
-              <Icon name="plus" />
-              Follow
-            </Button>}
-        </div>
-        <div className="postDescription">
-          <div className="postInnerContent">
-            {this.state.messageBody ? this.state.messageBody :
-            <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName}</a> {this.state.messageBody2}</div>
-            }
-          </div>
-        </div>
+        <Segment className={this.state.showDrawer ? 'postSegmentDrawerOpen' : 'postSegment'}>
+          <div className="postContent">
+            <div className="postUser" id="postUser">
+              <div className="imageWrapperPost">
+                  <img className="postUserImage" src={this.props.postData.pictureURL} />
+              </div>
+              <div className="postHeader">
+                <h3 className="postHeaderUser">{this.props.postData.username}</h3>
+                <p className="postTimeStamp">{this.state.timeStamp}</p>
+              </div>
+                {this.state.isFollowing ? <div className="isFollowingGroup">
+                  <Icon name="checkmark" className="iconFollowing" size={'small'} />
+                  <p className="followingText">Following</p>
+                </div> : <Button className="postFollowButton" onClick={() => this.joinConversation()}>
+                  <Icon name="plus" />
+                  Follow
+                </Button>}
+            </div>
+            <div className="postDescription">
+              <div className="postInnerContent">
+                {this.state.messageBody ? this.state.messageBody :
+                <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName}</a> {this.state.messageBody2}</div>
+                }
+              </div>
+            </div>
 
-        {urlPrev.length > 0 ? urlPrev[0] : null}
+            {urlPrev.length > 0 ? urlPrev[0] : null}
 
-        {(this.props.postData.attachment.name !== '') ?
-        <MediaAttachment data={this.props.postData.attachment}
-        renderLightBox={(data) => this.renderLightBox(data)}
-        renderPdfModal={(data) => this.renderPdfModal(data)}/>
-        : null}
-        <Lightbox
-          images={[{
-            src: this.state.lightBoxData.url,
-            caption: this.state.lightBoxData.name
-          }]}
-          isOpen={this.state.lightBoxData !== ''}
-          onClose={() => this.closeLightbox()}
-          />
-      </div>
-      <div className="statsGroup">
-        <span className="followNum">
-              {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
-        </span>
-        <span className="commentNum">
-              {this.state.count}{' messages'}
-        </span>
-        {this.state.isFollowing ? <span className={this.state.unreads > 0 ? 'isUnread' : 'noUnread'}>
-              {this.state.unreads}{' unread'}
-        </span> : null}
-      </div>
-      <Divider className="postDivider" fitted />
-      <div className="postFootnote">
-        <div className="tagContainer">
-          {this.props.postData.tags.map((tag, index) => (
-          <div key={index} className="tag">
-            <text className="hashtag">#{' ' + tag.name}</text>
-          </div>))}
-        </div>
-        <div></div>
-        <div className="commentDiv">
-          <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
-          <div className="membersGroup">
-            <Icon size="big" name="users" className="usersIcon" />
-            <p className="membersText">Active</p>
+            {(this.props.postData.attachment.name !== '') ?
+            <MediaAttachment data={this.props.postData.attachment}
+            renderLightBox={(data) => this.renderLightBox(data)}
+            renderPdfModal={(data) => this.renderPdfModal(data)}/>
+            : null}
+            <Lightbox
+              images={[{
+                src: this.state.lightBoxData.url,
+                caption: this.state.lightBoxData.name
+              }]}
+              isOpen={this.state.lightBoxData !== ''}
+              onClose={() => this.closeLightbox()}
+              />
           </div>
-          <div className="messagesGroup">
-            <Icon size="big" name="comments" className="commentIcon" onClick={() => {this.props.openModal(this.props.postData);}} />
-            <p className="messageText">Chat</p>
+          <div className="statsGroup">
+            <span className="activeNum">
+              {this.state.membersCount > 0 ? this.state.membersCount + ' active' : null}
+            </span>
+            <span className="followNum">
+                  {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
+            </span>
+            <span className="commentNum">
+                  {this.state.count}{' messages'}
+            </span>
+            {this.state.isFollowing ? <span className={this.state.unreads > 0 ? 'isUnread' : 'noUnread'}>
+                  {this.state.unreads}{' unread'}
+            </span> : null}
           </div>
-        </div>
+          <Divider className="postDivider" fitted />
+          <div className="postFootnote">
+            <div className="tagContainer">
+              {this.props.postData.tags.map((tag, index) => (
+              <div key={index} className="tag">
+                <text className="hashtag">#{' ' + tag.name}</text>
+              </div>))}
+            </div>
+            <div></div>
+            <div className="commentDiv" id="commentDiv">
+              <div className="messagesGroup" onClick={() => this.toggleDrawer()}>
+                <Icon size="big" name="comments outline" className="commentIcon" />
+                <p className="messageText">Chat</p>
+              </div>
+            </div>
+          </div>
+        </Segment>
+        {this.state.showDrawer ? <PostDrawer currentUser={this.props.currentUser}
+                                             members={this.state.members}
+                                             postData={this.props.postData}/> : null}
       </div>
-    </div>
     );
   }
 }
@@ -323,11 +345,13 @@ Post.propTypes = {
   currentUser: PropTypes.object,
   nested: PropTypes.bool,
   openModal: PropTypes.func,
-  currentModalData: PropTypes.object
+  currentModalData: PropTypes.object,
+  getPostFollowers: PropTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  openModal: (postData) => dispatch({type: 'MAKE_OPEN', postData: postData})
+  openModal: (postData) => dispatch({type: 'MAKE_OPEN', postData: postData}),
+  getPostFollowers: (followerIds) => dispatch(getPostFollowersThunk(followerIds))
 });
 
 const mapStateToProps = (state) => ({
