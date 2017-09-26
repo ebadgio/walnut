@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect} from 'react-redux';
-import ModalContainer from './Post_Modal_Container';
+import axios from 'axios';
 import MediaAttachment from './Post_Media_Attachment.js';
 import LinkPreview from './LinkPreview';
 import './Post.css';
@@ -35,22 +35,39 @@ class Post extends React.Component {
       unreads: 0,
       numFollowers: 0,
       showDrawer: false,
-      isFollowing: false
+      isFollowing: false,
+      meta: {}
     };
     this.getUseDate = this.getUseDate.bind(this);
   }
+
   componentWillMount() {
     const urls = this.urlFinder(this.props.postData.content);
-    this.setState({urls: urls});
-    if (urls.length !== 0) {
-      const idx = this.props.postData.content.indexOf(urls[0]);
-      const newBody1 = this.props.postData.content.substr(0, idx);
-      const newBody2 = this.props.postData.content.substr((idx + urls[0].length), this.props.postData.content.length);
-      const newLink = urls[0];
-      this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink, urlName: this.urlNamer(newLink)});
-    } else {
+    if (urls.length === 0) {
       this.setState({ messageBody: this.props.postData.content });
+      return false;
     }
+    axios.post('/db/get/linkpreview', {
+      url: urls[0]
+    })
+    .then((response) => {
+      console.log('return meta fetch', response.data.meta);
+      this.setState({ meta: response.data.meta });
+      if (urls.length !== 0) {
+        const idx = this.props.postData.content.indexOf(urls[0]);
+        const newBody1 = this.props.postData.content.substr(0, idx);
+        const newBody2 = this.props.postData.content.substr((idx + urls[0].length), this.props.postData.content.length);
+        const newLink = urls[0];
+        if (!response.data.meta.description || !response.data.meta.title || !response.data.meta.image) {
+          this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink });
+        } else {
+          this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink, urlName: this.urlNamer(newLink) });
+        }
+      }
+    })
+    .catch((err) => {
+      console.log('error in meta scrape', err);
+    });
   }
 
   componentDidMount() {
@@ -256,7 +273,6 @@ class Post extends React.Component {
   }
 
   render() {
-    const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreview url={url} />) : [];
     return (
       <div className="postOuter">
         <Segment className={this.state.showDrawer ? 'postSegmentDrawerOpen' : 'postSegment'}>
@@ -280,12 +296,12 @@ class Post extends React.Component {
             <div className="postDescription">
               <div className="postInnerContent">
                 {this.state.messageBody ? this.state.messageBody :
-                <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName}</a> {this.state.messageBody2}</div>
+                <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName ? this.state.urlName : this.state.newLink}</a> {this.state.messageBody2}</div>
                 }
               </div>
             </div>
 
-            {urlPrev.length > 0 ? urlPrev[0] : null}
+            {this.state.meta.description && this.state.meta.title && this.state.meta.image ? <LinkPreview meta={this.state.meta} url={this.state.newLink} /> : null}
 
             {(this.props.postData.attachment.name !== '') ?
             <MediaAttachment data={this.props.postData.attachment}

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import YouTube from 'react-youtube';
 
 class LinkPreview extends React.Component {
@@ -18,17 +17,6 @@ class LinkPreview extends React.Component {
       this.setState({ youtube: this.props.url.split('v=')[1]});
       return;
     }
-    axios.post('/db/get/linkpreview', {
-      url: this.props.url
-    })
-    .then((response) => {
-      if (this.refs.myRef) {
-        this.setState({ meta: response.data.meta});
-      }
-    })
-    .catch((err) => {
-      console.log('error in meta scrape', err);
-    });
   }
 
   validURL(str) {
@@ -40,7 +28,7 @@ class LinkPreview extends React.Component {
   }
 
   render() {
-    const validURL = this.validURL(this.state.meta.image);
+    const validURL = this.validURL(this.props.meta.image);
     const opts = {
       height: '270',
       width: '513',
@@ -50,16 +38,16 @@ class LinkPreview extends React.Component {
     };
     return (
       <div ref="myRef" className="linkPrev">
-        {((this.state.youtube === '') && (validURL && this.state.meta.description && this.state.meta.title)) ?
+        {((this.state.youtube === '') && (validURL && this.props.meta.description && this.props.meta.title)) ?
           <div className="lineLeft"></div> : null
         }
         <div className="linkPreviewWrapper">
-          {(validURL && this.state.meta.description && this.state.meta.title) ?
+          {(validURL && this.props.meta.description && this.props.meta.title) ?
           <div className="linkPreview">
-              <a href={this.state.meta.url}><h3 className="linkTitle">{this.state.meta.title}</h3></a><br />
-              <p className="linkDesc">{this.state.meta.description}</p><br />
+              <a href={this.props.meta.url}><h3 className="linkTitle">{this.props.meta.title}</h3></a><br />
+              <p className="linkDesc">{this.props.meta.description}</p><br />
               <div className="linkImage">
-                  <img className="linkImg" src={this.state.meta.image} />
+                  <img className="linkImg" src={this.props.meta.image} />
               </div>
           </div>
           : null
@@ -77,7 +65,8 @@ class LinkPreview extends React.Component {
   }
 }
 LinkPreview.propTypes = {
-  url: PropTypes.string
+  url: PropTypes.string,
+  meta: PropTypes.object
 };
 
 export default LinkPreview;

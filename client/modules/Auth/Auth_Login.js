@@ -8,6 +8,7 @@ import googleLoginThunk from '../../thunks/auth_thunks/googleLoginThunk';
 import signInThunk from '../../thunks/auth_thunks/signInThunk';
 import firebase from 'firebase';
 import verificationThunk from '../../thunks/auth_thunks/verificationThunk';
+import $ from 'jquery';
 import './Auth.css';
 
 // TODO: component login
@@ -29,6 +30,16 @@ class Login extends React.Component {
       registerClose: true,
       buttonBig: false
     };
+  }
+
+
+  componentDidMount() {
+    $(document).keypress((e) =>  {
+      if (e.which === 13) {
+        e.preventDefault();
+        this.regLogin(e);
+      }
+    });
   }
 
   handleEmailChange(e) {
@@ -151,7 +162,7 @@ class Login extends React.Component {
                     className="loginInputs"
                     onChange={(e) => this.handlePasswordChange(e)}
                     value={this.state.passwordVal} />
-                  <Button onClick={() => this.open()} className="forgotPassword" labelPosition="right" content="Forgot Password?" />
+                  <Button onClick={() => this.open()} onKeyPress={() => {console.log('enter');}} className="forgotPassword" labelPosition="right" content="Forgot Password?" />
                 </Form.Field>
                 <Button onClick={(e) => { this.regLogin(e); }} className="authButtons" type="submit">Log In</Button>
                 <Modal size={'mini'} basic open={this.state.open} onClose={() => this.close()}>
