@@ -59,6 +59,8 @@ class NewPostContainer extends React.Component {
   }
 
   submitPost() {
+    this.setState({ open: false });
+    this.props.dimmerOff();
     if (this.state.file !== '') {
       superagent.post('/aws/upload/post')
       .field('body', this.state.postBody ? this.state.postBody : '')
@@ -119,10 +121,12 @@ class NewPostContainer extends React.Component {
   }
 
   handleOpen() {
+    this.setState({open: true});
     this.props.dimmerOn();
   }
 
   handleClose() {
+    this.setState({ open: false });
     this.props.dimmerOff();
   }
 
@@ -136,6 +140,7 @@ class NewPostContainer extends React.Component {
           )}
           onOpen={() => this.handleOpen()}
           onClose={() => this.handleClose()}
+          open={this.state.open}
       >
         <Segment className="newPostSegment">
           <div className="row newPostContent">

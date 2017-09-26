@@ -18,17 +18,6 @@ class LinkPreview extends React.Component {
       this.setState({ youtube: this.props.url.split('v=')[1] });
       return;
     }
-    axios.post('/db/get/linkpreview', {
-      url: this.props.url
-    })
-            .then((response) => {
-              if (this.refs.myRef) {
-                this.setState({ meta: response.data.meta });
-              }
-            })
-            .catch((err) => {
-              console.log('error in meta scrape', err);
-            });
   }
 
   validURL(str) {
@@ -40,7 +29,7 @@ class LinkPreview extends React.Component {
   }
 
   render() {
-    const validURL = this.validURL(this.state.meta.image);
+    const validURL = this.validURL(this.props.meta.image);
     const opts = {
       height: '60px',
       width: '100px',
@@ -48,18 +37,19 @@ class LinkPreview extends React.Component {
         autoplay: 0
       }
     };
+    console.log('rendering preview component');
     return (
             <div ref="myRef" className="linkPrevComment">
-        {((this.state.youtube === '') && (validURL && this.state.meta.description && this.state.meta.title)) ?
+        {((this.state.youtube === '') && (validURL && this.props.meta.description && this.props.meta.title)) ?
                     <div className="lineLeftComment"></div> : null
                 }
                 <div className="linkPreviewCommentWrapper">
-                  {(validURL && this.state.meta.description && this.state.meta.title) ?
+                  {(validURL && this.props.meta.description && this.props.meta.title) ?
                         <div className="linkPreviewComment">
-                            <a href={this.state.meta.url}><h3 className="linkTitleComment">{this.state.meta.title}</h3></a><br />
-                            <p className="linkDescComment">{this.state.meta.description}</p><br />
+                            <a href={this.props.meta.url}><h3 className="linkTitleComment">{this.props.meta.title}</h3></a><br />
+                            <p className="linkDescComment">{this.props.meta.description}</p><br />
                             <div className="linkImageComment">
-                                <img className="linkImgComment" src={this.state.meta.image} />
+                                <img className="linkImgComment" src={this.props.meta.image} />
                             </div>
                         </div>
                         : null
@@ -77,7 +67,8 @@ class LinkPreview extends React.Component {
   }
 }
 LinkPreview.propTypes = {
-  url: PropTypes.string
+  url: PropTypes.string,
+  meta: PropTypes.object
 };
 
 export default LinkPreview;
