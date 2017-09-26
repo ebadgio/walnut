@@ -1009,8 +1009,9 @@ body ::-webkit-scrollbar {
 }
 
 .postDrawer {
+    background: none !important;
     border-top: none !important;
-    margin-top: 2px!important;
+    margin-top: 0 !important;
     width: 100% !important;
     min-height: 200px !important;
     height: auto !important;
