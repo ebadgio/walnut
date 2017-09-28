@@ -20,7 +20,7 @@ class EditProfile extends React.Component {
     this.state = {
       homeTown: props.homeTown,
       school: props.school,
-      concentration: props.concentration,
+      concentration: props.concentration ? props.concentration[0] : '',
       graduation: props.graduation,
       position: props.position,
       company: props.company,
@@ -217,7 +217,7 @@ const mapStateToProps = (state) => ({
   homeTown: state.userReducer.placesLived.current,
   school: state.userReducer.education.colleges[0] ? state.userReducer.education.colleges[0].name : '',
   concentration: state.userReducer.education.colleges[0] ?
-        (state.userReducer.education.colleges[0].concentrations ? state.userReducer.education.colleges[0].concentrations[0] : '')
+        state.userReducer.education.colleges[0].concentrations
         : '',
   graduation: state.userReducer.education.colleges[0] ? state.userReducer.education.colleges[0].endedAt : '',
   position: state.userReducer.work[0] ? state.userReducer.work[0].position : '',
