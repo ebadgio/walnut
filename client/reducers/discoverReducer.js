@@ -26,7 +26,8 @@ const discoverReducer = (state = {
         posts: action.posts,
         hasMore: true,
         isFetching: false,
-        lastRefresh: action.lastRefresh
+        lastRefresh: action.lastRefresh,
+        useFilters: []
       };
     // TODO: backend needs to check otherFilters
     case 'GET_DISCOVER_DATA_REFRESH':
