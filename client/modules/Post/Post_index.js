@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect} from 'react-redux';
-import ModalContainer from './Post_Modal_Container';
+import axios from 'axios';
 import MediaAttachment from './Post_Media_Attachment.js';
 import LinkPreview from './LinkPreview';
 import './Post.css';
 import Lightbox from 'react-images';
-import {Divider, Icon, Button} from 'semantic-ui-react';
+import {Divider, Icon, Button, Segment} from 'semantic-ui-react';
 import dateStuff from '../../dateStuff';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
+import PostDrawer from './PostDrawer/PostDrawer_index';
+import getPostFollowersThunk from '../../thunks/post_thunks/getPostFollowers';
 
 class Post extends React.Component {
   constructor(props) {
@@ -31,22 +33,41 @@ class Post extends React.Component {
       members: [],
       count: 0,
       unreads: 0,
-      isFollowing: false
+      numFollowers: 0,
+      showDrawer: false,
+      isFollowing: false,
+      meta: {}
     };
     this.getUseDate = this.getUseDate.bind(this);
   }
+
   componentWillMount() {
     const urls = this.urlFinder(this.props.postData.content);
-    this.setState({urls: urls});
-    if (urls.length !== 0) {
-      const idx = this.props.postData.content.indexOf(urls[0]);
-      const newBody1 = this.props.postData.content.substr(0, idx);
-      const newBody2 = this.props.postData.content.substr((idx + urls[0].length), this.props.postData.content.length);
-      const newLink = urls[0];
-      this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink, urlName: this.urlNamer(newLink)});
-    } else {
+    if (urls.length === 0) {
       this.setState({ messageBody: this.props.postData.content });
+      return false;
     }
+    axios.post('/db/get/linkpreview', {
+      url: urls[0]
+    })
+    .then((response) => {
+      console.log('return meta fetch', response.data.meta);
+      this.setState({ meta: response.data.meta });
+      if (urls.length !== 0) {
+        const idx = this.props.postData.content.indexOf(urls[0]);
+        const newBody1 = this.props.postData.content.substr(0, idx);
+        const newBody2 = this.props.postData.content.substr((idx + urls[0].length), this.props.postData.content.length);
+        const newLink = urls[0];
+        if (!response.data.meta.description || !response.data.meta.title || !response.data.meta.image) {
+          this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink });
+        } else {
+          this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink, urlName: this.urlNamer(newLink) });
+        }
+      }
+    })
+    .catch((err) => {
+      console.log('error in meta scrape', err);
+    });
   }
 
   componentDidMount() {
@@ -65,6 +86,7 @@ class Post extends React.Component {
       }
     });
 
+    // Determining if this user follows this post
     const followsRef = firebaseApp.database().ref('/follows/' + user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' +  this.props.postData.postId);
     followsRef.on('value', (snapshot) => {
       if (snapshot.val()) {
@@ -73,6 +95,17 @@ class Post extends React.Component {
         this.setState({isFollowing: false});
       }
     });
+
+    // Getting # followers of this post
+    const followersRef = firebaseApp.database().ref('/followGroups/' + this.props.postData.postId);
+    followersRef.on('value', (snapshot) => {
+      if (snapshot.val()) {
+        const followers = Object.keys(snapshot.val());
+        this.props.getPostFollowers(followers);
+        this.setState({numFollowers: followers.length});
+      }
+    });
+
 
     // unreads stuff
     firebaseApp.database().ref('/unreads/' + user.uid + '/' + this.props.postData.postId).on('value', snapshotB => {
@@ -98,6 +131,9 @@ class Post extends React.Component {
       let isPM;
       if (parseInt(timeArr[0], 10) > 12) {
         hour = parseInt(timeArr[0], 10) - 12;
+        isPM = true;
+      } else if (parseInt(timeArr[0], 10) === 12) {
+        hour = 12;
         isPM = true;
       } else {
         if (parseInt(timeArr[0], 10) === 0) {
@@ -221,80 +257,101 @@ class Post extends React.Component {
   //   // TODO: unreads to 0
   // }
 
+  toggleDrawer() {
+    const before = this.state.showDrawer;
+    this.setState({showDrawer: !this.state.showDrawer});
+
+    // trying to stop it from making the page jump, it only works sometimes tho so i commented it out
+    // if (!before) {
+    //   this.getPlace();
+    // }
+  }
+
+  getPlace() {
+    const elem = document.getElementById('commentDiv');
+    elem.scrollIntoView({block: 'center'});
+  }
+
   render() {
-    const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreview url={url} />) : [];
     return (
       <div className="postOuter">
-      <div className="postContent">
-        <div className="postUser">
-          <div className="imageWrapperPost">
-              <img className="postUserImage" src={this.props.postData.pictureURL} />
-          </div>
-          <div className="postHeader">
-            <h3 className="postHeaderUser">{this.props.postData.username}</h3>
-            <p className="postTimeStamp">{this.state.timeStamp}</p>
-          </div>
-            {this.state.isFollowing ? <div className="isFollowingGroup">
-              <Icon name="checkmark" className="iconFollowing" size={'small'} />
-              <p className="followingText">Following</p>
-            </div> : <Button className="postFollowButton" onClick={() => this.joinConversation()}>
-              <Icon name="plus" />
-              Follow
-            </Button>}
-        </div>
-        <div className="postDescription">
-          <div className="postInnerContent">
-            {this.state.messageBody ? this.state.messageBody :
-            <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName}</a> {this.state.messageBody2}</div>
-            }
-          </div>
-        </div>
+        <Segment className={this.state.showDrawer ? 'postSegmentDrawerOpen' : 'postSegment'}>
+          <div className="postContent">
+            <div className="postUser" id="postUser">
+              <div className="imageWrapperPost">
+                  <img className="postUserImage" src={this.props.postData.pictureURL} />
+              </div>
+              <div className="postHeader">
+                <h3 className="postHeaderUser">{this.props.postData.username}</h3>
+                <p className="postTimeStamp">{this.state.timeStamp}</p>
+              </div>
+                {this.state.isFollowing ? <div className="isFollowingGroup">
+                  <Icon name="checkmark" className="iconFollowing" size={'small'} />
+                  <p className="followingText">Following</p>
+                </div> : <Button className="postFollowButton" onClick={() => this.joinConversation()}>
+                  <Icon name="plus" />
+                  Follow
+                </Button>}
+            </div>
+            <div className="postDescription">
+              <div className="postInnerContent">
+                {this.state.messageBody ? this.state.messageBody :
+                <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName ? this.state.urlName : this.state.newLink}</a> {this.state.messageBody2}</div>
+                }
+              </div>
+            </div>
 
-        {urlPrev.length > 0 ? urlPrev[0] : null}
+            {this.state.meta.description && this.state.meta.title && this.state.meta.image ? <LinkPreview meta={this.state.meta} url={this.state.newLink} /> : null}
 
-        {(this.props.postData.attachment.name !== '') ?
-        <MediaAttachment data={this.props.postData.attachment}
-        renderLightBox={(data) => this.renderLightBox(data)}
-        renderPdfModal={(data) => this.renderPdfModal(data)}/>
-        : null}
-        <Lightbox
-          images={[{
-            src: this.state.lightBoxData.url,
-            caption: this.state.lightBoxData.name
-          }]}
-          isOpen={this.state.lightBoxData !== ''}
-          onClose={() => this.closeLightbox()}
-          />
+            {(this.props.postData.attachment.name !== '') ?
+            <MediaAttachment data={this.props.postData.attachment}
+            renderLightBox={(data) => this.renderLightBox(data)}
+            renderPdfModal={(data) => this.renderPdfModal(data)}/>
+            : null}
+            <Lightbox
+              images={[{
+                src: this.state.lightBoxData.url,
+                caption: this.state.lightBoxData.name
+              }]}
+              isOpen={this.state.lightBoxData !== ''}
+              onClose={() => this.closeLightbox()}
+              />
+          </div>
+          <div className="statsGroup">
+            <span className="activeNum">
+              {this.state.membersCount > 0 ? this.state.membersCount + ' active' : null}
+            </span>
+            <span className="followNum">
+                  {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
+            </span>
+            <span className="commentNum">
+                  {this.state.count}{' messages'}
+            </span>
+            {this.state.isFollowing ? <span className={this.state.unreads > 0 ? 'isUnread' : 'noUnread'}>
+                  {this.state.unreads}{' unread'}
+            </span> : null}
+          </div>
+          <Divider className="postDivider" fitted />
+          <div className="postFootnote">
+            <div className="tagContainer">
+              {this.props.postData.tags.map((tag, index) => (
+              <div key={index} className="tag">
+                <text className="hashtag">#{' ' + tag.name}</text>
+              </div>))}
+            </div>
+            <div></div>
+            <div className="commentDiv" id="commentDiv">
+              <div className="messagesGroup" onClick={() => this.toggleDrawer()}>
+                <Icon size="big" name="comments outline" className="commentIcon" />
+                <p className="messageText">Chat</p>
+              </div>
+            </div>
+          </div>
+        </Segment>
+        {this.state.showDrawer ? <PostDrawer currentUser={this.props.currentUser}
+                                             members={this.state.members}
+                                             postData={this.props.postData}/> : null}
       </div>
-
-      <span className="commentNum">
-            {this.state.count}{' messages'}
-      </span>
-      {this.state.isFollowing ? <span className={this.state.unreads > 0 ? 'isUnread' : 'noUnread'}>
-            {this.state.unreads}{' unread'}
-      </span> : null}
-      <Divider className="postDivider" fitted />
-      <div className="postFootnote">
-        <div className="tagContainer">
-          {this.props.postData.tags.map((tag, index) => (
-          <div key={index} className="tag">
-            <text className="hashtag">#{' ' + tag.name}</text>
-          </div>))}
-        </div>
-        <div></div>
-        <div className="commentDiv">
-          <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
-          <div className="membersGroup">
-            <Icon size="big" name="users" className="usersIcon" />
-            <p className="membersText">Active</p>
-          </div>
-          <div className="messagesGroup">
-            <Icon size="big" name="comments" className="commentIcon" onClick={() => {this.props.openModal(this.props.postData);}} />
-            <p className="messageText">Chat</p>
-          </div>
-        </div>
-      </div>
-    </div>
     );
   }
 }
@@ -303,11 +360,18 @@ Post.propTypes = {
   newLike: PropTypes.func,
   currentUser: PropTypes.object,
   nested: PropTypes.bool,
-  openModal: PropTypes.func
+  openModal: PropTypes.func,
+  currentModalData: PropTypes.object,
+  getPostFollowers: PropTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  openModal: (postData) => dispatch({type: 'MAKE_OPEN', postData: postData})
+  openModal: (postData) => dispatch({type: 'MAKE_OPEN', postData: postData}),
+  getPostFollowers: (followerIds) => dispatch(getPostFollowersThunk(followerIds))
 });
 
-export default connect(null, mapDispatchToProps)(Post);
+const mapStateToProps = (state) => ({
+  currentModalData: state.modalReducer.postData
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post);

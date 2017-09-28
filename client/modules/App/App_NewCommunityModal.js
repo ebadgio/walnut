@@ -58,18 +58,6 @@ class NewCommunityModal extends React.Component {
     }
   }
 
-  saveImage() {
-    superagent.post('/aws/upload/community')
-    .attach('community', this.state.file)
-    .end((err, res) => {
-      if (err) {
-        console.log(err);
-        alert('failed uploaded!');
-      }
-      this.setState({pic: res.body.pictureURL, file: {}});
-    });
-  }
-
   upload() {
     const myFile = $('#fileInputNewComm').prop('files');
     this.setState({ file: myFile[0] });

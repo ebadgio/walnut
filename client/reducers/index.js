@@ -12,6 +12,7 @@ import postReducer from './postReducer';
 import conversationReducer from './conversationReducer';
 import walnutHomeReducer from './walnutHomeReducer';
 import modalReducer from './modalReducer';
+import dimmerReducer from './dimmerReducer';
 
 const rootReducer = combineReducers({
   conversationReducer: conversationReducer,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   postReducer: postReducer,
   walnutHomeReducer: walnutHomeReducer,
   modalReducer: modalReducer,
+  dimmerReducer: dimmerReducer,
   routing: routerReducer // this reducer is used by React Router in Redux
 });
 

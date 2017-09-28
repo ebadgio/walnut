@@ -7,7 +7,7 @@ import Select from 'react-select';
 import toggleFilterCheckedThunk from '../../thunks/toggleFilterCheckedThunk';
 import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
 import toggleTempFilterCheckedThunk from '../../thunks/toggleTempFilterCheckedThunk';
-import { Icon, Label } from 'semantic-ui-react';
+import { Icon, Label, Dropdown } from 'semantic-ui-react';
 import $ from 'jquery';
 
 class FilterPrefContainer extends React.Component {
@@ -18,6 +18,7 @@ class FilterPrefContainer extends React.Component {
       value: [],
       useFilters: []
     };
+    this.handleSelectChange = this.handleSelectChange.bind(this);
   }
 
   handleSubmit(e) {
@@ -36,9 +37,11 @@ class FilterPrefContainer extends React.Component {
     return val;
   }
 
-  handleSelectChange(value) {
+  handleSelectChange(e, { value }) {
     // const newPostBox = document.getElementById('newPostBox');
     // newPostBox.scrollIntoView(true);
+    e.preventDefault();
+    const elem = document.getElementById('dropdownTopic');
     const send = this.props.otherFilters.filter((filter) => filter.name === value);
     this.props.addFilters(send);
     this.props.toggleTempChecked(this.props.useFilters.concat(send).map((filt) => filt._id));
@@ -84,32 +87,34 @@ class FilterPrefContainer extends React.Component {
   }
 
   render() {
-    const filters = this.props.useFilters;
     const options = this.selectOptions();
     return (
-      <div>
-        <form name="choice_form" id="choice_form" method="post" onSubmit={this.handleSubmit}>
-          {filters ?
-            filters.map((filter, index) => (
+      <div className="topicContainer">
+        <div id="choice_form" onSubmit={this.handleSubmit}>
+          <span className="currentView">Currently viewing posts including: </span>
+          {this.props.useFilters.length > 0 ?
+            this.props.useFilters.map((filter, index) => (
               <div key={index} className="tag">
                 <text className="hashtag"># {filter.name}</text>
                 <Icon className="topicRemove" name="delete" onClick={() => this.handleRemove(filter)} />
               </div>
               ))
            :
-            null
+            <span className="allTopics">All Topics</span>
           }
-        </form>
-        <form>
-          <Select
-            name="form-field-name"
-            value={this.state.value}
-            multi simpleValue
-            placeholder="Filter by topic(s)..."
-            options={options}
-            onChange={this.handleSelectChange.bind(this)}
-          />
-        </form>
+        </div>
+        <Dropdown
+          defaultValue={''}
+          searchInput={'value'}
+          id="dropdownTopic"
+          className="topicSelectorDiscover"
+          search
+          icon="search"
+          selection
+          placeholder="Filter by topic(s)..."
+          options={options}
+          onChange={this.handleSelectChange}
+        />
       </div>
     );
   }

@@ -19,11 +19,18 @@
 }
 
 .registerCard{
-    background-color: #3a3a3a !important;
-    padding: 20px;
+    background-color: #FAFAFA !important;
+    padding: 10px 20px 10px 20px;
+    border: solid 1px;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
     border-radius: 5px;
-    width:440px;
+    width: 280px;
     color: #5bc0e3 !important;
+    position: absolute !important;
+    top: 135px !important;
+    right: 47px !important;
+    z-index: 100;
 }
 
 .registerPage {
@@ -36,7 +43,7 @@
 }
 
 .authLabels {
-    color: #FAFAFA !important;
+    color: #3a3a3a !important;
 }
 
 .authButtons {
@@ -44,6 +51,125 @@
     color: #3a3a3a !important;
 }
 
+.forgotPassword {
+    background: #fafafa !important;
+    height: 20px !important;
+    color: #b3b5c1 !important;
+    font-size: x-small !important;
+}
+
+.forgotPassword:hover {
+    color: #5bc0e3 !important;
+}
+
+.authLabelsRegister {
+    color: #3a3a3a !important;
+}
+
 .authButtons:hover {
     color: #5bc0e3 !important;
+}
+
+#navBarLogin {
+    width: 100%;
+    position: fixed;
+    z-index: 300;
+    display: flex;
+    height: 168px;
+    background-color: #FAFAFA;
+    border-bottom: solid 1px;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.loginForm {
+    display: flex;
+    margin-right: 20px;
+}
+
+.loginInputs {
+    height: 32px !important;
+}
+
+.inputLogin {
+    margin-left: 20px !important;
+}
+
+.inputLoginPassword {
+    margin-left: 20px !important;
+    margin-bottom: 0 !important;
+    width: 177px !important;
+}
+
+.walnutTitleLoginDiv {
+    margin-bottom: 10px;
+    margin-left: 80px;
+}
+
+.walnutTitleLogin {
+    font-size: 40px;
+    font-family: avenir next;
+}
+
+.registerShowButton {
+    position: absolute !important;
+    top: 358px !important;
+    right: 200px !important;
+    background-color: #5bc0e3 !important;
+    color: #fff !important;
+}
+
+.backgroundImageLogin {
+    width: 100%;
+    height: 98.5vh;
+    position: absolute;
+    top: 10px;
+    filter: brightness(40%);
+}
+
+.introTextDiv {
+    position: absolute;
+    color: #3a3a3a;
+    top: 135px;
+    left: 80px;
+    height: auto;
+}
+
+.introTextTitle {
+    font-size: 56px;
+    margin-top: 57px !important;
+}
+
+.introTextBlurb {
+    position: absolute;
+    top: 135px;
+    left: 80px;
+    color: #5bc0e3;
+    z-index: 100;
+}
+
+.introText {
+    font-size: 20px;
+    width: 463px;
+}
+
+.step {
+    padding-left: 17px !important;
+    padding-right: 13px !important;
+}
+
+.landingImageSmall {
+    max-width: 400px;
+    height: auto;
+    position: absolute;
+    top: 225px;
+    left: 80px;
+}
+
+.loginSteps {
+    position: absolute;
+    top: 480px;
+    left: 80px;
 }

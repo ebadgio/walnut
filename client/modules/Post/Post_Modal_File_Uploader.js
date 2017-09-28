@@ -24,7 +24,7 @@ class FileModal extends React.Component {
                     <h4>{this.props.fileName}</h4>
                     <h3>Description</h3>
                     <Input id="fileBody" onChange={(e) => this.setState({ fileBody: e.target.value })} />
-                    <Button id="fileSubmit" content="send" onClick={() => this.props.handleFileSubmit(this.state.fileBody)}/>
+                    <Button id="fileSubmit" content="send" onClick={() => { this.props.handleFileSubmit(this.state.fileBody); this.setState({ fileBody: '' });}}/>
                 </Modal.Content>
             </Modal>
         );

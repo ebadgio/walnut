@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import TagPrefContainer from './Feed_NewPost_TagPref_Container';
 import newPostThunk from '../../thunks/post_thunks/newPostThunk';
 import $ from 'jquery';
-import { Icon, Button, TextArea, Form, Divider, Popup } from 'semantic-ui-react';
+import { Icon, Button, TextArea, Form, Divider, Popup, Segment, Portal } from 'semantic-ui-react';
 import superagent from 'superagent';
 import './Feed.css';
 import firebaseApp from '../../firebase';
@@ -59,6 +59,8 @@ class NewPostContainer extends React.Component {
   }
 
   submitPost() {
+    this.setState({ open: false });
+    this.props.dimmerOff();
     if (this.state.file !== '') {
       superagent.post('/aws/upload/post')
       .field('body', this.state.postBody ? this.state.postBody : '')
@@ -118,46 +120,67 @@ class NewPostContainer extends React.Component {
     this.setState({emptyBody: false});
   }
 
+  handleOpen() {
+    this.setState({open: true});
+    this.props.dimmerOn();
+  }
+
+  handleClose() {
+    this.setState({ open: false });
+    this.props.dimmerOff();
+  }
+
   render() {
     return (
-      <div className="newPost" id="newPostBox">
-        <div className="row newPostContent">
-          {this.state.emptyBody ? <div className="popUpNoBody"><h4>Please type a new conversation</h4></div> : null}
-          <Form className="newPostForm">
-            <TextArea
-              id="textarea1"
-              autoHeight
-              placeholder="What's on your mind?"
-              minRows={2}
-              onChange={(e) => this.handleChange(e)}
-              onClick={() => this.removePopup()}
-              />
-          </Form>
-        </div>
-        <div className="row newPostTagsPref">
-          <TagPrefContainer addTags={(tag) => (this.addTags(tag))}
-                            addNewTags={(tag) => {this.addNewTags(tag);}}
-                            tags={this.props.postTags}
-                            newtags={this.props.newPostTags}
-                            handleRemove={(tag) => this.handleRemove(tag)} />
-        </div>
-          <Divider />
-          <div className="row newPostFooter">
-            <Icon id="fileUploadNewpost" onClick={() => $('#fileInputNewpost').trigger('click')} className="attachFileIcon" name="attach" size="large" />
-            <input id="fileInputNewpost" type="file" onChange={() => this.upload()} />
-              {(this.state.file !== '') ?
-              <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}
-              onChange={(e) => this.changeFileName(e.target.value)}/>
-                :
-                null}
-              <Button className="wholeCreateButton" onClick={() => this.submitPost()} animated>
-                <Button.Content className="createButton" visible>Create</Button.Content>
-                <Button.Content className="createButton" hidden>
-                  <Icon name="send" />
-                </Button.Content>
-              </Button>
+      <Portal
+          closeOnTriggerClick
+          openOnTriggerClick
+          trigger={(
+              <Icon circular className="newPostTrigger" size="big" name="edit" />
+          )}
+          onOpen={() => this.handleOpen()}
+          onClose={() => this.handleClose()}
+          open={this.state.open}
+      >
+        <Segment className="newPostSegment">
+          <div className="row newPostContent">
+            {this.state.emptyBody ? <div className="popUpNoBody"><h4>Please type a new conversation</h4></div> : null}
+            <Form className="newPostForm">
+              <TextArea
+                id="textarea1"
+                autoHeight
+                placeholder="What's on your mind?"
+                minRows={2}
+                onChange={(e) => this.handleChange(e)}
+                onClick={() => this.removePopup()}
+                />
+            </Form>
           </div>
-      </div>
+          <div className="row newPostTagsPref">
+            <TagPrefContainer addTags={(tag) => (this.addTags(tag))}
+                              addNewTags={(tag) => {this.addNewTags(tag);}}
+                              tags={this.props.postTags}
+                              newtags={this.props.newPostTags}
+                              handleRemove={(tag) => this.handleRemove(tag)} />
+          </div>
+            <Divider />
+            <div className="row newPostFooter">
+              <Icon id="fileUploadNewpost" onClick={() => $('#fileInputNewpost').trigger('click')} className="attachFileIcon" name="attach" size="large" />
+              <input id="fileInputNewpost" type="file" onChange={() => this.upload()} />
+                {(this.state.file !== '') ?
+                <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}
+                onChange={(e) => this.changeFileName(e.target.value)}/>
+                  :
+                  null}
+                <Button className="wholeCreateButton" onClick={() => this.submitPost()} animated>
+                  <Button.Content className="createButton" visible>Create</Button.Content>
+                  <Button.Content className="createButton" hidden>
+                    <Icon name="send" />
+                  </Button.Content>
+                </Button>
+            </div>
+        </Segment>
+      </Portal>
     );
   }
 }
@@ -176,7 +199,9 @@ NewPostContainer.propTypes = {
   toggleModal: PropTypes.func,
   useFilters: PropTypes.array,
   newPostTags: PropTypes.array,
-  handleNewRemove: PropTypes.func
+  handleNewRemove: PropTypes.func,
+  dimmerOn: PropTypes.func,
+  dimmerOff: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -195,7 +220,9 @@ const mapDispatchToProps = (dispatch) => ({
   handleRemove: (tag) => dispatch({type: 'DELETE_TAG', tag: tag}),
   handleNewRemove: (tag) => dispatch({type: 'DELETE_NEW_TAG', tag: tag}),
   clearPostTag: () => dispatch({type: 'CLEAR_POST_TAG'}),
-  toggleModal: () => dispatch({type: 'MODAL_TOGGLE'})
+  toggleModal: () => dispatch({type: 'MODAL_TOGGLE'}),
+  dimmerOn: () => dispatch({type: 'DIMMER_ON'}),
+  dimmerOff: () => dispatch({type: 'DIMMER_OFF'})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPostContainer);

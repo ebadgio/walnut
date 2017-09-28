@@ -46,7 +46,7 @@ class EditCommunityModal extends React.Component {
       const oldTags = this.state.oldFilters.filter((f) => this.state.defaultFilters.indexOf(f.name) !== -1);
       const newTags = this.state.defaultFilters.filter((f) => this.state.oldFilters.filter((fi) => fi.name === f).length === 0);
       if (this.state.file) {
-        superagent.post('/aws/upload/community')
+        superagent.post('/aws/upload/communitypicture')
           .attach('community', this.state.file)
           .end((err, res) => {
             if (err) {
@@ -65,18 +65,6 @@ class EditCommunityModal extends React.Component {
   upload() {
     const myFile = $('#fileInputEditComm').prop('files');
     this.setState({ file: myFile[0] });
-  }
-
-  saveImage() {
-    superagent.post('/aws/upload/community')
-    .attach('community', this.state.file)
-    .end((err, res) => {
-      if (err) {
-        console.log(err);
-        alert('failed uploaded!');
-      }
-      this.setState({image: res.body.pictureURL, file: {}});
-    });
   }
 
   handleAdmin(user) {
@@ -115,7 +103,6 @@ class EditCommunityModal extends React.Component {
                 <img className="communityImgUpload" src={this.state.image} />
                 <Icon id="fileUploadEditComm" onClick={() => $('#fileInputEditComm').trigger('click')} className="editPicButton" size="big" name="edit" />
                 <input id="fileInputEditComm" type="file" onChange={() => this.upload()} />
-                        {this.state.file ? <button value="save" onClick={() => {this.saveImage();}}>Upload</button> : <p></p>}
                 <Input
                        className="titleInput"
                        value={this.state.titleValue}

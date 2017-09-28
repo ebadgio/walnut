@@ -86,7 +86,7 @@ class Navbar extends React.Component {
       return (
             <div className="row" id="navBar">
               <Link className="navBarHome" to={'/walnuthome'} onClick={() => {
-                this.props.setHomeTrue()
+                this.props.setHomeTrue();
                 this.handleClick(1);
                 this.setState({isOpen: true});
                 this.props.clearDirectory();

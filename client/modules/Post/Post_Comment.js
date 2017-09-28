@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, Popup } from 'semantic-ui-react';
 import './Post.css';
 import firebaseApp from '../../firebase';
-import Linkify from 'linkifyjs/react';
+import axios from 'axios';
 import LinkPreviewComment from './LinkPreviewComment';
 import AttachmentPreviewComment from './Post_Modal_Attachement';
 
@@ -39,7 +39,8 @@ class Comment extends React.Component {
       messageBody1: '',
       messageBody2: '',
       newLink: '',
-      urlName: ''
+      urlName: '',
+      meta: {}
     };
   }
 
@@ -47,16 +48,31 @@ class Comment extends React.Component {
     // console.log('this is the content at the start', this.props.content);
     this.setState({ useDate: this.getUseDate(this.props.createdAt) });
     const urls = this.urlFinder(this.props.content);
-    this.setState({ urls: urls });
-    if (urls.length !== 0) {
-      const idx = this.props.content.indexOf(urls[0]);
-      const newBody1 = this.props.content.substr(0, idx);
-      const newBody2 = this.props.content.substr((idx + urls[0].length), this.props.content.length);
-      const newLink = urls[0];
-      this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink, urlName: this.urlNamer(newLink) });
-    } else {
+    if (urls.length === 0 ) {
       this.setState({ messageBody: this.props.content });
+      return false;
     }
+    axios.post('/db/get/linkpreview', {
+      url: urls[0]
+    })
+    .then((response) => {
+      console.log('return meta fetch', response.data.meta);
+      this.setState({ meta: response.data.meta });
+      if (urls.length !== 0) {
+        const idx = this.props.content.indexOf(urls[0]);
+        const newBody1 = this.props.content.substr(0, idx);
+        const newBody2 = this.props.content.substr((idx + urls[0].length), this.props.content.length);
+        const newLink = urls[0];
+        if (!response.data.meta.description || !response.data.meta.title || !response.data.meta.image) {
+          this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink });
+        } else {
+          this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink, urlName: this.urlNamer(newLink) });
+        }
+      }
+    })
+    .catch((err) => {
+      console.log('error in meta scrape', err);
+    });
   }
 
   urlNamer(url) {
@@ -116,17 +132,16 @@ class Comment extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    // TODO: comments re render block
-    console.log('preventing comments form updating');
-    return false;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   // TODO: comments re render block
+  //   console.log('preventing comments form updating');
+  //   return false;
+  // }
 
 
   render() {
     // console.log('attachement in comment', this.props.attachment);
     // console.log('this is re rendering', this.state.messageBody);
-    const urlPrev = this.state.urls.length > 0 ? this.state.urls.map((url) => <LinkPreviewComment url={url} />) : [];
     const useDate = this.getUseDate(this.props.createdAt);
     if (this.props.authorId === firebaseApp.auth().currentUser.uid) {
       return (
@@ -136,12 +151,12 @@ class Comment extends React.Component {
           <div className="userGroupYou">
             <Card className="commentCardYou">
               <Card.Content className="messageContent">
-                <Card.Description className="messageDescription" style={{color: '#fff'}}>
+                <Card.Description className="messageDescriptionYou">
                     {this.state.messageBody ? this.state.messageBody :
-                      <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName}</a> {this.state.messageBody2}</div>
+                      <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName ? this.state.urlName : this.state.newLink}</a> {this.state.messageBody2}</div>
                     }
                 </Card.Description>
-                {urlPrev.length > 0 ? urlPrev[0] : null}
+              {this.state.meta.description && this.state.meta.title && this.state.meta.image ? <LinkPreviewComment meta={this.state.meta} url={this.state.newLink}/> : null}
               {this.props.attachment !== '' ? <AttachmentPreviewComment attachment={this.props.attachment}/> : null}
               </Card.Content>
             </Card>
@@ -167,10 +182,12 @@ class Comment extends React.Component {
           <div className="messageNameOther">{this.props.name ? this.props.name.split(' ')[0] : ''}</div>
             <Card className="commentCardOther">
               <Card.Content className="messageContent">
-                <Card.Description className="messageDescription" style={{color: '#fff'}}>
-                  <Linkify tagName="p" options={defaults}>{this.state.messageBody}</Linkify>
+                <Card.Description className="messageDescriptionOther">
+                  {this.state.messageBody ? this.state.messageBody :
+                    <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName ? this.state.urlName : this.state.newLink}</a> {this.state.messageBody2}</div>
+                  }
                 </Card.Description>
-                {urlPrev.length > 0 ? urlPrev[0] : null}
+                {this.state.meta.description && this.state.meta.title && this.state.meta.image ? <LinkPreviewComment meta={this.state.meta} url={this.state.newLink} /> : null}
                 {this.props.attachment !== '' ? <AttachmentPreviewComment attachment={this.props.attachment} /> : null}
               </Card.Content>
             </Card>
