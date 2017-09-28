@@ -8,11 +8,7 @@ import Directory from '../Directory/Directory_index';
 import NavBar from './App_Nav_Temp';
 import MapContainer from '../Map/Map_index';
 import updateLocationThunk from '../../thunks/map_thunks/updateLocationThunk';
-<<<<<<< HEAD
 import EditProfile from '../Editprofile/EditProfile_index';
-=======
-import EditProfile from '../EditProfile/EditProfile_index';
->>>>>>> master
 import WalnutLoader from './App_WalnutLoader';
 
 class Community extends React.Component {
