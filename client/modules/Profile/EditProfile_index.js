@@ -20,7 +20,7 @@ class EditProfile extends React.Component {
     this.state = {
       homeTown: props.homeTown,
       school: props.school,
-      concentration: props.concentration,
+      concentration: props.concentration ? props.concentration[0] : '',
       graduation: props.graduation,
       position: props.position,
       company: props.company,
@@ -185,13 +185,6 @@ class EditProfile extends React.Component {
                 <input id="fileInputEditprofile" type="file" onChange={() => this.upload()} />
                 {this.state.file ? <Button className="uploadButton" onClick={() => { this.saveImage(); }}>Upload</Button> : <p></p>}
             </div>
-            {/* <DirectoryCard*/}
-                {/* picture={this.props.profilePic}*/}
-                {/* name={this.props.fullName}*/}
-                {/* email={this.props.contact.email[0]}*/}
-                {/* school={this.props.school}*/}
-                {/* job={this.props.company}*/}
-            {/* />*/}
         </div>
       );
   }
@@ -217,7 +210,7 @@ const mapStateToProps = (state) => ({
   homeTown: state.userReducer.placesLived.current,
   school: state.userReducer.education.colleges[0] ? state.userReducer.education.colleges[0].name : '',
   concentration: state.userReducer.education.colleges[0] ?
-        (state.userReducer.education.colleges[0].concentrations ? state.userReducer.education.colleges[0].concentrations[0] : '')
+        state.userReducer.education.colleges[0].concentrations
         : '',
   graduation: state.userReducer.education.colleges[0] ? state.userReducer.education.colleges[0].endedAt : '',
   position: state.userReducer.work[0] ? state.userReducer.work[0].position : '',
