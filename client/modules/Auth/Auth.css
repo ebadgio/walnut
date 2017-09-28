@@ -19,18 +19,20 @@
 }
 
 .registerCard{
-    background-color: #FAFAFA !important;
+    background-color: #fff !important;
     padding: 10px 20px 10px 20px;
-    border: solid 1px;
-    border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
-    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
+    border: 1px solid rgba(34,36,38,.15);
+    /*box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);*/
     border-radius: 5px;
     width: 280px;
-    color: #5bc0e3 !important;
+    color: #3a3a3a !important;
     position: absolute !important;
     top: 135px !important;
     right: 47px !important;
     z-index: 100;
+}
+.newUser {
+
 }
 
 .registerPage {
@@ -49,6 +51,43 @@
 .authButtons {
     background: #fafafa !important;
     color: #3a3a3a !important;
+}
+
+.registerButton {
+    width: 80px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    border: 1px solid #b3b5c1;
+    color: #b3b5c1;
+    cursor: pointer;
+    transition: border-color 0.35s ease,  color 0.35s ease;
+}
+
+.registerButton:hover {
+    border: 1px solid #568ea3;
+    color: #568ea3;
+}
+
+.loginButton {
+    width: 60px;
+    height: 32px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    border: 1px solid #b3b5c1;
+    cursor: pointer;
+    color: #b3b5c1;
+    transition: border-color 0.35s ease,  color 0.35s ease;
+}
+
+.loginButton:hover {
+    border: 1px solid #568ea3;
+    color: #568ea3;
 }
 
 .forgotPassword {
@@ -72,14 +111,13 @@
 
 #navBarLogin {
     width: 100%;
-    position: fixed;
+    position: absolute;
     z-index: 300;
+    top: 0;
     display: flex;
-    height: 168px;
-    background-color: #FAFAFA;
-    border-bottom: solid 1px;
-    border-color: #e5e6e9 #dfe0e4 #d0d1d5 !important;
-    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
+    height: 68px;
+    background: none;
+    border-bottom: 1px solid rgba(34,36,38,.15);
     justify-content: space-between;
     align-items: flex-end;
 }
@@ -105,20 +143,34 @@
 
 .walnutTitleLoginDiv {
     margin-bottom: 10px;
-    margin-left: 80px;
+    margin-left: 40px;
 }
 
 .walnutTitleLogin {
-    font-size: 40px;
+    font-size: 35px;
     font-family: avenir next;
 }
 
 .registerShowButton {
     position: absolute !important;
-    top: 358px !important;
-    right: 200px !important;
-    background-color: #5bc0e3 !important;
+    top: 270px !important;
+    right: 0;
+    margin-right: 10%;
+    background-color: #1b4079 !important;
+    cursor: pointer;
+    width: 120px;
+    height: 60px;
+    border-radius: 4px;
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
     color: #fff !important;
+    transition: background-color 0.35s ease;
+}
+
+.registerShowButton:hover {
+    background-color: #143379 !important;
 }
 
 .backgroundImageLogin {
@@ -144,10 +196,12 @@
 
 .introTextBlurb {
     position: absolute;
-    top: 135px;
-    left: 80px;
-    color: #5bc0e3;
-    z-index: 100;
+    top: 105px;
+    left: 0;
+    margin-left: 10%;
+    font-size: -webkit-xxx-large;
+    color: #424874;
+    /*z-index: 100;*/
 }
 
 .introText {
@@ -165,11 +219,22 @@
     height: auto;
     position: absolute;
     top: 225px;
-    left: 80px;
+    left: 0;
+    margin-left: 10%;
 }
 
 .loginSteps {
     position: absolute;
     top: 480px;
-    left: 80px;
+    left: 0;
+    margin-left: 10% !important;
 }
+
+.newUser {
+    top: 200px !important;
+    position: absolute;
+    color: #3a3a3a;
+    right: 0;
+    margin-right: 10%;
+}
+

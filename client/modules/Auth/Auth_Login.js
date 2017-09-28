@@ -61,9 +61,10 @@ class Login extends React.Component {
     this.props.googleLogin();
   }
 
-  regLogin(e) {
-    e.preventDefault();
+  regLogin() {
+    console.log('first', this);
     if (this.state.emailVal && this.state.passwordVal) {
+      console.log('second', this);
       this.props.signIn(this.state.emailVal, this.state.passwordVal, this.props.redirect);
     }
   }
@@ -146,25 +147,27 @@ class Login extends React.Component {
               }
               <Form className="loginForm">
                 <Form.Field className="inputLogin">
-                  <label className="authLabels">Email</label>
+                  {/* <label className="authLabels">Email</label>*/}
                   <input
                     type="text"
                     name="email"
+                    placeholder="Email"
                     className="loginInputs"
                     onChange={(e) => this.handleEmailChange(e)}
                     value={this.state.emailVal} />
                 </Form.Field>
                 <Form.Field className="inputLoginPassword">
-                  <label className="authLabels">Password</label>
+                  {/* <label className="authLabels">Password</label>*/}
                   <input
                     type="password"
                     name="password"
+                    placeholder="Password"
                     className="loginInputs"
                     onChange={(e) => this.handlePasswordChange(e)}
                     value={this.state.passwordVal} />
                   <Button onClick={() => this.open()} onKeyPress={() => {console.log('enter');}} className="forgotPassword" labelPosition="right" content="Forgot Password?" />
                 </Form.Field>
-                <Button onClick={(e) => { this.regLogin(e); }} className="authButtons" type="submit">Log In</Button>
+                <div onClick={(e) => this.regLogin(e)} className="loginButton">Log In</div>
                 <Modal size={'mini'} basic open={this.state.open} onClose={() => this.close()}>
                   <Modal.Header>
                     Reset the password
@@ -191,15 +194,13 @@ class Login extends React.Component {
               </Form>
             </div>
           </div>
-          {/* {this.state.registerClose ?
-          <Button
-            onClick={() => this.setState({ registerClose: false })}
-            className="registerShowButton"
-            onMouseOver={() => this.setState({ buttonBig: true })}
-            onMouseOut={() => this.setState({ buttonBig: false})}
-            size={this.state.buttonBig ? 'massive' : 'huge'}
-            >Sign Up</Button> : null}
-          {this.state.registerClose ? null : <RegistrationContainer /> }
+          <h2 className="newUser">New user?</h2>
+          {this.state.registerClose ?
+              <div
+                  onClick={() => this.setState({ registerClose: false })}
+                  className="registerShowButton"
+              >Sign Up</div> : null}
+          {/* {this.state.registerClose ? null : <RegistrationContainer /> }
           <div className="introTextDiv">
             <h1 className="introTextTitle">walnut network</h1>
             <h2 className="introTextBlurb">a conversation tool for communities </h2>
@@ -210,10 +211,10 @@ class Login extends React.Component {
             <p className="introText">follow conversations to get notified and remain updated by the ones that matter to you</p>
             <p className="introText">it's like a forum centred around communities but its just on steroids!</p>
           </div> */}
-          <RegistrationContainer />
-          <h2 className="introTextBlurb">A conversation tool for communities.</h2>
-          <img className="backgroundImageLogin" src="https://s3-us-west-1.amazonaws.com/walnut-test/1672187-poster-1280-geo-hacker-905x509.jpg" />
-          <img className="landingImageSmall" src="http://images.clipartpanda.com/connection-clipart-yearbook-connection-md.png"/>
+            {this.state.registerClose ? null : <RegistrationContainer /> }
+          <h2 className="introTextBlurb">Where communities grow</h2>
+          {/* <img className="backgroundImageLogin" src="https://s3-us-west-1.amazonaws.com/walnut-test/1672187-poster-1280-geo-hacker-905x509.jpg" />*/}
+          <img className="landingImageSmall" src="http://sbims.com/wp-content/uploads/2017/04/Association_Membership_Networking_Connections.jpg"/>
           <Step.Group size="mini" className="loginSteps">
             <Step active icon="id badge" title="Sign Up" description="Start a new account with us" />
 
