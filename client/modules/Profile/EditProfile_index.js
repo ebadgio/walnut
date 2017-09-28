@@ -185,13 +185,6 @@ class EditProfile extends React.Component {
                 <input id="fileInputEditprofile" type="file" onChange={() => this.upload()} />
                 {this.state.file ? <Button className="uploadButton" onClick={() => { this.saveImage(); }}>Upload</Button> : <p></p>}
             </div>
-            {/* <DirectoryCard*/}
-                {/* picture={this.props.profilePic}*/}
-                {/* name={this.props.fullName}*/}
-                {/* email={this.props.contact.email[0]}*/}
-                {/* school={this.props.school}*/}
-                {/* job={this.props.company}*/}
-            {/* />*/}
         </div>
       );
   }
