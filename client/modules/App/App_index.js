@@ -8,10 +8,23 @@ import getUser from '../../thunks/app_thunks/getAppThunk';
 
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      form: false,
+    };
+  }
+
 
   componentWillMount() {
     // this.props.getUser();
   }
+
+
+  componentDidMount() {
+    setTimeout(() => {this.setState({form: true});}, 1000);
+  }
+
 
   render() {
     return (

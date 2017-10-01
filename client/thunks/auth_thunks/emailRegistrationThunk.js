@@ -14,7 +14,7 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
     })
     .then(() => {
       result.getIdToken(/* forceRefresh */ true)
-          .then(function(idToken) {
+          .then((idToken) => {
             axios.post(URL + 'auth/signup', {
               token: idToken,
               fname: firstname,
@@ -22,15 +22,15 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
               email: email,
               password: password
             })
-              .then((res) => {
-                dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
-                setTimeout(() => dispatch({type: 'WALNUT_READY'}), 1500);
-              })
-              .catch(function(error) {
-                console.log('axios did not go through');
-              });
+            .then((res) => {
+              dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
+              setTimeout(() => dispatch({type: 'WALNUT_READY'}), 1500);
+            })
+            .catch((error) => {
+              console.log('axios did not go through');
+            });
           })
-          .catch(function(error) {
+          .catch((error) => {
             console.log('could not get token', error);
           });
     })
@@ -38,7 +38,7 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
       console.log('update user error', error);
     });
   })
-  .catch(function(error) {
+  .catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
     const errorMessage = error.message;
