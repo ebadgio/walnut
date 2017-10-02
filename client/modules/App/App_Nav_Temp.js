@@ -85,7 +85,7 @@ class Navbar extends React.Component {
             </div>
 
             <div className="navBarLinks">
-                <Link className="profileLink" to={'/community/' + title + '/editprofile'} onClick={() => this.props.changeTab(0)}>
+                <Link className="profileLink" to={'/community/' + title + '/editprofile'}>
                   <div className="navUser">
                           <div className="imageWrapperNav">
                               <img className="postUserImage" src={this.props.pictureURL}/>
@@ -119,7 +119,6 @@ class Navbar extends React.Component {
 Navbar.propTypes = {
   pictureURL: PropTypes.string,
   community: PropTypes.object,
-  changeTab: PropTypes.func,
   isEdited: PropTypes.bool,
   fullName: PropTypes.string,
   onLogout: PropTypes.func,
@@ -139,7 +138,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeTab: (tab) => dispatch({type: 'CHANGE_NAVBAR_TAB', tab: tab}),
   onLogout: (his) => dispatch(signOutThunk(his)),
   updateCommunity: (img, title, oldT, newT, admins) => dispatch(updateCommunity(img, title, oldT, newT, admins)),
   clearDirectory: () => dispatch({type: 'DIRECTORY_FRESH'}),

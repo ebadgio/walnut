@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import FilterPrefContainer from '../Feed/Feed_FilterPref_Container';
+import TopicSelector from './Discover_TopicSelector';
 import Online from './Discover_Online';
 
 import './Discover.css';
@@ -28,7 +28,7 @@ class LeftSideBar extends React.Component {
       <div className="LeftSidebar_Container">
         <div className="LeftSideBar_Preference">
           <div>
-             <FilterPrefContainer filterChange={(name) => (this.filterChange(name))}/>
+             <TopicSelector filterChange={(name) => (this.filterChange(name))}/>
           </div>
         </div>
         {/* <Online />*/}

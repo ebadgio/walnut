@@ -7,10 +7,10 @@ import Select from 'react-select';
 import toggleFilterCheckedThunk from '../../thunks/toggleFilterCheckedThunk';
 import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
 import toggleTempFilterCheckedThunk from '../../thunks/toggleTempFilterCheckedThunk';
-import { Icon, Label, Dropdown } from 'semantic-ui-react';
+import { Icon, Label, Search } from 'semantic-ui-react';
 import $ from 'jquery';
 
-class FilterPrefContainer extends React.Component {
+class TopicSelectorContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,11 +19,12 @@ class FilterPrefContainer extends React.Component {
       useFilters: []
     };
     this.handleSelectChange = this.handleSelectChange.bind(this);
+    this.handleResultSelect = this.handleResultSelect.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-  }
+
+  resetComponent = () => this.setState({ isLoading: false, results: [], value: '' });
 
   isPrefSelected(options) {
     let val = false;
@@ -90,7 +91,7 @@ class FilterPrefContainer extends React.Component {
     const options = this.selectOptions();
     return (
       <div className="topicContainer">
-        <div id="choice_form" onSubmit={this.handleSubmit}>
+        <div id="choice_form">
           <span className="currentView">Currently viewing posts including: </span>
           {this.props.useFilters.length > 0 ?
             this.props.useFilters.map((filter, index) => (
@@ -103,24 +104,19 @@ class FilterPrefContainer extends React.Component {
             <span className="allTopics">All Topics</span>
           }
         </div>
-        <Dropdown
-          defaultValue={''}
-          searchInput={'value'}
-          id="dropdownTopic"
-          className="topicSelectorDiscover"
-          search
-          icon="search"
-          selection
-          placeholder="Filter by topic(s)..."
-          options={options}
-          onChange={this.handleSelectChange}
+        <Search
+            loading={this.state.isLoading}
+            onResultSelect={this.handleResultSelect}
+            onSearchChange={this.handleSearchChange}
+            results={this.state.results}
+            value={this.state.value}
         />
       </div>
     );
   }
 }
 
-FilterPrefContainer.propTypes = {
+TopicSelectorContainer.propTypes = {
   otherFilters: PropTypes.array,
   communityPreference: PropTypes.array,
   toggleChecked: PropTypes.func,
@@ -149,4 +145,4 @@ const mapDispatchToProps = (dispatch) => ({
   handleRemove: (tags) => dispatch({type: 'REMOVE_FILTER', tags: tags})
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FilterPrefContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(TopicSelectorContainer);

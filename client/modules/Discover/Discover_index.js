@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Feed from '../Feed/Feed_index';
 // import LeftSideBar from './Discover_Left_Sidebar_Container';
-import TopicContainer from '../Feed/Feed_FilterPref_Container';
+import TopicContainer from './Discover_TopicSelector';
 // import LeftSideContainer from './Discover_Left_Side_Container';
 import NewPostContainer from '../Feed/Feed_NewPost_Container';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';

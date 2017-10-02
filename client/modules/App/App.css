@@ -510,11 +510,12 @@ button.ui.button > input {
 
 .discoverTab {
     padding: 10px 10px 10px 12px;
-    color: #343A4C;
+    color: #b6bcbc;
 }
 
 .discoverTabActive {
     padding: 10px 10px 10px 12px;
+    border-left: solid 6px;
     color: #94B0DA;
 }
 
