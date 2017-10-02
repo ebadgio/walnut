@@ -4,6 +4,7 @@ import URL from '../../info';
 
 const emailRegistrationThunk = (firstname, lastname, email, password) => (dispatch) => {
   dispatch({type: 'USER_IS_NOT_VERIFIED'});
+  // TODO: dispatch waiting to be verified on /login with resend option (no navbar)
   firebaseApp.auth().createUserWithEmailAndPassword(email, password)
   .then((result) => {
     result.updateProfile({
@@ -13,6 +14,9 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
       return firebaseApp.auth().currentUser.sendEmailVerification();
     })
     .then(() => {
+      // TODO: listener for if validated
+      // TODO: login on backend after reg
+      // TODO: redirect to home
       result.getIdToken(/* forceRefresh */ true)
           .then((idToken) => {
             axios.post(URL + 'auth/signup', {
@@ -23,6 +27,7 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
               password: password
             })
             .then((res) => {
+              // TODO: dispatch ready to login as "email"
               dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
               setTimeout(() => dispatch({type: 'WALNUT_READY'}), 1500);
             })
