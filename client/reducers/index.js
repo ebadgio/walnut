@@ -7,7 +7,6 @@ import mapReducer from './mapReducer';
 import deckReducer from './deckReducer';
 import getCommunityReducer from './getCommunityReducer';
 import newTagsReducer from './newTagsReducer';
-import navBarReducer from './navBarReducer';
 import postReducer from './postReducer';
 import conversationReducer from './conversationReducer';
 import walnutHomeReducer from './walnutHomeReducer';
@@ -23,7 +22,6 @@ const rootReducer = combineReducers({
   deckReducer: deckReducer,
   getCommunityReducer: getCommunityReducer,
   newTagsReducer: newTagsReducer,
-  navBarReducer: navBarReducer,
   postReducer: postReducer,
   walnutHomeReducer: walnutHomeReducer,
   modalReducer: modalReducer,

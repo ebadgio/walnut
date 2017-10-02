@@ -3,7 +3,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Icon, Dropdown, Button } from 'semantic-ui-react';
+import { Icon, Dropdown } from 'semantic-ui-react';
 import './App.css';
 import signOutThunk from '../../thunks/auth_thunks/signOutThunk';
 import {history} from '../Auth/Auth_index';
@@ -11,7 +11,6 @@ import EditCommunityModal from './App_EditCommunityModal';
 import updateCommunity from '../../thunks/community_thunks/updateCommunityThunk';
 import axios from 'axios';
 import URL from '../../info';
-import $ from 'jquery';
 
 class Navbar extends React.Component {
   constructor(props) {
