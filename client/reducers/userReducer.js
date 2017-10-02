@@ -47,23 +47,13 @@ const userObj = {
   blurb: '',
   isCreated: true,
   isEdited: true,
-  isVerified: true,
+  isVerified: false,
   isError: false,
   currentConversations: []
 };
 
 const userReducer = (state = userObj, action) => {
   switch(action.type) {
-    case 'USER_IS_NOT_VERIFIED':
-      return {
-        ...state,
-        isVerified: false
-      };
-    case 'IS_VERIFIED':
-      return {
-        ...state,
-        isVerified: true
-      };
     case 'GET_USER_DATA_ERROR':
       return {
         ...state,

@@ -4,7 +4,6 @@ import URL from '../../info';
 
 const emailRegistrationThunk = (firstname, lastname, email, password) => (dispatch) => {
   dispatch({type: 'USER_IS_NOT_VERIFIED'});
-  // TODO: dispatch waiting to be verified on /login with resend option (no navbar)
   firebaseApp.auth().createUserWithEmailAndPassword(email, password)
   .then((result) => {
     result.updateProfile({

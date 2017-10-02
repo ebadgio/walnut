@@ -27,7 +27,6 @@ class Login extends React.Component {
       vopen: false,
       isChanging: false,
       isSendingEmailForV: false,
-      registerClose: true,
       buttonBig: false
     };
   }
@@ -114,7 +113,7 @@ class Login extends React.Component {
               <h1 className="walnutTitleLogin">Walnut</h1>
             </div>
             <div className="loginForm">
-              {this.state.isChanging ?
+              {/* {this.state.isChanging ?
                 <Message
                   success
                   header="Email will be sent soon"
@@ -144,7 +143,7 @@ class Login extends React.Component {
                   <p>Your account has not been verified yet</p>
                   <Button onClick={() => this.vopen()}>Send Verification Email</Button>
                 </Message>
-              }
+              } */}
               <Form className="loginForm">
                 <Form.Field className="inputLogin">
                   {/* <label className="authLabels">Email</label>*/}
@@ -195,23 +194,25 @@ class Login extends React.Component {
             </div>
           </div>
           <h2 className="newUser">New user?</h2>
-          {this.state.registerClose ?
+          {this.props.loginDisplay === 1 ?
               <div
                   onClick={() => this.setState({ registerClose: false })}
                   className="registerShowButton"
               >Sign Up</div> : null}
-          {/* {this.state.registerClose ? null : <RegistrationContainer /> }
-          <div className="introTextDiv">
-            <h1 className="introTextTitle">walnut network</h1>
-            <h2 className="introTextBlurb">a conversation tool for communities </h2>
-            <p className="introText">join a community</p>
-            <p className="introText">... or create one</p>
-            <p className="introText">start a conversation</p>
-            <p className="introText">tag it by topics for it to be discovered by others</p>
-            <p className="introText">follow conversations to get notified and remain updated by the ones that matter to you</p>
-            <p className="introText">it's like a forum centred around communities but its just on steroids!</p>
-          </div> */}
-            {this.state.registerClose ? null : <RegistrationContainer /> }
+          {this.props.loginDisplay === 2 ? <RegistrationContainer /> : null}
+          {this.props.loginDisplay === 3 ?
+              <Message id="awaitingVerification">
+                <Message.Header>Please check your email</Message.Header>
+                <p>In order to verify your account</p>
+                <Button onClick={() => this.vopen()}>Re send Verification Email</Button>
+              </Message>
+          : null }
+          {this.props.loginDisplay === 4 ?
+            <Message id="awaitingVerification">
+              <Message.Header>Your account is now verified</Message.Header>
+              <p>Log in to get connected</p>
+            </Message>
+            : null}
           <h2 className="introTextBlurb">Where communities grow</h2>
           {/* <img className="backgroundImageLogin" src="https://s3-us-west-1.amazonaws.com/walnut-test/1672187-poster-1280-geo-hacker-905x509.jpg" />*/}
           <img className="landingImageSmall" src="http://sbims.com/wp-content/uploads/2017/04/Association_Membership_Networking_Connections.jpg"/>
@@ -235,12 +236,14 @@ Login.propTypes = {
   redirect: PropTypes.func,
   isError: PropTypes.bool,
   isVerified: PropTypes.bool,
-  reVerify: PropTypes.func
+  reVerify: PropTypes.func,
+  loginDisplay: PropTypes.number
 };
 
 const mapStateToProps = (state) => ({
   isError: state.userReducer.isError,
-  isVerified: state.userReducer.isVerified
+  isVerified: state.userReducer.isVerified,
+  loginDisplay: state.loginReducer.loginDisplay
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -53,7 +53,7 @@ class Register extends React.Component {
   render() {
     return (
       <div className="registerCard">
-          {!this.props.isVerified ?
+          {/* {!this.props.isVerified ?
               <Message icon>
                 <Icon name="circle notched" loading />
                 <Message.Content>
@@ -62,7 +62,7 @@ class Register extends React.Component {
                 </Message.Content>
               </Message> :
               null
-          }
+          } */}
           {this.state.passwordFail ?
             <Message icon>
               <Icon name="warning sign" />
