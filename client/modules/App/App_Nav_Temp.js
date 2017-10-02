@@ -11,6 +11,7 @@ import EditCommunityModal from './App_EditCommunityModal';
 import updateCommunity from '../../thunks/community_thunks/updateCommunityThunk';
 import axios from 'axios';
 import URL from '../../info';
+import $ from 'jquery';
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -101,49 +102,21 @@ class Navbar extends React.Component {
             </div>
 
             <div className="navBarLinks">
-                    <Link className={this.state.pos === 1 ? 'discoverTabActive' : 'discoverTab'} to={'/community/' + title + '/discover'}>
-                        <div className="navBarLink" onClick={() => {
-                          this.handleClick(1);
-                          this.setState({isOpen: true});
-                          this.navBarChoiceArt(1);
-                        }}>
-                            <Icon name="browser" size="large" className="discoverIcon" />
-                        </div>
-                    </Link>
-                    <div className="verticalDivider"></div>
-                    <Link className="navUser"
-                          to={'/community/' + title + '/editprofile'}
-                          onClick={() => this.setState({pos: 0})}>
-                            <div className="imageWrapperNav">
-                                <img className="postUserImage" src={this.props.pictureURL}/>
-                            </div>
-                            {this.props.fullName.split(' ')[0]}
-                    </Link>
-                    <Dropdown
-                        className="menuDropdown"
-                        icon="ellipsis vertical">
-                        <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => {
-                              this.handleClick(2);
-                              this.setState({isOpen: true});
-                              this.navBarChoiceArt(2);
-                            }}
-                                           content={<Link className="tabMenuItem" to={'/community/' + title + '/directory'}>
-                                                        <Icon size="small"  name="address book outline"/>
-                                                        <p>Directory</p>
-                                                    </Link>} />
-                            <Dropdown.Item onClick={() => {
-                              this.handleClick(3);
-                              this.setState({isOpen: true});
-                              this.navBarChoiceArt(3);
-                            }}
-                                           content={<Link className="tabMenuItem" to={'/community/' + title + '/map'}>
-                                               <Icon size="small" name="world"/>
-                                               <p>Map</p>
-                                           </Link>} />
-                            <Dropdown.Item className="dropdownLogout" onClick={() => this.handleLogout()}>Logout</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                <Link className="profileLink" to={'/community/' + title + '/editprofile'}>
+                  <div className="navUser">
+                          <div className="imageWrapperNav">
+                              <img className="postUserImage" src={this.props.pictureURL}/>
+                          </div>
+                          {this.props.fullName.split(' ')[0]}
+                  </div>
+                </Link>
+              <Dropdown
+                  className="menuDropdown"
+                  icon="ellipsis vertical">
+                  <Dropdown.Menu>
+                      <Dropdown.Item className="dropdownLogout" onClick={() => this.handleLogout()}>Logout</Dropdown.Item>
+                  </Dropdown.Menu>
+              </Dropdown>
 
             </div>
             {this.state.admin ?

@@ -10,6 +10,7 @@ import MapContainer from '../Map/Map_index';
 import updateLocationThunk from '../../thunks/map_thunks/updateLocationThunk';
 import EditProfile from '../Profile/EditProfile_index';
 import WalnutLoader from './App_WalnutLoader';
+import LeftSideContainer from './App_Left_Side_Container';
 
 class Community extends React.Component {
 
@@ -34,6 +35,7 @@ class Community extends React.Component {
       return (
             <div className={this.props.showDimmer ? 'newPostDimmer' : null}>
                 <NavBar/>
+                <LeftSideContainer />
                 <Switch>
                     <Route path="/community/:communityName/directory" component={Directory}/>
                     <Route path="/community/:communityName/map" component={MapContainer}/>

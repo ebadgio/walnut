@@ -496,29 +496,29 @@ button.ui.button > input {
     align-items: center;
     flex-direction: row;
     margin-right: 10px;
-    height: 38px;
+    height: 38px
 }
 
 .navUser:hover {
-    color: #292f36;
     background: #ebebeb;
 }
 
-.navBarLink {
+.profileLink {
 
 }
 
+
 .discoverTab {
     height: 100%;
-    margin-right: 10px;
-    margin-top: 5px;
+    margin-top: 71px;
+    margin-left: 1.3vw;
     color: #343A4C;
 }
 
 .discoverTabActive {
     height: 100%;
-    margin-right: 10px;
-    margin-top: 5px;
+    margin-top: 71px;
+    margin-left: 1.3vw;
     color: #94B0DA;
 }
 
@@ -526,6 +526,14 @@ button.ui.button > input {
     color: #94B0DA;
 }
 
-.profileLink {
-
+.LeftSidebar_Container {
+    position: fixed;
+    z-index: 200;
+    width: 5.5vw;
+    border-right: 1px solid rgba(34, 36, 38, 0.15);
+    height: 94vh;
+    margin-top: 5.5vh;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }

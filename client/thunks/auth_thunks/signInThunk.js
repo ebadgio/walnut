@@ -7,6 +7,7 @@ const signInThunk = (email, password, redirect) => (dispatch) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then(result => {
     if (!result.emailVerified) {
+      console.log('not verified');
       dispatch({type: 'GET_USER_VERIFY_ERROR', email: email, password: password});
     }
     result.getIdToken(/* forceRefresh */ true)
