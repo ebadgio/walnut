@@ -102,22 +102,18 @@ class Navbar extends React.Component {
             </div>
 
             <div className="navBarLinks">
-              <div className="navUser">
-                      <div className="imageWrapperNav">
-                          <img className="postUserImage" src={this.props.pictureURL}/>
-                      </div>
-                      {this.props.fullName.split(' ')[0]}
-              </div>
+                <Link className="profileLink" to={'/community/' + title + '/editprofile'}>
+                  <div className="navUser">
+                          <div className="imageWrapperNav">
+                              <img className="postUserImage" src={this.props.pictureURL}/>
+                          </div>
+                          {this.props.fullName.split(' ')[0]}
+                  </div>
+                </Link>
               <Dropdown
                   className="menuDropdown"
                   icon="ellipsis vertical">
                   <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <Link
-                          to={'/community/' + title + '/editprofile'}>
-                          Edit profile
-                        </Link>
-                      </Dropdown.Item>
                       <Dropdown.Item className="dropdownLogout" onClick={() => this.handleLogout()}>Logout</Dropdown.Item>
                   </Dropdown.Menu>
               </Dropdown>

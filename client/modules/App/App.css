@@ -499,9 +499,14 @@ button.ui.button > input {
     height: 38px;
 }
 
-.navBarLink {
+.navUser:hover {
+    background: #ebebeb;
+}
+
+.profileLink {
 
 }
+
 
 .discoverTab {
     height: 100%;
@@ -519,10 +524,6 @@ button.ui.button > input {
 
 .discoverTab:hover, .discoverTabActive:hover {
     color: #94B0DA;
-}
-
-.profileLink {
-
 }
 
 .LeftSidebar_Container {
