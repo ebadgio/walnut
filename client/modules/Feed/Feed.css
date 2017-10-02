@@ -25,7 +25,7 @@
 .Feed_Wrapper {
     width: 513px;
     position: absolute;
-    left: 65%;
+    left: 54%;
     margin-top: 100px;
     transform: translate(-50%);
     /*border: 1px solid rgba(34, 36, 38, 0.15);*/
@@ -303,7 +303,7 @@
 .newPostTrigger {
     position: fixed !important;
     bottom: 2%;
-    left: 27%;
+    left: 92%;
     background-color: #568ea3 !important;
     color: #fff !important;
     box-shadow: none !important;
@@ -319,10 +319,12 @@
     margin-top: 20px !important;
     border-radius: 0 !important;
     position: fixed !important;
+    width: 400px;
     bottom: 11%;
+    border: none !important;
     z-index: 1000;
-    box-shadow: -4px 5px 2px 0 rgba(34, 36, 38, 0.15) !important;
-    left: 5%;
+    box-shadow: 0px 0px 10px 3px rgba(34, 36, 38, 0.15) !important;
+    right: 5%;
 }
 
 .newPostDimmer {

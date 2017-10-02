@@ -4,6 +4,7 @@ import URL from '../../info';
 
 const emailRegistrationThunk = (firstname, lastname, email, password) => (dispatch) => {
   dispatch({type: 'USER_IS_NOT_VERIFIED'});
+  // TODO: dispatch waiting to be verified on /login with resend option (no navbar)
   firebaseApp.auth().createUserWithEmailAndPassword(email, password)
   .then((result) => {
     result.updateProfile({
@@ -13,8 +14,11 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
       return firebaseApp.auth().currentUser.sendEmailVerification();
     })
     .then(() => {
+      // TODO: listener for if validated
+      // TODO: login on backend after reg
+      // TODO: redirect to home
       result.getIdToken(/* forceRefresh */ true)
-          .then(function(idToken) {
+          .then((idToken) => {
             axios.post(URL + 'auth/signup', {
               token: idToken,
               fname: firstname,
@@ -22,15 +26,16 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
               email: email,
               password: password
             })
-              .then((res) => {
-                dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
-                setTimeout(() => dispatch({type: 'WALNUT_READY'}), 1500);
-              })
-              .catch(function(error) {
-                console.log('axios did not go through');
-              });
+            .then((res) => {
+              // TODO: dispatch ready to login as "email"
+              dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
+              setTimeout(() => dispatch({type: 'WALNUT_READY'}), 1500);
+            })
+            .catch((error) => {
+              console.log('axios did not go through');
+            });
           })
-          .catch(function(error) {
+          .catch((error) => {
             console.log('could not get token', error);
           });
     })
@@ -38,7 +43,7 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
       console.log('update user error', error);
     });
   })
-  .catch(function(error) {
+  .catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
     const errorMessage = error.message;

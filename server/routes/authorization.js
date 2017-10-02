@@ -55,7 +55,6 @@ import adminApp from '../firebaseAdmin';
       return new_user.save()
       .then((doc) => {
         // const token = CryptoJS.AES.encrypt(doc._id.toString(), 'secret').toString();
-        req.session.userMToken = doc._id;
         res.send({success: true, user: doc});
       })
       .catch((err) => {
