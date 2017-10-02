@@ -509,16 +509,12 @@ button.ui.button > input {
 
 
 .discoverTab {
-    height: 100%;
-    margin-top: 71px;
-    margin-left: 1.3vw;
+    padding: 10px 10px 10px 12px;
     color: #343A4C;
 }
 
 .discoverTabActive {
-    height: 100%;
-    margin-top: 71px;
-    margin-left: 1.3vw;
+    padding: 10px 10px 10px 12px;
     color: #94B0DA;
 }
 
@@ -529,11 +525,11 @@ button.ui.button > input {
 .LeftSidebar_Container {
     position: fixed;
     z-index: 200;
-    width: 5.5vw;
+    width: 60px;
     border-right: 1px solid rgba(34, 36, 38, 0.15);
     height: 94vh;
     margin-top: 5.5vh;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-direction: column;
 }

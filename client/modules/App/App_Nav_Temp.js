@@ -25,7 +25,6 @@ class Navbar extends React.Component {
   }
 
   componentDidMount() {
-    this.navBarChoice();
     setInterval(() => {this.setState({innerWidth: window.innerWidth});}, 100);
   }
 
@@ -34,23 +33,7 @@ class Navbar extends React.Component {
   }
 
   handleLogout() {
-    this.props.onLogout(history);
-  }
-
-  navBarChoice() {
-    if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'discover') {
-      this.setState({ pos: 1 });
-    } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'directory') {
-      this.setState({ pos: 2 });
-    } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'map') {
-      this.setState({ pos: 3 });
-    } else {
-      this.setState({ pos: 0 });
-    }
-  }
-
-  navBarChoiceArt(pos) {
-    this.setState({pos: pos});
+      this.props.onLogout(history);
   }
 
   handleLogoClick() {
@@ -102,7 +85,7 @@ class Navbar extends React.Component {
             </div>
 
             <div className="navBarLinks">
-                <Link className="profileLink" to={'/community/' + title + '/editprofile'}>
+                <Link className="profileLink" to={'/community/' + title + '/editprofile'} onClick={() => this.props.changeTab(0)}>
                   <div className="navUser">
                           <div className="imageWrapperNav">
                               <img className="postUserImage" src={this.props.pictureURL}/>
