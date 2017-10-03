@@ -36,10 +36,10 @@ const userObj = {
   interests: [],
   projects: [],
   portfolio: [
-    {name: 'media', data: []},
-    {name: 'documents', data: []},
-    {name: 'code', data: []},
-    {name: 'design', data: []}
+    { name: 'media', data: [] },
+    { name: 'documents', data: [] },
+    { name: 'code', data: [] },
+    { name: 'design', data: [] }
   ],
   tags: [],
   hasProfile: false,
@@ -47,37 +47,23 @@ const userObj = {
   blurb: '',
   isCreated: true,
   isEdited: true,
-  isVerified: true,
   isError: false,
-  currentConversations: []
+  currentConversations: [],
+  loginFirebase: true
 };
 
 const userReducer = (state = userObj, action) => {
-  switch(action.type) {
-    case 'USER_IS_NOT_VERIFIED':
-      return {
-        ...state,
-        isVerified: false
-      };
-    case 'IS_VERIFIED':
-      return {
-        ...state,
-        isVerified: true
-      };
+  switch (action.type) {
     case 'GET_USER_DATA_ERROR':
       return {
         ...state,
         isError: true
       };
-    case 'GET_USER_VERIFY_ERROR':
-      return {
-        ...state,
-        isVerified: false
-      };
     case 'USER_IS_FETCHING':
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
+        loginFirebase: false
       };
     case 'GET_USER_DATA_DONE':
       return {
@@ -85,7 +71,13 @@ const userReducer = (state = userObj, action) => {
         ...action.user,
         isFetching: false,
         isCreated: true,
-        isError: false
+        isError: false,
+        loginFirebase: false
+      };
+    case 'LOGIN_APP':
+      return {
+        ...state,
+        loginFirebase: false
       };
     case 'ADD_TEMP_FILTER':
       return {
@@ -129,12 +121,12 @@ const userReducer = (state = userObj, action) => {
     case 'REMOVE_FILE':
       const newState3 = JSON.parse(JSON.stringify(state));
       let index = - 1;
-      for(let i = 0; i < newState3.portfolio.length; i += 1) {
-        if(newState3.portfolio[i].name === action.tab) {
+      for (let i = 0; i < newState3.portfolio.length; i += 1) {
+        if (newState3.portfolio[i].name === action.tab) {
           index = i;
         }
       }
-      if(index > - 1) {
+      if (index > - 1) {
         newState3.portfolio[index].data.splice(action.index, 1);
         return newState3;
       }
