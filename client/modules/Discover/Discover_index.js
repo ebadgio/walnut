@@ -3,16 +3,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Feed from '../Feed/Feed_index';
-// import LeftSideBar from './Discover_Left_Sidebar_Container';
 import TopicContainer from './Discover_TopicSelector';
-// import LeftSideContainer from './Discover_Left_Side_Container';
 import NewPostContainer from '../Feed/Feed_NewPost_Container';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
 import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
 import Online from './Discover_Online';
-// import FollowedPostsContainer from './Discover_My_Conversation_Container';
-import ModalContainer from '../Post/Post_Modal_Container';
 // import firebaseApp from '../../firebase';
 import _ from 'underscore';
 
@@ -42,7 +38,6 @@ class Home extends React.Component {
           <TopicContainer />
           <Feed id="Feed"/>
           <NewPostContainer />
-          <ModalContainer />
         </div>
     );
   }

@@ -19,12 +19,14 @@ class TopicSelectorContainer extends React.Component {
       useFilters: []
     };
     this.handleSelectChange = this.handleSelectChange.bind(this);
-    this.handleResultSelect = this.handleResultSelect.bind(this);
-    this.handleSearchChange = this.handleSearchChange.bind(this);
+    // this.handleResultSelect = this.handleResultSelect.bind(this);
+    // this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
 
-  resetComponent = () => this.setState({ isLoading: false, results: [], value: '' });
+  resetComponent() {
+    this.setState({isLoading: false, results: [], value: ''});
+  }
 
   isPrefSelected(options) {
     let val = false;
@@ -104,13 +106,13 @@ class TopicSelectorContainer extends React.Component {
             <span className="allTopics">All Topics</span>
           }
         </div>
-        <Search
-            loading={this.state.isLoading}
-            onResultSelect={this.handleResultSelect}
-            onSearchChange={this.handleSearchChange}
-            results={this.state.results}
-            value={this.state.value}
-        />
+        {/* <Search*/}
+            {/* loading={this.state.isLoading}*/}
+            {/* onResultSelect={this.handleResultSelect}*/}
+            {/* onSearchChange={this.handleSearchChange}*/}
+            {/* results={this.state.results}*/}
+            {/* value={this.state.value}*/}
+        {/* />*/}
       </div>
     );
   }

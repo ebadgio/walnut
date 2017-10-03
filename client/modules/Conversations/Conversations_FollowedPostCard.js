@@ -111,23 +111,15 @@ class ConversationCard extends React.Component {
   }
 
   switching() {
-    this.props.handleSelect();
-    const updates = {};
-    updates['/members/' + this.props.data.postId + '/' + this.state.user.uid] = null;
-    firebaseApp.database().ref().update(updates);
-
-    const updatesEx = {};
-    updatesEx['/typers/' + this.props.data.postId + '/' + this.state.user.uid] = null;
-    firebaseApp.database().ref().update(updatesEx);
-
-    this.props.toggleModal(this.props.data);
+    this.props.togglePostData(this.props.data);
     // TODO: set unreads to 0
   }
 
   render() {
     return (
-        <Segment className="miniPostCard">
-          <div className="conversationCardContent" onClick={() => this.switching()} >
+        <Segment className={this.props.postDataId === this.props.data.postId ? 'miniPostCardActive' : 'miniPostCard'}
+                 onClick={() => this.switching()}>
+          <div className="conversationCardContent" >
             <div className="conversationCardHeader">
               <div className="conversationCardWrapper">
                 <img className="conversationCardUserImage" src={this.props.data.pictureURL} />
@@ -142,6 +134,9 @@ class ConversationCard extends React.Component {
                   <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify> }
               <div className="conversationFootnote">
                 <div className="messageInfoGroupMini">
+                  <span className="activeNumMini">
+                    {this.state.membersCount > 0 ? this.state.membersCount + ' active' : null}
+                  </span>
                   <span className="followNumMini">
                     {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
                   </span>
@@ -149,10 +144,6 @@ class ConversationCard extends React.Component {
                   <span className={this.state.unreads > 0 ? 'isUnreadMini' : 'noUnreadMini'}>
                     {this.state.unreads}{' unread'}
                   </span>
-                </div>
-                <div className="commentDiv">
-                  <span className="userNum">{this.state.membersCount > 0 ? this.state.membersCount : ''}</span>
-                  <Icon size="large" name="users" className="usersIconMini" />
                 </div>
             </div>
           </div>
@@ -166,12 +157,17 @@ ConversationCard.propTypes = {
   user: PropTypes.object,
   toggleModal: PropTypes.func,
   handleSelect: PropTypes.func,
-  sumUnreads: PropTypes.func
+  sumUnreads: PropTypes.func,
+  togglePostData: PropTypes.func,
+  postDataId: PropTypes.string,
 };
 
+const mapStateToProps = (state) => ({
+  postDataId: state.messengerReducer.postDataId
+});
+
 const mapDispatchToProps = (dispatch) => ({
-  toggleModal: (postData) => dispatch({type: 'TOGGLE_DATA', newPostData: postData})
 });
 
 
-export default connect(null, mapDispatchToProps)(ConversationCard);
+export default connect(mapStateToProps, null)(ConversationCard);

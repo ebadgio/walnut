@@ -49,7 +49,7 @@ class LeftSideContainer extends React.Component {
             <Link className={this.state.tab === 1 ? 'discoverTabActive' : 'discoverTab'}
                   to={'/community/' + title + '/discover'}>
               <div className="leftBarLink">
-            <Icon name="feed" size="big" className="discoverIcon" />
+            <Icon name="browser" size="big" className="discoverIcon" />
               </div>
             </Link>
             <Link className={this.state.tab === 2 ? 'discoverTabActive' : 'discoverTab'}

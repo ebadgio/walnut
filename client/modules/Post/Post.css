@@ -369,6 +369,12 @@
     margin-right: 12px;
 }
 
+.activeNumMini {
+    color: #85C7F2;
+    font-size: 8px;
+    margin-right: 12px;
+}
+
 .messageInfoGroupMini {
     display: flex;
     flex-direction: row;
@@ -862,9 +868,9 @@ iframe {
 body ::-webkit-scrollbar-thumb {
     cursor: pointer;
     border-radius: 5px;
-    background: #b3b5c1;
+    background: rgba(0, 0, 0, 0.2);
     -webkit-transition: color .2s ease;
-    transition: color .2s ease;
+    transition: color .35s ease;
 }
 
 .inputWrapper {

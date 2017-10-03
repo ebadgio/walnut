@@ -12,11 +12,20 @@ class NestedPostModal extends React.Component {
     };
   }
 
+  // startListen() {
+  //   $(document).keyup((event) => {
+  //     if (event.keyCode === 27) {
+  //       console.log('trying to press escape testing');
+  //       this.handleClose();
+  //       this.props.closeModal();
+  //     }
+  //     return null;
+  //   });
+  // }
 
   render() {
     return (
-        <Modal size={'small'} basic trigger={<Button>Show Post</Button>}
-               closeIcon="close">
+        <Modal size={'small'} basic trigger={<div className="viewPostButton">View Post</div>}>
             <Modal.Content image scrolling className="scrollContentClass">
                 <Post
                     nested

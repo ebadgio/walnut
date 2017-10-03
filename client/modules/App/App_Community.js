@@ -11,6 +11,7 @@ import updateLocationThunk from '../../thunks/map_thunks/updateLocationThunk';
 import EditProfile from '../Profile/EditProfile_index';
 import WalnutLoader from './App_WalnutLoader';
 import LeftSideContainer from './App_Left_Side_Container';
+import Conversations from '../Conversations/Conversations_Index';
 
 class Community extends React.Component {
 
@@ -37,6 +38,7 @@ class Community extends React.Component {
                 <NavBar/>
                 <LeftSideContainer />
                 <Switch>
+                    <Route path="/community/:communityName/conversations" component={Conversations}/>
                     <Route path="/community/:communityName/directory" component={Directory}/>
                     <Route path="/community/:communityName/map" component={MapContainer}/>
                     <Route path="/community/:communityName/discover" component={Discover}/>
