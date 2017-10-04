@@ -6,7 +6,7 @@
     display: flex;
     height: 43px;
     background-color: #fff;
-    border-bottom: 1px solid rgba(34,36,38,.15);
+    /*border-bottom: 1px solid rgba(34,36,38,.15);*/
     /*box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);*/
 }
 
@@ -510,7 +510,8 @@ button.ui.button > input {
 
 .discoverTab {
     padding: 10px 10px 10px 12px;
-    color: #b6bcbc;
+    color: #fff;
+    transition: color .35s ease;
 }
 
 .discoverTabActive {
@@ -527,10 +528,11 @@ button.ui.button > input {
     position: fixed;
     z-index: 200;
     width: 60px;
-    border-right: 1px solid rgba(34, 36, 38, 0.15);
-    height: 94vh;
+    /*border-right: 1px solid rgba(34, 36, 38, 0.15);*/
+    height: 95vh;
     margin-top: 5.5vh;
     display: flex;
     justify-content: space-around;
     flex-direction: column;
+    background: #353535;
 }

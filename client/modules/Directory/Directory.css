@@ -1,11 +1,14 @@
 .directoryCardsList {
-    padding-top: 10vh;
-    max-width: 100%;
+    margin-top: 43px;
+    padding-top: 40px;
+    width: calc(100vw - 60px);
+    position: absolute;
+    right: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
-    min-width: 950px;
+    border-top: 1px solid rgba(34, 36, 38, 0.15);
 }
 
 .Container {
@@ -13,12 +16,7 @@
     overflow-x: scroll;
 }
 
-.directoryCard.ui.card {
-    margin: 40px;
-    width: 220px;
-    height: auto;
-    /*box-shadow: none;*/
-}
+
 
 .cardImage.ui.image {
     height: 160px;
@@ -49,11 +47,15 @@ body ::-webkit-scrollbar-track {
     margin-left: 25%;
 }
 
-.ui.card.directoryCard {
-    height: 310px;
-    width: 220px;
-    margin-left: 50px;
-    box-shadow: none;
+.directoryCard {
+    height: 310px !important;
+    width: 220px !important;
+    margin-left: 50px !important;
+    box-shadow: 0 0 10px 0 rgba(34,36,38,.15) !important;
+}
+
+.directoryCard:hover {
+    box-shadow: 0 0 20px 0px rgba(34,36,38,.15) !important;
 }
 
 .infoSpan {

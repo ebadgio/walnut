@@ -221,17 +221,29 @@
 }
 
 .postFollowButton {
-    padding: 3px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #b3b5c1 !important;
     background-color: #fff !important;
-    height: 20px !important;
     margin-left: auto !important;
-    margin-right: 74px !important;
+    margin-right: 54px !important;
+    cursor: pointer;
+    width: 100px;
+    padding-right: 5px;
+    height: 30px;
+    border: 1px solid;
+    border-radius: 27px;
     margin-top: 5px !important;
+    transition: color .35s ease;
+}
+
+.followIcon {
+    margin-bottom: 5px !important;
 }
 
 .postFollowButton:hover {
-    color: #5bc0e3 !important;
+    color: #6874E8 !important;
 }
 
 .postUser {
@@ -689,10 +701,11 @@ iframe {
     cursor: pointer;
     display: flex;
     align-items: center;
+    transition: color .35s ease;
 }
 
 .messagesGroup:hover {
-    color: #5bc0e3 !important;
+    color: #3b28cc !important;
 }
 
 .messageText {
@@ -1002,7 +1015,8 @@ body ::-webkit-scrollbar {
     margin-bottom: 0 !important;
     margin-top: 3px !important;
     padding: .5em .5em !important;
-    box-shadow: none !important;
+    border: none !important;
+    box-shadow: 0 0 10px 0 rgba(34,36,38,.15) !important;
     border-radius: 0 !important;
 }
 

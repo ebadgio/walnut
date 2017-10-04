@@ -5,6 +5,7 @@
     height: 100vh;
     display: flex;
     flex-direction: row;
+
 }
 
 .conversationsSideBar {
@@ -12,6 +13,7 @@
     border-right: 1px solid rgba(34, 36, 38, 0.15);
     max-height: 100%;
     overflow: hidden;
+    border-top: 1px solid rgba(34,36,38,.15);
 }
 
 .conversationsSideBar:hover {
@@ -22,7 +24,7 @@
     flex: 2;
     display: flex;
     flex-direction: row;
-
+    border-top: 1px solid rgba(34,36,38,.15);
 }
 
 .chatGrouping {

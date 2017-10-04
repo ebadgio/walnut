@@ -302,10 +302,10 @@ class Post extends React.Component {
                 {this.state.isFollowing ? <div className="isFollowingGroup">
                   <Icon name="checkmark" className="iconFollowing" size={'small'} />
                   <p className="followingText">Following</p>
-                </div> : <Button className="postFollowButton" onClick={() => this.joinConversation()}>
-                  <Icon name="plus" />
+                </div> : <div className="postFollowButton" onClick={() => this.joinConversation()}>
+                  <Icon name="plus" className="followIcon" />
                   Follow
-                </Button>}
+                </div>}
             </div>
             <div className="postDescription">
               <div className="postInnerContent">

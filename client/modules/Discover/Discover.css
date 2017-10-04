@@ -366,8 +366,10 @@
     height: 50px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid rgba(34, 36, 38, 0.15);
-    background: #fff;
+    /*border-bottom: 1px solid rgba(34, 36, 38, 0.15);*/
+    /*background: #fff;*/
+    background: #4f5d75;
+    border-bottom: 1px solid #48556b;
 }
 
 .topicSelectorDiscover {

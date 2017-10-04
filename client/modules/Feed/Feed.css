@@ -302,16 +302,17 @@
 
 .newPostTrigger {
     position: fixed !important;
-    bottom: 2%;
-    left: 92%;
+    top: 105px;
+    right: 5%;
     background-color: #568ea3 !important;
     color: #fff !important;
     box-shadow: none !important;
-    transition: background-color 0.35s ease;
+    transition: background-color 0.35s ease, box-shadow 0.35s ease;
     cursor: pointer;
 }
 
 .newPostTrigger:hover {
+    box-shadow: 0px 0px 10px 3px rgba(34, 36, 38, 0.15) !important;
     background-color: #3f8ea3 !important;
 }
 
@@ -320,7 +321,7 @@
     border-radius: 0 !important;
     position: fixed !important;
     width: 400px;
-    bottom: 11%;
+    top: 24%;
     border: none !important;
     z-index: 1000;
     box-shadow: 0px 0px 10px 3px rgba(34, 36, 38, 0.15) !important;
