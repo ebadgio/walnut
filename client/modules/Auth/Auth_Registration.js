@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Form, Message, Icon} from 'semantic-ui-react';
+import { Form, Message, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import emailRegistrationThunk from '../../thunks/auth_thunks/emailRegistrationThunk';
 import './Auth.css';
@@ -21,29 +21,29 @@ class Register extends React.Component {
   }
 
   handleFnameChange(e) {
-    this.setState({fName: e.target.value});
+    this.setState({ fName: e.target.value });
   }
 
   handleLnameChange(e) {
-    this.setState({lName: e.target.value});
+    this.setState({ lName: e.target.value });
   }
 
   handleEmailChange(e) {
-    this.setState({email: e.target.value});
+    this.setState({ email: e.target.value });
   }
 
   handlePasswordChange(e) {
-    this.setState({password: e.target.value});
+    this.setState({ password: e.target.value });
   }
 
   handleRepeatChange(e) {
-    this.setState({repeat: e.target.value});
+    this.setState({ repeat: e.target.value });
   }
 
   register(e) {
     e.preventDefault();
     if (this.state.password !== this.state.repeat) {
-      this.setState({passwordFail: true});
+      this.setState({ passwordFail: true });
     }
     if (this.state.fName && this.state.lName && this.state.email && this.state.password === this.state.repeat) {
       this.props.emailRegistration(this.state.fName, this.state.lName, this.state.email, this.state.password);
@@ -53,7 +53,7 @@ class Register extends React.Component {
   render() {
     return (
       <div className="registerCard">
-          {!this.props.isVerified ?
+        {/* {!this.props.isVerified ?
               <Message icon>
                 <Icon name="circle notched" loading />
                 <Message.Content>
@@ -62,16 +62,16 @@ class Register extends React.Component {
                 </Message.Content>
               </Message> :
               null
-          }
-          {this.state.passwordFail ?
-            <Message icon>
-              <Icon name="warning sign" />
-              <Message.Content>
-                <Message.Header>Passwords don't match </Message.Header>
-                </Message.Content>
-            </Message> :
-            null
-          }
+          } */}
+        {this.state.passwordFail ?
+          <Message icon>
+            <Icon name="warning sign" />
+            <Message.Content>
+              <Message.Header>Passwords don't match </Message.Header>
+            </Message.Content>
+          </Message> :
+          null
+        }
         <Form>
           <Form.Field>
             <label className="authLabelsRegister" htmlFor="fname">First Name</label>
@@ -116,11 +116,9 @@ class Register extends React.Component {
           <div className="registerButton" onClick={(e) => { this.register(e); }}>Register</div>
         </Form>
       </div>
-
     );
   }
 }
-
 
 Register.propTypes = {
   emailRegistration: PropTypes.func,
@@ -134,6 +132,5 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   emailRegistration: (firstname, lastname, email, password) => emailRegistrationThunk(firstname, lastname, email, password)(dispatch)
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);
