@@ -141,6 +141,7 @@
     border-radius: 0 !important;
     border: none !important;
     box-shadow: none !important;
+    transition: background 0.2s ease;
 }
 
 .miniPostCardActive {

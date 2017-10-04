@@ -43,6 +43,12 @@ class ConversationsMessages extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    console.log('trying to unmount', this.props.postData);
+    const user = firebaseApp.auth().currentUser;
+    this.handleClose(this.props.postData, user);
+  }
+
   watchForTypers(postData, user) {
     const typersRef = firebaseApp.database().ref('/typers' + '/' + postData.postId);
     typersRef.on('value', (snapshot) => {
@@ -179,7 +185,7 @@ class ConversationsMessages extends React.Component {
 
   handleClose(postData, user) {
     console.log('succesful messsagebox toggle', postData);
-    if (this.props.postData.postId) {
+    if (postData.postId) {
       if (user) {
         this.setState({
           hitBottom: false,
