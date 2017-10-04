@@ -10,7 +10,7 @@ import {Divider, Icon, Button, Segment} from 'semantic-ui-react';
 import dateStuff from '../../dateStuff';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
-import PostDrawer from './PostDrawer/PostDrawer_index';
+// import PostDrawer from './PostDrawer/PostDrawer_index';
 import getPostFollowersThunk from '../../thunks/post_thunks/getPostFollowers';
 
 class Post extends React.Component {
@@ -257,19 +257,33 @@ class Post extends React.Component {
   //   // TODO: unreads to 0
   // }
 
-  toggleDrawer() {
-    const before = this.state.showDrawer;
-    this.setState({showDrawer: !this.state.showDrawer});
+  // toggleDrawer() {
+  //   const before = this.state.showDrawer;
+  //   this.setState({showDrawer: !this.state.showDrawer});
 
-    // trying to stop it from making the page jump, it only works sometimes tho so i commented it out
-    // if (!before) {
-    //   this.getPlace();
-    // }
-  }
+  //   // trying to stop it from making the page jump, it only works sometimes tho so i commented it out
+  //   // if (!before) {
+  //   //   this.getPlace();
+  //   // }
+  // }
 
   getPlace() {
     const elem = document.getElementById('commentDiv');
     elem.scrollIntoView({block: 'center'});
+  }
+
+  openQuickChat() {
+    const followersRef = firebaseApp.database().ref('/followGroups/' + this.props.postData.postId);
+    followersRef.on('value', (snapshot) => {
+      if (snapshot.val()) {
+        const followers = Object.keys(snapshot.val());
+
+        // TODO: same thunk with arg that dispatches action to quickChat reducer
+        // this.props.getPostFollowers(followers);
+      }
+    });
+
+    this.props.openQuickChat(this.props.postData);
   }
 
   render() {
@@ -341,16 +355,16 @@ class Post extends React.Component {
             </div>
             <div></div>
             <div className="commentDiv" id="commentDiv">
-              <div className="messagesGroup" onClick={() => this.toggleDrawer()}>
+              <div className="messagesGroup" onClick={() => this.openQuickChat()}>
                 <Icon size="big" name="comments outline" className="commentIcon" />
                 <p className="messageText">Chat</p>
               </div>
             </div>
           </div>
         </Segment>
-        {this.state.showDrawer ? <PostDrawer currentUser={this.props.currentUser}
+        {/* {this.state.showDrawer ? <PostDrawer currentUser={this.props.currentUser}
                                              members={this.state.members}
-                                             postData={this.props.postData}/> : null}
+                                             postData={this.props.postData}/> : null} */}
       </div>
     );
   }
@@ -362,12 +376,14 @@ Post.propTypes = {
   nested: PropTypes.bool,
   openModal: PropTypes.func,
   currentModalData: PropTypes.object,
-  getPostFollowers: PropTypes.func
+  getPostFollowers: PropTypes.func,
+  openQuickChat: PropTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => ({
   openModal: (postData) => dispatch({type: 'MAKE_OPEN', postData: postData}),
-  getPostFollowers: (followerIds) => dispatch(getPostFollowersThunk(followerIds))
+  getPostFollowers: (followerIds) => dispatch(getPostFollowersThunk(followerIds)),
+  openQuickChat: (postData) => dispatch({ type: 'OPEN_QUICKCHAT', postData: postData})
 });
 
 const mapStateToProps = (state) => ({

@@ -15,6 +15,7 @@ import modalReducer from './modalReducer';
 import dimmerReducer from './dimmerReducer';
 import messengerReducer from './messengerReducer';
 import loginReducer from './loginReducer';
+import quickchatReducer from './quickchatReducer';
 
 const rootReducer = combineReducers({
   conversationReducer: conversationReducer,
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   dimmerReducer: dimmerReducer,
   messengerReducer: messengerReducer,
   loginReducer: loginReducer,
+  quickchatReducer: quickchatReducer,
   routing: routerReducer // this reducer is used by React Router in Redux
 });
 

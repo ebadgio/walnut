@@ -9,6 +9,7 @@ import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
 import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
 import Online from './Discover_Online';
+import QuickchatContainer from '../Quickchat/Quickchat_index';
 // import firebaseApp from '../../firebase';
 import _ from 'underscore';
 
@@ -37,6 +38,7 @@ class Home extends React.Component {
         <div className="row" id="Discover">
           <TopicContainer />
           <Feed id="Feed"/>
+          {this.props.isQuickchatOpen ? <QuickchatContainer /> : null }
           <NewPostContainer />
         </div>
     );
@@ -56,7 +58,8 @@ Home.propTypes = {
   myConversations: PropTypes.array,
   currentUser: PropTypes.object,
   addIds: PropTypes.func,
-  getConvos: PropTypes.func
+  getConvos: PropTypes.func,
+  isQuickchatOpen: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
@@ -66,7 +69,8 @@ const mapStateToProps = (state) => ({
   lastRefresh: state.discoverReducer.lastRefresh,
   currentCommunity: state.conversationReducer.current,
   useFilters: state.discoverReducer.useFilters,
-  currentUser: state.userReducer
+  currentUser: state.userReducer,
+  isQuickchatOpen: state.quickchatReducer.isOpen
 });
 
 const mapDispatchToProps = (dispatch) => ({
