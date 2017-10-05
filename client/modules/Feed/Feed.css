@@ -25,7 +25,7 @@
 .Feed_Wrapper {
     width: 513px;
     position: absolute;
-    left: 54%;
+    left: 50%;
     margin-top: 100px;
     transform: translate(-50%);
     /*border: 1px solid rgba(34, 36, 38, 0.15);*/
