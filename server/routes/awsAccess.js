@@ -217,6 +217,7 @@ router.post('/upload/post', upload.single('attach'), (req, res) => {
       return com.save();
     })
     .then((result) => {
+      console.log('return new post', posts);
       res.json({ posts: posts, lastRefresh: new Date(), otherTags: result.otherTags, postId: post._id, userComm: req.user.currentCommunity});
     })
     .catch((er) => {

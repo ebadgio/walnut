@@ -62,6 +62,7 @@ class NewPostContainer extends React.Component {
     this.setState({ open: false });
     this.props.dimmerOff();
     if (this.state.file !== '') {
+      console.log('the motherfucker');
       superagent.post('/aws/upload/post')
       .field('body', this.state.postBody ? this.state.postBody : '')
       .field('tags', this.props.postTags ? this.props.postTags.map((tag) => tag._id) : [])
@@ -75,6 +76,8 @@ class NewPostContainer extends React.Component {
           console.log(err);
           alert('failed uploaded!');
         }
+        this.props.dataRefresh(res.body.posts, res.body.lastRefresh, res.body.otherTags);
+        this.setState({ postBody: '', file: '', newFileName: null });
         const updates = {};
         updates['/follows/' + user.uid + '/' + res.body.userComm + '/' + res.body.postId] = true;
         updates['/followGroups/' + res.body.postId + '/' + user.uid] = true;
@@ -82,15 +85,13 @@ class NewPostContainer extends React.Component {
         this.props.clearPostTag();
         const elem = document.getElementById('textarea1');
         elem.value = '';
-        this.setState({postBody: '', file: '', newFileName: null});
-        this.props.refreshDiscover(res.body.posts, res.body.lastRefresh, res.body.otherTags);
       });
     } else {
       if (this.state.postBody && this.state.file === '') {
         this.props.newPost(this.state.postBody, this.props.postTags.map((tag) => tag._id), this.props.newPostTags, this.props.lastRefresh, this.props.useFilters);
+        this.setState({ postBody: '', file: '', newFileName: null });
         const elem = document.getElementById('textarea1');
         elem.value = '';
-        this.setState({ postBody: '', file: ''});
         this.props.clearPostTag();
       } else {
         this.setState({emptyBody: true});
@@ -201,7 +202,8 @@ NewPostContainer.propTypes = {
   newPostTags: PropTypes.array,
   handleNewRemove: PropTypes.func,
   dimmerOn: PropTypes.func,
-  dimmerOff: PropTypes.func
+  dimmerOff: PropTypes.func,
+  dataRefresh: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -222,7 +224,8 @@ const mapDispatchToProps = (dispatch) => ({
   clearPostTag: () => dispatch({type: 'CLEAR_POST_TAG'}),
   toggleModal: () => dispatch({type: 'MODAL_TOGGLE'}),
   dimmerOn: () => dispatch({type: 'DIMMER_ON'}),
-  dimmerOff: () => dispatch({type: 'DIMMER_OFF'})
+  dimmerOff: () => dispatch({type: 'DIMMER_OFF'}),
+  dataRefresh: (posts, lastRefresh, otherTags) => dispatch({type: 'GET_DISCOVER_DATA_REFRESH', posts: posts, lastRefresh: lastRefresh, otherTags: otherTags})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPostContainer);
