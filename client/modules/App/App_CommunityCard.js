@@ -1,6 +1,4 @@
-/**
- * Created by ebadgio on 8/10/17.
- */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import './App.css';

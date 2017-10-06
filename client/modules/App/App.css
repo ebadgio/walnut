@@ -344,12 +344,13 @@ button.ui.button > input {
 
 .closingIcon {
     cursor: pointer;
+    color: black;
 }
 
 .modalHeader {
     display: flex !important;
     width: 100% !important;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 
 .ui.loader:after {
@@ -535,4 +536,23 @@ button.ui.button > input {
     justify-content: space-around;
     flex-direction: column;
     background: #353535;
+}
+ 
+.createCommunityCard {
+    background: #fff;
+    height: 92vh;
+    width: 600px;
+    padding: .5em .5em;
+    border: none;
+    margin: 0;
+    box-shadow: 0 0 10px 0 rgba(34,36,38,.15);
+    border-radius: 4px;
+}
+
+.modalComponent {
+    width: inherit !important;
+    margin: 0 !important;
+    top: 4% !important;
+    left: 29% !important;
+    right: 29% !important;
 }
