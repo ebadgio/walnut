@@ -1,6 +1,5 @@
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import './App.css';
 import { Modal, Button } from 'semantic-ui-react';
 import CreateCommunityPage from './App_NewCommunityPage.js';

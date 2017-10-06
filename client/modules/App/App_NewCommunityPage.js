@@ -16,7 +16,7 @@ class CreateCommunityPage extends React.Component {
       filterValue: '',
       file: '',
       pic: '',
-      open: false
+      page: 1
     };
   }
 
@@ -65,42 +65,90 @@ class CreateCommunityPage extends React.Component {
   render() {
     return (
         <div className="createCommunityCard">
-            <Modal.Header className="modalHeader">
-                <Icon className="closingIcon" name="close" onClick={() => this.props.closeModal()} />
-            </Modal.Header>
-            <Modal.Content scrolling>
-                {/* <img className="communityImgUpload" src={'http://www.sessionlogs.com/media/icons/defaultIcon.png'} /> */}
-                <div id="communityUploaderCreate">
-                    <Icon id="fileUploadNewComm" onClick={() => $('#fileInputNewComm').trigger('click')} className="editPicButton" size="big" name="edit" />
-                    <input id="fileInputNewComm" type="file" onChange={() => this.upload()} />
-                </div>
-                <Input
-                    className="titleInput"
-                    value={this.state.titleValue}
-                    label="Title"
-                    onChange={(e) => { this.handleChange(e); }} />
-                <div style={{ marginLeft: '10px', marginBottom: '2px', marginTop: '10px' }}>
-                    Add Default Topics:
-                </div>
-                <ul>
-                    {this.state.otherTags.map((filter, idx) => <li key={idx}>#{' '}{filter.toUpperCase()}</li>)}
-                </ul>
-                <Input labelPosition="left"
-                    type="text"
-                    placeholder="Topic here..."
-                    value={this.state.filterValue}
-                    onChange={(e) => { this.handleFilterChange(e); }} >
-                    <Label basic><Icon name="hashtag" /></Label>
-                    <input />
-                </Input>
-                <Button className="addButton" content="Add" icon="add" onClick={(e) => { this.handleClick(e); }} />
-            </Modal.Content>
-            <Modal.Actions>
-                <Button onClick={() => this.handleNewComm(this.state.image, this.state.titleValue, this.state.otherTags)}>
-                    Create
-                    <Icon name="lightning" />
-                </Button>
-            </Modal.Actions>
+
+
+            { this.state.page === 1 ?
+            <div>
+                <Modal.Header className="modalHeader">
+                    <Icon className="closingIcon" name="close" onClick={() => this.props.closeModal()} />
+                </Modal.Header>
+                <Modal.Content scrolling>
+                    {/* <img className="communityImgUpload" src={'http://www.sessionlogs.com/media/icons/defaultIcon.png'} /> */}
+                    <div id="communityUploaderCreate">
+                        <Icon id="fileUploadNewComm" onClick={() => $('#fileInputNewComm').trigger('click')} className="editPicButton" size="big" name="edit" />
+                        <input id="fileInputNewComm" type="file" onChange={() => this.upload()} />
+                    </div>
+                    <Input
+                        className="titleInput"
+                        value={this.state.titleValue}
+                        label="Title"
+                        onChange={(e) => { this.handleChange(e); }} />
+                    <div style={{ marginLeft: '10px', marginBottom: '2px', marginTop: '10px' }}>
+                        Add Default Topics:
+                    </div>
+                    <ul>
+                        {this.state.otherTags.map((filter, idx) => <li key={idx}>#{' '}{filter.toUpperCase()}</li>)}
+                    </ul>
+                    <Input labelPosition="left"
+                        type="text"
+                        placeholder="Topic here..."
+                        value={this.state.filterValue}
+                        onChange={(e) => { this.handleFilterChange(e); }} >
+                        <Label basic><Icon name="hashtag" /></Label>
+                        <input />
+                    </Input>
+                    <Button className="addButton" content="Add" icon="add" onClick={(e) => { this.handleClick(e); }} />
+                </Modal.Content>
+                <Modal.Actions className="createCommunityActions">
+                    {/* <Button onClick={() => this.handleNewComm(this.state.image, this.state.titleValue, this.state.otherTags)}>
+                            Create
+                            <Icon name="lightning" />
+                        </Button> */}
+                    <Button.Content className="nextButtonModal" onClick={() => this.setState({page: 2})} visible>Next</Button.Content>
+                </Modal.Actions>
+            </div> : null }
+
+
+            { this.state.page === 2 ?
+            <div>
+                <h2>page 2</h2>
+                <Modal.Actions className="createCommunityActions">
+                    {/* <Button onClick={() => this.handleNewComm(this.state.image, this.state.titleValue, this.state.otherTags)}>
+                            Create
+                            <Icon name="lightning" />
+                        </Button> */}
+                    <Button.Content className="prevButtonModal" onClick={() => this.setState({ page: 1 })} visible>Back</Button.Content>
+                    <Button.Content className="nextButtonModal" onClick={() => this.setState({page: 3})} visible>Next</Button.Content>
+                </Modal.Actions>
+            </div> : null }
+
+
+            {this.state.page === 3 ?
+                <div>
+                    <h2>page 2</h2>
+                    <Modal.Actions className="createCommunityActions">
+                        {/* <Button onClick={() => this.handleNewComm(this.state.image, this.state.titleValue, this.state.otherTags)}>
+                            Create
+                            <Icon name="lightning" />
+                        </Button> */}
+                        <Button.Content className="prevButtonModal" onClick={() => this.setState({ page: 2 })} visible>Back</Button.Content>
+                        <Button.Content className="nextButtonModal" onClick={() => this.setState({page: 4})} visible>Next</Button.Content>
+                    </Modal.Actions>
+                </div> : null}
+
+
+            {this.state.page === 4 ?
+                <div>
+                    <h2>page 2</h2>
+                    <Modal.Actions className="createCommunityActions">
+                        {/* <Button onClick={() => this.handleNewComm(this.state.image, this.state.titleValue, this.state.otherTags)}>
+                            Create
+                            <Icon name="lightning" />
+                        </Button> */}
+                        {/* <Button.Content className="nextButtonModal" onClick={() => this.setState({page: 2})} visible>Next</Button.Content> */}
+                        <Button.Content className="prevButtonModal" onClick={() => this.setState({ page: 3 })} visible>Back</Button.Content>
+                    </Modal.Actions>
+                </div> : null}
         </div>
     );
   }

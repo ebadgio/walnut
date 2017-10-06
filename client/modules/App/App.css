@@ -556,3 +556,34 @@ button.ui.button > input {
     left: 29% !important;
     right: 29% !important;
 }
+
+.nextButtonModal {
+    color: #5bc0e3 !important;
+    background-color: #fff !important;
+    border: 1.5px solid !important;
+    border-radius: 4px !important;
+    width: 57px !important;
+    height: 28px !important;
+    padding-left: 11px !important;
+    padding-top: 6px !important;
+    position: relative !important;
+    left: 902% !important;
+}
+
+.nextButtonModal {
+    color: #5bc0e3 !important;
+    background-color: #fff !important;
+    border: 1.5px solid !important;
+    border-radius: 4px !important;
+    width: 57px !important;
+    height: 28px !important;
+    padding-left: 11px !important;
+    padding-top: 6px !important;
+    position: relative !important;
+    left: 20% !important;
+}
+
+.createCommunityActions {
+    position: absolute !important;
+    bottom: 3%;
+}
