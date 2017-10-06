@@ -149,7 +149,7 @@
     border-radius: 3px;
     padding-top: 4px;
     padding-bottom: 2px;
-    font-weight: bold;
+    font-weight: 700;
     padding-right: 10px;
     display: inline-block;
     margin-right: 5px;
@@ -157,7 +157,7 @@
 }
 
 .hashtag {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 19px;
 }
 
@@ -254,10 +254,10 @@
 .imageWrapperPost {
     margin-left: 10px;
     margin-top: 6px;
-    min-width: 36px;
-    min-height: 36px;
-    max-height: 36px;
-    max-width: 36px;
+    min-width: 42px;
+    min-height: 42px;
+    max-height: 42px;
+    max-width: 42px;
     border-radius: 50%;
     display: flex;
     overflow: hidden;
@@ -281,8 +281,7 @@
     align-self: baseline;
     height: 19px;
     color: #3a3a3a;
-    font-family: Avenir Next;	
-    font-size: 14px;	
+    font-size: 16px;
     font-weight: bold;	
     line-height: 19px;
     margin-left: -5px;
@@ -292,12 +291,10 @@
 .postInnerContent {
     overflow: hidden;
     width: 480.83px;	
-    color: #4A4A4A;	
-    font-family: Avenir Next;	
+    color: #4A4A4A;
     font-size: 16px;
     line-height: 25px;
     margin-left: 2%;
-    margin-bottom: 15px;
     margin-top: 5px;
 }
 
@@ -417,7 +414,7 @@
 }
 
 .postDescription {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .downloadFileName {
@@ -491,7 +488,7 @@
 .messageAvatarYou {
 }
 
-.imageWrapper.messageAvatarOther {
+.messageAvatarOther {
     margin-left: 10px;
     margin-top: 10px;
     margin-right: 8px;

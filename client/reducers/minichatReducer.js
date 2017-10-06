@@ -3,13 +3,13 @@ const minichatReducer = (state = {
 }, action) => {
   switch (action.type) {
     case 'ADD_CHAT':
-      const newState = state;
-      newState.openChats.push(action.postData);
-      return newState;
+      return {
+        openChats: state.openChats.concat(action.postData)
+      };
     case 'REMOVE_CHAT':
-      const newState1 = state;
-      newState1.openChats.filter((chat) => chat.postDataId !== action.postData.postId);
-      return newState1;
+      return {
+        openChats: state.openChats.filter((chat) => chat.postId !== action.postData.postId)
+      };
     default:
       return state;
   }

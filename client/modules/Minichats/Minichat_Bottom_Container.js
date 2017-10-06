@@ -23,7 +23,10 @@ class BottomContainer extends React.Component {
   render() {
     return(
         <div className="minichatBottomBar">
-            {this.state.openChats.map((chat) => <MinichatCard postData={chat} currentUser={this.props.currentUser}/>)}
+            {this.state.openChats.map((chat) => <MinichatCard key={chat.postId}
+                                                              closeChat={this.props.closeChat.bind(this)}
+                                                              postData={chat}
+                                                              currentUser={this.props.currentUser}/>)}
         </div>
     );
   }
@@ -31,7 +34,8 @@ class BottomContainer extends React.Component {
 
 BottomContainer.propTypes = {
   currentUser: PropTypes.object,
-  openChats: PropTypes.array
+  openChats: PropTypes.array,
+  closeChat: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -40,6 +44,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  closeChat: (postData) => dispatch({type: 'REMOVE_CHAT', postData: postData})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BottomContainer);

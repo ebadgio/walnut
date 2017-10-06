@@ -4,16 +4,26 @@ import PropTypes from 'prop-types';
 import firebaseApp from '../../../firebase';
 
 
+
 class MinichatTextBox extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      active: props.active
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.active) {
+      this.setState({active: true});
+    } else {
+      this.setState({active: false});
+    }
   }
 
   render() {
     return(
-        <div className="minichatTextBox">
+        <div className={this.state.active ? 'minichatTextBoxActive' : 'minichatTextBox'}>
         </div>
     );
   }
@@ -21,7 +31,8 @@ class MinichatTextBox extends React.Component {
 
 MinichatTextBox.propTypes = {
   currentUser: PropTypes.object,
-  postData: PropTypes.object
+  postData: PropTypes.object,
+  active: PropTypes.bool
 };
 
 

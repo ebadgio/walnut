@@ -23,27 +23,27 @@ class MinichatCard extends React.Component {
   }
 
   render() {
-    if (this.state.active) {
-      return (
-          <div className="minichatCard">
-            <Header active
-                    toggleOpen={() => this.toggleOpen()}/>
-            <MessageBox />
-            <TextBox />
-          </div>
-      );
-    }
-    return(
-        <div className="minichatCard">
-            <Header toggleOpen={() => this.toggleOpen()}/>
-        </div>
-    );
+    return (
+      <div className="minichatCard">
+        <Header active={this.state.active}
+                postData={this.props.postData}
+                toggleOpen={() => this.toggleOpen()}
+                closeChat={this.props.closeChat}/>
+        <MessageBox active={this.state.active}
+                    postData={this.props.postData}
+                    currentUser={this.props.currentUser}/>
+        <TextBox active={this.state.active}
+                 postData={this.props.postData}
+                 currentUser={this.props.currentUser} />
+      </div>
+  );
   }
 }
 
 MinichatCard.propTypes = {
   currentUser: PropTypes.object,
-  postData: PropTypes.object
+  postData: PropTypes.object,
+  closeChat: PropTypes.func
 };
 
 
