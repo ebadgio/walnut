@@ -170,7 +170,7 @@ class Comment extends React.Component {
     return (
       <div className="userGroupOther">
         <Popup
-        trigger= {<div className="imageWrapper messageAvatarOther">
+        trigger= {<div className={this.props.mini ? 'messageAvatarOtherMini' : 'messageAvatarOther'}>
           <img className="postUserImage" src={this.props.authorPhoto} />
         </div>}
         content={this.props.name}
@@ -209,7 +209,8 @@ Comment.propTypes = {
   authorId: PropTypes.string,
   authorPhoto: PropTypes.string,
   id: PropTypes.string,
-  attachment: PropTypes.object
+  attachment: PropTypes.object,
+  mini: PropTypes.bool
 };
 
 export default Comment;

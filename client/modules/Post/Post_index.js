@@ -272,20 +272,6 @@ class Post extends React.Component {
     elem.scrollIntoView({block: 'center'});
   }
 
-  openQuickChat() {
-    const followersRef = firebaseApp.database().ref('/followGroups/' + this.props.postData.postId);
-    followersRef.on('value', (snapshot) => {
-      if (snapshot.val()) {
-        const followers = Object.keys(snapshot.val());
-
-        // TODO: same thunk with arg that dispatches action to quickChat reducer
-        // this.props.getPostFollowers(followers);
-      }
-    });
-
-    this.props.openQuickChat(this.props.postData);
-  }
-
   render() {
     return (
       <div className="postOuter">
@@ -355,7 +341,7 @@ class Post extends React.Component {
             </div>
             <div></div>
             <div className="commentDiv" id="commentDiv">
-              <div className="messagesGroup" onClick={() => this.openQuickChat()}>
+              <div className="messagesGroup" onClick={() => this.props.addChat(this.props.postData)}>
                 <Icon size="big" name="comments outline" className="commentIcon" />
                 <p className="messageText">Chat</p>
               </div>
@@ -374,20 +360,16 @@ Post.propTypes = {
   newLike: PropTypes.func,
   currentUser: PropTypes.object,
   nested: PropTypes.bool,
-  openModal: PropTypes.func,
-  currentModalData: PropTypes.object,
   getPostFollowers: PropTypes.func,
-  openQuickChat: PropTypes.func
+  addChat: PropTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  openModal: (postData) => dispatch({type: 'MAKE_OPEN', postData: postData}),
   getPostFollowers: (followerIds) => dispatch(getPostFollowersThunk(followerIds)),
-  openQuickChat: (postData) => dispatch({ type: 'OPEN_QUICKCHAT', postData: postData})
+  addChat: (postData) => dispatch({type: 'ADD_CHAT', postData: postData})
 });
 
 const mapStateToProps = (state) => ({
-  currentModalData: state.modalReducer.postData
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);

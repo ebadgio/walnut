@@ -12,6 +12,7 @@ import Online from './Discover_Online';
 import QuickchatContainer from '../Quickchat/Quickchat_index';
 // import firebaseApp from '../../firebase';
 import _ from 'underscore';
+import BottomContainer from '../Minichats/Minichat_Bottom_Container';
 
 class Home extends React.Component {
   constructor() {
@@ -40,6 +41,7 @@ class Home extends React.Component {
           <Feed id="Feed"/>
           {this.props.isQuickchatOpen ? <QuickchatContainer /> : null }
           <NewPostContainer />
+          <BottomContainer />
         </div>
     );
   }

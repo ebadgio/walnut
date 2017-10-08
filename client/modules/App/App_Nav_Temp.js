@@ -81,7 +81,7 @@ class Navbar extends React.Component {
                     <img className="communityImage" src={this.props.community.icon}
                          onClick={() => this.handleLogoClick()}/>
                 </div>
-                <h3 className="communityTitle" onClick={() => this.handleLogoClick()}>{this.props.community.title}</h3>
+                <span className="communityTitle" onClick={() => this.handleLogoClick()}>{this.props.community.title}</span>
             </div>
 
             <div className="navBarLinks">
