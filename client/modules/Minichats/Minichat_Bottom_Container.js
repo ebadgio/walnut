@@ -23,7 +23,7 @@ class BottomContainer extends React.Component {
   render() {
     return(
         <div className="minichatBottomBar">
-            {this.state.openChats.map((chat) => <MinichatCard key={chat.postId}
+            {this.state.openChats.reverse().map((chat) => <MinichatCard key={chat.postId}
                                                               closeChat={this.props.closeChat.bind(this)}
                                                               postData={chat}
                                                               currentUser={this.props.currentUser}/>)}

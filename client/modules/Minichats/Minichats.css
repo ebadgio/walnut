@@ -68,7 +68,7 @@
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
     width: 300px;
-    margin-bottom: 12px;
+    margin-bottom: 4px;
     display: flex;
     cursor: pointer;
     align-items: center;
@@ -82,7 +82,7 @@
 }
 
 .closeChatIcon:hover {
-    color: #6874E8 !important;
+    color: #353535 !important;
 }
 
 .messageAvatarOtherMini {
