@@ -24,6 +24,7 @@ router.get('/user', (req, res) => {
 });
 
 router.post('/create/community', (req, res) => {
+  console.log('inside the backend', req.body);
   let userEnd;
   let commEnd;
   const tagModels = req.body.otherTags.map((filter) =>
@@ -35,6 +36,7 @@ router.post('/create/community', (req, res) => {
         .then((values) => {
           const community = new Community({
             title: req.body.title,
+            status: req.body.status,
             users: [req.user._id],
             admins: [req.user._id],
             icon: req.body.image,

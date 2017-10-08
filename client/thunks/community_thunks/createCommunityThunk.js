@@ -1,14 +1,14 @@
-/**
- * Created by ebadgio on 7/24/17.
- */
+
 import axios from 'axios';
 import URL from '../../info';
 
-const createCommunityThunk = (image, title, otherFilters) => (dispatch) => {
+const createCommunityThunk = (image, title, status, otherTags) => (dispatch) => {
+  console.log('thunk', status, otherTags);
   axios.post(URL + 'db/create/community', {
     title: title,
     image: image,
-    otherTags: otherFilters
+    status: status,
+    otherTags: otherTags
   })
     .then((response) => {
       dispatch({type: 'GET_USER_DATA_DONE', user: response.data.user});

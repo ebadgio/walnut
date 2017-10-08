@@ -31,7 +31,8 @@ const CommunitySchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Tag'
     }
-  ]
+  ],
+  status: ''
 });
 
 const UserSchema = new mongoose.Schema({

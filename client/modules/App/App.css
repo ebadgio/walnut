@@ -223,7 +223,100 @@
 }
 
 .titleInput {
-    margin-bottom: 15px;
+    position: absolute !important;
+    top: 75%;
+    left: 8%;
+    width: 400px;
+}
+
+#communityTitleText {
+    color: black;
+    margin: 0;
+    position: absolute;
+    top: 70%;
+    left: 8%;
+}
+
+#communityPictureText {
+    color: black;
+    margin: 0;
+    position: absolute;
+    top: 9%;
+    left: 7%
+}
+
+#radioLabel {
+    font-weight: 600 !important;
+    font-size: 22px !important;
+}
+
+#communityPrivacyHeader {
+    color: black;
+    margin: 0;
+    position: absolute;
+    top: 5%;
+    left: 3%
+}
+
+.privacySettings {
+    height: 460px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 51px;
+    margin-right: 81px;
+    margin-top: 71px;
+}
+
+.privacySettingDesc {
+    color: black;
+}
+
+.topicLi {
+    color: black;
+    margin-top: 10px;
+}
+
+.topicTitle {
+    color: black;
+    margin-left: 20px;
+    margin-top: 0;
+}
+
+#topicInput {
+    width: 403px;
+}
+
+#defaultTopicList {
+    height: 200px;
+    position: absolute;
+    bottom: 17%;
+    font-size: 17px;
+    font-weight: 600;
+    margin-left: 177px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.topicIntro {
+    color: black;
+    margin-left: 25px;
+    margin-right: 25px;
+    text-align: center;
+}
+
+.topicPicture {
+    height: auto;
+    width: 400px;
+    position: absolute;
+    top: 22%;
+    margin-left: 95px;
+}
+
+.addTags {
+    margin-left: 15px;
+    position: absolute;
+    bottom: 10%;
 }
 
 .stickyDiv {
@@ -278,11 +371,30 @@
     color: #5bc0e3 !important;
 }
 
-.communityImgUpload {
-    height: 105px;
+.communityImgPre {
+    height: 305px;
     width: auto;
-    margin-left: 10px;
-    margin-top: 10px;
+    position: absolute;
+    top: 14%;
+    left: 13%;
+    filter: brightness(80%);
+}
+
+.imgWrapperComm {
+    height: 305px;
+    width: 305px;
+    display: flex;
+    overflow: hidden;
+    position: absolute;
+    top: 14%;
+    left: 13%;
+}
+
+.communityImgUpload {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    margin: auto;
 }
 
 button.ui.button > input {
@@ -345,6 +457,7 @@ button.ui.button > input {
 .closingIcon {
     cursor: pointer;
     color: black;
+    font-size: 22px !important;
 }
 
 .modalHeader {
@@ -567,10 +680,25 @@ button.ui.button > input {
     padding-left: 11px !important;
     padding-top: 6px !important;
     position: relative !important;
-    left: 902% !important;
+    left: 79% !important;
+    cursor: pointer;
 }
 
-.nextButtonModal {
+.createButtonModal {
+    color: #5bc0e3 !important;
+    background-color: #fff !important;
+    border: 1.5px solid !important;
+    border-radius: 4px !important;
+    width: 83px !important;
+    height: 28px !important;
+    padding-left: 11px !important;
+    padding-top: 6px !important;
+    position: relative !important;
+    left: 84% !important;
+    cursor: pointer;
+}
+
+.nextButtonModal1 {
     color: #5bc0e3 !important;
     background-color: #fff !important;
     border: 1.5px solid !important;
@@ -580,10 +708,48 @@ button.ui.button > input {
     padding-left: 11px !important;
     padding-top: 6px !important;
     position: relative !important;
-    left: 20% !important;
+    left: 89% !important;
+    cursor: pointer;
+}
+
+.prevButtonModal {
+    color: #5bc0e3 !important;
+    background-color: #fff !important;
+    border: 1.5px solid !important;
+    border-radius: 4px !important;
+    width: 57px !important;
+    height: 28px !important;
+    padding-left: 11px !important;
+    padding-top: 6px !important;
+    position: relative !important;
+    left: 1% !important;
+    cursor: pointer;
+}
+
+.prevButtonModalEnd {
+    color: #5bc0e3 !important;
+    background-color: #fff !important;
+    border: 1.5px solid !important;
+    border-radius: 4px !important;
+    width: 57px !important;
+    height: 28px !important;
+    padding-left: 11px !important;
+    padding-top: 6px !important;
+    position: relative !important;
+    left: -12% !important;
+    cursor: pointer;
 }
 
 .createCommunityActions {
     position: absolute !important;
-    bottom: 3%;
+    bottom: 2%;
+    width: 585px;
+    display: flex;
+}
+
+#fileUploadNewComm {
+    position: relative;
+    left: 42%;
+    margin-top: 40%;
+    z-index: 1;
 }

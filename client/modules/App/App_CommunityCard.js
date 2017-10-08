@@ -29,7 +29,7 @@ class CommunityCard extends React.Component {
               </Card.Header>
           </Card.Content>
           <Card.Content extra>
-              {this.props.title === 'Test Squad' ?
+              {this.props.status === 'public' ?
                     <Button className="joinButton" onClick={() => this.props.join(this.props.communityId)} content="Join" icon="plus" labelPosition="left" />
                         : null}
           </Card.Content>
@@ -44,7 +44,8 @@ CommunityCard.propTypes = {
   icon: PropTypes.string,
   title: PropTypes.string,
   join: PropTypes.func,
-  communityId: PropTypes.string
+  communityId: PropTypes.string,
+  status: PropTypes.string
 };
 
 
