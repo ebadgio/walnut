@@ -15,6 +15,8 @@ class CreateCommunityPage extends React.Component {
       image: 'https://avatars2.githubusercontent.com/u/5745754?v=4&s=88',
       otherTags: [],
       filterValue: '',
+      newMembers: [],
+      member: '',
       file: '',
       pic: '',
       page: 1,
@@ -37,6 +39,26 @@ class CreateCommunityPage extends React.Component {
     copy.push(this.state.filterValue);
     this.setState({ otherTags: copy, filterValue: '' });
   }
+
+  handleMemberChange(e) {
+    this.setState({ member: e.target.value });
+  }
+
+  handleMemberClick(e) {
+    e.preventDefault();
+    if (this.state.member.length !== 0) {
+      const copy = this.state.newMembers;
+      copy.push(this.state.member);
+      this.setState({ newMembers: copy, member: '' });
+    }
+  }
+
+  handleMemberRemove(n) {
+    const copy = this.state.newMembers;
+    copy.splice(n, 1);
+    this.setState({ newMembers: copy});
+  }
+
 
   handleNewComm() {
     if (this.state.file !== '' && this.state.titleValue) {
@@ -198,11 +220,29 @@ class CreateCommunityPage extends React.Component {
                         <Icon className="closingIcon" name="close" onClick={() => this.props.closeModal()} />
                     </Modal.Header>
                     <h3 className="topicTitle">Add Members:</h3>
+                    <div className="emailDiv">
+                        { this.state.newMembers.map((email, i) =>
+                            <div className="emailInnerDiv">
+                                <Icon className="removeIcon" name="close" onClick={() => this.handleMemberRemove(i)} />
+                                <h4 className="email">
+                                    {email}
+                                </h4>
+                            </div>
+                        )}
+                    </div>
+                    <div className="addTags">
+                        <Input
+                            id="topicInput"
+                            labelPosition="left"
+                            type="text"
+                            placeholder="Add Members..."
+                            value={this.state.member}
+                            onChange={(e) => { this.handleMemberChange(e); }} >
+                            <input />
+                        </Input>
+                        <Button className="addButton" content="Add" icon="plus" onClick={(e) => { this.handleMemberClick(e); }} />
+                    </div>
                     <Modal.Actions className="createCommunityActions">
-                        {/* <Button onClick={() => this.handleNewComm(this.state.image, this.state.titleValue, this.state.otherTags)}>
-                            Create
-                            <Icon name="lightning" />
-                        </Button> */}
                         <Button.Content className="createButtonModal" onClick={() => this.handleNewComm()} visible>Create <Icon name="lightning" /></Button.Content>
                         <Button.Content className="prevButtonModalEnd" onClick={() => this.setState({ page: 3 })} visible>Back</Button.Content>
                     </Modal.Actions>

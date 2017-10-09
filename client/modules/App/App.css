@@ -506,6 +506,37 @@ button.ui.button > input {
     padding-top: 2px !important;
 }
 
+.emailDiv {
+    height: 450px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.emailInnerDiv {
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    border-radius: 8px;
+    width: fit-content;
+    border: 1px solid;
+    border-color: #5bc0e3;
+    height: fit-content;
+    padding: 6px;
+    margin-left: 36px;
+}
+
+.removeIcon {
+    color: #94B0DA !important;
+    font-size: 22px !important;
+    margin-top: 1px !important;
+}
+
+.email {
+    color: black;
+    margin-top: 0;
+    font-size: 18px;
+}
+
 .navbarLinkOffDropdown {
     cursor: pointer !important;
     color: #3A3A3A;

@@ -122,7 +122,7 @@ class ConversationCard extends React.Component {
                 </div>
                 {this.props.data.content.split(' ').length > 4 ? <Popup inverted
                                                                         hoverable
-                                                                        trigger={<p className="conversationCardBody">{this.props.data.content.split(' ').slice(0, 4).join(' ') + '...'}</p>}
+                                                                        trigger={<p className="conversationCardBody">{this.props.data.content.split(' ').slice(0, 8).join(' ') + '...'}</p>}
                                                                         content={<Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify>}/> :
                     <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify> }
             <div className="conversationFootnote">
