@@ -506,6 +506,11 @@ button.ui.button > input {
     padding-top: 2px !important;
 }
 
+.messageEnd {
+    float: left;
+    clear: both;
+}
+
 .emailDiv {
     height: 450px;
     overflow-x: hidden;
@@ -523,12 +528,14 @@ button.ui.button > input {
     height: fit-content;
     padding: 6px;
     margin-left: 36px;
+    margin-bottom: 4px;
 }
 
 .removeIcon {
     color: #94B0DA !important;
     font-size: 22px !important;
     margin-top: 1px !important;
+    cursor: pointer !important;
 }
 
 .email {

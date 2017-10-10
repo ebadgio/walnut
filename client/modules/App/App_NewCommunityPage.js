@@ -6,6 +6,7 @@ import createCommunityThunk from '../../thunks/community_thunks/createCommunityT
 import superagent from 'superagent';
 import $ from 'jquery';
 import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
 
 class CreateCommunityPage extends React.Component {
   constructor() {
@@ -24,6 +25,16 @@ class CreateCommunityPage extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    // Scroll to bottom
+    if (prevState.newMembers.length !== this.state.newMembers.length) {
+      const len = this.state.newMembers.length - 1;
+      const node = ReactDOM.findDOMNode(this['_div' + len]);
+      if (node) {
+        node.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }
 
   handleChange(e) {
     this.setState({ titleValue: e.target.value });
@@ -47,14 +58,14 @@ class CreateCommunityPage extends React.Component {
   handleMemberClick(e) {
     e.preventDefault();
     if (this.state.member.length !== 0) {
-      const copy = this.state.newMembers;
+      const copy = this.state.newMembers.slice();
       copy.push(this.state.member);
       this.setState({ newMembers: copy, member: '' });
     }
   }
 
   handleMemberRemove(n) {
-    const copy = this.state.newMembers;
+    const copy = this.state.newMembers.slice();
     copy.splice(n, 1);
     this.setState({ newMembers: copy});
   }
@@ -222,7 +233,7 @@ class CreateCommunityPage extends React.Component {
                     <h3 className="topicTitle">Add Members:</h3>
                     <div className="emailDiv">
                         { this.state.newMembers.map((email, i) =>
-                            <div className="emailInnerDiv">
+                            <div className="emailInnerDiv" ref={(ref) => {this['_div' + i] = ref;}}>
                                 <Icon className="removeIcon" name="close" onClick={() => this.handleMemberRemove(i)} />
                                 <h4 className="email">
                                     {email}
