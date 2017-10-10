@@ -1,10 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import {User, Tag, Post, Quote, Community} from '../../models/models';
-import axios from 'axios';
-import Promise from 'promise';
-import firebaseApp from '../../../client/firebase';
-import adminApp from '../../firebaseAdmin';
+import {User, Post, Quote, Community} from '../../models/models';
 import Metascraper from 'metascraper';
 
 router.get('/app', (req, res) => {

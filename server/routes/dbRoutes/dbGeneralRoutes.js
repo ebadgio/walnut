@@ -1,10 +1,7 @@
 import express from 'express';
 const router = express.Router();
-import {User, Tag, Post, Quote, Community} from '../../models/models';
-import axios from 'axios';
+import {User, Tag, Post, Community} from '../../models/models';
 import Promise from 'promise';
-import firebaseApp from '../../../client/firebase';
-import adminApp from '../../firebaseAdmin';
 
 router.get('/user', (req, res) => {
   User.findById(req.user._id)
@@ -24,7 +21,6 @@ router.get('/user', (req, res) => {
 });
 
 router.post('/create/community', (req, res) => {
-  console.log('inside the backend', req.body);
   let userEnd;
   let commEnd;
   let communityID;
