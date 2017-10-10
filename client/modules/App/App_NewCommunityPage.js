@@ -74,11 +74,11 @@ class CreateCommunityPage extends React.Component {
   handleNewComm() {
     if (this.state.file !== '' && this.state.titleValue) {
       console.log('inside with pic', this.state.file, this.state.titleValue, this.state.status, this.state.otherTags);
-      this.props.handleCreate(this.state.file, this.state.titleValue, this.state.status, this.state.otherTags);
+      this.props.handleCreate(this.state.file, this.state.titleValue, this.state.status, this.state.otherTags, this.state.newMembers);
       this.setState({ titleValue: '', status: 'public', otherTags: [] });
       this.props.closeModal();
     } else if (this.state.titleValue) {
-      this.props.handleCreate(this.state.image, this.state.titleValue, this.state.status, this.state.otherTags);
+        this.props.handleCreate(this.state.image, this.state.titleValue, this.state.status, this.state.otherTags, this.state.newMembers);
       this.setState({ titleValue: '', status: 'public', otherTags: [] });
       this.props.closeModal();
     }
@@ -274,7 +274,7 @@ CreateCommunityPage.propTypes = {
 const mapDispatchToProps = (dispatch) => ({
   updateUser: (user) => dispatch({ type: 'GET_USER_DATA_DONE', user }),
   updateCommunities: (communities) => dispatch({ type: 'GET_ALL_COMMUNITIES_NEW', communities }),
-  handleCreate: (image, title, status, otherTags) => dispatch(createCommunityThunk(image, title, status, otherTags))
+  handleCreate: (image, title, status, otherTags, newMembers) => dispatch(createCommunityThunk(image, title, status, otherTags, newMembers))
 });
 
 export default connect(null, mapDispatchToProps)(CreateCommunityPage);

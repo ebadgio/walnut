@@ -27,6 +27,7 @@ router.post('/create/community', (req, res) => {
   console.log('inside the backend', req.body);
   let userEnd;
   let commEnd;
+  let communityID;
   const tagModels = req.body.otherTags.map((filter) =>
         new Tag({
           name: filter.toUpperCase()
@@ -46,6 +47,7 @@ router.post('/create/community', (req, res) => {
           return community.save();
         })
         .then((community) => {
+          communityID = community._id;
           commEnd = community;
           return User.findById(req.user._id);
         })
@@ -76,7 +78,7 @@ router.post('/create/community', (req, res) => {
             return Community.find();
           })
           .then((communities) => {
-            res.json({user: userEnd, communities: communities});
+            res.json({user: userEnd, communities: communities, communityID: communityID});
           })
         .catch((err) => {
           console.log('got error', err);
