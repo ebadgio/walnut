@@ -17,7 +17,7 @@
 }
 
 .conversationsSideBar:hover {
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .conversationsChatBox {
@@ -153,11 +153,11 @@
     border-radius: 0 !important;
     border: none !important;
     box-shadow: none !important;
-    background: rgba(0, 0, 0, 0.08) !important;
+    background: rgba(0, 0, 0, .05) !important;
 }
 
 .miniPostCard:hover {
-    background: rgba(0, 0, 0, 0.08) !important;
+    background: rgba(0, 0, 0, .05) !important;
 }
 
 body ::-webkit-scrollbar-thumb {

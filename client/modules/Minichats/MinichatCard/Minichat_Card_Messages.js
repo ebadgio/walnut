@@ -43,7 +43,6 @@ class MinichatMessageBox extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('will', nextProps);
     if (nextProps.active) {
       this.setState({active: true});
     } else {
@@ -244,7 +243,7 @@ class MinichatMessageBox extends React.Component {
                   {this.state.typers.length > 0 ? this.state.typers.map((typer) =>
                       <div key={typer.typerId} className="typerGroup">
                         <Popup
-                            trigger={<div className="imageWrapper messageAvatarOther typingImage">
+                            trigger={<div className="messageAvatarOtherMini">
                               <img className="postUserImage" src={typer.typerPhoto} />
                             </div>}
                             content={typer.typer}

@@ -11,7 +11,6 @@ import navBarReducer from './navBarReducer';
 import postReducer from './postReducer';
 import conversationReducer from './conversationReducer';
 import walnutHomeReducer from './walnutHomeReducer';
-import modalReducer from './modalReducer';
 import dimmerReducer from './dimmerReducer';
 import messengerReducer from './messengerReducer';
 import loginReducer from './loginReducer';
@@ -30,7 +29,6 @@ const rootReducer = combineReducers({
   navBarReducer: navBarReducer,
   postReducer: postReducer,
   walnutHomeReducer: walnutHomeReducer,
-  modalReducer: modalReducer,
   dimmerReducer: dimmerReducer,
   messengerReducer: messengerReducer,
   loginReducer: loginReducer,
