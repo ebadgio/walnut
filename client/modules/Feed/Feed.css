@@ -292,12 +292,12 @@
 
 .currentView {
     margin-left: 10px;
-    color: #b3b5c1;
+    /*color: #b3b5c1;*/
     margin-right: 15px;
 }
 
 .allTopics {
-    color: #b3b5c1;
+    /*color: #b3b5c1;*/
 }
 
 .newPostTrigger {

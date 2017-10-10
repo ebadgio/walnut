@@ -73,6 +73,7 @@ class Navbar extends React.Component {
               this.handleClick(1);
               this.setState({isOpen: true});
               this.props.clearDirectory();
+              this.props.clearMinichats();
             }}>
                 <Icon name="home" size="big"/>
             </Link>
@@ -126,7 +127,8 @@ Navbar.propTypes = {
   user: PropTypes.string,
   updateCommunity: PropTypes.func,
   clearDirectory: PropTypes.func,
-  setHomeTrue: PropTypes.func
+  setHomeTrue: PropTypes.func,
+  clearMinichats: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -141,7 +143,8 @@ const mapDispatchToProps = (dispatch) => ({
   onLogout: (his) => dispatch(signOutThunk(his)),
   updateCommunity: (img, title, oldT, newT, admins) => dispatch(updateCommunity(img, title, oldT, newT, admins)),
   clearDirectory: () => dispatch({type: 'DIRECTORY_FRESH'}),
-  setHomeTrue: () => dispatch({ type: 'WALNUT_READY'})
+  setHomeTrue: () => dispatch({ type: 'WALNUT_READY'}),
+  clearMinichats: () => dispatch({type: 'CLEAR_CHATS'})
 });
 
 

@@ -100,3 +100,38 @@
     margin-bottom: 5px;
     background: none !important;
 }
+
+#minichatMessageInput {
+    border-color: transparent!important;
+    background-color: transparent!important;
+    padding: 2px!important;
+    box-shadow: none!important;
+    border-radius: 0!important;
+    color: #3a3a3a !important;
+    max-height: 50px;
+    overflow-y: auto;
+}
+
+.headerTopics {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    padding: 3px 3px 3px 3px;
+}
+
+.tagMini {
+    color: #568ea3;
+    max-height: 14px;
+    border-radius: 3px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-weight: 700;
+    padding-right: 10px;
+    display: inline-block;
+    min-width: fit-content;
+}
+
+.hashtagMini {
+    font-size: 12px;
+    line-height: 14px;
+}

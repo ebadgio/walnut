@@ -17,6 +17,10 @@ const minichatReducer = (state = {
       return {
         openChats: state.openChats.filter((chat) => chat.postId !== action.postData.postId)
       };
+    case 'CLEAR_CHATS':
+      return {
+        openChats: []
+      };
     default:
       return state;
   }
