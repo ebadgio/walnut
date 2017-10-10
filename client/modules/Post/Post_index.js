@@ -10,7 +10,6 @@ import {Divider, Icon, Button, Segment} from 'semantic-ui-react';
 import dateStuff from '../../dateStuff';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
-// import PostDrawer from './PostDrawer/PostDrawer_index';
 import getPostFollowersThunk from '../../thunks/post_thunks/getPostFollowers';
 
 class Post extends React.Component {
