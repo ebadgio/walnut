@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './App.css';
 import { history } from '../Auth/Auth_index';
+import { Button } from 'semantic-ui-react';
+import JoinCommunityCode from './App_JoinCommunityCode';
 import createCommunityThunk from '../../thunks/community_thunks/createCommunityThunk';
 import joinCommunityThunk from '../../thunks/community_thunks/joinCommunityThunk';
 import getAllCommunities from '../../thunks/community_thunks/getAllCommunitiesThunk';
@@ -60,7 +62,6 @@ class WalnutHomeContainer extends React.Component {
   }
 
 
-  // TODO HORIZONS
   render() {
     if (this.props.isReady) {
       const userCommunityTitles = this.props.userCommunities.map((com) => com.title);
@@ -71,6 +72,8 @@ class WalnutHomeContainer extends React.Component {
             <hr />
           </div>
           <div>
+            <JoinCommunityCode />
+            <Button className="codeTrigger" content="Enter code to join" icon="privacy" labelPosition="left"/>
             <NewCommunityModal
               handleCreate={(image, title, defaultFilters) => this.handleSubmit(image, title, defaultFilters)} />
           </div>
