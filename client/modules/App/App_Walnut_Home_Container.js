@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './App.css';
 import { history } from '../Auth/Auth_index';
-import { Button } from 'semantic-ui-react';
 import JoinCommunityCode from './App_JoinCommunityCode';
 import createCommunityThunk from '../../thunks/community_thunks/createCommunityThunk';
 import joinCommunityThunk from '../../thunks/community_thunks/joinCommunityThunk';
@@ -73,7 +72,6 @@ class WalnutHomeContainer extends React.Component {
           </div>
           <div>
             <JoinCommunityCode />
-            <Button className="codeTrigger" content="Enter code to join" icon="privacy" labelPosition="left"/>
             <NewCommunityModal
               handleCreate={(image, title, defaultFilters) => this.handleSubmit(image, title, defaultFilters)} />
           </div>

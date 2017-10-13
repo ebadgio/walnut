@@ -130,56 +130,57 @@ router.post('/join/community', (req, res) => {
 });
 
 router.post('/join/community/code', (req, res) => {
+  console.log('code', req.body.code);
   const code = req.body.code;
   let communityID;
   let joined;
 
   // TODO: decrypt
-  Community.findById(communityID)
-    .then((community) => {
-      if (community.users.indexOf(req.user._id) === -1) {
-        community.users.push(req.user._id);
-      }
-      joined = community;
-      return community.save();
-    })
-    .then((response) => {
-      return User.findById(req.user._id);
-    })
-    .then((user) => {
-      if (user.communities.indexOf(req.body.communityId) === -1) {
-        user.communities.push(req.body.communityId);
-      }
-      user.currentCommunity = req.body.communityId;
-      const commPref = user.preferences.filter((pref) => pref.community === req.body.communityId);
-      if (commPref.length === 0 || commPref[0].pref.length === 0) {
-        const pref = {
-          community: req.body.communityId,
-          pref: []
-        };
-        user.preferences.push(pref);
-      }
-      user.markModified('preferences', 'currentCommunity');
-      return user.save();
-    })
-    .then((savedUser) => {
-      const opts = [
-        { path: 'communities' },
-        { path: 'currentCommunity' },
-        {
-          path: 'currentCommunity',
-          populate: { path: 'admins defaultags users' }
-        }
-      ];
-      return User.populate(savedUser, opts);
-    })
-    .then((populatedUser) => {
-      res.json({ success: true, community: joined, user: populatedUser });
-    })
-    .catch((err) => {
-      console.log('join error', err);
-      res.json({ error: err });
-    });
+  // Community.findById(communityID)
+  //   .then((community) => {
+  //     if (community.users.indexOf(req.user._id) === -1) {
+  //       community.users.push(req.user._id);
+  //     }
+  //     joined = community;
+  //     return community.save();
+  //   })
+  //   .then((response) => {
+  //     return User.findById(req.user._id);
+  //   })
+  //   .then((user) => {
+  //     if (user.communities.indexOf(req.body.communityId) === -1) {
+  //       user.communities.push(req.body.communityId);
+  //     }
+  //     user.currentCommunity = req.body.communityId;
+  //     const commPref = user.preferences.filter((pref) => pref.community === req.body.communityId);
+  //     if (commPref.length === 0 || commPref[0].pref.length === 0) {
+  //       const pref = {
+  //         community: req.body.communityId,
+  //         pref: []
+  //       };
+  //       user.preferences.push(pref);
+  //     }
+  //     user.markModified('preferences', 'currentCommunity');
+  //     return user.save();
+  //   })
+  //   .then((savedUser) => {
+  //     const opts = [
+  //       { path: 'communities' },
+  //       { path: 'currentCommunity' },
+  //       {
+  //         path: 'currentCommunity',
+  //         populate: { path: 'admins defaultags users' }
+  //       }
+  //     ];
+  //     return User.populate(savedUser, opts);
+  //   })
+  //   .then((populatedUser) => {
+  //     res.json({ success: true, community: joined, user: populatedUser });
+  //   })
+  //   .catch((err) => {
+  //     console.log('join error', err);
+  //     res.json({ error: err });
+  //   });
 });
 
 router.post('/toggle/community', (req, res) => {

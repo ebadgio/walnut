@@ -5,11 +5,11 @@ const joinCommunityCodeThunk = (id) => (dispatch) => {
   axios.post(URL + 'db/join/community/code', {
     code: id
   })
-        .then((response) => {
-          dispatch({ type: 'GET_USER_DATA_DONE', user: response.data.user });
-        })
-        .catch((err) => {
-          console.log('probably failed to join community', err);
-        });
+  .then((response) => {
+    // TODO: dispatch of both join and toggle
+  })
+  .catch((err) => {
+    console.log('probably failed to join community', err);
+  });
 };
 export default joinCommunityCodeThunk;
