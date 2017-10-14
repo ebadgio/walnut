@@ -60,11 +60,12 @@
 }
 
 .minichatHeaderActive {
-    /*background: #59B7C5;*/
+    /* background: #59B7C5; */
     background: #fff;
     box-shadow: 0 0 7px 0 rgba(34, 36, 38, 0.15);
     border-bottom: none;
-    height: 50px;
+    height: 40px;
+    padding-left: 20px;
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
     width: 300px;

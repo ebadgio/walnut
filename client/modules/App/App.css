@@ -212,9 +212,6 @@
     margin-right: 50px !important;
 }
 
-.hashtag.icon {
-    color: #4CC1FC;
-}
 
 .addButton {
     margin-left: 15px !important;
@@ -538,35 +535,35 @@ button.ui.button > input {
     width: 30%
 }
 
-@media (max-width: 560px) {
-    .menuDropdown {
-        margin-right: 5px;
-        margin-left: 10px;
-        color: #3a3a3a;
-        right: 2%;
-        position: absolute !important;
-    }
-    .communityNavBarLogo {
-        display: flex;
-        margin-left: 40px;
-    }
-    .communityTitle {
-        font-size: 14px;
-        margin-left: 10px;
-        color: #3A3A3A;
-        margin-top: 0;
-        align-self: center;
-    }
-}
-@media (max-width: 255px) {
-    .communityTitle {
-        font-size: 0px;
-        margin-left: 10px;
-        color: #3A3A3A;
-        margin-top: 0;
-        align-self: center;
-    }
-}
+/*@media (max-width: 560px) {*/
+    /*.menuDropdown {*/
+        /*margin-right: 5px;*/
+        /*margin-left: 10px;*/
+        /*color: #3a3a3a;*/
+        /*right: 2%;*/
+        /*position: absolute !important;*/
+    /*}*/
+    /*.communityNavBarLogo {*/
+        /*display: flex;*/
+        /*margin-left: 40px;*/
+    /*}*/
+    /*.communityTitle {*/
+        /*font-size: 14px;*/
+        /*margin-left: 10px;*/
+        /*color: #3A3A3A;*/
+        /*margin-top: 0;*/
+        /*align-self: center;*/
+    /*}*/
+/*}*/
+/*@media (max-width: 255px) {*/
+    /*.communityTitle {*/
+        /*font-size: 0px;*/
+        /*margin-left: 10px;*/
+        /*color: #3A3A3A;*/
+        /*margin-top: 0;*/
+        /*align-self: center;*/
+    /*}*/
+/*}*/
 
 #fileInputEditComm {
     display: none

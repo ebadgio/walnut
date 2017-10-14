@@ -3,64 +3,53 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Select from 'react-select';
 import toggleFilterCheckedThunk from '../../thunks/toggleFilterCheckedThunk';
 import updateUserPrefThunk from '../../thunks/user_thunks/updateUserPrefThunk';
 import toggleTempFilterCheckedThunk from '../../thunks/toggleTempFilterCheckedThunk';
 import { Icon, Label, Search } from 'semantic-ui-react';
-import $ from 'jquery';
-
+import _ from 'lodash';
 class TopicSelectorContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       filters: [],
-      value: [],
-      useFilters: []
+      useFilters: [],
+      options: [],
+      isLoadging: false,
+      results: [],
+      value: ''
     };
-    this.handleSelectChange = this.handleSelectChange.bind(this);
-    // this.handleResultSelect = this.handleResultSelect.bind(this);
-    // this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleResultSelect = this.handleResultSelect.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.isFetching && this.props.otherFilters) {
+      const options = this.selectOptions(nextProps);
+      console.log('options', nextProps, options);
+      this.setState({options: options});
+    } else {
+      console.log('that shit is missing');
+    }
+  }
 
   resetComponent() {
     this.setState({isLoading: false, results: [], value: ''});
   }
 
-  isPrefSelected(options) {
-    let val = false;
-    if (this.state.useFilters.length > 0) {
-      this.state.useFilters.forEach((filter) => {
-        if (options.indexOf(filter.name) > -1) {
-          val = true;
-        }
-      });
-    }
-    return val;
-  }
-
-  handleSelectChange(e, { value }) {
-    // const newPostBox = document.getElementById('newPostBox');
-    // newPostBox.scrollIntoView(true);
-    e.preventDefault();
-    const elem = document.getElementById('dropdownTopic');
-    const send = this.props.otherFilters.filter((filter) => filter.name === value);
+  handleResultSelect(e, { result }) {
+    const send = this.props.otherFilters.filter((filter) => filter.name === result.value);
     this.props.addFilters(send);
     this.props.toggleTempChecked(this.props.useFilters.concat(send).map((filt) => filt._id));
+    this.resetComponent();
     window.scrollTo(0, 0);
   }
 
-  selectOptions() {
-    if(this.props.isFetching) {
-      return null;
-    }
-    if(!this.props.otherFilters) {
-      return null;
-    }
-    if(this.props.useFilters.length === 0) {
-      return this.props.otherFilters.map((tag) => {
-        return { value: tag.name, label: '#' + tag.name };
+  selectOptions(props) {
+    if(props.useFilters.length === 0) {
+      return props.otherFilters.map((tag) => {
+        return { value: tag.name, title: '#' + tag.name };
       });
     }
     function findWithAttr(array, attr, value) {
@@ -71,11 +60,11 @@ class TopicSelectorContainer extends React.Component {
       }
       return -1;
     }
-    const indxs = this.props.useFilters.map((filter) => findWithAttr(this.props.otherFilters, 'name', filter.name));
-    const arrFilt = this.props.otherFilters.slice();
+    const indxs = props.useFilters.map((filter) => findWithAttr(props.otherFilters, 'name', filter.name));
+    const arrFilt = props.otherFilters.slice();
     indxs.forEach((indx) => arrFilt.splice(indx, 1));
     return arrFilt.map((tag) => {
-      return {value: tag.name, label: '#' + tag.name};
+      return {value: tag.name, title: '#' + tag.name};
     });
   }
 
@@ -89,8 +78,23 @@ class TopicSelectorContainer extends React.Component {
     // this.props.toggleChecked(filter._id);
   }
 
+  handleSearchChange(e, { value }) {
+    this.setState({ isLoading: true, value });
+
+    setTimeout(() => {
+      if (this.state.value.length < 1) return this.resetComponent();
+
+      const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
+      const isMatch = result => re.test(result.title);
+
+      this.setState({
+        isLoading: false,
+        results: _.filter(this.state.options, isMatch),
+      });
+    }, 300);
+  }
+
   render() {
-    const options = this.selectOptions();
     return (
       <div className="topicContainer">
         <div id="choice_form">
@@ -106,13 +110,15 @@ class TopicSelectorContainer extends React.Component {
             <span className="allTopics">All Topics</span>
           }
         </div>
-        {/* <Search*/}
-            {/* loading={this.state.isLoading}*/}
-            {/* onResultSelect={this.handleResultSelect}*/}
-            {/* onSearchChange={this.handleSearchChange}*/}
-            {/* results={this.state.results}*/}
-            {/* value={this.state.value}*/}
-        {/* />*/}
+         <Search
+             className="topicSearchBar"
+             loading={this.state.isLoading}
+             onResultSelect={this.handleResultSelect}
+             onSearchChange={this.handleSearchChange}
+             results={this.state.results}
+             value={this.state.value}
+             icon="hashtag"
+         />
       </div>
     );
   }

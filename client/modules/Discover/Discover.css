@@ -378,6 +378,31 @@
     position: absolute !important;
 }
 
+.topicSearchBar {
+    width: 200px !important;
+    margin-left: auto !important;
+    margin-right: 10px !important;
+
+}
+
+.ui.search>.results {
+    width: 14em !important;
+}
+
+.topicSearchBar .ui.icon.input>i.icon {
+    left: 0 !important;
+}
+
+.topicSearchBar .ui.icon.input input {
+    padding-left: 2.67142857em !important;
+    padding-right: inherit !important;
+}
+
+.ui.input input:focus, .ui.input.focus input {
+    border-color: #6874E8 !important;
+}
+
+
 /*@media (max-width: 950px) {*/
     /*#root {*/
         /*background-color: #FAFAFA;*/

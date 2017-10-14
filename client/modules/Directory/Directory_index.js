@@ -51,7 +51,7 @@ class Directory extends React.Component {
       <div>
         <div className="directoryCardsList">
               <Select
-                  className="search"
+                  className="searchDirectory"
                   name="selected-state"
                   value={this.state.query}
                   simpleValue

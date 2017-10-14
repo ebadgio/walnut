@@ -1053,3 +1053,10 @@ body ::-webkit-scrollbar {
 .messageDescriptionOther {
     color: #231f20 !important;
 }
+
+.postDropdown {
+    height: 100% !important;
+    margin-top: 0 !important;
+    color: #b3b5c1;
+    font-size: 1.5em;
+}

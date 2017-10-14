@@ -24,7 +24,7 @@ class MinichatHeader extends React.Component {
               </div>
               <Icon name="remove"
                     className="closeChatIcon"
-                    size="big"
+                    size="large"
                     onClick={() => this.props.closeChat(this.props.postData)}/>
         </div>
     );

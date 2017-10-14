@@ -63,6 +63,7 @@
     "image-webpack-loader": "^3.3.1",
     "karma-scss-preprocessor": "^2.0.0",
     "linkifyjs": "^2.1.4",
+    "lodash": "^4.17.4",
     "mapbox-gl": "^0.38.0",
     "material-ui": "^0.18.7",
     "metascraper": "^1.0.7",

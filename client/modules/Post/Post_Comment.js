@@ -167,36 +167,72 @@ class Comment extends React.Component {
         inverted />
       );
     }
+    if (this.props.mini) {
+      return (
+            <div className="userGroupOther">
+              <Popup
+                  trigger={<div className="messageAvatarOtherMini">
+                    <img className="postUserImage" src={this.props.authorPhoto}/>
+                  </div>}
+                  content={this.props.name + ' ' + this.state.useDate}
+                  position="left center"
+                  inverted
+              />
+              <div className="messageGroupOther" id={this.props.id}>
+                <div className="messageNameOther">{this.props.name ? this.props.name.split(' ')[0] : ''}</div>
+                <Card className="commentCardOther">
+                  <Card.Content className="messageContent">
+                    <Card.Description className="messageDescriptionOther">
+                        {this.state.messageBody ? this.state.messageBody :
+                            <div>{this.state.messageBody1} <a
+                                href={this.state.newLink}>{this.state.urlName ? this.state.urlName : this.state.newLink}</a> {this.state.messageBody2}
+                            </div>
+                        }
+                    </Card.Description>
+                      {this.state.meta.description && this.state.meta.title && this.state.meta.image ?
+                          <LinkPreviewComment meta={this.state.meta} url={this.state.newLink}/> : null}
+                      {this.props.attachment !== '' ?
+                          <AttachmentPreviewComment attachment={this.props.attachment}/> : null}
+                  </Card.Content>
+                </Card>
+              </div>
+            </div>
+        );
+    }
     return (
-      <div className="userGroupOther">
-        <Popup
-        trigger= {<div className={this.props.mini ? 'messageAvatarOtherMini' : 'messageAvatarOther'}>
-          <img className="postUserImage" src={this.props.authorPhoto} />
-        </div>}
-        content={this.props.name}
-        position="left center"
-        inverted
-        />
-        <Popup
-        trigger = {<div className="messageGroupOther" id={this.props.id}>
-          <div className="messageNameOther">{this.props.name ? this.props.name.split(' ')[0] : ''}</div>
-            <Card className="commentCardOther">
-              <Card.Content className="messageContent">
-                <Card.Description className="messageDescriptionOther">
-                  {this.state.messageBody ? this.state.messageBody :
-                    <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName ? this.state.urlName : this.state.newLink}</a> {this.state.messageBody2}</div>
-                  }
-                </Card.Description>
-                {this.state.meta.description && this.state.meta.title && this.state.meta.image ? <LinkPreviewComment meta={this.state.meta} url={this.state.newLink} /> : null}
-                {this.props.attachment !== '' ? <AttachmentPreviewComment attachment={this.props.attachment} /> : null}
-              </Card.Content>
-            </Card>
-          </div>}
-        content={this.state.useDate}
-        position="left center"
-        inverted />
-      </div>
-    );
+          <div className="userGroupOther">
+            <Popup
+                trigger={<div className="messageAvatarOther">
+                  <img className="postUserImage" src={this.props.authorPhoto}/>
+                </div>}
+                content={this.props.name}
+                position="left center"
+                inverted
+            />
+            <Popup
+                trigger={<div className="messageGroupOther" id={this.props.id}>
+                  <div className="messageNameOther">{this.props.name ? this.props.name.split(' ')[0] : ''}</div>
+                  <Card className="commentCardOther">
+                    <Card.Content className="messageContent">
+                      <Card.Description className="messageDescriptionOther">
+                          {this.state.messageBody ? this.state.messageBody :
+                              <div>{this.state.messageBody1} <a
+                                  href={this.state.newLink}>{this.state.urlName ? this.state.urlName : this.state.newLink}</a> {this.state.messageBody2}
+                              </div>
+                          }
+                      </Card.Description>
+                        {this.state.meta.description && this.state.meta.title && this.state.meta.image ?
+                            <LinkPreviewComment meta={this.state.meta} url={this.state.newLink}/> : null}
+                        {this.props.attachment !== '' ?
+                            <AttachmentPreviewComment attachment={this.props.attachment}/> : null}
+                    </Card.Content>
+                  </Card>
+                </div>}
+                content={this.state.useDate}
+                position="left center"
+                inverted/>
+          </div>
+      );
   }
 }
 
