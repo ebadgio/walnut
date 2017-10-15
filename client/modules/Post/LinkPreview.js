@@ -44,7 +44,7 @@ class LinkPreview extends React.Component {
         <div className="linkPreviewWrapper">
           {(validURL && this.props.meta.description && this.props.meta.title) ?
           <div className="linkPreview">
-              <a href={this.props.meta.url}><h3 className="linkTitle">{this.props.meta.title}</h3></a><br />
+              <a target="_blank" href={this.props.meta.url}><h3 className="linkTitle">{this.props.meta.title}</h3></a><br />
               <p className="linkDesc">{this.props.meta.description}</p><br />
               <div className="linkImage">
                   <img className="linkImg" src={this.props.meta.image} />

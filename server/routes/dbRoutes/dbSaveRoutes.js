@@ -99,6 +99,35 @@ router.post('/post', (req, res) => {
   });
 });
 
+router.post('/editPost', (req, res) => {
+  console.log('editing post', req.body);
+  Post.findById(req.body.postId)
+    .then((response) => {
+      response.content = req.body.newPostBody;
+      return response.save();
+    })
+    .then((postObj) => {
+      const send = {
+        postId: postObj._id,
+        username: postObj.createdBy.fullName,
+        pictureURL: postObj.createdBy.pictureURL,
+        content: postObj.content,
+        createdAt: postObj.createdAt,
+        tags: postObj.tags,
+        likes: postObj.likes,
+        commentNumber: postObj.commentNumber,
+        link: postObj.link,
+        attachment: postObj.attachment,
+        comments: postObj.comments
+      };
+      res.json({success: true, editedPost: send});
+    })
+    .catch((err) => {
+      console.log('error in edit post', err);
+      res.json({success: false, editedPost: {}});
+    });
+});
+
 router.post('/joinconversation', (req, res) => {
   res.json({success: req.body.postId});
 });

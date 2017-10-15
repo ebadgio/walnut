@@ -1,3 +1,4 @@
+/* eslint-disable no-trailing-spaces */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect} from 'react-redux';
@@ -6,11 +7,12 @@ import MediaAttachment from './Post_Media_Attachment.js';
 import LinkPreview from './LinkPreview';
 import './Post.css';
 import Lightbox from 'react-images';
-import {Divider, Icon, Button, Dropdown, Segment} from 'semantic-ui-react';
+import {Divider, Icon, Button, Dropdown, Form, TextArea, Segment} from 'semantic-ui-react';
 import dateStuff from '../../dateStuff';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
 import getPostFollowersThunk from '../../thunks/post_thunks/getPostFollowers';
+import editPostThunk from '../../thunks/post_thunks/editPostThunk';
 
 class Post extends React.Component {
   constructor(props) {
@@ -271,6 +273,19 @@ class Post extends React.Component {
     elem.scrollIntoView({block: 'center'});
   }
 
+  startEdit() {
+    this.setState({editing: true});
+    setTimeout(() => {
+      const elem = document.getElementById('editTextarea');
+      elem.value = this.props.postData.content;
+    }, 500);
+  }
+
+  savePost() {
+    const elem = document.getElementById('editTextarea');
+    this.props.editPost(elem.value, this.props.postData.postId);
+  }
+
   render() {
     return (
       <div className="postOuter">
@@ -284,6 +299,7 @@ class Post extends React.Component {
                 <h3 className="postHeaderUser">{this.props.postData.username}</h3>
                 <p className="postTimeStamp">{this.state.timeStamp}</p>
               </div>
+                {this.state.editing ? <div onClick={() => this.savePost()}>Save</div> : null}
                 {this.state.isFollowing ? <div className="isFollowingGroup">
                   <Icon name="checkmark" className="iconFollowing" size={'small'} />
                   <p className="followingText">Following</p>
@@ -293,30 +309,36 @@ class Post extends React.Component {
                 </div>}
               <Dropdown className="postDropdown" icon={'ellipsis horizontal'}>
                 <Dropdown.Menu>
-                  <Dropdown.Item text="New" />
-                  <Dropdown.Item text="Open..." description="ctrl + o" />
-                  <Dropdown.Item text="Save as..." description="ctrl + s" />
-                  <Dropdown.Item text="Rename" description="ctrl + r" />
-                  <Dropdown.Item text="Make a copy" />
-                  <Dropdown.Item icon="folder" text="Move to folder" />
-                  <Dropdown.Item icon="trash" text="Move to trash" />
-                  <Dropdown.Divider />
-                  <Dropdown.Item text="Download As..." />
-                  <Dropdown.Item text="Publish To Web" />
-                  <Dropdown.Item text="E-mail Collaborators" />
+                    {!this.state.isFollowing ?
+                        <Dropdown.Item icon="plus" onClick={() => this.joinConversation()} text="Follow" /> :
+                        <Dropdown.Item text="Unfollow" onClick={() => this.leaveConversation()} />}
+                    {this.props.currentUser.fullName === this.props.postData.username ? <Dropdown.Item icon="edit" text="Edit post" onClick={() => this.startEdit()} /> : null}
                 </Dropdown.Menu>
               </Dropdown>
             </div>
-            <div className="postDescription">
-              <div className="postInnerContent">
-                {this.state.messageBody ? this.state.messageBody :
-                <div>{this.state.messageBody1} <a href={this.state.newLink}>{this.state.urlName ? this.state.urlName : this.state.newLink}</a> {this.state.messageBody2}</div>
-                }
-              </div>
-            </div>
-
-            {this.state.meta.description && this.state.meta.title && this.state.meta.image ? <LinkPreview meta={this.state.meta} url={this.state.newLink} /> : null}
-
+              {!this.state.editing ?
+                  <div>
+                      <div className="postDescription">
+                        <div className="postInnerContent">
+                          {this.state.messageBody ? this.state.messageBody :
+                        <div>{this.state.messageBody1 + ' ' + this.state.messageBody2}</div>
+                          }
+                        </div>
+                      </div>
+                      {this.state.meta.description && this.state.meta.title && this.state.meta.image ?
+                          <LinkPreview meta={this.state.meta} url={this.state.newLink} /> :
+                          <a target="_blank" className="noMeta" href={this.state.newLink}>{this.state.newLink}</a>}
+                      </div>
+                      : <div className="postDescription">
+                          <div className="postInnerContent">
+                            <Form className="editPostForm">
+                              <TextArea
+                                id="editTextarea"
+                                autoHeight
+                                minRows={2}/>
+                            </Form>
+                          </div>
+                        </div>}
             {(this.props.postData.attachment.name !== '') ?
             <MediaAttachment data={this.props.postData.attachment}
             renderLightBox={(data) => this.renderLightBox(data)}
@@ -372,12 +394,14 @@ Post.propTypes = {
   currentUser: PropTypes.object,
   nested: PropTypes.bool,
   getPostFollowers: PropTypes.func,
-  addChat: PropTypes.func
+  addChat: PropTypes.func,
+  editPost: PropTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => ({
   getPostFollowers: (followerIds) => dispatch(getPostFollowersThunk(followerIds)),
-  addChat: (postData) => dispatch({type: 'ADD_CHAT', postData: postData})
+  addChat: (postData) => dispatch({type: 'ADD_CHAT', postData: postData}),
+  editPost: (newPostData, postId) => dispatch(editPostThunk(newPostData, postId))
 });
 
 const mapStateToProps = (state) => ({

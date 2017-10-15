@@ -517,7 +517,7 @@
 
 .lineLeft {
     width: 6px;
-    background-color: #59B7C5;
+    background-color: #ddd;
     border-radius: 100px;
     height: auto;
     margin-left: 10px;
@@ -1059,4 +1059,19 @@ body ::-webkit-scrollbar {
     margin-top: 0 !important;
     color: #b3b5c1;
     font-size: 1.5em;
+}
+
+.noMeta {
+    margin-left: 2%;
+}
+
+#editTextarea {
+    width: 100%;
+    border: none !important;
+    color: inherit !important;
+    font-family: inherit !important;
+}
+
+.editPostForm {
+    width: 100%;
 }
