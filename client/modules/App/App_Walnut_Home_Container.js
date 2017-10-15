@@ -42,8 +42,18 @@ class WalnutHomeContainer extends React.Component {
       nextProps.getAllCommunities();
       this.setState({ isCalled: true });
     }
+    if (nextProps.isJoinError) {
+      console.log('error in join');
+      setTimeout(() => { this.props.errorDone();}, 5000);
+    }
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('stats receive', nextProps);
+    if (nextProps.isJoined) {
+      setTimeout(() => { this.setState({ open: false }); }, 5000);
+    }
+  }
 
   toggleCommunity(com) {
     this.props.updateConvos(com._id);
@@ -72,6 +82,8 @@ class WalnutHomeContainer extends React.Component {
           </div>
           <div>
             <JoinCommunityCode />
+            {this.props.isJoinError ?
+              <div className="popUpJoinError"><h4>Code invalid</h4></div> : null}
             <NewCommunityModal
               handleCreate={(image, title, defaultFilters) => this.handleSubmit(image, title, defaultFilters)} />
           </div>
@@ -124,15 +136,18 @@ WalnutHomeContainer.propTypes = {
   updateConvos: PropTypes.func,
   isReady: PropTypes.bool,
   handleLogout: PropTypes.func,
-  loginFirebase: PropTypes.bool
+  loginFirebase: PropTypes.bool,
+  isJoinError: PropTypes.bool,
+  errorDone: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
   hasProfile: state.userReducer.hasProfile,
   userCommunities: state.userReducer.communities,
   communities: state.getCommunityReducer.communities,
-  isReady: state.walnutHomeReducer,
-  loginFirebase: state.userReducer.loginFirebase
+  isReady: state.walnutHomeReducer.isReady,
+  loginFirebase: state.userReducer.loginFirebase,
+  isJoinError: state.walnutHomeReducer.joiningCodeError
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -142,6 +157,7 @@ const mapDispatchToProps = (dispatch) => ({
   getAllCommunities: () => dispatch(getAllCommunities()),
   updateConvos: (id) => dispatch({ type: 'SWITCH_COM', communityId: id }),
   handleLogout: (his) => dispatch(signOutThunk(his)),
+  errorDone: () => dispatch({ type: 'JOINING_CODE_ERROR_DONE'})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalnutHomeContainer);

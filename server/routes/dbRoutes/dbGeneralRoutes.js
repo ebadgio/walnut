@@ -130,57 +130,80 @@ router.post('/join/community', (req, res) => {
 });
 
 router.post('/join/community/code', (req, res) => {
-  console.log('code', req.body.code);
   const code = req.body.code;
-  let communityID;
   let joined;
+  let foundCommunityId;
+
 
   // TODO: decrypt
-  // Community.findById(communityID)
-  //   .then((community) => {
-  //     if (community.users.indexOf(req.user._id) === -1) {
-  //       community.users.push(req.user._id);
-  //     }
-  //     joined = community;
-  //     return community.save();
-  //   })
-  //   .then((response) => {
-  //     return User.findById(req.user._id);
-  //   })
-  //   .then((user) => {
-  //     if (user.communities.indexOf(req.body.communityId) === -1) {
-  //       user.communities.push(req.body.communityId);
-  //     }
-  //     user.currentCommunity = req.body.communityId;
-  //     const commPref = user.preferences.filter((pref) => pref.community === req.body.communityId);
-  //     if (commPref.length === 0 || commPref[0].pref.length === 0) {
-  //       const pref = {
-  //         community: req.body.communityId,
-  //         pref: []
-  //       };
-  //       user.preferences.push(pref);
-  //     }
-  //     user.markModified('preferences', 'currentCommunity');
-  //     return user.save();
-  //   })
-  //   .then((savedUser) => {
-  //     const opts = [
-  //       { path: 'communities' },
-  //       { path: 'currentCommunity' },
-  //       {
-  //         path: 'currentCommunity',
-  //         populate: { path: 'admins defaultags users' }
-  //       }
-  //     ];
-  //     return User.populate(savedUser, opts);
-  //   })
-  //   .then((populatedUser) => {
-  //     res.json({ success: true, community: joined, user: populatedUser });
-  //   })
-  //   .catch((err) => {
-  //     console.log('join error', err);
-  //     res.json({ error: err });
-  //   });
+  Community.find()
+    .then((arr) => {
+      return arr.filter((community) =>  {
+        const newId = community._id.toString();
+        const startId = newId.substring(21, 24);
+        const endId = newId.substring(0, 3);
+        const letters = community.title.substr(0, 2);
+        const status = community.status[0];
+        const potentialID = startId + '_' + letters + '_' + status + '_' + endId;
+        if ( potentialID === code ) {
+          return community;
+        } else {
+          return null;
+        }
+      });
+    })
+    .then((communityArr) => {
+      if ( communityArr.length < 1 ) {
+        res.json({ success: false });
+      } else {
+        return communityArr[0];
+      }
+    })
+    .then((community) => {
+      foundCommunityId = community._id;
+      if (community.users.indexOf(req.user._id) === -1) {
+        community.users.push(req.user._id);
+      }
+      joined = community;
+      return community.save();
+    })
+    .then((response) => {
+      return User.findById(req.user._id);
+    })
+    .then((user) => {
+      if (user.communities.indexOf(foundCommunityId) === -1) {
+        user.communities.push(foundCommunityId);
+      }
+      user.currentCommunity = foundCommunityId;
+      const commPref = user.preferences.filter((pref) => pref.community === foundCommunityId);
+      if (commPref.length === 0 || commPref[0].pref.length === 0) {
+        const pref = {
+          community: foundCommunityId,
+          pref: []
+        };
+        user.preferences.push(pref);
+      }
+      user.markModified('preferences', 'currentCommunity', 'communities');
+      return user.save();
+    })
+    .then((savedUser) => {
+      const opts = [
+        { path: 'communities' },
+        { path: 'currentCommunity' },
+        {
+          path: 'currentCommunity',
+          populate: { path: 'admins defaultags users' }
+        }
+      ];
+      return User.populate(savedUser, opts);
+    })
+    .then((populatedUser) => {
+      res.json({ success: true, community: joined, user: populatedUser });
+    })
+    .catch((err) => {
+      console.log('join error', err);
+      res.json({ error: err });
+    });
 });
 
 router.post('/toggle/community', (req, res) => {

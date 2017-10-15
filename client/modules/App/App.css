@@ -233,6 +233,34 @@
     width: 170px !important;
 }
 
+.joinLoader {
+    margin-top: 10px !important;
+}
+
+.isJoiningDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+#verifyingText {
+    margin-left: 109px;
+}
+
+.popUpJoinError {
+    padding: 3px;
+    border: 1px solid #ccc !important;
+    border-radius: 4px;
+    width: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    color: #5bc0e3;
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 254px;
+}
+
 .hashtag.icon {
     color: #4CC1FC;
 }

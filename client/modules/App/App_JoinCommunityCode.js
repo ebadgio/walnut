@@ -3,15 +3,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import joinCommunityCode from '../../thunks/community_thunks/joinCommunityCodeThunk';
-import { Button, Input, Form, Segment, Portal } from 'semantic-ui-react';
+import { Button, Input, Form, Segment, Portal, Loader, Icon } from 'semantic-ui-react';
 
 class JoinCommunityCode extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       code: '',
-      emptyBody: false
+      emptyBody: false,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isJoined) {
+      setTimeout(() => {this.setState({ open: false});}, 5000);
+    }
   }
 
   handleOpen() {
@@ -51,7 +57,8 @@ class JoinCommunityCode extends React.Component {
                 open={this.state.open}
             >
             <Segment className="joinCodeSegment">
-                    <div className="row newPostContent">
+            { !this.props.isJoining && !this.props.isJoined ?
+            <div className="row newPostContent">
                         {this.state.emptyBody ? <div className="popUpNoBody"><h4>Please type code from invitation email</h4></div> : null}
                         <Form className="newPostForm">
                             <Input
@@ -64,7 +71,19 @@ class JoinCommunityCode extends React.Component {
                         <Button className="wholeCreateButton" onClick={() => this.submitCode()}>
                             <Button.Content className="createButton" visible>submit</Button.Content>
                         </Button>
-                    </div>
+                    </div> : null }
+
+            { this.props.isJoining ?
+                    <div className="row isJoiningDiv">
+                      <Loader className="joinLoader" active inline="centered" />
+                      <p id="verifyingText">Verifying...</p>
+                    </div> : null }
+
+            { this.props.isJoined ?
+                    <div className="row newPostContent">
+                      <Icon name="checkmark" className="successJoinIcon"/>
+                      <p>Success, you can now check out your new community</p>
+                    </div> : null }
                 </Segment>
             </Portal>
         );
@@ -72,10 +91,16 @@ class JoinCommunityCode extends React.Component {
 }
 
 JoinCommunityCode.propTypes = {
-  submitCode: PropTypes.func
+  submitCode: PropTypes.func,
+  isJoined: PropTypes.bool,
+  isJoinError: PropTypes.bool,
+  isJoining: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
+  isJoined: state.walnutHomeReducer.joiningCodeSuccess,
+  isJoinError: state.walnutHomeReducer.joiningCodeError,
+  isJoining: state.walnutHomeReducer.isJoiningCode
 });
 
 const mapDispatchToProps = (dispatch) => ({
