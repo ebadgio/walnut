@@ -3,6 +3,7 @@ import URL from '../../info';
 
 
 const newPostThunk = (newPostBody, postId) => (dispatch) => {
+  console.log('reached start', newPostBody, postId);
   axios.post(URL + 'db/save/editPost', {
     newPostBody: newPostBody,
     postId: postId

@@ -7,20 +7,19 @@ import MediaAttachment from './Post_Media_Attachment.js';
 import LinkPreview from './LinkPreview';
 import './Post.css';
 import Lightbox from 'react-images';
-import {Divider, Icon, Button, Dropdown, Form, TextArea, Segment} from 'semantic-ui-react';
+import {Divider, Icon, Loader, Dropdown, Form, TextArea, Segment} from 'semantic-ui-react';
 import dateStuff from '../../dateStuff';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
 import getPostFollowersThunk from '../../thunks/post_thunks/getPostFollowers';
 import editPostThunk from '../../thunks/post_thunks/editPostThunk';
 
+
 class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       nested: this.props.nested,
-      likeCount: this.props.postData.likes.length,
-      isLiked: this.props.postData.likes.indexOf(this.props.currentUser._id) > 0,
       lightBoxData: '',
       pdfModalData: '',
       page: 1,
@@ -37,41 +36,20 @@ class Post extends React.Component {
       numFollowers: 0,
       showDrawer: false,
       isFollowing: false,
-      meta: {}
+      meta: {},
+      loading: false,
+      postData: this.props.postData,
+      minHeighter: 100
     };
     this.getUseDate = this.getUseDate.bind(this);
   }
 
-  componentWillMount() {
-    const urls = this.urlFinder(this.props.postData.content);
-    if (urls.length === 0) {
-      this.setState({ messageBody: this.props.postData.content });
-      return false;
-    }
-    axios.post('/db/get/linkpreview', {
-      url: urls[0]
-    })
-    .then((response) => {
-      console.log('return meta fetch', response.data.meta);
-      this.setState({ meta: response.data.meta });
-      if (urls.length !== 0) {
-        const idx = this.props.postData.content.indexOf(urls[0]);
-        const newBody1 = this.props.postData.content.substr(0, idx);
-        const newBody2 = this.props.postData.content.substr((idx + urls[0].length), this.props.postData.content.length);
-        const newLink = urls[0];
-        if (!response.data.meta.description || !response.data.meta.title || !response.data.meta.image) {
-          this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink });
-        } else {
-          this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink, urlName: this.urlNamer(newLink) });
-        }
-      }
-    })
-    .catch((err) => {
-      console.log('error in meta scrape', err);
-    });
-  }
-
   componentDidMount() {
+    setTimeout(() => {
+      const elem = document.getElementById(this.props.postData.postId);
+      this.setState({minHeighter: elem.clientHeight + 20});
+    }, 5000);
+
     const user = firebaseApp.auth().currentUser;
     this.setState({ user: user, timeStamp: this.getUseDate(this.props.postData.createdAt)});
     const membersRef = firebaseApp.database().ref('/members/' + this.props.postData.postId);
@@ -115,6 +93,55 @@ class Post extends React.Component {
       if (!isNaN(unreadCount) && unreadCount !== null) {
         this.setState({unreads: unreadCount});
       }
+    });
+  }
+
+  componentWillMount() {
+    this.getLinkPreview(this.props.postData);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // Only want it do something if its waiting for edit response (i.e if its loading)
+    if (this.state.loading) {
+      if (!nextProps.saving) {
+        if (!nextProps.saveError) {
+          this.getLinkPreview(nextProps.savedPost);
+          this.setState({loading: false, success: true, showStatus: true, postData: nextProps.savedPost});
+          setTimeout(() => {this.setState({showStatus: false}); this.props.finishEdit();}, 1000);
+        } else {
+          this.setState({loading: false, success: false, showStatus: true});
+          setTimeout(() => {this.setState({showStatus: false}); this.props.finishEdit();}, 1000);
+        }
+      }
+    }
+  }
+
+  getLinkPreview(postData) {
+    const urls = this.urlFinder(postData.content);
+    if (urls.length === 0) {
+      this.setState({ messageBody: postData.content });
+      return false;
+    }
+    axios.post('/db/get/linkpreview', {
+      url: urls[0]
+    })
+    .then((response) => {
+      console.log('return meta fetch', response.data.meta);
+      this.setState({ meta: response.data.meta });
+      if (urls.length !== 0) {
+        const idx = postData.content.indexOf(urls[0]);
+        const newBody1 = postData.content.substr(0, idx);
+        const newBody2 = postData.content.substr((idx + urls[0].length), postData.content.length);
+        const newLink = urls[0];
+        if (!response.data.meta.description || !response.data.meta.title || !response.data.meta.image) {
+          this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink });
+        } else {
+          this.setState({ messageBody1: newBody1, messageBody2: newBody2, newLink: newLink, urlName: this.urlNamer(newLink) });
+        }
+      }
+    })
+    .catch((err) => {
+      console.log('error in meta scrape', err);
     });
   }
 
@@ -274,32 +301,107 @@ class Post extends React.Component {
   }
 
   startEdit() {
+    this.props.beginEdit();
     this.setState({editing: true});
     setTimeout(() => {
       const elem = document.getElementById('editTextarea');
       elem.value = this.props.postData.content;
-    }, 500);
+    }, 300);
   }
 
   savePost() {
     const elem = document.getElementById('editTextarea');
     this.props.editPost(elem.value, this.props.postData.postId);
+    this.setState({editing: false, loading: true});
   }
 
   render() {
+    const { minHeighter } = this.state;
+    if (this.state.loading) {
+      return(
+          <div className="postOuter">
+            <Segment className={this.state.showDrawer ? 'postSegmentDrawerOpen' : 'postSegment'}>
+              <div className="postContent">
+                <div className="postUser" id="postUser">
+                  <div className="imageWrapperPost">
+                    <img className="postUserImage" src={this.state.postData.pictureURL} />
+                  </div>
+                  <div className="postHeader">
+                    <h3 className="postHeaderUser">{this.state.postData.username}</h3>
+                    <p className="postTimeStamp">{this.state.timeStamp}</p>
+                      {this.state.postData.edited ? <p className="isEdited">(edited)</p> : null}
+                  </div>
+                    {this.state.isFollowing ? <div className="isFollowingGroup">
+                      <Icon name="checkmark" className="iconFollowing" size={'small'} />
+                      <p className="followingText">Following</p>
+                    </div> : <div className="postFollowButton" onClick={() => this.joinConversation()}>
+                      <Icon name="plus" className="followIcon" />
+                      Follow
+                    </div>}
+                  <Dropdown className="postDropdown" icon={'ellipsis horizontal'}>
+                    <Dropdown.Menu>
+                        {!this.state.isFollowing ?
+                            <Dropdown.Item icon="plus" onClick={() => this.joinConversation()} text="Follow" /> :
+                            <Dropdown.Item text="Unfollow" onClick={() => this.leaveConversation()} />}
+                        {this.props.currentUser.fullName === this.state.postData.username ? <Dropdown.Item icon="edit" text="Edit post" onClick={() => this.startEdit()} /> : null}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+                <div className="postDescription">
+                  <div className="postInnerContent">
+                    <Loader active/>
+                  </div>
+                </div>
+              </div>
+              <div className="statsGroup">
+                <span className="activeNum">
+                  {this.state.membersCount > 0 ? this.state.membersCount + ' active' : null}
+                </span>
+                    <span className="followNum">
+                      {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
+                </span>
+                    <span className="commentNum">
+                      {this.state.count}{' messages'}
+                </span>
+                      {this.state.isFollowing ? <span className={this.state.unreads > 0 ? 'isUnread' : 'noUnread'}>
+                      {this.state.unreads}{' unread'}
+                </span> : null}
+              </div>
+              <Divider className="postDivider" fitted />
+              <div className="postFootnote">
+                <div className="tagContainer">
+                    {this.state.postData.tags ? this.state.postData.tags.map((tag, index) => (
+                        <div key={index} className="tag">
+                          <text className="hashtag">#{' ' + tag.name}</text>
+                        </div>)) : null}
+                </div>
+                <div></div>
+                <div className="commentDiv" id="commentDiv">
+                  <div className="messagesGroup" onClick={() => this.state.addChat(this.state.postData)}>
+                    <Icon size="big" name="comments outline" className="commentIcon" />
+                    <p className="messageText">Chat</p>
+                  </div>
+                </div>
+              </div>
+            </Segment>
+          </div>
+      );
+    }
+    console.log('min height', minHeighter);
     return (
       <div className="postOuter">
         <Segment className={this.state.showDrawer ? 'postSegmentDrawerOpen' : 'postSegment'}>
           <div className="postContent">
             <div className="postUser" id="postUser">
               <div className="imageWrapperPost">
-                  <img className="postUserImage" src={this.props.postData.pictureURL} />
+                  <img className="postUserImage" src={this.state.postData.pictureURL} />
               </div>
               <div className="postHeader">
-                <h3 className="postHeaderUser">{this.props.postData.username}</h3>
+                <h3 className="postHeaderUser">{this.state.postData.username}</h3>
                 <p className="postTimeStamp">{this.state.timeStamp}</p>
+                  {this.state.postData.edited ? <p className="isEdited">(edited)</p> : null}
               </div>
-                {this.state.editing ? <div onClick={() => this.savePost()}>Save</div> : null}
+                {this.state.showStatus ? <div>{this.state.success ? <span className="successSave">Save successful!</span> : <span className="failSave">Something went wrong...</span>}</div> : null}
                 {this.state.isFollowing ? <div className="isFollowingGroup">
                   <Icon name="checkmark" className="iconFollowing" size={'small'} />
                   <p className="followingText">Following</p>
@@ -312,14 +414,14 @@ class Post extends React.Component {
                     {!this.state.isFollowing ?
                         <Dropdown.Item icon="plus" onClick={() => this.joinConversation()} text="Follow" /> :
                         <Dropdown.Item text="Unfollow" onClick={() => this.leaveConversation()} />}
-                    {this.props.currentUser.fullName === this.props.postData.username ? <Dropdown.Item icon="edit" text="Edit post" onClick={() => this.startEdit()} /> : null}
+                    {this.props.currentUser.fullName === this.state.postData.username ? <Dropdown.Item icon="edit" text="Edit post" onClick={() => this.startEdit()} /> : null}
                 </Dropdown.Menu>
               </Dropdown>
             </div>
               {!this.state.editing ?
                   <div>
                       <div className="postDescription">
-                        <div className="postInnerContent">
+                        <div className="postInnerContent" id={this.state.postData.postId}>
                           {this.state.messageBody ? this.state.messageBody :
                         <div>{this.state.messageBody1 + ' ' + this.state.messageBody2}</div>
                           }
@@ -334,13 +436,14 @@ class Post extends React.Component {
                             <Form className="editPostForm">
                               <TextArea
                                 id="editTextarea"
-                                autoHeight
-                                minRows={2}/>
+                                style={{minHeight: minHeighter}}
+                                autoHeight/>
                             </Form>
                           </div>
                         </div>}
-            {(this.props.postData.attachment.name !== '') ?
-            <MediaAttachment data={this.props.postData.attachment}
+              {this.state.editing ? <div className="savePostButton" onClick={() => this.savePost()}>Save</div> : null}
+            {(this.state.postData.attachment.name !== '') ?
+            <MediaAttachment data={this.state.postData.attachment}
             renderLightBox={(data) => this.renderLightBox(data)}
             renderPdfModal={(data) => this.renderPdfModal(data)}/>
             : null}
@@ -370,14 +473,14 @@ class Post extends React.Component {
           <Divider className="postDivider" fitted />
           <div className="postFootnote">
             <div className="tagContainer">
-              {this.props.postData.tags.map((tag, index) => (
+              {this.state.postData.tags.map((tag, index) => (
               <div key={index} className="tag">
                 <text className="hashtag">#{' ' + tag.name}</text>
               </div>))}
             </div>
             <div></div>
             <div className="commentDiv" id="commentDiv">
-              <div className="messagesGroup" onClick={() => this.props.addChat(this.props.postData)}>
+              <div className="messagesGroup" onClick={() => this.state.addChat(this.state.postData)}>
                 <Icon size="big" name="comments outline" className="commentIcon" />
                 <p className="messageText">Chat</p>
               </div>
@@ -395,16 +498,26 @@ Post.propTypes = {
   nested: PropTypes.bool,
   getPostFollowers: PropTypes.func,
   addChat: PropTypes.func,
-  editPost: PropTypes.func
+  editPost: PropTypes.func,
+  savedPost: PropTypes.object,
+  saving: PropTypes.bool,
+  saveError: PropTypes.bool,
+  beginEdit: PropTypes.func,
+  finishEdit: PropTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => ({
+  beginEdit: () =>  dispatch({type: 'STARTED_EDITING'}),
+  finishEdit: () => dispatch({type: 'EVERYTHING_DONE'}),
   getPostFollowers: (followerIds) => dispatch(getPostFollowersThunk(followerIds)),
   addChat: (postData) => dispatch({type: 'ADD_CHAT', postData: postData}),
   editPost: (newPostData, postId) => dispatch(editPostThunk(newPostData, postId))
 });
 
 const mapStateToProps = (state) => ({
+  savedPost: state.editPostReducer.edited,
+  saving: state.editPostReducer.saving,
+  saveError: state.editPostReducer.saveError
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);

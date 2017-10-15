@@ -50,7 +50,11 @@ class Feed extends React.Component {
     } else {
       if(shouldRefire) {
         shouldRefire = false;
-        refresh = setInterval(() => { this.props.getRefresh(this.props.lastRefresh, this.props.useFilters); }, 30000);
+        refresh = setInterval(() => {
+          if (!this.props.editing) {
+            this.props.getRefresh(this.props.lastRefresh, this.props.useFilters);
+          }
+        }, 30000);
       }
     }
   }
@@ -120,7 +124,8 @@ Feed.propTypes = {
   lastRefresh: PropTypes.string,
   useFilters: PropTypes.array,
   modalIsOpen: PropTypes.bool,
-  toggleModal: PropTypes.func
+  toggleModal: PropTypes.func,
+  editing: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
@@ -130,7 +135,8 @@ const mapStateToProps = (state) => ({
   isReady: state.discoverReducer.isReady,
   lastRefresh: state.discoverReducer.lastRefresh,
   useFilters: state.discoverReducer.useFilters,
-  modalIsOpen: state.discoverReducer.modalIsOpen
+  modalIsOpen: state.discoverReducer.modalIsOpen,
+  editing: state.editPostReducer.editing
 });
 
 const mapDispatchToProps = (dispatch) => ({

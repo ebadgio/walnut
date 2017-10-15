@@ -272,7 +272,8 @@
 }
 
 .postHeader {
-    display: block;
+    display: flex;
+    flex-direction: column;
     height: 46px;
     margin-top: 5px;
 }
@@ -859,6 +860,7 @@ iframe {
     font-size: 10px;
     margin-left: -5px;
     color: #b3b5c1;
+    margin-bottom: 0;
 }
 
 .noMoreMessages {
@@ -1066,6 +1068,8 @@ body ::-webkit-scrollbar {
 }
 
 #editTextarea {
+    font-size: 16px;
+    min-height: 100%;
     width: 100%;
     border: none !important;
     color: inherit !important;
@@ -1074,4 +1078,44 @@ body ::-webkit-scrollbar {
 
 .editPostForm {
     width: 100%;
+}
+
+.savePostButton {
+    cursor: pointer;
+    height: 30px;
+    width: 50px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    color: #6874e8;
+    border: 1px solid;
+    margin-left: auto;
+    margin-right: 2%;
+    border-radius: 27px;
+    /*transition: background .3s ease, color .3s ease;*/
+}
+
+.savePostButton:hover {
+    background: #6874e8;
+    color: #fff;
+    border-color: #6874e8;
+}
+
+.successSave {
+    font-weight: bold;
+    color: #11e6a7;
+    margin-left:20px;
+}
+
+.failSave {
+    font-weight: bold;
+    margin-left: 20px;
+    color: #B80C09;
+}
+
+.isEdited {
+    font-size: 8px;
+    margin-left: -5px;
+    height: 11px;
+    color: #cecfd7;
 }

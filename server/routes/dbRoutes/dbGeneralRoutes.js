@@ -187,6 +187,7 @@ router.post('/toggle/community', (req, res) => {
                         commentNumber: postObj.commentNumber,
                         link: postObj.link,
                         attachment: postObj.attachment,
+                        edited: postObj.edited
                       };
                     });
                     res.json({ data: populatedUser, defaultFilters: defaultFilters, otherFilters: otherFilters, posts: posts, lastRefresh: new Date() });
@@ -253,6 +254,7 @@ router.post('/toggle/checked', (req, res) => {
                               commentNumber: postObj.commentNumber,
                               link: postObj.link,
                               attachment: postObj.attachment,
+                              edited: postObj.edited
                             };
                           });
                           res.json({ posts: posts, user: user, lastRefresh: new Date()});
@@ -297,6 +299,7 @@ router.post('/toggle/checkedtemp', (req, res) => {
               commentNumber: postObj.commentNumber,
               link: postObj.link,
               attachment: postObj.attachment,
+              edited: postObj.edited
             };
           });
           if (posts.length > 10) {

@@ -270,6 +270,10 @@ const PostSchema = new mongoose.Schema({
       default: ''
     }
   },
+  edited: {
+    type: Boolean,
+    default: false
+  }
 });
 
 

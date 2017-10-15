@@ -66,6 +66,7 @@ router.post('/post', (req, res) => {
           commentNumber: postObj.commentNumber,
           link: postObj.link,
           attachment: postObj.attachment,
+          edited: postObj.edited,
           comments: postObj.comments.map((commentObj) => {
             return {
               commentId: commentObj._id,
@@ -102,11 +103,15 @@ router.post('/post', (req, res) => {
 router.post('/editPost', (req, res) => {
   console.log('editing post', req.body);
   Post.findById(req.body.postId)
+    .populate('tags')
+    .populate('createdBy')
     .then((response) => {
       response.content = req.body.newPostBody;
+      response.edited = true;
       return response.save();
     })
     .then((postObj) => {
+      console.log('made it past populate', postObj);
       const send = {
         postId: postObj._id,
         username: postObj.createdBy.fullName,
@@ -118,7 +123,8 @@ router.post('/editPost', (req, res) => {
         commentNumber: postObj.commentNumber,
         link: postObj.link,
         attachment: postObj.attachment,
-        comments: postObj.comments
+        comments: postObj.comments,
+        edited: postObj.edited
       };
       res.json({success: true, editedPost: send});
     })
