@@ -28,7 +28,8 @@ const defaults = {
   members: [],
   membersCount: 0,
   validate: true,
-  unreads: 0
+  unreads: 0,
+  lastMessage: {}
 };
 
 class ConversationCard extends React.Component {
@@ -36,6 +37,10 @@ class ConversationCard extends React.Component {
     super();
     this.state = {
       numFollowers: 0,
+      lastMessage: {},
+      members: [],
+      membersCount: 0,
+      unreads: 0,
     };
   }
 
@@ -71,6 +76,16 @@ class ConversationCard extends React.Component {
         const num = followers.length;
         // this.props.sumUnreads(this.props.data.postId, num);
         this.setState({numFollowers: num});
+      }
+    });
+
+    // Last message stuff
+    firebaseApp.database().ref('/lastMessage/' + this.props.data.postId).on('value', snapshotC => {
+      if (snapshotC.val()) {
+        const lastMessage =  snapshotC.val();
+        if (lastMessage.author && lastMessage.content) {
+          this.setState({lastMessage: lastMessage});
+        }
       }
     });
   }
@@ -122,30 +137,26 @@ class ConversationCard extends React.Component {
                  onClick={() => this.switching()}>
           <div className="conversationCardContent" >
             <div className="conversationCardHeader">
-              <div className="conversationCardWrapper">
-                <img className="conversationCardUserImage" src={this.props.data.pictureURL} />
-              </div>
-                <h3 className="conversationCardHeaderUser">{this.props.data.username}</h3>
+                {this.props.data.tags.map((tag, index) => (
+                    <div key={index} className="tag">
+                      <text className="hashtag">#{' ' + tag.name}</text>
+                    </div>))}
             </div>
-              {this.props.data.content.split(' ').length > 4 ?
-              <Popup inverted
-                   hoverable
-                   trigger={<p className="conversationCardBody">{this.props.data.content.split(' ').slice(0, 4).join(' ') + '...'}</p>}
-                   content={<Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify>}/> :
-                  <Linkify className="conversationCardBody" tagName="p" options={defaults}>{this.props.data.content}</Linkify> }
-              <div className="conversationFootnote">
-                <div className="messageInfoGroupMini">
-                  <span className="activeNumMini">
-                    {this.state.membersCount > 0 ? this.state.membersCount + ' active' : null}
-                  </span>
-                  <span className="followNumMini">
-                    {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
-                  </span>
-                  <span className="commentNumMini">{this.state.count}{' messages'}</span>
-                  <span className={this.state.unreads > 0 ? 'isUnreadMini' : 'noUnreadMini'}>
-                    {this.state.unreads}{' unread'}
-                  </span>
-                </div>
+            <div className="lastMessageBox">{this.state.lastMessage.author ?
+                this.state.lastMessage.author + ': ' + this.state.lastMessage.content : 'No messages to display yet' }</div>
+            <div className="conversationFootnote">
+              <div className="messageInfoGroupMini">
+                <span className="activeNumMini">
+                  {this.state.membersCount > 0 ? this.state.membersCount + ' active' : null}
+                </span>
+                <span className="followNumMini">
+                  {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
+                </span>
+                <span className="commentNumMini">{this.state.count}{' messages'}</span>
+                <span className={this.state.unreads > 0 ? 'isUnreadMini' : 'noUnreadMini'}>
+                  {this.state.unreads}{' unread'}
+                </span>
+              </div>
             </div>
           </div>
         </Segment>

@@ -20,10 +20,10 @@ const signInThunk = (email, password, redirect) => (dispatch) => {
           })
             .then((res) => {
               dispatch({ type: 'GET_USER_DATA_DONE', user: res.data.user });
-              setTimeout(dispatch({ type: 'WALNUT_READY' }), 5000);
+              setTimeout(() => dispatch({ type: 'WALNUT_READY' }), 5000);
             });
         })
-        .catch(function (error) {
+        .catch((error) => {
           // Handle Errors here.
           console.log('you got a fucking error', error);
           const errorCode = error.code;
@@ -32,7 +32,7 @@ const signInThunk = (email, password, redirect) => (dispatch) => {
           // ...
         });
     })
-    .catch(function (error) {
+    .catch((error) => {
       // Handle Errors here.
       console.log('you got a fucking error', error);
       const errorCode = error.code;

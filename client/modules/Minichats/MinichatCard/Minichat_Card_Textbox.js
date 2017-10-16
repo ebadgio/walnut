@@ -126,6 +126,14 @@ class MinichatTextBox extends React.Component {
         };
       }
 
+      // Last message stuff
+      const updateLast = {};
+      updateLast['/lastMessage/' + this.props.postData.postId] = {
+        author: this.state.user.displayName,
+        content: this.state.commentBody
+      };
+      firebaseApp.database().ref().update(updateLast);
+
             // unread messages set up
       firebaseApp.database().ref('/followGroups/' + this.props.postData.postId).once('value', snapshot => {
         const followers = Object.keys(snapshot.val());

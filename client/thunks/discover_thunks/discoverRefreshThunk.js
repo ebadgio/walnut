@@ -12,7 +12,7 @@ const discoverRefreshThunk = (lastRefresh, filters) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log('error in discoverThunk', err, err.response, err.response.headers);
+      console.log('error in discoverThunk', err);
       dispatch({ type: 'GET_DISCOVER_DATA_ERROR' });
     });
 };
