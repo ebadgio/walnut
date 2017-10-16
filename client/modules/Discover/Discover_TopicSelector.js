@@ -28,7 +28,11 @@ class TopicSelectorContainer extends React.Component {
     if (!nextProps.isFetching && this.props.otherFilters) {
       const options = this.selectOptions(nextProps);
       console.log('options', nextProps, options);
-      this.setState({options: options});
+      if (options.length > 0) {
+        this.setState({options: options});
+      } else {
+        console.log('missing options');
+      }
     } else {
       console.log('that shit is missing');
     }

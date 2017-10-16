@@ -387,7 +387,6 @@ class Post extends React.Component {
           </div>
       );
     }
-    console.log('min height', minHeighter);
     return (
       <div className="postOuter">
         <Segment className={this.state.showDrawer ? 'postSegmentDrawerOpen' : 'postSegment'}>
