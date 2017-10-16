@@ -377,7 +377,7 @@ class Post extends React.Component {
                 </div>
                 <div></div>
                 <div className="commentDiv" id="commentDiv">
-                  <div className="messagesGroup" onClick={() => this.state.addChat(this.state.postData)}>
+                  <div className="messagesGroup" onClick={() => this.props.addChat(this.state.postData)}>
                     <Icon size="big" name="comments outline" className="commentIcon" />
                     <p className="messageText">Chat</p>
                   </div>
@@ -480,7 +480,7 @@ class Post extends React.Component {
             </div>
             <div></div>
             <div className="commentDiv" id="commentDiv">
-              <div className="messagesGroup" onClick={() => this.state.addChat(this.state.postData)}>
+              <div className="messagesGroup" onClick={() => this.props.addChat(this.state.postData)}>
                 <Icon size="big" name="comments outline" className="commentIcon" />
                 <p className="messageText">Chat</p>
               </div>

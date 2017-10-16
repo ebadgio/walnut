@@ -1061,6 +1061,7 @@ body ::-webkit-scrollbar {
     margin-top: 0 !important;
     color: #b3b5c1;
     font-size: 1.5em;
+    transition: color .35s ease, box-shadow .1s ease, width .1s ease !important;
 }
 
 .noMeta {
@@ -1118,4 +1119,8 @@ body ::-webkit-scrollbar {
     margin-left: -5px;
     height: 11px;
     color: #cecfd7;
+}
+
+.postDropdown:hover {
+    color: #313235;
 }
