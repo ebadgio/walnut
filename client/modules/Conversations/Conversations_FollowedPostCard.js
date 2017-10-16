@@ -6,6 +6,7 @@ import Linkify from 'linkifyjs/react';
 import dateStuff from '../../dateStuff';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
+import '../Discover/Discover.css';
 
 const defaults = {
   attributes: null,
