@@ -8,10 +8,7 @@ import NewPostContainer from '../Feed/Feed_NewPost_Container';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
 import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
-import Online from './Discover_Online';
-
 // import firebaseApp from '../../firebase';
-import _ from 'underscore';
 import BottomContainer from '../Minichats/Minichat_Bottom_Container';
 
 class Home extends React.Component {

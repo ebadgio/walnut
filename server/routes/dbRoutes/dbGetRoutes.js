@@ -1,10 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import {User, Tag, Post, Quote, Community} from '../../models/models';
-import axios from 'axios';
-import Promise from 'promise';
-import firebaseApp from '../../../client/firebase';
-import adminApp from '../../firebaseAdmin';
+import {User, Post, Quote, Community} from '../../models/models';
 import Metascraper from 'metascraper';
 
 router.get('/app', (req, res) => {
@@ -286,10 +282,8 @@ router.get('/myconversations/:postIds', (req, res) => {
 
 router.get('/followers/:followUserIds', (req, res) => {
   const userIds = req.params.followUserIds.split('+');
-  console.log('in backend Followers', userIds);
   User.find({ firebaseId: { $in: userIds}})
     .then((userArr) => {
-      console.log('in backend Followers', userArr);
       const followers = userArr.map((userObj) => {
         return {
           userId: userObj._id,

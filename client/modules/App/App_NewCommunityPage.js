@@ -6,6 +6,7 @@ import createCommunityThunk from '../../thunks/community_thunks/createCommunityT
 import superagent from 'superagent';
 import $ from 'jquery';
 import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
 
 class CreateCommunityPage extends React.Component {
   constructor() {
@@ -15,6 +16,8 @@ class CreateCommunityPage extends React.Component {
       image: 'https://avatars2.githubusercontent.com/u/5745754?v=4&s=88',
       otherTags: [],
       filterValue: '',
+      newMembers: [],
+      member: '',
       file: '',
       pic: '',
       page: 1,
@@ -22,6 +25,16 @@ class CreateCommunityPage extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    // Scroll to bottom
+    if (prevState.newMembers.length !== this.state.newMembers.length) {
+      const len = this.state.newMembers.length - 1;
+      const node = ReactDOM.findDOMNode(this['_div' + len]);
+      if (node) {
+        node.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }
 
   handleChange(e) {
     this.setState({ titleValue: e.target.value });
@@ -38,14 +51,34 @@ class CreateCommunityPage extends React.Component {
     this.setState({ otherTags: copy, filterValue: '' });
   }
 
+  handleMemberChange(e) {
+    this.setState({ member: e.target.value });
+  }
+
+  handleMemberClick(e) {
+    e.preventDefault();
+    if (this.state.member.length !== 0) {
+      const copy = this.state.newMembers.slice();
+      copy.push(this.state.member);
+      this.setState({ newMembers: copy, member: '' });
+    }
+  }
+
+  handleMemberRemove(n) {
+    const copy = this.state.newMembers.slice();
+    copy.splice(n, 1);
+    this.setState({ newMembers: copy});
+  }
+
+
   handleNewComm() {
     if (this.state.file !== '' && this.state.titleValue) {
       console.log('inside with pic', this.state.file, this.state.titleValue, this.state.status, this.state.otherTags);
-      this.props.handleCreate(this.state.file, this.state.titleValue, this.state.status, this.state.otherTags);
+      this.props.handleCreate(this.state.file, this.state.titleValue, this.state.status, this.state.otherTags, this.state.newMembers);
       this.setState({ titleValue: '', status: 'public', otherTags: [] });
       this.props.closeModal();
     } else if (this.state.titleValue) {
-      this.props.handleCreate(this.state.image, this.state.titleValue, this.state.status, this.state.otherTags);
+        this.props.handleCreate(this.state.image, this.state.titleValue, this.state.status, this.state.otherTags, this.state.newMembers);
       this.setState({ titleValue: '', status: 'public', otherTags: [] });
       this.props.closeModal();
     }
@@ -198,11 +231,29 @@ class CreateCommunityPage extends React.Component {
                         <Icon className="closingIcon" name="close" onClick={() => this.props.closeModal()} />
                     </Modal.Header>
                     <h3 className="topicTitle">Add Members:</h3>
+                    <div className="emailDiv">
+                        { this.state.newMembers.map((email, i) =>
+                            <div className="emailInnerDiv" ref={(ref) => {this['_div' + i] = ref;}}>
+                                <Icon className="removeIcon" name="close" onClick={() => this.handleMemberRemove(i)} />
+                                <h4 className="email">
+                                    {email}
+                                </h4>
+                            </div>
+                        )}
+                    </div>
+                    <div className="addTags">
+                        <Input
+                            id="topicInput"
+                            labelPosition="left"
+                            type="text"
+                            placeholder="Add Members..."
+                            value={this.state.member}
+                            onChange={(e) => { this.handleMemberChange(e); }} >
+                            <input />
+                        </Input>
+                        <Button className="addButton" content="Add" icon="plus" onClick={(e) => { this.handleMemberClick(e); }} />
+                    </div>
                     <Modal.Actions className="createCommunityActions">
-                        {/* <Button onClick={() => this.handleNewComm(this.state.image, this.state.titleValue, this.state.otherTags)}>
-                            Create
-                            <Icon name="lightning" />
-                        </Button> */}
                         <Button.Content className="createButtonModal" onClick={() => this.handleNewComm()} visible>Create <Icon name="lightning" /></Button.Content>
                         <Button.Content className="prevButtonModalEnd" onClick={() => this.setState({ page: 3 })} visible>Back</Button.Content>
                     </Modal.Actions>
@@ -223,7 +274,7 @@ CreateCommunityPage.propTypes = {
 const mapDispatchToProps = (dispatch) => ({
   updateUser: (user) => dispatch({ type: 'GET_USER_DATA_DONE', user }),
   updateCommunities: (communities) => dispatch({ type: 'GET_ALL_COMMUNITIES_NEW', communities }),
-  handleCreate: (image, title, status, otherTags) => dispatch(createCommunityThunk(image, title, status, otherTags))
+  handleCreate: (image, title, status, otherTags, newMembers) => dispatch(createCommunityThunk(image, title, status, otherTags, newMembers))
 });
 
 export default connect(null, mapDispatchToProps)(CreateCommunityPage);

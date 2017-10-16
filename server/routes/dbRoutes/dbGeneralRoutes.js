@@ -1,10 +1,7 @@
 import express from 'express';
 const router = express.Router();
-import {User, Tag, Post, Quote, Community} from '../../models/models';
-import axios from 'axios';
+import {User, Tag, Post, Community} from '../../models/models';
 import Promise from 'promise';
-import firebaseApp from '../../../client/firebase';
-import adminApp from '../../firebaseAdmin';
 
 router.get('/user', (req, res) => {
   User.findById(req.user._id)
@@ -24,9 +21,9 @@ router.get('/user', (req, res) => {
 });
 
 router.post('/create/community', (req, res) => {
-  console.log('inside the backend', req.body);
   let userEnd;
   let commEnd;
+  let communityID;
   const tagModels = req.body.otherTags.map((filter) =>
         new Tag({
           name: filter.toUpperCase()
@@ -46,6 +43,7 @@ router.post('/create/community', (req, res) => {
           return community.save();
         })
         .then((community) => {
+          communityID = community._id;
           commEnd = community;
           return User.findById(req.user._id);
         })
@@ -76,7 +74,7 @@ router.post('/create/community', (req, res) => {
             return Community.find();
           })
           .then((communities) => {
-            res.json({user: userEnd, communities: communities});
+            res.json({user: userEnd, communities: communities, communityID: communityID});
           })
         .catch((err) => {
           console.log('got error', err);
@@ -129,6 +127,83 @@ router.post('/join/community', (req, res) => {
           console.log('join error', err);
           res.json({error: err});
         });
+});
+
+router.post('/join/community/code', (req, res) => {
+  const code = req.body.code;
+  let joined;
+  let foundCommunityId;
+
+
+  // TODO: decrypt
+  Community.find()
+    .then((arr) => {
+      return arr.filter((community) =>  {
+        const newId = community._id.toString();
+        const startId = newId.substring(21, 24);
+        const endId = newId.substring(0, 3);
+        const letters = community.title.substr(0, 2);
+        const status = community.status[0];
+        const potentialID = startId + '_' + letters + '_' + status + '_' + endId;
+        if ( potentialID === code ) {
+          return community;
+        } else {
+          return null;
+        }
+      });
+    })
+    .then((communityArr) => {
+      if ( communityArr.length < 1 ) {
+        res.json({ success: false });
+      } else {
+        return communityArr[0];
+      }
+    })
+    .then((community) => {
+      foundCommunityId = community._id;
+      if (community.users.indexOf(req.user._id) === -1) {
+        community.users.push(req.user._id);
+      }
+      joined = community;
+      return community.save();
+    })
+    .then((response) => {
+      return User.findById(req.user._id);
+    })
+    .then((user) => {
+      if (user.communities.indexOf(foundCommunityId) === -1) {
+        user.communities.push(foundCommunityId);
+      }
+      user.currentCommunity = foundCommunityId;
+      const commPref = user.preferences.filter((pref) => pref.community === foundCommunityId);
+      if (commPref.length === 0 || commPref[0].pref.length === 0) {
+        const pref = {
+          community: foundCommunityId,
+          pref: []
+        };
+        user.preferences.push(pref);
+      }
+      user.markModified('preferences', 'currentCommunity', 'communities');
+      return user.save();
+    })
+    .then((savedUser) => {
+      const opts = [
+        { path: 'communities' },
+        { path: 'currentCommunity' },
+        {
+          path: 'currentCommunity',
+          populate: { path: 'admins defaultags users' }
+        }
+      ];
+      return User.populate(savedUser, opts);
+    })
+    .then((populatedUser) => {
+      res.json({ success: true, community: joined, user: populatedUser });
+    })
+    .catch((err) => {
+      console.log('join error', err);
+      res.json({ error: err });
+    });
 });
 
 router.post('/toggle/community', (req, res) => {

@@ -34,6 +34,7 @@ var dbSaveRoutes = require('./routes/dbRoutes/dbSaveRoutes');
 var dbUpdateRoutes = require('./routes/dbRoutes/dbUpdateRoutes');
 var awsRoutes = require('./routes/awsAccess');
 var auth = require('./routes/authorization');
+var emailRoutes = require('./routes/email');
 var app = express();
 
 app.use(logger('tiny'));
@@ -134,6 +135,7 @@ app.use('/db/get', dbGetRoutes);
 app.use('/db/save', dbSaveRoutes);
 app.use('/db/update', dbUpdateRoutes);
 app.use('/aws', awsRoutes);
+app.use('/email', emailRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
 app.use('/*', (request, response) => {
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
