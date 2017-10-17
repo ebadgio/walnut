@@ -137,10 +137,7 @@ class ConversationCard extends React.Component {
                  onClick={() => this.switching()}>
           <div className="conversationCardContent" >
             <div className="conversationCardHeader">
-                {this.props.data.tags.map((tag, index) => (
-                    <div key={index} className="tag">
-                      <text className="hashtag">#{' ' + tag.name}</text>
-                    </div>))}
+                {this.props.data.tags.map((tag) => ('#' + tag.name)).join(' ')}
             </div>
             <div className="lastMessageBox">{this.state.lastMessage.author ?
                 this.state.lastMessage.author + ': ' + this.state.lastMessage.content : 'No messages to display yet' }</div>

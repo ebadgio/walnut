@@ -145,7 +145,8 @@
 }
 
 .tag {
-    color: #568ea3;
+    /*color: #568ea3;*/
+    color: #4EAABA;
     border-radius: 3px;
     padding-top: 4px;
     padding-bottom: 2px;
@@ -441,7 +442,8 @@
 }
 
 .ui.card.commentCardOther {
-    background-color: #e8e8e8;
+    /*background-color: #e8e8e8;*/
+    background-color: #f1f0f0;
     box-shadow: none;
     margin: 0 10px 5px 5px;
     clear:both;
@@ -459,7 +461,8 @@
 }
 
 .ui.card.commentCardYou {
-    background-color: #59B7C5;
+    /*background-color: #59B7C5;*/
+    background-color: rgb(68, 190, 199);
     box-shadow: none;
     margin:0 10px 5px 10px;
     clear: both;

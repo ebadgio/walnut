@@ -7,6 +7,22 @@ import './App.css';
 import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 
+
+const borderColors = {
+  discover: '#4E148C',
+  conversations: '#613DC1',
+  directory: '#858AE3',
+  map: '#97DFFC'
+};
+
+const borderColors2 = {
+  discover: '#4EAABA',
+  conversations: '#6874e8',
+  // directory: '#EF946C',
+  directory: '#A9BCD0',
+  map: '#A18C87'
+};
+
 class LeftSideContainer extends React.Component {
   constructor() {
     super();
@@ -47,28 +63,24 @@ class LeftSideContainer extends React.Component {
             {/* <FollowedPosts />
             <Online /> */}
             <Link className={this.state.tab === 1 ? 'discoverTabActive' : 'discoverTab'}
-                  to={'/community/' + title + '/discover'}>
-              <div className="leftBarLink">
-            <Icon name="browser" size="big" className="discoverIcon" />
-              </div>
+                  to={'/community/' + title + '/discover'}
+                  style={{borderColor: borderColors2.discover}}>
+                <Icon name="browser" size="big" className="discoverIcon" />
             </Link>
             <Link className={this.state.tab === 2 ? 'discoverTabActive' : 'discoverTab'}
-                  to={'/community/' + title + '/conversations'}>
-              <div className="leftBarLink">
-            <Icon name="comments outline" size="big" />
-              </div>
+                  to={'/community/' + title + '/conversations'}
+                  style={{borderColor: borderColors2.conversations}}>
+                <Icon name="comments outline" size="big" />
             </Link>
             <Link className={this.state.tab === 3 ? 'discoverTabActive' : 'discoverTab'}
-                  to={'/community/' + title + '/directory'}>
-              <div className="leftBarLink">
-            <Icon size="big" className="address book outline" />
-              </div>
+                  to={'/community/' + title + '/directory'}
+                  style={{borderColor: borderColors2.directory}}>
+                <Icon size="big" className="address book outline" />
             </Link>
             <Link className={this.state.tab === 4 ? 'discoverTabActive' : 'discoverTab'}
-                  to={'/community/' + title + '/map'}>
-              <div className="leftBarLink">
-            <Icon name="browser" size="big" className="world" />
-              </div>
+                  to={'/community/' + title + '/map'}
+                  style={{borderColor: borderColors2.map}}>
+                <Icon name="browser" size="big" className="world" />
             </Link>
         </div>
     );

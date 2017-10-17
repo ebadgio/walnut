@@ -9,7 +9,7 @@
 }
 
 .conversationsSideBar {
-    flex: 1;
+    flex: 2;
     border-right: 1px solid rgba(34, 36, 38, 0.15);
     max-height: 100%;
     overflow: hidden;
@@ -21,7 +21,7 @@
 }
 
 .conversationsChatBox {
-    flex: 2;
+    flex: 5;
     display: flex;
     flex-direction: row;
     border-top: 1px solid rgba(34,36,38,.15);
@@ -92,18 +92,18 @@
     cursor: pointer;
     margin-top: 20px;
     width: 100px;
-    height: 50px;
+    height: 40px;
     display: flex;
-    color: #fff;
+    color: #b3b5c1;
     border-radius: 27px;
     justify-content: center;
     align-items: center;
-    background-color: #424874 !important;
-    transition: background-color 0.35s ease;
+    border: 1px solid;
+    transition: color 0.35s ease;
 }
 
 .viewPostButton:hover {
-    background-color: #353765 !important;
+    color: #6874e8;
 }
 
 .conversationsTypingRow {
@@ -172,3 +172,64 @@ body ::-webkit-scrollbar-thumb {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.conversationCardWrapper {
+    margin-left: 0px;
+    margin-top: 0px;
+    min-width: 24px;
+    min-height: 20px;
+    max-width: 24px;
+    max-height: 24px;
+    border-radius: 50%;
+    display: flex;
+    overflow: hidden;
+}
+
+.conversationCardUserImage {
+    max-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    margin: auto;
+}
+
+.conversationCardContent {
+    cursor: pointer;
+    color: #3a3a3a !important;
+    padding: 6px !important;
+    padding-bottom: 0px !important;
+}
+
+.conversationCardHeader {
+    margin-bottom: 5px;
+    /*color: #568ea3;*/
+    color: #4EAABA;
+    font-size: 14px;
+    line-height: 19px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    font-weight: 700;
+    word-spacing: 10px;
+}
+
+.conversationCardHeader:after {
+    content: "   ";
+    /*content: "&nbsp;&nbsp;&nbsp;"*/
+}
+
+.conversationCardHeaderUser {
+    margin-left: 6px;
+    font-size: 11px;
+    margin-top: 0 !important;
+}
+
+.conversationCardBody {
+    overflow: hidden;
+    font-size: 10px;
+    margin-left: 30px !important;
+    margin-bottom: 0px !important;
+
+}
+
+

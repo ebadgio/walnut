@@ -22,12 +22,26 @@ class TopicSelectorContainer extends React.Component {
     this.handleResultSelect = this.handleResultSelect.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
+  componentDidMount() {
+    console.log('in did topics', this.props);
+    if (!this.props.isFetching && this.props.otherFilters) {
+      const options = this.selectOptions(this.props);
+      console.log('options didMount', this.props, options);
+      if (options.length > 0) {
+        this.setState({options: options});
+      } else {
+        console.log('missing options');
+      }
+    } else {
+      console.log('that shit is missing');
+    }
+  }
 
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.isFetching && this.props.otherFilters) {
+    if (!nextProps.isFetching && nextProps.otherFilters) {
       const options = this.selectOptions(nextProps);
-      console.log('options', nextProps, options);
+      console.log('options Will', nextProps, options);
       if (options.length > 0) {
         this.setState({options: options});
       } else {

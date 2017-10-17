@@ -55,50 +55,6 @@
 }
 
 
-.conversationCardWrapper {
-    margin-left: 0px;
-    margin-top: 0px;
-    min-width: 24px;
-    min-height: 20px;
-    max-width: 24px;
-    max-height: 24px;
-    border-radius: 50%;
-    display: flex;
-    overflow: hidden;
-}
-
-.conversationCardUserImage {
-    max-width: 100%;
-    min-height: 100%;
-    object-fit: cover;
-    margin: auto;
-}
-
-.conversationCardContent {
-    cursor: pointer;
-    color: #3a3a3a !important;
-  padding: 6px !important;
-  padding-bottom: 0px !important;
-}
-
-.conversationCardHeader {
-  display: flex;
-  margin-bottom: 5px;
-}
-
-.conversationCardHeaderUser {
-    margin-left: 6px;
-    font-size: 11px;
-    margin-top: 0 !important;
-}
-
-.conversationCardBody {
-    overflow: hidden;
-    font-size: 10px;
-    margin-left: 30px !important;
-    margin-bottom: 0px !important;
-}
-
 
 .tagContainerConversation {
     margin-left: 10px;
