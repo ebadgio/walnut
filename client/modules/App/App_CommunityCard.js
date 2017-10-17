@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
-import { Card, Segment, Button, Icon } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 
 
 class CommunityCard extends React.Component {
@@ -26,8 +26,10 @@ class CommunityCard extends React.Component {
           </div>
           <div>
               {this.props.status === 'public' ?
-                    <Button className="joinButton" onClick={() => this.props.join(this.props.communityId)} content="Join" icon="plus" labelPosition="left" />
-                        : null}
+                  <div className="joinButton" onClick={() => this.props.join(this.props.communityId)}>
+                      <Icon name="plus" className="buttonIconJoin"/>
+                      Join
+                  </div> : null}
           </div>
       </div>
     );

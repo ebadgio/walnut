@@ -247,13 +247,54 @@
 }
 
 .modalTrigger {
+    cursor: pointer;
+    padding: 5px 15px 5px 15px;
     float: right;
+    display: flex;
+    align-items: center;
+    color: #b3b5c1;
+    border-radius: 27px;
+    border: 1px solid;
     margin-right: 50px !important;
+    transition: color .35s ease;
+}
+
+.modalTrigger:hover {
+    color:#6874e8;
 }
 
 .codeTrigger {
+    cursor: pointer;
+    padding: 5px 15px 5px 15px;
     float: left;
     margin-left: 50px !important;
+    display: flex;
+    align-items: center;
+    color: #b3b5c1;
+    border-radius: 27px;
+    border: 1px solid;
+    transition: color .35s ease;
+}
+
+.codeTrigger:hover {
+    color: #4EAABA;
+}
+
+.joinButton {
+    cursor: pointer;
+    padding: 5px 10px 5px 10px;
+    float: right;
+    display: flex;
+    align-items: center;
+    color: #b3b5c1;
+    border-radius: 27px;
+    border: 1px solid;
+    transition: color .35s ease;
+    margin-right: 15px;
+}
+
+.joinButton:hover {
+    color:#6874e8;
 }
 
 .joinCodeSegment {
@@ -266,6 +307,16 @@
     z-index: 1000;
     box-shadow: 0px 0px 10px 3px rgba(34, 36, 38, 0.15) !important;
     left: 26%;
+}
+
+.buttonIcon {
+    margin-bottom: 7px !important;
+    margin-right: 5px !important;
+}
+
+.buttonIconJoin {
+    margin-bottom: 5px !important;
+    margin-right: 5px !important;
 }
 
 #codeTextBox {
@@ -304,9 +355,6 @@
     margin-left: 15px !important;
 }
 
-.joinButton {
-    float: right;
-}
 
 .titleInput {
     position: absolute !important;

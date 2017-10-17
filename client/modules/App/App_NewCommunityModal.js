@@ -1,7 +1,7 @@
 
 import React from 'react';
 import './App.css';
-import { Modal, Button } from 'semantic-ui-react';
+import { Modal, Icon } from 'semantic-ui-react';
 import CreateCommunityPage from './App_NewCommunityPage.js';
 
 class NewCommunityModal extends React.Component {
@@ -20,8 +20,11 @@ class NewCommunityModal extends React.Component {
     return (
         <Modal size={'small'}
                basic
-               trigger={ <Button className="modalTrigger" content="Create new Community" icon="add square" labelPosition="left"
-               onClick={() => this.setState({open: true})} />}
+               trigger={
+                 <div className="modalTrigger" onClick={() => this.setState({open: true})}>
+                   <Icon name="plus" className="buttonIconJoin"/>
+                   Create new Community
+                 </div>}
                open={this.state.open}
                className="modalComponent"
         >

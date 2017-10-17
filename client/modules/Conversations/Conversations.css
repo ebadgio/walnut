@@ -13,6 +13,7 @@
     border-right: 1px solid rgba(34, 36, 38, 0.15);
     max-height: 100%;
     overflow: hidden;
+    background: #fff;
     border-top: 1px solid rgba(34,36,38,.15);
 }
 
@@ -38,6 +39,7 @@
     overflow-y: auto;
     padding-bottom: 5px;
     overflow-x: hidden;
+    padding-top: 20px;
 }
 
 

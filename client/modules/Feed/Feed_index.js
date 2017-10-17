@@ -11,7 +11,7 @@ import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
 import NewPostContainer from './Feed_NewPost_Container.js';
 import './Feed.css';
 import $ from 'jquery';
-import { Loader, Button, Modal, Icon, Header } from 'semantic-ui-react';
+import { Loader, Segment } from 'semantic-ui-react';
 
 
 let refresh;
@@ -75,13 +75,21 @@ class Feed extends React.Component {
   }
 
   render() {
+    // return (
+    //     <div className="Feed_Wrapper">
+    //         {[...Array(10)].map(() =>
+    //             <Segment className="emptyLoaders">
+    //               <Loader className="postLoader" active inline="centered" />
+    //             </Segment>)}
+    //     </div>
+    // );
     if (this.props.data.isFetching || !this.props.isReady) {
       return (
         <div className="Feed_Wrapper">
           {[...Array(10)].map(() =>
-            <div className="emptyLoaders">
+            <Segment className="emptyLoaders">
               <Loader className="postLoader" active inline="centered" />
-            </div>)}
+            </Segment>)}
         </div>
       );
     }

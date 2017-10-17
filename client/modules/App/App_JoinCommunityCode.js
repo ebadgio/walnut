@@ -49,9 +49,12 @@ class JoinCommunityCode extends React.Component {
             <Portal
                 closeOnTriggerClick
                 openOnTriggerClick
-                trigger={(
-                    <Button className="codeTrigger" content="Enter code to join" icon="privacy" labelPosition="left" />
-                )}
+                trigger={
+                  <div className="codeTrigger">
+                    <Icon name="privacy" className="buttonIcon"/>
+                    Enter code to join community
+                  </div>
+                }
                 onOpen={() => this.handleOpen()}
                 onClose={() => this.handleClose()}
                 open={this.state.open}

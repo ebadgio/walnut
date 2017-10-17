@@ -114,9 +114,7 @@
 }
 
 .headerTopics {
-    display: flex;
-    height: 100%;
-    padding-left: 15px;
+    padding-left: 10px;
     color: #4EAABA;
     font-size: 12px;
     line-height: 12px;
@@ -125,7 +123,7 @@
     text-overflow: ellipsis;
     width: calc(100% - 20px);
     font-weight: 700;
-    word-spacing: 10px;
+    word-spacing: 8px;
     align-items: center;
 }
 

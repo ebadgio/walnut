@@ -257,19 +257,21 @@
 /*}*/
 
 .emptyLoaders {
-    background-color: #fff;
     display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    border-radius: 3px;
-    width: 513.67px;
-    border: 1px solid;
-    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
-    height: 150px
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px !important;
+    margin-top: 3px !important;
+    padding: .5em .5em !important;
+    border: none !important;
+    box-shadow: 0 0 10px 0 rgba(34,36,38,.15) !important;
+    border-radius: 0 !important;
+    height: 200px;
+
 }
 
 .postLoader {
-    margin-top: 59px !important;
+    /*margin-top: 59px !important;*/
 }
 
 #fileInputNewpost {
