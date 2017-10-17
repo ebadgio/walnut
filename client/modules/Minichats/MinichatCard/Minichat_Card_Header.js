@@ -16,11 +16,8 @@ class MinichatHeader extends React.Component {
     return(
         <div className={this.props.active ? 'minichatHeaderActive' : 'minichatHeader'}
              onClick={() => this.props.toggleOpen()}>
-              <div className="headerTopics">
-                  {this.props.postData.tags.map((tag, index) => (
-                      <div key={index} className="tagMini">
-                        <text className="hashtagMini">#{' ' + tag.name}</text>
-                      </div>))}
+              <div className={this.props.active ? 'headerTopicsActive' : 'headerTopics'}>
+                  {this.props.postData.tags.map((tag) => ('#' + tag.name)).join(' ')}
               </div>
               <Icon name="remove"
                     className="closeChatIcon"

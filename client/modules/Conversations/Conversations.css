@@ -23,6 +23,7 @@
 .conversationsChatBox {
     flex: 5;
     display: flex;
+    background: #fff;
     flex-direction: row;
     border-top: 1px solid rgba(34,36,38,.15);
 }

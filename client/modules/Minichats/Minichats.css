@@ -115,24 +115,29 @@
 
 .headerTopics {
     display: flex;
-    flex-wrap: wrap;
     height: 100%;
-    padding: 3px 3px 3px 3px;
-}
-
-.tagMini {
-    color: #568ea3;
-    max-height: 14px;
-    border-radius: 3px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    font-weight: 700;
-    padding-right: 10px;
-    display: inline-block;
-    min-width: fit-content;
-}
-
-.hashtagMini {
+    padding-left: 15px;
+    color: #4EAABA;
     font-size: 12px;
-    line-height: 14px;
+    line-height: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: calc(100% - 20px);
+    font-weight: 700;
+    word-spacing: 10px;
+    align-items: center;
+}
+
+.headerTopicsActive {
+    align-items: center;
+    color: #4EAABA;
+    font-size: 14px;
+    line-height: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: calc(100% - 20px);
+    font-weight: 700;
+    word-spacing: 10px;
 }

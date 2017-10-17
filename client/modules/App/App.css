@@ -78,7 +78,7 @@
     margin-top: 10px;
 }
 
-.communityTitle {
+.communityTitleNav {
     margin-left: 10px;
     color: #3A3A3A;
     font-size: 24px;
@@ -109,7 +109,6 @@
 .imageWrapper {
     margin-left: 10px;
     margin-top: 10px;
-    background-color: red;
     min-width: 30px;
     min-height: 30px;
 
@@ -167,18 +166,49 @@
     font-size: 20px;
 }
 
+.communityLink {
+    margin: 15px 40px 15px 40px;
+}
 
 .communityCard {
-    margin: 20px 40px 20px 40px !important;
     width: 220px !important;
-    height: auto !important;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+    color: #3a3a3a;
+    background: #fff;
+    box-shadow: 0 0 10px 0 rgba(34,36,38,.15);
+    transition: background .25s ease;
 
-    box-shadow: none !important;
+}
+
+.communityCard:hover, .communityCardOther:hover {
+    box-shadow: 0 0 20px 0 rgba(34,36,38,.18);
+}
+
+.communityCardOther {
+    margin: 15px 40px 15px 40px;
+    min-width: 220px !important;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+    color: #3a3a3a;
+    background: #fff;
+    box-shadow: 0 0 10px 0 rgba(34,36,38,.15)
+}
+
+.communityCardTitle {
+    font-weight: bold;
+    padding: 10px 0 10px 10px;
+    font-size: 20px;
 }
 
 .communityCardImage {
     object-fit: cover !important;
     height: 210px;
+    min-width: 100%;
+    max-width: 100%;
+    max-height: 200px;
 }
 
 .communitiesContainer {
@@ -190,7 +220,7 @@
 .walnutContainer {
     display: flex;
     flex-direction: column;
-    background-color: #FAFAFA;
+    background-color: #fff;
 }
 
 .communityCardContent {
@@ -198,13 +228,22 @@
 }
 
 .Heading {
-    color: #313D4D;
+    color: #3a3a3a;
+    font-size: 45px;
+    font-weight: bolder;
     padding: 20px 20px 10px 20px;
+    margin-bottom: 30px;
+}
+
+.walnutHomeActions {
+    margin-bottom: 20px;
 }
 
 .subHead {
     padding: 0px 20px 0px 35px;
-    color: #313D4D;
+    color: #3a3a3a;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .modalTrigger {

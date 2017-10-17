@@ -77,20 +77,20 @@ class WalnutHomeContainer extends React.Component {
       return (
         <div className="walnutContainer">
           <div className="Heading">
-            <h1>Walnut</h1>
-            <hr />
+            Walnut
           </div>
-          <div>
+          <div className="walnutHomeActions">
             <JoinCommunityCode />
             {this.props.isJoinError ?
               <div className="popUpJoinError"><h4>Code invalid</h4></div> : null}
             <NewCommunityModal
               handleCreate={(image, title, defaultFilters) => this.handleSubmit(image, title, defaultFilters)} />
           </div>
-          <h2 className="subHead">Your Communities</h2>
+          <div className="subHead">Your Communities</div>
           <div className="communitiesContainer">
             {this.props.userCommunities.map((community, idx) =>
               <Link key={idx}
+                className="communityLink"
                 onClick={() => this.toggleCommunity(community)}
                 to={'/community/' + community.title.split(' ').join('') + '/discover'}>
                 <CommunityCard joined

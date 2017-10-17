@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
-import { Card, Button, Icon, Image } from 'semantic-ui-react';
+import { Card, Segment, Button, Icon } from 'semantic-ui-react';
 
 
 class CommunityCard extends React.Component {
@@ -10,30 +10,26 @@ class CommunityCard extends React.Component {
   render() {
     if (this.props.joined) {
       return (
-          <Card className="communityCard">
-              <Image className="communityCardImage" src={this.props.icon} />
-              <Card.Content className="communityCardContent">
-                  <Card.Header className="communityHeader">
-                      {this.props.title}
-                  </Card.Header>
-              </Card.Content>
-          </Card>
+          <div className="communityCard">
+              <img className="communityCardImage" src={this.props.icon} />
+              <div className="communityCardTitle">
+                {this.props.title}
+              </div>
+          </div>
       );
     }
     return (
-      <Card className="communityCard">
-          <Image className="communityCardImage" src={this.props.icon} />
-          <Card.Content className="communityCardContent">
-              <Card.Header className="communityHeader">
-                  {this.props.title}
-              </Card.Header>
-          </Card.Content>
-          <Card.Content extra>
+      <div className="communityCardOther">
+          <img className="communityCardImage" src={this.props.icon} />
+          <div className="communityCardTitle">
+            {this.props.title}
+          </div>
+          <div>
               {this.props.status === 'public' ?
                     <Button className="joinButton" onClick={() => this.props.join(this.props.communityId)} content="Join" icon="plus" labelPosition="left" />
                         : null}
-          </Card.Content>
-      </Card>
+          </div>
+      </div>
     );
   }
 }
