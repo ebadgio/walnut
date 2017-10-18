@@ -257,18 +257,125 @@
 /*}*/
 
 .emptyLoaders {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     margin-bottom: 15px !important;
     margin-top: 3px !important;
-    padding: .5em .5em !important;
+    padding: 15px 20px !important;
     border: none !important;
-    box-shadow: 0 0 10px 0 rgba(34,36,38,.15) !important;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0, .05) !important;
     border-radius: 0 !important;
-    height: 200px;
-
+    height: 250px;
+    padding-right: 30px !important;
 }
+
+@keyframes placeHolderShimmer{
+    0%{
+        background-position: -468px 0
+    }
+    100%{
+        background-position: 468px 0
+    }
+}
+
+.animatedBackground {
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+    background-size: 800px 104px;
+    height: auto;
+    position: relative;
+}
+
+.avatarBlank {
+    height: 36px;
+    width: 36px;
+    padding: 16px;
+    background: none;
+    border-radius: 100%;
+    margin-right: 8px;
+    border: 100px solid #fff;
+}
+
+.avatarBlankHolder {
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    height: 80px;
+    overflow: hidden;
+    align-items: center;
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.postHeaderLoader {
+    height: 40px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.postHeaderBlank {
+    height: 5px;
+    background: #fff;
+    width: 100%;
+}
+
+.postHeaderBlankName {
+    height: 12px;
+    background: #fff;
+    width: 88%;
+    margin-left: auto;
+}
+
+.postHeaderBlankTime {
+    height: 8px;
+    background: #fff;
+    width: 92%;
+    margin-left: auto;
+}
+
+.postBodyBlank {
+    background: #fff;
+    height: 10px;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.postBodySpace {
+    background: #fff;
+    height: 10px;
+    width: 100%;
+}
+
+.postBodyBlankHalf {
+    background: #fff;
+    height: 15px;
+    width: 60%;
+    margin-left: auto;
+}
+
+.postDescriptionBlank {
+    width: 100%;
+    height: 75px;
+    display: flex;
+    flex-direction: column;
+}
+
+.postContentBlank {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+}
+
+.postDividerBlank {
+    margin-right: 10px !important;
+    margin-bottom: 5px !important;
+}
+
+
 
 .postLoader {
     /*margin-top: 59px !important;*/
