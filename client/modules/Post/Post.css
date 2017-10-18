@@ -1018,8 +1018,9 @@ body ::-webkit-scrollbar {
     margin-top: 3px !important;
     padding: .5em .5em !important;
     border: none !important;
-    box-shadow: 0 0 10px 0 rgba(34,36,38,.15) !important;
+    /*box-shadow: 0 0 10px 0 rgba(34,36,38,.15) !important;*/
     border-radius: 0 !important;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0, .05) !important;
 }
 
 .postSegmentDrawerOpen {
