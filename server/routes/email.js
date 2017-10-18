@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport('smtps://walnutreg@gmail.com:' + 
 router.post('/community/invites', (req, res) => {
   const emails = req.body.newMembers;
   const id = req.body.communityID;
-  const link = 'www.walnutnetwork.com/login?community?2345';
+  const link = 'www.walnutnetwork.com/login?code=';
   const start = id.substr(21, 24);
   const end = id.substr(0, 3);
   let letters;
@@ -32,9 +32,8 @@ router.post('/community/invites', (req, res) => {
           to: email, // list of receivers
           subject: 'You have been summoned to join a new community on Walnut', // Subject line
           text: 'Hello world?', // plain text body
-          html: '<a href="http://www.walnutnetwork.com">' + link + '</a><p>here is your code:' + code + '</p>' // html body
+          html: '<a href=' + link + code + '>' + link + code + '</a><p>here is your code:' + code + '</p>' // html body
         };
-
           // send mail with defined transport object
         transporter.sendMail(mailOptions, (error, info) => {
           if (error) {

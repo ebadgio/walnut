@@ -7,7 +7,7 @@ import { history } from '../Auth/Auth_index';
 import JoinCommunityCode from './App_JoinCommunityCode';
 import createCommunityThunk from '../../thunks/community_thunks/createCommunityThunk';
 import joinCommunityThunk from '../../thunks/community_thunks/joinCommunityThunk';
-import getAllCommunities from '../../thunks/community_thunks/getAllCommunitiesThunk';
+import getAllCommunitiesThunk from '../../thunks/community_thunks/getAllCommunitiesThunk';
 import updateUserCommunityThunk from '../../thunks/user_thunks/updateUserCommunityThunk';
 import CommunityCard from './App_CommunityCard';
 import NewCommunityModal from './App_NewCommunityModal';
@@ -42,17 +42,6 @@ class WalnutHomeContainer extends React.Component {
       nextProps.getAllCommunities();
       this.setState({ isCalled: true });
     }
-    if (nextProps.isJoinError) {
-      console.log('error in join');
-      setTimeout(() => { this.props.errorDone();}, 5000);
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log('stats receive', nextProps);
-    if (nextProps.isJoined) {
-      setTimeout(() => { this.setState({ open: false }); }, 5000);
-    }
   }
 
   toggleCommunity(com) {
@@ -81,8 +70,6 @@ class WalnutHomeContainer extends React.Component {
           </div>
           <div className="walnutHomeActions">
             <JoinCommunityCode />
-            {this.props.isJoinError ?
-              <div className="popUpJoinError"><h4>Code invalid</h4></div> : null}
             <NewCommunityModal
               handleCreate={(image, title, defaultFilters) => this.handleSubmit(image, title, defaultFilters)} />
           </div>
@@ -137,7 +124,6 @@ WalnutHomeContainer.propTypes = {
   isReady: PropTypes.bool,
   handleLogout: PropTypes.func,
   loginFirebase: PropTypes.bool,
-  isJoinError: PropTypes.bool,
   errorDone: PropTypes.func
 };
 
@@ -147,14 +133,13 @@ const mapStateToProps = (state) => ({
   communities: state.getCommunityReducer.communities,
   isReady: state.walnutHomeReducer.isReady,
   loginFirebase: state.userReducer.loginFirebase,
-  isJoinError: state.walnutHomeReducer.joiningCodeError
 });
 
 const mapDispatchToProps = (dispatch) => ({
   joinCommunity: (id) => dispatch(joinCommunityThunk(id)),
   createCommunity: (image, title, filters) => dispatch(createCommunityThunk(image, title, filters)),
   changeCommunity: (updateObj) => dispatch(updateUserCommunityThunk(updateObj)),
-  getAllCommunities: () => dispatch(getAllCommunities()),
+  getAllCommunities: () => dispatch(getAllCommunitiesThunk()),
   updateConvos: (id) => dispatch({ type: 'SWITCH_COM', communityId: id }),
   handleLogout: (his) => dispatch(signOutThunk(his)),
   errorDone: () => dispatch({ type: 'JOINING_CODE_ERROR_DONE'})

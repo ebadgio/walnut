@@ -32,6 +32,13 @@ const walnutHomeReducer = (state = {
         ...state,
         joiningCodeError: false
       };
+    case 'JOINING_CODE_END':
+      return {
+        ...state,
+        isJoiningCode: false,
+        joiningCodeError: false,
+        joiningCodeSuccess: false
+      };
     default:
       return state;
   }

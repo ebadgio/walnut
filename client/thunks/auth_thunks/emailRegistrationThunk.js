@@ -4,52 +4,54 @@ import URL from '../../info';
 
 const emailRegistrationThunk = (firstname, lastname, email, password) => (dispatch) => {
   dispatch({ type: 'USER_IS_NOT_VERIFIED' });
+  dispatch({ type: 'REGISTER_FIREBASE_STOP'});
   firebaseApp.auth().createUserWithEmailAndPassword(email, password)
     .then((result) => {
       result.updateProfile({
         displayName: firstname + ' ' + lastname
       })
-        .then(() => {
-          return firebaseApp.auth().currentUser.sendEmailVerification();
-        })
-        .then(() => {
-          console.log('pre verification');
-          result.getIdToken(/* forceRefresh */ true)
-            .then((idToken) => {
-              axios.post(URL + 'auth/signup', {
-                token: idToken,
-                fname: firstname,
-                lname: lastname,
-                email: email,
-                password: password
-              })
-                .then(() => {
-                  firebaseApp.auth().signOut()
-                    .then(() => {
-                      localStorage.removeItem('tab');
-                      localStorage.removeItem('url');
-                      localStorage.removeItem('isUserInCommunity');
-                      localStorage.removeItem('home');
-                      sessionStorage.removeItem('url');
-                      sessionStorage.removeItem('tab');
-                      return axios.post('/auth/logout');
-                    })
-                    .then(() => {
-                      dispatch({ type: 'LOGOUT_DONE' });
-                      history.replace('/login');
-                    });
-                })
-                .catch((error) => {
-                  console.log('axios did not go through');
-                });
+    .then(() => {
+      console.log('current user', firebaseApp.auth().currentUser);
+      return firebaseApp.auth().currentUser.sendEmailVerification();
+    })
+    .then(() => {
+      console.log('pre verification');
+      result.getIdToken(/* forceRefresh */ true)
+        .then((idToken) => {
+          axios.post(URL + 'auth/signup', {
+            token: idToken,
+            fname: firstname,
+            lname: lastname,
+            email: email,
+            password: password
+          })
+            .then(() => {
+              // firebaseApp.auth().signOut()
+              //   .then(() => {
+              //     localStorage.removeItem('tab');
+              //     localStorage.removeItem('url');
+              //     localStorage.removeItem('isUserInCommunity');
+              //     localStorage.removeItem('home');
+              //     sessionStorage.removeItem('url');
+              //     sessionStorage.removeItem('tab');
+              //     return axios.post('/auth/logout');
+              //   })
+              //   .then(() => {
+              //     dispatch({ type: 'LOGOUT_DONE' });
+              //     history.replace('/login');
+              //   });
             })
             .catch((error) => {
-              console.log('could not get token', error);
+              console.log('axios did not go through');
             });
         })
-        .catch((error) => {
-          console.log('update user error', error);
-        });
+          .catch((error) => {
+            console.log('could not get token', error);
+          });
+    })
+      .catch((error) => {
+        console.log('update user error', error);
+      });
     })
     .catch((error) => {
       // Handle Errors here.

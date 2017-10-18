@@ -2,8 +2,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import joinCommunityCode from '../../thunks/community_thunks/joinCommunityCodeThunk';
+import joinCommunityCodeThunk from '../../thunks/community_thunks/joinCommunityCodeThunk';
 import { Button, Input, Form, Segment, Portal, Loader, Icon } from 'semantic-ui-react';
+import $ from 'jquery';
 
 class JoinCommunityCode extends React.Component {
   constructor(props) {
@@ -15,10 +16,16 @@ class JoinCommunityCode extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('stats receive', nextProps);
     if (nextProps.isJoined) {
-      setTimeout(() => {this.setState({ open: false});}, 5000);
+      setTimeout(() => { this.setState({ open: false }); this.props.resetJoin(); }, 3000);
+    }
+    if (nextProps.isJoinError) {
+      console.log('error in join');
+      setTimeout(() => { this.props.errorDone(); }, 5000);
     }
   }
+
 
   handleOpen() {
     this.setState({ open: true });
@@ -28,21 +35,29 @@ class JoinCommunityCode extends React.Component {
     this.setState({ open: false });
   }
 
-  handleChange(code) {
-    this.setState({ code: code });
+  handleChange(e) {
+    e.preventDefault();
+    this.setState({ code: e.target.value });
   }
 
   submitCode() {
     if (this.state.code) {
       this.props.submitCode(this.state.code);
-    } else {
-      this.setState({ emptyBody: true });
     }
   }
 
-  removePopup() {
-    this.setState({ emptyBody: false});
+  findEnter() {
+    $('#codeTextBox').keypress((event) => {
+      if (event.which === 13) {
+        if (this.state.code.length > 0) {
+          this.submitCode();
+          return false; // prevent duplicate submission
+        }
+      }
+      return null;
+    });
   }
+
 
   render() {
     return (
@@ -60,35 +75,36 @@ class JoinCommunityCode extends React.Component {
                 open={this.state.open}
             >
             <Segment className="joinCodeSegment">
-            { !this.props.isJoining && !this.props.isJoined ?
             <div className="row newPostContent">
-                        {this.state.emptyBody ? <div className="popUpNoBody"><h4>Please type code from invitation email</h4></div> : null}
-                        <Form className="newPostForm">
-                            <Input
-                                id="codeTextBox"
-                                placeholder="Enter code from invite"
-                                onChange={(e) => this.handleChange(e.target.value)}
-                                onClick={() => this.removePopup()}
-                            />
-                        </Form>
-                        <Button className="wholeCreateButton" onClick={() => this.submitCode()}>
-                            <Button.Content className="createButton" visible>submit</Button.Content>
-                        </Button>
-                    </div> : null }
+            {this.props.isJoinError ?
+              <Icon name="warning sign" className="joinErrorIcon" /> : null}
 
-            { this.props.isJoining ?
-                    <div className="row isJoiningDiv">
-                      <Loader className="joinLoader" active inline="centered" />
-                      <p id="verifyingText">Verifying...</p>
-                    </div> : null }
+              {!this.props.isJoining && !this.props.isJoined ?
+                    <div>
+                      <Form className="newPostForm">
+                          <Input
+                              id="codeTextBox"
+                              placeholder="Enter code from invite"
+                              onChange={(e) => { this.handleChange(e); this.findEnter(); }}
+                          />
+                      </Form>
+                    </div> : null}
 
-            { this.props.isJoined ?
-                    <div className="row newPostContent">
-                      <Icon name="checkmark" className="successJoinIcon"/>
-                      <p>Success, you can now check out your new community</p>
-                    </div> : null }
-                </Segment>
-            </Portal>
+              { this.props.isJoining ?
+                      <div className="isJoiningDiv">
+                        <Loader className="joinLoader" active inline="centered" />
+                        <p id="verifyingText">Verifying...</p>
+                      </div> : null }
+
+              { this.props.isJoined ?
+                      <div>
+                        <Icon name="checkmark" className="successJoinIcon"/>
+                        <p>Success, you can now check out your new community</p>
+                      </div> : null }
+
+            </div>
+          </Segment>
+      </Portal>
         );
   }
 }
@@ -97,7 +113,9 @@ JoinCommunityCode.propTypes = {
   submitCode: PropTypes.func,
   isJoined: PropTypes.bool,
   isJoinError: PropTypes.bool,
-  isJoining: PropTypes.bool
+  isJoining: PropTypes.bool,
+  errorDone: PropTypes.func,
+  resetJoin: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -107,7 +125,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  submitCode: (code) => dispatch(joinCommunityCode(code))
+  submitCode: (code) => dispatch(joinCommunityCodeThunk(code)),
+  errorDone: () => dispatch({ type: 'JOINING_CODE_ERROR_DONE' }),
+  resetJoin: () => dispatch({ type: 'JOINING_CODE_END'})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(JoinCommunityCode);

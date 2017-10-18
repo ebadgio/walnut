@@ -302,16 +302,24 @@
     border-radius: 0 !important;
     position: fixed !important;
     width: 294px !important;
-    top: 10%;
+    top: 6%;
     border: none !important;
     z-index: 1000;
     box-shadow: 0px 0px 10px 3px rgba(34, 36, 38, 0.15) !important;
-    left: 26%;
+    left: 27%;
 }
 
 .buttonIcon {
     margin-bottom: 7px !important;
     margin-right: 5px !important;
+}
+
+.joinErrorIcon {
+    font-size: 22px !important;
+    color: #BD303F !important;
+    position: absolute !important;
+    left: 5.5% !important;
+    top: 43% !important;
 }
 
 .buttonIconJoin {
@@ -333,7 +341,7 @@
 }
 
 #verifyingText {
-    margin-left: 109px;
+    margin-left: 18px;
 }
 
 .popUpJoinError {

@@ -4,7 +4,6 @@ import axios from 'axios';
 import URL from '../../info';
 
 const signInThunk = (email, password, redirect) => (dispatch) => {
-  dispatch({ type: 'LOGIN_APP' });
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(result => {
       if (!result.emailVerified) {
@@ -19,8 +18,9 @@ const signInThunk = (email, password, redirect) => (dispatch) => {
             password: password
           })
             .then((res) => {
+              dispatch({ type: 'LOGIN_APP' });
               dispatch({ type: 'GET_USER_DATA_DONE', user: res.data.user });
-              setTimeout(() => dispatch({ type: 'WALNUT_READY' }), 5000);
+              // setTimeout(() => dispatch({ type: 'WALNUT_READY' }), 5000);
             });
         })
         .catch((error) => {

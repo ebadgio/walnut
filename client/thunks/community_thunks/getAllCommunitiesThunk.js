@@ -9,6 +9,7 @@ const getAllCommunitiesThunk = () => (dispatch) => {
   axios.get(URL + 'db/get/allcommunities')
     .then((response) => {
       dispatch({type: 'GET_ALL_COMMUNITIES_DONE', communities: response.data});
+      dispatch({ type: 'WALNUT_READY' });
     })
     .catch((err) =>{
       console.log('error in getting users', err);

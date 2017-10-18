@@ -49,7 +49,7 @@ const userObj = {
   isEdited: true,
   isError: false,
   currentConversations: [],
-  loginFirebase: true
+  loginFirebase: false
 };
 
 const userReducer = (state = userObj, action) => {
@@ -62,8 +62,7 @@ const userReducer = (state = userObj, action) => {
     case 'USER_IS_FETCHING':
       return {
         ...state,
-        isFetching: true,
-        loginFirebase: false
+        isFetching: true
       };
     case 'GET_USER_DATA_DONE':
       return {
@@ -78,6 +77,11 @@ const userReducer = (state = userObj, action) => {
       return {
         ...state,
         loginFirebase: false
+      };
+    case 'REGISTER_FIREBASE_STOP':
+      return {
+        ...state,
+        loginFirebase: true
       };
     case 'ADD_TEMP_FILTER':
       return {
