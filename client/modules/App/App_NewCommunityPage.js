@@ -44,19 +44,19 @@ class CreateCommunityPage extends React.Component {
     this.setState({ filterValue: e.target.value });
   }
 
-  handleClick(e) {
-    e.preventDefault();
-    const copy = this.state.otherTags;
-    copy.push(this.state.filterValue);
-    this.setState({ otherTags: copy, filterValue: '' });
+  handleClickTag() {
+    if (this.state.filterValue.length !== 0 ) {
+      const copy = this.state.otherTags;
+      copy.push(this.state.filterValue);
+      this.setState({ otherTags: copy, filterValue: '' });
+    }
   }
 
   handleMemberChange(e) {
     this.setState({ member: e.target.value });
   }
 
-  handleMemberClick(e) {
-    e.preventDefault();
+  handleMemberClick() {
     if (this.state.member.length !== 0) {
       const copy = this.state.newMembers.slice();
       copy.push(this.state.member);
@@ -78,7 +78,7 @@ class CreateCommunityPage extends React.Component {
       this.setState({ titleValue: '', status: 'public', otherTags: [] });
       this.props.closeModal();
     } else if (this.state.titleValue) {
-        this.props.handleCreate(this.state.image, this.state.titleValue, this.state.status, this.state.otherTags, this.state.newMembers);
+      this.props.handleCreate(this.state.image, this.state.titleValue, this.state.status, this.state.otherTags, this.state.newMembers);
       this.setState({ titleValue: '', status: 'public', otherTags: [] });
       this.props.closeModal();
     }
@@ -101,6 +101,27 @@ class CreateCommunityPage extends React.Component {
     console.log('val val', val.value);
     this.setState({ status: val.value });
   }
+
+  findEnterMember() {
+    $('#memberInput').keypress((event) => {
+      if (event.which === 13) {
+        this.handleMemberClick();
+        return false; // prevent duplicate submission
+      }
+      return null;
+    });
+  }
+
+  findEnterTag() {
+    $('#topicInput').keypress((event) => {
+      if (event.which === 13) {
+        this.handleClickTag();
+        return false; // prevent duplicate submission
+      }
+      return null;
+    });
+  }
+
 
   render() {
     return (
@@ -201,9 +222,16 @@ class CreateCommunityPage extends React.Component {
                     <h3 className="topicTitle">Add Default Conversation Topics:</h3>
                     <h4 className="topicIntro">Topics help your community stay organised and discover conversations more efficiently</h4>
                     <img src="https://s3-us-west-1.amazonaws.com/walnut-test/topicEg.png" className="topicPicture"/>
-                    <ul id="defaultTopicList">
-                        {this.state.otherTags.map((filter, idx) => <li className="topicLi" key={idx}>#{' '}{filter.toUpperCase()}</li>)}
-                    </ul>
+                    <div className="tagsDiv">
+                        { this.state.otherTags.map((tag, i) =>
+                            <div className="emailInnerDiv" ref={(ref) => {this['_div' + i] = ref;}}>
+                                <Icon className="removeIcon" name="close" onClick={() => this.handleTagRemove(i)} />
+                                <h4 className="email">
+                                    {tag}
+                                </h4>
+                            </div>
+                        )}
+                    </div>
                     <div className="addTags">
                         <Input
                             id="topicInput"
@@ -211,11 +239,10 @@ class CreateCommunityPage extends React.Component {
                             type="text"
                             placeholder="Add Topic here..."
                             value={this.state.filterValue}
-                            onChange={(e) => { this.handleFilterChange(e); }} >
+                            onChange={(e) => { this.handleFilterChange(e); this.findEnterTag(e); }} >
                             <Label basic><Icon name="hashtag" /></Label>
                             <input />
                         </Input>
-                        <Button className="addButton" content="Add" icon="add" onClick={(e) => { this.handleClick(e); }} />
                     </div>
 
                     <Modal.Actions className="createCommunityActions">
@@ -243,15 +270,14 @@ class CreateCommunityPage extends React.Component {
                     </div>
                     <div className="addTags">
                         <Input
-                            id="topicInput"
+                            id="memberInput"
                             labelPosition="left"
                             type="text"
                             placeholder="Add Members..."
                             value={this.state.member}
-                            onChange={(e) => { this.handleMemberChange(e); }} >
+                            onChange={(e) => { this.handleMemberChange(e); this.findEnterMember(e); }} >
                             <input />
                         </Input>
-                        <Button className="addButton" content="Add" icon="plus" onClick={(e) => { this.handleMemberClick(e); }} />
                     </div>
                     <Modal.Actions className="createCommunityActions">
                         <Button.Content className="createButtonModal" onClick={() => this.handleNewComm()} visible>Create <Icon name="lightning" /></Button.Content>

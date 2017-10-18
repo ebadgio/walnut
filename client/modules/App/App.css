@@ -429,6 +429,11 @@
     width: 403px;
 }
 
+#memberInput {
+    width: 403px;
+    margin-left: 8px;
+}
+
 #defaultTopicList {
     height: 200px;
     position: absolute;
@@ -456,7 +461,7 @@
 }
 
 .addTags {
-    margin-left: 15px;
+    margin-left: 64px;
     position: absolute;
     bottom: 10%;
 }
@@ -653,6 +658,13 @@ button.ui.button > input {
 
 .emailDiv {
     height: 450px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.tagsDiv {
+    height: 261px;
+    margin-top: 144px;
     overflow-x: hidden;
     overflow-y: scroll;
 }
