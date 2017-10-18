@@ -70,6 +70,11 @@ class CreateCommunityPage extends React.Component {
     this.setState({ newMembers: copy});
   }
 
+  handleTagRemove(n) {
+    const copy = this.state.otherTags.slice();
+    copy.splice(n, 1);
+    this.setState({ otherTags: copy });
+  }
 
   handleNewComm() {
     if (this.state.file !== '' && this.state.titleValue) {
