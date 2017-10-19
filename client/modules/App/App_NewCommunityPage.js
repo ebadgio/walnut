@@ -232,7 +232,7 @@ class CreateCommunityPage extends React.Component {
                             <div className="emailInnerDiv" ref={(ref) => {this['_div' + i] = ref;}}>
                                 <Icon className="removeIcon" name="close" onClick={() => this.handleTagRemove(i)} />
                                 <h4 className="email">
-                                    {tag}
+                                    # {tag}
                                 </h4>
                             </div>
                         )}

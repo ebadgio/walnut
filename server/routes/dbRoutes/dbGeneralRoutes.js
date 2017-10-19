@@ -153,6 +153,7 @@ router.post('/join/community/code', (req, res) => {
       });
     })
     .then((communityArr) => {
+      console.log('array', communityArr);
       if ( communityArr.length < 1 ) {
         res.json({ success: false });
       } else {
@@ -201,7 +202,7 @@ router.post('/join/community/code', (req, res) => {
       res.json({ success: true, community: joined, user: populatedUser });
     })
     .catch((err) => {
-      console.log('join error', err);
+      console.log('join error code', err);
       res.json({ error: err });
     });
 });

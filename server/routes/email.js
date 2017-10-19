@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport('smtps://walnutreg@gmail.com:' + 
 router.post('/community/invites', (req, res) => {
   const emails = req.body.newMembers;
   const id = req.body.communityID;
-  const link = 'www.walnutnetwork.com/login?code=';
+  const link = 'localhost:3000/login?code=';
   const start = id.substr(21, 24);
   const end = id.substr(0, 3);
   let letters;

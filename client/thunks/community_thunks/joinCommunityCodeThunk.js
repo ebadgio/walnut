@@ -10,8 +10,10 @@ const joinCommunityCodeThunk = (id) => (dispatch) => {
     console.log('response', response.data);
     if (!response.data.success) {
       dispatch({ type: 'JOINING_CODE_ERROR' });
+      dispatch({ type: 'ZERO_CODE' });
     } else {
       dispatch({ type: 'JOINING_CODE_DONE' });
+      dispatch({ type: 'ZERO_CODE' });
       dispatch({ type: 'GET_USER_DATA_DONE', user: response.data.user });
     }
   })

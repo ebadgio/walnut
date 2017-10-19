@@ -2,7 +2,8 @@ const walnutHomeReducer = (state = {
   isReady: false,
   isJoiningCode: false,
   joiningCodeSuccess: false,
-  joiningCodeError: false
+  joiningCodeError: false,
+  code: ''
 }, action) => {
   switch(action.type) {
     case 'WALNUT_READY':
@@ -38,6 +39,16 @@ const walnutHomeReducer = (state = {
         isJoiningCode: false,
         joiningCodeError: false,
         joiningCodeSuccess: false
+      };
+    case 'SAVE_CODE':
+      return {
+        ...state,
+        code: action.code
+      };
+    case 'ZERO_CODE':
+      return {
+        ...state,
+        code: ''
       };
     default:
       return state;

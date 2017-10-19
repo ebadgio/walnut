@@ -13,7 +13,7 @@ import CommunityCard from './App_CommunityCard';
 import NewCommunityModal from './App_NewCommunityModal';
 import WalnutLoader from './App_WalnutLoader';
 import signOutThunk from '../../thunks/auth_thunks/signOutThunk';
-
+import joinCommunityCodeThunk from '../../thunks/community_thunks/joinCommunityCodeThunk';
 
 class WalnutHomeContainer extends React.Component {
   constructor() {
@@ -35,6 +35,11 @@ class WalnutHomeContainer extends React.Component {
 
   componentDidMount() {
     localStorage.setItem('url', '/walnuthome');
+
+    // AUTO JOIN WITH LINK
+    if (this.props.savedCode) {
+      this.props.submitCode(this.props.savedCode);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -124,7 +129,9 @@ WalnutHomeContainer.propTypes = {
   isReady: PropTypes.bool,
   handleLogout: PropTypes.func,
   loginFirebase: PropTypes.bool,
-  errorDone: PropTypes.func
+  errorDone: PropTypes.func,
+  savedCode: PropTypes.string,
+  submitCode: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -133,6 +140,7 @@ const mapStateToProps = (state) => ({
   communities: state.getCommunityReducer.communities,
   isReady: state.walnutHomeReducer.isReady,
   loginFirebase: state.userReducer.loginFirebase,
+  savedCode: state.walnutHomeReducer.code
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -142,7 +150,8 @@ const mapDispatchToProps = (dispatch) => ({
   getAllCommunities: () => dispatch(getAllCommunitiesThunk()),
   updateConvos: (id) => dispatch({ type: 'SWITCH_COM', communityId: id }),
   handleLogout: (his) => dispatch(signOutThunk(his)),
-  errorDone: () => dispatch({ type: 'JOINING_CODE_ERROR_DONE'})
+  errorDone: () => dispatch({ type: 'JOINING_CODE_ERROR_DONE'}),
+  submitCode: (code) => dispatch(joinCommunityCodeThunk(code))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalnutHomeContainer);

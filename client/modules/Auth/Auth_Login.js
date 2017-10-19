@@ -37,6 +37,11 @@ class Login extends React.Component {
         this.regLogin(e);
       }
     });
+
+    if (window.location.href.split('=')[1]) {
+      console.log('code', window.location.href.split('=')[1]);
+      this.props.saveCode(window.location.href.split('=')[1]);
+    }
   }
 
   handleEmailChange(e) {
@@ -219,7 +224,8 @@ Login.propTypes = {
   reVerify: PropTypes.func,
   loginDisplay: PropTypes.number,
   openReg: PropTypes.func,
-  verifiedEmail: PropTypes.string
+  verifiedEmail: PropTypes.string,
+  saveCode: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -234,7 +240,8 @@ const mapDispatchToProps = (dispatch) => ({
   googleLogin: () => googleLoginThunk(dispatch),
   signIn: (email, password, redirect) => signInThunk(email, password, redirect)(dispatch),
   reVerify: (email, password) => dispatch(verificationThunk(email, password)),
-  openReg: () => dispatch({ type: 'REGISTER_OPEN' })
+  openReg: () => dispatch({ type: 'REGISTER_OPEN' }),
+  saveCode: (code) => dispatch({ type: 'SAVE_CODE', code: code })
 });
 
 
