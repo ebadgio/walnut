@@ -11,7 +11,7 @@ import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
 import NewPostContainer from './Feed_NewPost_Container.js';
 import './Feed.css';
 import $ from 'jquery';
-import { Loader, Segment } from 'semantic-ui-react';
+import { Loader, Segment, Divider } from 'semantic-ui-react';
 
 
 let refresh;
@@ -77,12 +77,38 @@ class Feed extends React.Component {
   render() {
     if (this.props.data.isFetching || !this.props.isReady) {
       return (
-        <div className="Feed_Wrapper">
-          {[...Array(10)].map(() =>
-            <Segment className="emptyLoaders">
-              <Loader className="postLoader" active inline="centered" />
-            </Segment>)}
-        </div>
+          <div className="Feed_Wrapper">
+              {[...Array(10)].map(() =>
+                  <Segment className="emptyLoaders">
+                    <div className="animatedBackground">
+                      <div className="postContentBlank">
+                        <div className="postUser" id="postUser">
+                          <div className="avatarBlankHolder">
+                            <div className="avatarBlank"></div>
+                          </div>
+                          <div className="postHeaderLoader">
+                            <div className="postHeaderBlank"></div>
+                            <div className="postHeaderBlankName"></div>
+                            <div className="postHeaderBlank"></div>
+                            <div className="postHeaderBlankTime"></div>
+                            <div className="postHeaderBlank"></div>
+                            <div className="postHeaderBlank"></div>
+                          </div>
+
+                        </div>
+                        <div className="postDescriptionBlank">
+                          <div className="postBodyBlank"></div>
+                          <div className="postBodyBlank"></div>
+                          <div className="postBodySpace"></div>
+                          <div className="postBodyBlankHalf"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <Divider className="postDividerBlank" fitted />
+                    <div className="postFootnote">
+                    </div>
+                  </Segment>)}
+          </div>
       );
     }
     return (
@@ -147,3 +173,20 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feed);
+
+// {<div className="postContentBlank">
+//   <div className="postUser" id="postUser">
+//     <div className="avatarBlank"></div>
+//     <div className="postHeader">
+//       <div className="postNameBlank"></div>
+//       <div className="postTimeBlank"></div>
+//     </div>
+//   </div>
+//   <div className="postDescription">
+//     <div className="postBodyBlank"></div>
+//     <div className="postBodyBlank"></div>
+//     <div className="postBodyBlankHalf"></div>
+//   </div>
+// </div>}
+
+
