@@ -102,6 +102,7 @@ class NewPostContainer extends React.Component {
 
   upload() {
     const myFile = $('#fileInputNewpost').prop('files');
+    console.log(myFile, myFile[0]);
     this.setState({ file: myFile[0] });
   }
 
