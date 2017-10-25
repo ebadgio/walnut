@@ -156,9 +156,14 @@ class CreateCommunityPage extends React.Component {
                         value={this.state.titleValue}
                         onChange={(e) => { this.handleChange(e); }} />
                 </Modal.Content>
-                <Modal.Actions className="createCommunityActions">
+                        <div className="pageMarker">
+                            <div className="outerCircle"></div>
+                            <div className="innerCircle"></div>
+                            <div className="outerCircle"></div>
+                            <div className="outerCircle"></div>
+                            <div className="outerCircle"></div>
+                        </div>
                         <Button.Content className="nextButtonModal1" onClick={() => this.state.titleValue === '' ? null : this.setState({page: 2})} visible>Next</Button.Content>
-                </Modal.Actions>
             </div> : null }
 
 
@@ -212,10 +217,15 @@ class CreateCommunityPage extends React.Component {
                         <p className="privacySettingDesc">Community will be hidden from the public and only be joined by invite</p>
                     </div>
                 </Form>
-                <Modal.Actions className="createCommunityActions">
                     <Button.Content className="prevButtonModal" onClick={() => this.setState({ page: 1 })} visible>Back</Button.Content>
+                    <div className="pageMarker">
+                        <div className="outerCircle"></div>
+                        <div className="outerCircle"></div>
+                        <div className="innerCircle1"></div>
+                        <div className="outerCircle"></div>
+                        <div className="outerCircle"></div>
+                    </div>
                     <Button.Content className="nextButtonModal" onClick={() => this.setState({page: 3})} visible>Next</Button.Content>
-                </Modal.Actions>
             </div> : null }
 
 
@@ -249,11 +259,15 @@ class CreateCommunityPage extends React.Component {
                             <input />
                         </Input>
                     </div>
-
-                    <Modal.Actions className="createCommunityActions">
                         <Button.Content className="prevButtonModal" onClick={() => this.setState({ page: 2 })} visible>Back</Button.Content>
+                        <div className="pageMarker">
+                            <div className="outerCircle"></div>
+                            <div className="outerCircle"></div>
+                            <div className="outerCircle"></div>
+                            <div className="innerCircle2"></div>
+                            <div className="outerCircle"></div>
+                        </div>
                         <Button.Content className="nextButtonModal" onClick={() => this.setState({page: 4})} visible>Next</Button.Content>
-                    </Modal.Actions>
                 </div> : null}
 
 
@@ -284,10 +298,15 @@ class CreateCommunityPage extends React.Component {
                             <input />
                         </Input>
                     </div>
-                    <Modal.Actions className="createCommunityActions">
                         <Button.Content className="createButtonModal" onClick={() => this.handleNewComm()} visible>Create <Icon name="lightning" /></Button.Content>
+                        <div className="pageMarker">
+                            <div className="outerCircle"></div>
+                            <div className="outerCircle"></div>
+                            <div className="outerCircle"></div>
+                            <div className="outerCircle"></div>
+                            <div className="innerCircle3"></div>
+                        </div>
                         <Button.Content className="prevButtonModalEnd" onClick={() => this.setState({ page: 3 })} visible>Back</Button.Content>
-                    </Modal.Actions>
                 </div> : null}
         </div>
     );
