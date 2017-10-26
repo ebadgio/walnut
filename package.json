@@ -13,7 +13,7 @@
     "webpack": "webpack --watch",
     "dev": "webpack-dev-server --content-base build/",
     "server": "nodemon ./server/server.js --exec babel-node --presets es2015",
-    "start": "./server/server.js --exec babel-node --presets es2015",
+    "start": "node ./server/server.js --exec babel-node --presets es2015",
     "postinstall": "webpack --config webpack.prod.config.js"
   },
   "repository": {
