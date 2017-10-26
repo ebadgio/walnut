@@ -140,7 +140,7 @@ class CreateCommunityPage extends React.Component {
                 </Modal.Header>
                 <Modal.Content scrolling>
 
-                    <h3 id="communityPictureText">Community Picture</h3>
+                    <h3 id="communityPictureText">1) Community Picture</h3>
                     <input id="fileInputNewComm" type="file" onChange={() => this.upload()} />
                     {this.state.file !== '' ? <div className="imgWrapperComm"><img onClick={() => $('#fileInputNewComm').trigger('click')} className="communityImgUpload" src={this.state.file} /></div> : null }
                     {this.state.file  === '' ?
@@ -150,7 +150,7 @@ class CreateCommunityPage extends React.Component {
                     {this.state.file === '' ?
                         <img className="communityImgPre" src="https://avatars2.githubusercontent.com/u/5745754?v=4&s=88" /> : null }
 
-                    <h3 id="communityTitleText">Community Title</h3>
+                    <h3 id="communityTitleText">2) Community Title</h3>
                     <Input
                         className="titleInput"
                         value={this.state.titleValue}
@@ -172,7 +172,7 @@ class CreateCommunityPage extends React.Component {
                 <Modal.Header className="modalHeader">
                     <Icon className="closingIcon" name="close" onClick={() => this.props.closeModal()} />
                 </Modal.Header>
-                <h3 id="communityPrivacyHeader">Community Discovery Settings</h3>
+                <h3 id="communityPrivacyHeader">3) Community Discovery Settings</h3>
                 <Form className="privacySettings">
                     <div>
                         <Form.Field>
@@ -217,7 +217,7 @@ class CreateCommunityPage extends React.Component {
                         <p className="privacySettingDesc">Community will be hidden from the public and only be joined by invite</p>
                     </div>
                 </Form>
-                    <Button.Content className="prevButtonModal" onClick={() => this.setState({ page: 1 })} visible>Back</Button.Content>
+                    <Button.Content className="prevButtonModal2" onClick={() => this.setState({ page: 1 })} visible>Back</Button.Content>
                     <div className="pageMarker">
                         <div className="outerCircle"></div>
                         <div className="outerCircle"></div>
@@ -225,7 +225,7 @@ class CreateCommunityPage extends React.Component {
                         <div className="outerCircle"></div>
                         <div className="outerCircle"></div>
                     </div>
-                    <Button.Content className="nextButtonModal" onClick={() => this.setState({page: 3})} visible>Next</Button.Content>
+                    <Button.Content className="nextButtonModal2" onClick={() => this.setState({page: 3})} visible>Next</Button.Content>
             </div> : null }
 
 
@@ -234,7 +234,7 @@ class CreateCommunityPage extends React.Component {
                     <Modal.Header className="modalHeader">
                         <Icon className="closingIcon" name="close" onClick={() => this.props.closeModal()} />
                     </Modal.Header>
-                    <h3 className="topicTitle">Add Default Conversation Topics:</h3>
+                    <h3 className="topicTitle">4) Add Default Conversation Topics:</h3>
                     <h4 className="topicIntro">Topics help your community stay organised and discover conversations more efficiently</h4>
                     <img src="https://s3-us-west-1.amazonaws.com/walnut-test/topicEg.png" className="topicPicture"/>
                     <div className="tagsDiv">
@@ -259,7 +259,7 @@ class CreateCommunityPage extends React.Component {
                             <input />
                         </Input>
                     </div>
-                        <Button.Content className="prevButtonModal" onClick={() => this.setState({ page: 2 })} visible>Back</Button.Content>
+                        <Button.Content className="prevButtonModal3" onClick={() => this.setState({ page: 2 })} visible>Back</Button.Content>
                         <div className="pageMarker">
                             <div className="outerCircle"></div>
                             <div className="outerCircle"></div>
@@ -267,7 +267,7 @@ class CreateCommunityPage extends React.Component {
                             <div className="innerCircle2"></div>
                             <div className="outerCircle"></div>
                         </div>
-                        <Button.Content className="nextButtonModal" onClick={() => this.setState({page: 4})} visible>Next</Button.Content>
+                        <Button.Content className="nextButtonModal3" onClick={() => this.setState({page: 4})} visible>Next</Button.Content>
                 </div> : null}
 
 
@@ -276,7 +276,7 @@ class CreateCommunityPage extends React.Component {
                     <Modal.Header className="modalHeader">
                         <Icon className="closingIcon" name="close" onClick={() => this.props.closeModal()} />
                     </Modal.Header>
-                    <h3 className="topicTitle">Add Members:</h3>
+                    <h3 className="topicTitle">5) Add Members:</h3>
                     <div className="emailDiv">
                         { this.state.newMembers.map((email, i) =>
                             <div className="emailInnerDiv" ref={(ref) => {this['_div' + i] = ref;}}>
@@ -306,7 +306,7 @@ class CreateCommunityPage extends React.Component {
                             <div className="outerCircle"></div>
                             <div className="innerCircle3"></div>
                         </div>
-                        <Button.Content className="prevButtonModalEnd" onClick={() => this.setState({ page: 3 })} visible>Back</Button.Content>
+                        <Button.Content className="prevButtonModal4" onClick={() => this.setState({ page: 3 })} visible>Back</Button.Content>
                 </div> : null}
         </div>
     );

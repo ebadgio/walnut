@@ -372,8 +372,8 @@
 
 .titleInput {
     position: absolute !important;
-    top: 75%;
-    left: 8%;
+    top: 77%;
+    margin-left: 96px;
     width: 400px;
 }
 
@@ -382,15 +382,15 @@
     margin: 0;
     position: absolute;
     top: 70%;
-    left: 8%;
+    left: 6%;   
 }
 
 #communityPictureText {
     color: black;
     margin: 0;
     position: absolute;
-    top: 9%;
-    left: 7%
+    top: 6%;
+    left: 6%;
 }
 
 #radioLabel {
@@ -411,9 +411,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    margin-left: 51px;
+    margin-left: 63px;
     margin-right: 81px;
-    margin-top: 71px;
+    margin-top: 41px;
 }
 
 .privacySettingDesc {
@@ -529,7 +529,7 @@
     width: auto;
     position: absolute;
     top: 14%;
-    left: 13%;
+    margin-left: 143px;
     filter: brightness(80%);
 }
 
@@ -540,7 +540,7 @@
     overflow: hidden;
     position: absolute;
     top: 14%;
-    left: 13%;
+    margin-left: 143px;
 }
 
 .communityImgUpload {
@@ -895,19 +895,6 @@ button.ui.button > input {
     right: 29% !important;
 }
 
-.nextButtonModal {
-    color: #5bc0e3 !important;
-    background-color: #fff !important;
-    border: 1.5px solid !important;
-    border-radius: 4px !important;
-    width: 57px !important;
-    height: 28px !important;
-    padding-left: 11px !important;
-    padding-top: 6px !important;
-    position: relative !important;
-    left: 79% !important;
-    cursor: pointer;
-}
 
 .createButtonModal {
     color: #5bc0e3 !important;
@@ -918,8 +905,9 @@ button.ui.button > input {
     height: 28px !important;
     padding-left: 11px !important;
     padding-top: 6px !important;
-    position: relative !important;
-    left: 84% !important;
+    position: absolute !important;
+    margin-left: 496px !important;
+    margin-top: 85px !important;
     cursor: pointer;
 }
 
@@ -935,9 +923,11 @@ button.ui.button > input {
     position: relative !important;
     left: 89% !important;
     cursor: pointer;
+    margin-top: 320px !important;
 }
 
-.prevButtonModal {
+
+.nextButtonModal2 {
     color: #5bc0e3 !important;
     background-color: #fff !important;
     border: 1.5px solid !important;
@@ -947,11 +937,12 @@ button.ui.button > input {
     padding-left: 11px !important;
     padding-top: 6px !important;
     position: relative !important;
-    left: 1% !important;
+    left: 89% !important;
     cursor: pointer;
+    margin-top: 72px !important;
 }
 
-.prevButtonModalEnd {
+.nextButtonModal3 {
     color: #5bc0e3 !important;
     background-color: #fff !important;
     border: 1.5px solid !important;
@@ -961,7 +952,54 @@ button.ui.button > input {
     padding-left: 11px !important;
     padding-top: 6px !important;
     position: relative !important;
-    left: -12% !important;
+    left: 89% !important;
+    cursor: pointer;
+    margin-top: 101px !important;
+}
+
+
+.prevButtonModal2 {
+    color: #5bc0e3 !important;
+    background-color: #fff !important;
+    border: 1.5px solid !important;
+    border-radius: 4px !important;
+    width: 57px !important;
+    height: 28px !important;
+    padding-left: 11px !important;
+    padding-top: 6px !important;
+    left: 17px !important;
+    cursor: pointer;
+    margin-top: 72px !important;
+    position: absolute !important;
+}
+
+.prevButtonModal3 {
+    color: #5bc0e3 !important;
+    background-color: #fff !important;
+    border: 1.5px solid !important;
+    border-radius: 4px !important;
+    width: 57px !important;
+    height: 28px !important;
+    padding-left: 11px !important;
+    padding-top: 6px !important;
+    left: 17px !important;
+    cursor: pointer;
+    margin-top: 101px !important;
+    position: absolute !important;
+}
+
+.prevButtonModal4 {
+    color: #5bc0e3 !important;
+    background-color: #fff !important;
+    border: 1.5px solid !important;
+    border-radius: 4px !important;
+    width: 57px !important;
+    height: 28px !important;
+    padding-left: 11px !important;
+    padding-top: 6px !important;
+    position: relative !important;
+    margin-top: 85px !important;
+    left: 17px !important;
     cursor: pointer;
 }
 
@@ -984,8 +1022,11 @@ h1, h2, h3, h4, h5 {
 }
 
 .pageMarker{
-  display: flex;
-  width: 100px;
+    display: flex;
+    width: 100px;
+    position: absolute;
+    bottom: 5%;
+    margin-left: 257px;
 }
 
 .outerCircle {
@@ -997,45 +1038,41 @@ h1, h2, h3, h4, h5 {
 }
 
 .innerCircle {
-  background-color: #568ea3;
-  position: absolute;
-  margin-top: 2px;
-  left: 1.5%;
-  height: 8px;
-  width: 8px;
-  margin-left: 10px;
-  border-radius: 50%;
+    background-color: #568ea3;
+    position: absolute;
+    margin-top: 2.5px;
+    height: 5px;
+    width: 5px;
+    margin-left: 12px;
+    border-radius: 50%;
 }
 
 .innerCircle1 {
-  background-color: #568ea3;
-  position: absolute;
-  margin-top: 2px;
-  left: 3%;
-  height: 8px;
-  width: 8px;
-  margin-left: 10px;
-  border-radius: 50%;
+    background-color: #568ea3;
+    position: absolute;
+    margin-top: 2.5px;
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    margin-left: 32.3px;
 }
 
 .innerCircle2 {
-  background-color: #568ea3;
-  position: absolute;
-  margin-top: 2px;
-  left: 5%;
-  height: 8px;
-  width: 8px;
-  margin-left: 10px;
-  border-radius: 50%;
+    background-color: #568ea3;
+    position: absolute;
+    margin-top: 2.5px;
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    margin-left: 52.3px;
 }
 
 .innerCircle3 {
-  background-color: #568ea3;
-  position: absolute;
-  margin-top: 2px;
-  left: 7.5%;
-  height: 8px;
-  width: 8px;
-  margin-left: 10px;
-  border-radius: 50%;
+    background-color: #568ea3;
+    position: absolute;
+    margin-top: 2.5px;
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    margin-left: 72.3px;
 }
