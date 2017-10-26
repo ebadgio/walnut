@@ -12,6 +12,7 @@ import NewPostContainer from './Feed_NewPost_Container.js';
 import './Feed.css';
 import $ from 'jquery';
 import { Loader, Segment, Divider } from 'semantic-ui-react';
+import EmptyLoader from './Empty_Loader';
 
 
 let refresh;
@@ -79,35 +80,7 @@ class Feed extends React.Component {
       return (
           <div className="Feed_Wrapper">
               {[...Array(10)].map(() =>
-                  <Segment className="emptyLoaders">
-                    <div className="animatedBackground">
-                      <div className="postContentBlank">
-                        <div className="postUser" id="postUser">
-                          <div className="avatarBlankHolder">
-                            <div className="avatarBlank"></div>
-                          </div>
-                          <div className="postHeaderLoader">
-                            <div className="postHeaderBlank"></div>
-                            <div className="postHeaderBlankName"></div>
-                            <div className="postHeaderBlank"></div>
-                            <div className="postHeaderBlankTime"></div>
-                            <div className="postHeaderBlank"></div>
-                            <div className="postHeaderBlank"></div>
-                          </div>
-
-                        </div>
-                        <div className="postDescriptionBlank">
-                          <div className="postBodyBlank"></div>
-                          <div className="postBodyBlank"></div>
-                          <div className="postBodySpace"></div>
-                          <div className="postBodyBlankHalf"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <Divider className="postDividerBlank" fitted />
-                    <div className="postFootnote">
-                    </div>
-                  </Segment>)}
+                  <EmptyLoader />)}
           </div>
       );
     }
@@ -120,7 +93,7 @@ class Feed extends React.Component {
               loadMore={() => this._loadMore()}
               hasMore={this.props.hasMore}
               threshold={250}
-              loader={<Loader active inline="centered" />}
+              loader={<EmptyLoader />}
               useWindow
           >
               {this.props.data.posts.map((post) => (
