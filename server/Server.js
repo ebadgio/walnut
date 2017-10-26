@@ -11,6 +11,7 @@ var User = require('./models/models').User;
 var cors = require('cors');
 var compression = require('compression');
 var CryptoJS = require("crypto-js");
+var http = require("http");
 
 var REQUIRED_ENV = "SECRET MONGODB_URI".split(" ");
 
@@ -141,6 +142,10 @@ app.use('/*', (request, response) => {
 });
 
 
+// prevent heroku sleep of free tier
+setInterval(function () {
+  http.get("https://www.walnutnetwork.com");
+}, 300000); 
 
 
 // make this dbRoutes when we have the database running
