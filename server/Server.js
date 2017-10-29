@@ -103,11 +103,12 @@ app.use(function(req, res, next) {
   }
 });
 
-app.get('/', function(req, res, next) {
+app.get('/', (req, res, next) => {
   if (!req.user) {
     res.redirect('/login')
   } 
   else {
+    console.log('this should not be seen on the backend and should only take care of /login');
     if (req.user.currentCommunity) {
       User.findById(req.user._id)
           .populate('currentCommunity')
