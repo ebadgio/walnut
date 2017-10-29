@@ -1076,3 +1076,29 @@ h1, h2, h3, h4, h5 {
     border-radius: 50%;
     margin-left: 72.3px;
 }
+
+.editCommTabs {
+     width: 100px !important;
+     background-color: white !important;
+}
+
+.editTabSection {
+    width: 550px;
+    height: 625px;
+    background-color: white;
+    position: absolute;
+    top: 0%;
+    margin-left: 100px;
+}
+
+.editCommModal {
+    margin-top: 0 !important;
+    top: 5% !important;
+    left: 50% !important;
+}
+
+.closeEditModal {
+    color: black !important;
+    margin-top: -18px !important;
+    margin-right: 7px !important;
+}

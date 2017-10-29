@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
-import { Label, Input, Modal, Button, Icon, List } from 'semantic-ui-react';
+import { Label, Input, Modal, Button, Icon, List, Menu } from 'semantic-ui-react';
 import $ from 'jquery';
 import superagent from 'superagent';
 import Select from 'react-select';
@@ -13,15 +13,10 @@ class EditCommunityModal extends React.Component {
     this.state = {
       titleValue: this.props.community.title,
       image: this.props.community.icon,
-      oldFilters: this.props.community.defaultTags,
-      defaultFilters: this.props.community.defaultTags.map((tag) => tag.name),
-      newFilters: [],
       users: this.props.community.users,
       admins: this.props.community.admins,
-      filterValue: '',
-      file: '',
-      pic: '',
-      admin: ''
+      admin: '',
+      activeItem: 'general'
     };
   }
 
@@ -30,73 +25,95 @@ class EditCommunityModal extends React.Component {
     this.setState({titleValue: e.target.value});
   }
 
-  handleFilterChange(e) {
-    this.setState({filterValue: e.target.value});
-  }
 
-  handleClick(e) {
-    e.preventDefault();
-    const copy = this.state.defaultFilters;
-    copy.push(this.state.filterValue);
-    this.setState({defaultFilters: copy, filterValue: ''});
-  }
+  // handleClick(e) {
+  //   e.preventDefault();
+  //   const copy = this.state.defaultFilters;
+  //   copy.push(this.state.filterValue);
+  //   this.setState({defaultFilters: copy, filterValue: ''});
+  // }
 
-  handleUpdate() {
-    if (this.state.titleValue && this.state.defaultFilters && this.state.admins) {
-      const oldTags = this.state.oldFilters.filter((f) => this.state.defaultFilters.indexOf(f.name) !== -1);
-      const newTags = this.state.defaultFilters.filter((f) => this.state.oldFilters.filter((fi) => fi.name === f).length === 0);
-      if (this.state.file) {
-        superagent.post('/aws/upload/communitypicture')
-          .attach('community', this.state.file)
-          .end((err, res) => {
-            if (err) {
-              console.log(err);
-              alert('failed uploaded!');
-            }
-            this.props.handleUpdate(res.body.pictureURL, this.state.titleValue, oldTags, newTags, this.state.admins);
-          });
-      } else {
-        this.props.handleUpdate(this.state.image, this.state.titleValue, oldTags, newTags, this.state.admins);
-      }
-      this.setState({open: false});
-    }
+  // handleUpdate() {
+  //   if (this.state.titleValue && this.state.defaultFilters && this.state.admins) {
+  //     const oldTags = this.state.oldFilters.filter((f) => this.state.defaultFilters.indexOf(f.name) !== -1);
+  //     const newTags = this.state.defaultFilters.filter((f) => this.state.oldFilters.filter((fi) => fi.name === f).length === 0);
+  //     if (this.state.file) {
+  //       superagent.post('/aws/upload/communitypicture')
+  //         .attach('community', this.state.file)
+  //         .end((err, res) => {
+  //           if (err) {
+  //             console.log(err);
+  //             alert('failed uploaded!');
+  //           }
+  //           this.props.handleUpdate(res.body.pictureURL, this.state.titleValue, oldTags, newTags, this.state.admins);
+  //         });
+  //     } else {
+  //       this.props.handleUpdate(this.state.image, this.state.titleValue, oldTags, newTags, this.state.admins);
+  //     }
+  //     this.setState({open: false});
+  //   }
+  // }
+
+  // upload() {
+  //   const myFile = $('#fileInputEditComm').prop('files');
+  //   this.setState({ file: myFile[0] });
+  // }
+
+  // handleAdmin(user) {
+  //   if (this.state.admins.length > 1) {
+  //     const newState = this.state.admins.filter((u) => u._id !== user._id);
+  //     this.setState({admins: newState});
+  //   }
+  // }
+
+  // handleAddAdminChange(value) {
+  //   if (value) {
+  //     const newState = this.state.admins.concat(value);
+  //     this.setState({admin: ''});
+  //     this.setState({admins: newState});
+  //   }
+  // }
+
+  // handleRemoveTag(tag) {
+  //   if (this.state.defaultFilters.length > 0) {
+  //     const newState = this.state.defaultFilters.filter((t) => t !== tag);
+  //     this.setState({defaultFilters: newState});
+  //   }
+  // }
+
+
+  handleTabClick(name) {
+    this.setState({ activeItem: name });
   }
 
   upload() {
     const myFile = $('#fileInputEditComm').prop('files');
-    this.setState({ file: myFile[0] });
+    superagent.post('/aws/upload/communitypicture')
+      .attach('community', myFile[0])
+      .end((err, res) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log('file end', res.body);
+        this.setState({ image: res.body.pictureURL });
+      });
   }
 
-  handleAdmin(user) {
-    if (this.state.admins.length > 1) {
-      const newState = this.state.admins.filter((u) => u._id !== user._id);
-      this.setState({admins: newState});
-    }
-  }
-
-  handleAddAdminChange(value) {
-    if (value) {
-      const newState = this.state.admins.concat(value);
-      this.setState({admin: ''});
-      this.setState({admins: newState});
-    }
-  }
-
-  handleRemoveTag(tag) {
-    if (this.state.defaultFilters.length > 0) {
-      const newState = this.state.defaultFilters.filter((t) => t !== tag);
-      this.setState({defaultFilters: newState});
-    }
+  handleAdminRemove(n) {
+    const copy = this.state.admins.slice();
+    copy.splice(n, 1);
+    this.setState({ admins: copy });
   }
 
   render() {
     return (
         <Modal size={'small'}
                basic
-               closeIcon="close"
+               closeIcon={<Icon className="closeEditModal" size="big" name="close" />}
+               className="editCommModal"
                trigger={ <Button className="modalEditTrigger" content="Edit Community" icon="edit" labelPosition="left" />}
         >
-            <Modal.Header className="modalHeader">
+            {/* <Modal.Header className="modalHeader">
                 Edit your community!
             </Modal.Header>
             <Modal.Content scrolling>
@@ -160,7 +177,47 @@ class EditCommunityModal extends React.Component {
                     Update
                     <Icon name="lightning" />
                 </Button>
-            </Modal.Actions>
+            </Modal.Actions> */}
+              <div className="editCommTabs">
+                <Menu fluid vertical tabular>
+                  <Menu.Item name="general" active={this.state.activeItem === 'general'} onClick={() => this.handleTabClick('general')} />
+                  <Menu.Item name="admins" active={this.state.activeItem === 'admins'} onClick={() => this.handleTabClick('admins')} />
+                  <Menu.Item name="members" active={this.state.activeItem === 'members'} onClick={() => this.handleTabClick('members')} />
+                </Menu>
+              </div>
+
+              {this.state.activeItem === 'general' ?
+                <div className="editTabSection">
+                  <input id="fileInputEditComm" type="file" onChange={() => this.upload()} />
+                  <div className="imgWrapperComm"><img onClick={() => $('#fileInputEditComm').trigger('click')} className="communityImgUpload" src={this.state.image} /></div>
+                  <Input
+                    className="titleInput"
+                    value={this.state.titleValue}
+                    onChange={(e) => { this.handleChange(e); }} />
+                </div> : null }
+
+              {this.state.activeItem === 'admins' ?
+                <div className="editTabSection">
+                  <div className="currentAdmins">
+                    {this.state.admins.map((admin, i) => (
+                      <div className="emailInnerDiv" ref={(ref) => { this['_div' + i] = ref; }}>
+                        <Icon className="removeIcon" name="close" onClick={() => this.handleAdminRemove(i)} />
+                        <h4 className="email">
+                          {admin.fullName}
+                        </h4>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div>
+                    Add new members
+                  </div>
+                </div> : null}
+
+              {this.state.activeItem === 'members' ?
+                <div className="editTabSection">
+                  <h3>members</h3>
+                </div> : null}
         </Modal>
     );
   }
