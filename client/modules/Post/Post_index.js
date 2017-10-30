@@ -47,8 +47,10 @@ class Post extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       const elem = document.getElementById(this.props.postData.postId);
-      this.setState({minHeighter: elem.clientHeight + 20});
-    }, 5000);
+      if (elem) {
+        this.setState({minHeighter: elem.clientHeight + 20});
+      }
+    }, 7500);
 
     const user = firebaseApp.auth().currentUser;
     this.setState({ user: user, timeStamp: this.getUseDate(this.props.postData.createdAt)});
@@ -89,7 +91,6 @@ class Post extends React.Component {
     // unreads stuff
     firebaseApp.database().ref('/unreads/' + user.uid + '/' + this.props.postData.postId).on('value', snapshotB => {
       const unreadCount =  snapshotB.val();
-      console.log('unreads', unreadCount);
       if (!isNaN(unreadCount) && unreadCount !== null) {
         this.setState({unreads: unreadCount});
       }

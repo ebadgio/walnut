@@ -1109,3 +1109,17 @@ h1, h2, h3, h4, h5 {
     width: 32px;
     margin-left: 5px;
 }
+
+.unreadsCircle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background: #d40d27;
+    border-radius: 50%;
+    min-width: 19px;
+    font-size: 12px;
+    position: absolute;
+    margin-left: 20px;
+    margin-top: -7px;
+}

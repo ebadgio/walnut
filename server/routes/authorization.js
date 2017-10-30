@@ -19,24 +19,11 @@ router.post('/signup', function (req, res) {
     .then(function (decodedToken) {
       var uid = decodedToken.uid;
 
-      let useFname = '';
-      req.body.fname.split(' ').forEach((word) => {
-        const firstLetter = word.substr(0, 1).toUpperCase();
-        const rest = word.substr(1);
-        useFname += (firstLetter + rest + ' ');
-      });
-
-      let useLname = '';
-      req.body.lname.split(' ').forEach((word) => {
-        const firstLetter = word.substr(0, 1).toUpperCase();
-        const rest = word.substr(1);
-        useLname += (firstLetter + rest + ' ');
-      });
 
 
       var new_user = new User({
         firebaseId: uid,
-        fullName: useFname.trim() + ' ' + useLname.trim(),
+        fullName: req.body.fname + ' ' + req.body.lname,
         username: req.body.username,
         portfolio: [
           { name: 'media', data: [] },

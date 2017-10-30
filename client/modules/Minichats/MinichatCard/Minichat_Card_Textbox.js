@@ -134,7 +134,7 @@ class MinichatTextBox extends React.Component {
       };
       firebaseApp.database().ref().update(updateLast);
 
-            // unread messages set up
+      // unread messages set up
       firebaseApp.database().ref('/followGroups/' + this.props.postData.postId).once('value', snapshot => {
         const followers = Object.keys(snapshot.val());
         console.log('followers', followers);
@@ -144,9 +144,14 @@ class MinichatTextBox extends React.Component {
           unreadsCountRef.transaction((currentValue) => {
             return (currentValue || 0) + 1;
           });
+
+          const totalUnreadsRef = firebaseApp.database().ref('/totalUnreads/' + follower + '/' + this.props.currentUser.currentCommunity._id);
+          totalUnreadsRef.transaction((currentValue) => {
+            return (currentValue || 0) + 1;
+          });
         });
       });
-            // unread stuff ends here
+      // unread stuff ends here
 
       this.setState({commentBody: '', prevBody: ''});
       const update = {};

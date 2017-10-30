@@ -352,44 +352,9 @@
 }
 
 .isUnread {
-    color: #f45b69;
+    color: #d40d27;
     font-size: smaller;
     margin-right: 12px;
-}
-.noUnreadMini {
-    color: #b3b5c1;
-    font-size: 8px;
-    margin-right: 12px;
-}
-
-.isUnreadMini {
-    color: #f45b69;
-    font-size: 8px;
-    margin-right: 12px;
-}
-
-.commentNumMini {
-    color: #b3b5c1;
-    font-size: 8px;
-    margin-right: 12px;
-}
-
-.followNumMini {
-    color: #b3b5c1;
-    font-size: 8px;
-    margin-right: 12px;
-}
-
-.activeNumMini {
-    color: #85C7F2;
-    font-size: 8px;
-    margin-right: 12px;
-}
-
-.messageInfoGroupMini {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
 }
 
 .commentNumUn {
