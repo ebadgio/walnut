@@ -34,7 +34,7 @@ class WalnutHomeContainer extends React.Component {
   }
 
   componentDidMount() {
-    localStorage.setItem('url', '/walnuthome');
+    sessionStorage.setItem('url', '/walnuthome');
 
     // AUTO JOIN WITH LINK
     if (this.props.savedCode) {

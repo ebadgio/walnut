@@ -29,10 +29,7 @@ class Directory extends React.Component {
 
   componentDidMount() {
     const urls = this.props.location.pathname;
-    localStorage.setItem('url', urls);
     sessionStorage.setItem('url', urls);
-    // testing here:
-    // this.setState({currentCards: this.props.users});
   }
 
   componentWillReceiveProps(nextProps) {

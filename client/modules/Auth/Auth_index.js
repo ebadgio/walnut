@@ -49,7 +49,7 @@ class Auth extends React.Component {
             if (sessionStorage.getItem(('url'))) {
               history.replace(sessionStorage.getItem('url'));
             } else {
-              history.replace(localStorage.getItem('home'));
+              history.replace('/walnuthome');
             }
           }
         }

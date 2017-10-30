@@ -61,7 +61,6 @@ class MapContainer extends React.Component {
   componentDidMount() {
     this.props.getAllUsers();
     const urls = this.props.location.pathname;
-    localStorage.setItem('url', urls);
     sessionStorage.setItem('url', urls);
   }
 
