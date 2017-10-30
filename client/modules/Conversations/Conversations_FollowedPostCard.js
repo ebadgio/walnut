@@ -128,10 +128,38 @@ class ConversationCard extends React.Component {
 
   switching() {
     this.props.togglePostData(this.props.data);
-    // TODO: set unreads to 0
   }
 
   render() {
+    if (this.state.unreads > 0) {
+      return (
+          <Segment className={this.props.postDataId === this.props.data.postId ? 'miniPostCardActive' : 'miniPostCard'}
+                   onClick={() => this.switching()}>
+            <div className="conversationCardContent" >
+              <div className="conversationCardHeader" style={{fontWeight: '900', fontSize: '16px'}}>
+                  {this.props.data.tags.map((tag) => ('#' + tag.name)).join(' ')}
+                  {/* <div className="unreadsCircleMini">{this.state.unreads}</div>*/}
+              </div>
+              <div className="lastMessageBox" style={{color: '#000', fontWeight: '900', fontSize: '14px' }}>{this.state.lastMessage.author ?
+                  this.state.lastMessage.author + ': ' + this.state.lastMessage.content : 'No messages to display yet' }</div>
+              <div className="conversationFootnote">
+                <div className="messageInfoGroupMini" style={{color: '#000', fontWeight: '900', fontSize: '10px' }}>
+                  <span className="activeNumMini">
+                    {this.state.membersCount > 0 ? this.state.membersCount + ' active' : null}
+                  </span>
+                  <span className="followNumMini">
+                    {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
+                  </span>
+                  <span className="commentNumMini">{this.state.count}{' messages'}</span>
+                  <span className="isUnreadMini">
+                    {this.state.unreads}{' unread'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Segment>
+      );
+    }
     return (
         <Segment className={this.props.postDataId === this.props.data.postId ? 'miniPostCardActive' : 'miniPostCard'}
                  onClick={() => this.switching()}>
@@ -150,9 +178,6 @@ class ConversationCard extends React.Component {
                   {this.state.numFollowers}{this.state.numFollowers === 1 ? ' follower' : ' followers'}
                 </span>
                 <span className="commentNumMini">{this.state.count}{' messages'}</span>
-                <span className={this.state.unreads > 0 ? 'isUnreadMini' : 'noUnreadMini'}>
-                  {this.state.unreads}{' unread'}
-                </span>
               </div>
             </div>
           </div>

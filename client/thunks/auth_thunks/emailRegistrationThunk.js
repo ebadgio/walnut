@@ -5,10 +5,12 @@ import URL from '../../info';
 const emailRegistrationThunk = (firstname, lastname, email, password) => (dispatch) => {
   dispatch({ type: 'USER_IS_NOT_VERIFIED' });
   dispatch({ type: 'REGISTER_FIREBASE_STOP'});
+  const useFirstname = firstname[0].toUpperCase() + firstname.substring(1);
+  const useLastname = lastname[0].toUpperCase() + lastname.substring(1);
   firebaseApp.auth().createUserWithEmailAndPassword(email, password)
     .then((result) => {
       result.updateProfile({
-        displayName: firstname + ' ' + lastname
+        displayName: useFirstname + ' ' + useLastname
       })
     .then(() => {
       console.log('current user', firebaseApp.auth().currentUser);
@@ -20,8 +22,8 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
         .then((idToken) => {
           axios.post(URL + 'auth/signup', {
             token: idToken,
-            fname: firstname,
-            lname: lastname,
+            fname: useFirstname,
+            lname: useLastname,
             email: email,
             password: password
           })

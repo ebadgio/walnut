@@ -139,24 +139,22 @@
 
 
 .miniPostCard {
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
     margin-bottom: 0 !important;
     margin-top: 0 !important;
     border-radius: 0 !important;
     border: none !important;
     box-shadow: none !important;
+    padding: 5px 0 5px 5px !important;
 }
 
 .miniPostCardActive {
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
     margin-bottom: 0 !important;
     margin-top: 0 !important;
     border-radius: 0 !important;
     border: none !important;
     box-shadow: none !important;
     background: rgba(0, 0, 0, .05) !important;
+    padding: 5px 0 5px 5px !important;
 }
 
 .miniPostCard:hover {
@@ -212,9 +210,10 @@ body ::-webkit-scrollbar-thumb {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
-    font-weight: 700;
+    font-weight: 400;
     word-spacing: 10px;
 }
+
 
 .conversationCardHeader:after {
     content: "   ";
@@ -235,4 +234,44 @@ body ::-webkit-scrollbar-thumb {
 
 }
 
+.commentNumMini {
+    margin-right: 12px;
+}
+
+.followNumMini {
+    margin-right: 12px;
+}
+
+.activeNumMini {
+    /*color: #85C7F2;*/
+    color: #11e6a7;
+    margin-right: 12px;
+}
+
+.isUnreadMini {
+    color: #d40d27;
+    margin-right: 12px;
+}
+
+.messageInfoGroupMini {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-size: 8px;
+    font-weight: 400;
+    color: #b3b5c1;
+}
+
+.unreadsCircleMini {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background: #d40d27;
+    border-radius: 50%;
+    min-width: 19px;
+    max-width: fit-content;
+    font-size: 10px;
+    margin-left: auto;
+}
 
