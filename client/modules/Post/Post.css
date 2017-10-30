@@ -352,7 +352,7 @@
 }
 
 .isUnread {
-    color: #f45b69;
+    color: #d40d27;
     font-size: smaller;
     margin-right: 12px;
 }
@@ -363,7 +363,7 @@
 }
 
 .isUnreadMini {
-    color: #f45b69;
+    color: #d40d27;
     font-size: 8px;
     margin-right: 12px;
 }

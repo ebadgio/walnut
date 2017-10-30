@@ -99,9 +99,19 @@ class MinichatMessageBox extends React.Component {
     const followsRef = firebaseApp.database().ref('/follows/' + user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' +  data.postId);
     followsRef.on('value', (snapshot) => {
       if (snapshot.val()) {
+        let currentVal;
         const unreadsCountRef = firebaseApp.database().ref('/unreads/' + user.uid + '/' + data.postId);
         unreadsCountRef.transaction((currentValue) => {
+          currentVal = currentValue;
           return 0;
+        });
+
+        const totalUnreadsRef = firebaseApp.database().ref('/totalUnreads/' + user.uid + '/' + this.props.currentUser.currentCommunity._id);
+        totalUnreadsRef.transaction((currentValue2) => {
+          if ((currentValue2 || 0) >= currentVal) {
+            return currentValue2 - currentVal;
+          }
+          return currentValue2;
         });
       }
     });
