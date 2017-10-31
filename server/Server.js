@@ -104,10 +104,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', (req, res, next) => {
-  if (!req.user) {
-    res.redirect('/login')
-  } 
-  else {
+  if (req.user) {
     console.log('this should not be seen on the backend and should only take care of /login');
     console.log('req.user', req.user);
     if (req.user.currentCommunity) {

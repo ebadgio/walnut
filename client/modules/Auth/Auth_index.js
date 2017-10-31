@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -9,6 +9,7 @@ import Community from '../App/App_Community';
 import firebaseApp from '../../firebase';
 import WalnutHomeContainer from '../App/App_Walnut_Home_Container';
 import getUser from '../../thunks/app_thunks/getAppThunk';
+import Landing from './Auth_Landing';
 
 export const history = createBrowserHistory();
 
@@ -35,6 +36,8 @@ class Auth extends React.Component {
       if (user) {
         console.log('inside');
         this.props.getUser();
+      } else {
+        history.replace('/login');
       }
       // history.replace('/walnuthome');
       // if (!user) {
@@ -70,8 +73,9 @@ class Auth extends React.Component {
 
   render() {
     return (
-      <Router path="/" history={history}>
+      <Router history={history}>
         <Switch>
+          <Route exact path="/" component={Landing} />
           <Route path="/walnuthome" component={WalnutHomeContainer} />
           {/* <Route path="/community" render={() => (<Community history={history} />)} /> */}
           <Route path="/community/:name" component={Community} />
