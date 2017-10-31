@@ -37,7 +37,7 @@ class Auth extends React.Component {
         console.log('inside');
         this.props.getUser();
       } else {
-        history.replace('/login');
+        history.replace('/');
       }
       // history.replace('/walnuthome');
       // if (!user) {

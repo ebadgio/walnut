@@ -54,9 +54,9 @@ class Navbar extends React.Component {
       newFilters: newT,
       admins: admins
     })
-            .then(() => {
-              window.location.reload();
-            });
+        .then(() => {
+          window.location.reload();
+        });
   }
 
   render() {
