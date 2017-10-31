@@ -15,9 +15,10 @@ import Conversations from '../Conversations/Conversations_Index';
 import firebaseApp from '../../firebase';
 
 class Community extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {};
+    console.log('MATCH', props.match);
   }
 
   componentDidMount() {
@@ -63,6 +64,7 @@ class Community extends React.Component {
                 <NavBar/>
                 <LeftSideContainer totalUnreads={this.state.totalUnreads}/>
                 <Switch>
+                    <Route path="/community/:communityName" exact component={Discover}/>
                     <Route path="/community/:communityName/conversations" component={Conversations}/>
                     <Route path="/community/:communityName/directory" component={Directory}/>
                     <Route path="/community/:communityName/map" component={MapContainer}/>
@@ -84,7 +86,8 @@ Community.propTypes = {
   updateLocation: PropTypes.func,
   history: PropTypes.object,
   currentUser: PropTypes.object,
-  showDimmer: PropTypes.bool
+  showDimmer: PropTypes.bool,
+  match: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({

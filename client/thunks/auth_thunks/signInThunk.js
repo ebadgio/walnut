@@ -3,7 +3,8 @@ import firebase from 'firebase';
 import axios from 'axios';
 import URL from '../../info';
 
-const signInThunk = (email, password, redirect) => (dispatch) => {
+
+const signInThunk = (email, password, redirect, history) => (dispatch) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(result => {
       if (!result.emailVerified) {
@@ -20,6 +21,7 @@ const signInThunk = (email, password, redirect) => (dispatch) => {
             .then((res) => {
               dispatch({ type: 'LOGIN_APP' });
               dispatch({ type: 'GET_USER_DATA_DONE', user: res.data.user });
+              history.replace('/walnuthome');
               // setTimeout(() => dispatch({ type: 'WALNUT_READY' }), 5000);
             });
         })

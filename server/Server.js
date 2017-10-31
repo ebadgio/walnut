@@ -109,23 +109,35 @@ app.get('/', (req, res, next) => {
   } 
   else {
     console.log('this should not be seen on the backend and should only take care of /login');
+    console.log('req.user', req.user);
     if (req.user.currentCommunity) {
+      console.log('YES');
       User.findById(req.user._id)
           .populate('currentCommunity')
           .then((user) => {
               const url = '/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
+              console.log('MORE');
               res.redirect(url);
           })
     }
     else {
+      console.log('BET');
       res.redirect('/walnuthome')
     }
   }
 });
 
+// app.get('/walnuthome', (req, res, next) => {
+//   // console.log('its hit');
+//   // res.redirect('/walnuthome');
+// });
+
 app.post('/auth/logout', function(req, res) {
+    console.log('hit destroy');
     mongoStore.destroy(req.session.id, function() {
       req.session.destroy();
+      req.user = undefined;
+      console.log('req.user logout', req.user);
       res.json({success:true});
     })
   });

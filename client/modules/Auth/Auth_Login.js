@@ -3,13 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import RegistrationContainer from './Auth_Registration.js';
 import { Button, Step, Input, Form, Modal, Message, Icon } from 'semantic-ui-react';
-import facebookLoginThunk from '../../thunks/auth_thunks/facebookLoginThunk';
-import googleLoginThunk from '../../thunks/auth_thunks/googleLoginThunk';
 import signInThunk from '../../thunks/auth_thunks/signInThunk';
 import firebase from 'firebase';
 import verificationThunk from '../../thunks/auth_thunks/verificationThunk';
 import $ from 'jquery';
 import './Auth.css';
+import {history} from './Auth_index';
 
 
 class Login extends React.Component {
@@ -55,19 +54,12 @@ class Login extends React.Component {
   handleResetEmailChange(e) {
     this.setState({ rEmail: e.target.value });
   }
-  fbLogin() {
-    this.props.fbLogin();
-  }
-
-  googleLogin() {
-    this.props.googleLogin();
-  }
 
   regLogin() {
     console.log('first', this);
     if (this.state.emailVal && this.state.passwordVal) {
       console.log('second', this);
-      this.props.signIn(this.state.emailVal, this.state.passwordVal, this.props.redirect);
+      this.props.signIn(this.state.emailVal, this.state.passwordVal, this.props.redirect, history);
     }
   }
 
@@ -215,8 +207,6 @@ class Login extends React.Component {
 
 
 Login.propTypes = {
-  fbLogin: PropTypes.func,
-  googleLogin: PropTypes.func,
   signIn: PropTypes.func,
   redirect: PropTypes.func,
   isError: PropTypes.bool,
@@ -225,7 +215,8 @@ Login.propTypes = {
   loginDisplay: PropTypes.number,
   openReg: PropTypes.func,
   verifiedEmail: PropTypes.string,
-  saveCode: PropTypes.func
+  saveCode: PropTypes.func,
+  history: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
@@ -236,9 +227,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fbLogin: () => facebookLoginThunk(dispatch),
-  googleLogin: () => googleLoginThunk(dispatch),
-  signIn: (email, password, redirect) => signInThunk(email, password, redirect)(dispatch),
+  signIn: (email, password, redirect, his) => signInThunk(email, password, redirect, his)(dispatch),
   reVerify: (email, password) => dispatch(verificationThunk(email, password)),
   openReg: () => dispatch({ type: 'REGISTER_OPEN' }),
   saveCode: (code) => dispatch({ type: 'SAVE_CODE', code: code })
