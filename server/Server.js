@@ -104,11 +104,6 @@ app.use(function(req, res, next) {
 });
 
 
-// app.get('/walnuthome', (req, res, next) => {
-//   // console.log('its hit');
-//   // res.redirect('/walnuthome');
-// });
-
 app.post('/auth/logout', function(req, res) {
     console.log('hit destroy');
     mongoStore.destroy(req.session.id, function() {

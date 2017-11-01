@@ -26,7 +26,6 @@ class Auth extends React.Component {
 
 
   componentDidMount() {
-    let user1;
     console.log('href', window.location.href);
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user && !user.emailVerified) {
@@ -40,7 +39,6 @@ class Auth extends React.Component {
         }, 1000);
       }
       if (user) {
-        user1 = user;
         console.log('inside');
         this.props.getUser();
         const url = window.location.href.split('/');
