@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Post from './Post_index';
 import './Post.css';
-import { Button, Modal } from 'semantic-ui-react';
+import { Modal } from 'semantic-ui-react';
 
 
 class NestedPostModal extends React.Component {
@@ -25,8 +25,8 @@ class NestedPostModal extends React.Component {
 
   render() {
     return (
-        <Modal size={'small'} basic trigger={<div className="viewPostButton">View Post</div>}>
-            <Modal.Content image scrolling className="scrollContentClass">
+        <Modal basic trigger={<div className="viewPostButton">View Post</div>}>
+            <Modal.Content>
                 <Post
                     nested
                     currentUser={this.props.currentUser}
