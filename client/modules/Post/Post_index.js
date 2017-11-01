@@ -44,6 +44,10 @@ class Post extends React.Component {
     this.getUseDate = this.getUseDate.bind(this);
   }
 
+  componentWillMount() {
+    this.getLinkPreview(this.props.postData);
+  }
+
   componentDidMount() {
     setTimeout(() => {
       const elem = document.getElementById(this.props.postData.postId);
@@ -95,10 +99,6 @@ class Post extends React.Component {
         this.setState({unreads: unreadCount});
       }
     });
-  }
-
-  componentWillMount() {
-    this.getLinkPreview(this.props.postData);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -233,15 +233,20 @@ class Post extends React.Component {
 
   joinConversation() {
     const updates = {};
-    updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = true;
-    updates['/followGroups/' + this.props.postData.postId + '/' + this.state.user.uid] = true;
+    updates['/follows/' + this.state.user.uid + '/' +
+    this.props.currentUser.currentCommunity._id +
+          '/' + this.props.postData.postId] = true;
+    updates['/followGroups/' + this.props.postData.postId +
+          '/' + this.state.user.uid] = true;
     firebaseApp.database().ref().update(updates);
   }
 
   // Don't delete, will use it eventually
   leaveConversation() {
     const updates = {};
-    updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = null;
+    updates['/follows/' + this.state.user.uid + '/'
+            + this.props.currentUser.currentCommunity._id + '/' +
+            this.props.postData.postId] = null;
     updates['/followGroups/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
     firebaseApp.database().ref().update(updates);
   }
@@ -280,25 +285,6 @@ class Post extends React.Component {
 
   closeDownloadModal() {
     this.setState({downloadUrl: ''});
-  }
-
-  // changeUnreads() {
-  //   // TODO: unreads to 0
-  // }
-
-  // toggleDrawer() {
-  //   const before = this.state.showDrawer;
-  //   this.setState({showDrawer: !this.state.showDrawer});
-
-  //   // trying to stop it from making the page jump, it only works sometimes tho so i commented it out
-  //   // if (!before) {
-  //   //   this.getPlace();
-  //   // }
-  // }
-
-  getPlace() {
-    const elem = document.getElementById('commentDiv');
-    elem.scrollIntoView({block: 'center'});
   }
 
   startEdit() {
@@ -344,7 +330,8 @@ class Post extends React.Component {
                         {!this.state.isFollowing ?
                             <Dropdown.Item icon="plus" onClick={() => this.joinConversation()} text="Follow" /> :
                             <Dropdown.Item text="Unfollow" onClick={() => this.leaveConversation()} />}
-                        {this.props.currentUser.fullName === this.state.postData.username ? <Dropdown.Item icon="edit" text="Edit post" onClick={() => this.startEdit()} /> : null}
+                        {this.props.currentUser.fullName === this.state.postData.username ?
+                            <Dropdown.Item icon="edit" text="Edit post" onClick={() => this.startEdit()} /> : null}
                     </Dropdown.Menu>
                   </Dropdown>
                 </div>
@@ -401,7 +388,11 @@ class Post extends React.Component {
                 <p className="postTimeStamp">{this.state.timeStamp}</p>
                   {this.state.postData.edited ? <p className="isEdited">(edited)</p> : null}
               </div>
-                {this.state.showStatus ? <div>{this.state.success ? <span className="successSave">Save successful!</span> : <span className="failSave">Something went wrong...</span>}</div> : null}
+                {this.state.showStatus ?
+                    <div>{this.state.success ?
+                        <span className="successSave">Save successful!</span> :
+                        <span className="failSave">Something went wrong...</span>}
+                    </div> : null}
                 {this.state.isFollowing ? <div className="isFollowingGroup">
                   <Icon name="checkmark" className="iconFollowing" size={'small'} />
                   <p className="followingText">Following</p>
@@ -409,14 +400,15 @@ class Post extends React.Component {
                   <Icon name="plus" className="followIcon" />
                   Follow
                 </div>}
-              <Dropdown className="postDropdown" icon={'ellipsis horizontal'}>
+                {this.state.nested ? null : <Dropdown className="postDropdown" icon={'ellipsis horizontal'}>
                 <Dropdown.Menu>
                     {!this.state.isFollowing ?
                         <Dropdown.Item icon="plus" onClick={() => this.joinConversation()} text="Follow" /> :
                         <Dropdown.Item text="Unfollow" onClick={() => this.leaveConversation()} />}
-                    {this.props.currentUser.fullName === this.state.postData.username ? <Dropdown.Item icon="edit" text="Edit post" onClick={() => this.startEdit()} /> : null}
+                    {this.props.currentUser.fullName === this.state.postData.username ?
+                        <Dropdown.Item icon="edit" text="Edit post" onClick={() => this.startEdit()} /> : null}
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown>}
             </div>
               {!this.state.editing ?
                   <div>
@@ -479,12 +471,12 @@ class Post extends React.Component {
               </div>))}
             </div>
             <div></div>
-            <div className="commentDiv" id="commentDiv">
+              {this.props.nested ? null : <div className="commentDiv" id="commentDiv">
               <div className="messagesGroup" onClick={() => this.props.addChat(this.state.postData)}>
                 <Icon size="big" name="comments outline" className="commentIcon" />
                 <p className="messageText">Chat</p>
               </div>
-            </div>
+            </div>}
           </div>
         </Segment>
       </div>

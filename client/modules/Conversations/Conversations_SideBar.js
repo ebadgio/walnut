@@ -13,29 +13,35 @@ import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
 class ConversationsSideBar extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      called: false
+    };
   }
 
   componentDidMount() {
     if (this.props.currentUser) {
-      const followsRef = firebaseApp.database().ref('/follows/' + this.props.currentUser.firebaseId + '/' + this.props.currentCommunity);
+      const followsRef = firebaseApp.database().ref('/follows/' +
+          this.props.currentUser.firebaseId +
+          '/' +
+          this.props.currentCommunity);
       followsRef.on('value', (snapshot) => {
         if (snapshot.val()) {
           const follows = _.pairs(snapshot.val());
-                    // this will filter down to only those postIds which are mapped to true
+          // this will filter down to only those postIds which are mapped to true
           const myConvs = follows.filter((follow) => follow[1]).map((fol) => fol[0]);
           if (myConvs) {
             this.props.getConvos(myConvs);
-            setTimeout(() => {
-              console.log('TIMEOUT FINISHED NOW');
-              if (this.props.topPost.postId) {
-                this.props.togglePostData(this.props.topPost);
-              }
-            }, 1000);
             this.props.addIds(myConvs);
           }
         }
       });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.topPost.postId && !this.state.called) {
+      this.props.togglePostData(nextProps.topPost);
+      this.setState({called: true});
     }
   }
 
