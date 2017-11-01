@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Conversations.css';
 import ConversationCard from './Conversations_FollowedPostCard';
-import { Loader, Sidebar, Button, Icon, Segment  } from 'semantic-ui-react';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
-import uuidv4 from 'uuid/v4';
 import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
 
 class ConversationsSideBar extends React.Component {

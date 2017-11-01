@@ -6,7 +6,7 @@ import MapItemSelector from './Map_Item_Selector_Container';
 import CircleIcon from 'react-icons/lib/fa/circle';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import uuidv4 from 'uuid/v4';
+
 import getAllUsersMapThunk from '../../thunks/map_thunks/getAllUsersMapThunk';
 import './Map.css';
 import {Icon, Popup, Image} from 'semantic-ui-react';
@@ -77,7 +77,7 @@ class MapContainer extends React.Component {
 
   clusterMarker(coordinates, count, data) {
     return (
-      <Marker coordinates={coordinates} className="marker" key={uuidv4()}>
+      <Marker coordinates={coordinates} className="marker">
           <div>
             <Popup
               trigger={<CircleIcon />}
@@ -86,7 +86,7 @@ class MapContainer extends React.Component {
             >
               <Popup.Content>
                 <div className="popup" >
-                  {data.map((d, i) => (<img key={uuidv4()} src={d.pictureURL} className="deckAvatar" />))}
+                  {data.map((d, i) => (<img key={d.id} src={d.pictureURL} className="deckAvatar" />))}
                 </div>
               </Popup.Content>
             </Popup>
@@ -132,7 +132,7 @@ class MapContainer extends React.Component {
                     users.map((feature) => {
                       return (
                         <Marker
-                          key={uuidv4()}
+                          key={feature.id}
                           data={feature}
                           coordinates={feature.location[this.props.selected]}
                           className="cluster"
