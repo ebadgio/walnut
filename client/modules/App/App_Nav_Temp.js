@@ -20,7 +20,8 @@ class Navbar extends React.Component {
       isOpen: this.props.isEdited,
       pos: 1,
       admin: false,
-      innerWidth: window.innerWidth
+      innerWidth: window.innerWidth,
+      openModal: false
     };
   }
 
@@ -33,30 +34,17 @@ class Navbar extends React.Component {
   }
 
   handleLogout() {
-      this.props.onLogout(history);
+    this.props.onLogout(history);
   }
 
   handleLogoClick() {
     if (this.props.community.admins.filter((user) => (user._id === this.props.user)).length > 0) {
-      this.setState({admin: !this.state.admin});
+      this.setState({openModal: true });
     }
   }
 
   handleClose() {
-    this.setState({admin: false});
-  }
-
-  handleSubmit(image, titleValue, oldT, newT, admins) {
-    axios.post(URL + 'db/update/community', {
-      title: titleValue,
-      image: image,
-      oldFilters: oldT,
-      newFilters: newT,
-      admins: admins
-    })
-            .then(() => {
-              window.location.reload();
-            });
+    this.setState({openModal: false});
   }
 
   render() {
@@ -78,12 +66,11 @@ class Navbar extends React.Component {
                 {/* <Icon name="home" size="big"/>*/}
                 <img src="https://s3.amazonaws.com/walnut-logo/logo.svg" className="logo"/>
             </Link>
-            <div className="communityNavBarLogo">
+            <div className="communityNavBarLogo" onClick={() => this.handleLogoClick()}>
                 <div className="imageWrapperCommunity">
-                    <img className="communityImage" src={this.props.community.icon}
-                         onClick={() => this.handleLogoClick()}/>
+                    <img className="communityImage" src={this.props.community.icon}/>
                 </div>
-                <span className="communityTitleNav" onClick={() => this.handleLogoClick()}>{this.props.community.title}</span>
+                <span className="communityTitleNav">{this.props.community.title}</span>
             </div>
 
             <div className="navBarLinks">
@@ -104,14 +91,11 @@ class Navbar extends React.Component {
               </Dropdown>
 
             </div>
-            {this.state.admin ?
-                <EditCommunityModal
-                    handleUpdate={(image, titleValue, oldT, newT, admins) => this.handleSubmit(image, titleValue, oldT, newT, admins)}
-                    handleLogoClose={() => this.handleClose()}
-                    community={this.props.community}
-                /> :
-                null
-            }
+
+            <EditCommunityModal
+            openModal={this.state.openModal}
+            handleClose={() => this.handleClose()}
+            community={this.props.community}/>
         </div>
     );
   }
@@ -150,14 +134,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
-
-// {!(this.state.isOpen || this.props.isEdited) ?
-//     <div className="profilePopoutOuterMost" onClick={() => this.setState({isOpen: true})}>
-//       <div className="profilePopoutOuter">
-//         <div className="arrow-up"></div>
-//         <Link className="profilePopeoutHeaderTab" onClick={() => this.setState({isOpen: true})} to={'/community/' + title + '/editprofile'}>
-//           <h2 className="profilePopeoutHeader">Complete the profile</h2>
-//         </Link>
-//       </div>
-//     </div> : null}
 

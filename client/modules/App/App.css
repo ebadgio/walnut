@@ -70,6 +70,26 @@
 .communityNavBarLogo {
     display: flex;
     margin-left: 80px;
+    transition: background .35s ease;
+    height: 38px;
+    border-radius: 4px;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-top: 1px;
+    cursor: pointer;
+}
+
+.communityNavBarLogo:hover {
+    display: flex;
+    margin-left: 80px;
+    transition: background .35s ease;
+    height: 38px;
+    border-radius: 4px;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-top: 1px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .communityImage {
@@ -85,6 +105,7 @@
     font-weight: bold;
     margin-top: 0;
     align-self: center;
+    margin-top: 10px;
 }
 
 .navbarLinkOn {
@@ -548,6 +569,7 @@
     height: auto;
     object-fit: contain;
     margin: auto;
+    cursor: pointer;
 }
 
 button.ui.button > input {
@@ -1099,8 +1121,10 @@ h1, h2, h3, h4, h5 {
 
 .closeEditModal {
     color: black !important;
-    margin-top: -18px !important;
-    margin-right: 7px !important;
+    position: fixed !important;
+    top: -5px !important;
+    margin-left: 621px !important;
+    right: unset !important;
 }
 
 .logo {
@@ -1122,4 +1146,56 @@ h1, h2, h3, h4, h5 {
     position: absolute;
     margin-left: 20px;
     margin-top: -7px;
+}
+
+.editCommunitySelector {
+    width: 400px !important;
+    position: absolute !important;
+    bottom: 15% !important;
+    margin-left: 76px !important;
+}
+
+.adminCurrentTitle {
+    color: black;
+    margin-left: 30px;
+    margin-top: 20px !important;
+}
+
+.currentAdmins {
+    height: 420px;
+    margin-top: 23px;
+    overflow-y: scroll;
+}
+
+.saveButtonEditModal {
+    color: #5bc0e3 !important;
+    background-color: #fff !important;
+    border: 1.5px solid !important;
+    border-radius: 4px !important;
+    width: 52px !important;
+    height: 28px !important;
+    padding-left: 11px !important;
+    padding-top: 6px !important;
+    position: absolute !important;
+    cursor: pointer;
+    bottom: 2%;
+    margin-left: 485px;
+}
+
+.currentMembers {
+    height: 240px;
+    margin-top: 23px;
+    overflow-y: scroll;
+}
+
+.emailEditDiv {
+    height: 150px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.emailTopicTitle {
+    color: black;
+    margin-left: 30px;
+    margin-top: 20px;
 }
