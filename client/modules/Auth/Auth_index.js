@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -9,18 +9,24 @@ import Community from '../App/App_Community';
 import firebaseApp from '../../firebase';
 import WalnutHomeContainer from '../App/App_Walnut_Home_Container';
 import getUser from '../../thunks/app_thunks/getAppThunk';
+import Landing from './Auth_Landing';
+import URL from '../../info';
+import WalnutLoader from '../App/App_WalnutLoader';
 
 export const history = createBrowserHistory();
 
 class Auth extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      loading: true
     };
+    console.log('index match', props.match);
   }
 
 
   componentDidMount() {
+    console.log('href', window.location.href);
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user && !user.emailVerified) {
         const timer = setInterval(() => {
@@ -32,46 +38,37 @@ class Auth extends React.Component {
           }
         }, 1000);
       }
-      if (!user) {
-        // this.context.history.push('/walnuthome');
-        history.replace('/login');
-        // history.push('/walnuthome');
-      } else {
-        if (user.emailVerified) {
-          this.props.getUser();
-          const isUserInCommunity = localStorage.getItem('isUserInCommunity');
-          if (this.props.isCreated && !isUserInCommunity) {
-            // TODO: this is the redirect that is racing
-            // TODO: not to do with racing but the middleware, we need to make sure there is a server req
-            // TODO: otherwise req.user never gets hit
-            history.replace('/walnuthome');
+      if (user) {
+        console.log('inside');
+        this.props.getUser();
+        const url = window.location.href.split('/');
+        if (url.length === 4 && url[url.length - 1] === '') {
+          const com = localStorage.getItem('community');
+          if (com) {
+            history.replace('/community/' + com.split(' ').join('') + '/discover');
           } else {
-            if (sessionStorage.getItem(('url'))) {
-              history.replace(sessionStorage.getItem('url'));
-            } else {
-              history.replace('/walnuthome');
-            }
+            history.replace('/walnuthome');
           }
         }
+        this.setState({loading: false});
+      } else {
+        this.setState({loading: false});
+        history.replace('/');
       }
     });
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   const isUserInCommunity = localStorage.getItem('isUserInCommunity');
-  //   if (nextProps.isCreated && !isUserInCommunity) {
-  //     history.replace('/app/walnuthome');
-  //   }
-  // }
 
   render() {
     return (
-      <Router path="/" history={history}>
+      <Router history={history}>
         <Switch>
+          <Route exact path="/" component={this.state.loading ? WalnutLoader : Landing} />
           <Route path="/walnuthome" component={WalnutHomeContainer} />
           {/* <Route path="/community" render={() => (<Community history={history} />)} /> */}
-          <Route path="/community" component={Community} />
+          <Route path="/community/:name" component={Community} />
           <Route path="/login" component={Login} />
+          <Route path="/:catch" render={(props) => <p>404 Page Not Found</p>} />
         </Switch>
       </Router>
     );
@@ -83,10 +80,13 @@ Auth.propTypes = {
   getUser: PropTypes.func,
   isCreated: PropTypes.bool,
   isVerified: PropTypes.bool,
-  onVerified: PropTypes.func
+  onVerified: PropTypes.func,
+  currentUser: PropTypes.object,
+  match: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
+  currentUser: state.userReducer,
   isCreated: state.userReducer.isCreated,
   isVerified: state.userReducer.isVerified
 });

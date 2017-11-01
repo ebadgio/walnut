@@ -11,7 +11,7 @@ import EditCommunityModal from './App_EditCommunityModal';
 import updateCommunity from '../../thunks/community_thunks/updateCommunityThunk';
 import axios from 'axios';
 import URL from '../../info';
-import $ from 'jquery';
+
 
 class Navbar extends React.Component {
   constructor(props) {

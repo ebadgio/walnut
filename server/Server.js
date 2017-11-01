@@ -103,29 +103,13 @@ app.use(function(req, res, next) {
   }
 });
 
-app.get('/', (req, res, next) => {
-  if (!req.user) {
-    res.redirect('/login')
-  } 
-  else {
-    console.log('this should not be seen on the backend and should only take care of /login');
-    if (req.user.currentCommunity) {
-      User.findById(req.user._id)
-          .populate('currentCommunity')
-          .then((user) => {
-              const url = '/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
-              res.redirect(url);
-          })
-    }
-    else {
-      res.redirect('/walnuthome')
-    }
-  }
-});
 
 app.post('/auth/logout', function(req, res) {
+    console.log('hit destroy');
     mongoStore.destroy(req.session.id, function() {
       req.session.destroy();
+      req.user = undefined;
+      console.log('req.user logout', req.user);
       res.json({success:true});
     })
   });
@@ -138,9 +122,33 @@ app.use('/db/update', dbUpdateRoutes);
 app.use('/aws', awsRoutes);
 app.use('/email', emailRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
-app.use('/*', (request, response) => {
+app.use('/', (request, response) => {
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
 });
+
+// app.get('/', (req, res, next) => {
+//     if (req.user) {
+//         console.log('this should not be seen on the backend and should only take care of /login');
+//         console.log('req.user', req.user);
+//         if (req.user.currentCommunity) {
+//             console.log('YES');
+//             User.findById(req.user._id)
+//                 .populate('currentCommunity')
+//                 .then((user) => {
+//                     const url = '/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
+//                     console.log('MORE');
+//                     res.redirect(url);
+//                 })
+//         }
+//         else {
+//             console.log('BET');
+//             res.redirect('/walnuthome')
+//         }
+//     }
+//     else {
+//         response.sendFile(path.join(__dirname, '..', 'build/index.html'));
+//     }
+// });
 
 
 
