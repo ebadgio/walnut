@@ -12,8 +12,8 @@
     "build": "webpack --config webpack.prod.config.js",
     "webpack": "webpack --watch",
     "dev": "webpack-dev-server --content-base build/",
-    "server": "nodemon ./server/server.js --exec babel-node --presets es2015",
-    "start": "babel-node --presets es2015 ./server/Server.js",
+    "server": "nodemon ./server/Server.js",
+    "start": "node ./server/Server.js",
     "postinstall": "webpack --config webpack.prod.config.js"
   },
   "repository": {

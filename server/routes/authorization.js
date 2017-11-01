@@ -1,14 +1,14 @@
 // Add Passport-related auth routes here.
-var express = require('express');
-var models = require('../models/models');
-var User = models.User;
-var Tag = models.Tag;
+const express = require('express');
+const models = require('../models/models');
+const User = models.User;
+const Tag = models.Tag;
 const Profile = models.Profile;
-var router = express.Router();
-var path = require('path');
-var CryptoJS = require("crypto-js");
+const router = express.Router();
+const path = require('path');
+const CryptoJS = require("crypto-js");
 
-import adminApp from '../firebaseAdmin';
+const adminApp = require('../firebaseAdmin').admin;
 
 router.post('/signup', function (req, res) {
   // console.log('req.body.token', req.body.token);
@@ -17,11 +17,11 @@ router.post('/signup', function (req, res) {
   //console.log('req.session.userToken', req.session.userToken);
   adminApp.auth().verifyIdToken(req.body.token)
     .then(function (decodedToken) {
-      var uid = decodedToken.uid;
+      const uid = decodedToken.uid;
 
 
 
-      var new_user = new User({
+      const new_user = new User({
         firebaseId: uid,
         fullName: req.body.fname + ' ' + req.body.lname,
         username: req.body.username,
@@ -57,7 +57,7 @@ router.post('/login', function (req, res) {
   // req.session.userToken = req.body.token;
   adminApp.auth().verifyIdToken(req.body.token)
     .then(function (decodedToken) {
-      var uid = decodedToken.uid;
+      const uid = decodedToken.uid;
       return User.findOne({ firebaseId: uid })
         .then((user) => {
           user.password = req.body.password;
@@ -70,7 +70,7 @@ router.post('/login', function (req, res) {
             { path: 'currentCommunity.admins' },
             { path: 'currentCommunity.defaultTags' },
             { path: 'currentCommunity.users' }
-          ]
+          ];
           return User.populate(doc, opts)
             .then((populated) => {
               // const token = CryptoJS.AES.encrypt(populated._id.toString(), 'secret').toString();
@@ -94,7 +94,7 @@ router.post('/facebook', function (req, res) {
   req.session.userToken = req.body.token;
   adminApp.auth().verifyIdToken(req.body.token)
     .then(function (decodedToken) {
-      var uid = decodedToken.uid;
+      const uid = decodedToken.uid;
       res.status(200);
     }).catch((error) => {
       console.log('error', error);
@@ -104,18 +104,6 @@ router.post('/facebook', function (req, res) {
 router.get('/userinreq', (req, res) => {
   console.log('req.user', req.user);
   res.json({ success: true })
-})
+});
 
-// router.get('/auth/facebook', passport.authenticate('facebook'));
-//
-// router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     res.redirect('/walnuthome');
-//   }
-// );
-//
-
-// return router;
-// }
 module.exports = router;

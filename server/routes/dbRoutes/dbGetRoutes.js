@@ -1,7 +1,10 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
-import {User, Post, Quote, Community} from '../../models/models';
-import Metascraper from 'metascraper';
+const User = require('../../models/models').User;
+const Post = require('../../models/models').Post;
+const Quote = require('../../models/models').Quote;
+const Community = require('../../models/models').Community;
+const Metascraper = require('metascraper');
 
 router.get('/app', (req, res) => {
   User.findById(req.user._id)

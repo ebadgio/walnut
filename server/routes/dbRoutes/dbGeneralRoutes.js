@@ -1,7 +1,10 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
-import {User, Tag, Post, Community} from '../../models/models';
-import Promise from 'promise';
+const User = require('../../models/models').User;
+const Post = require('../../models/models').Post;
+const Tag = require('../../models/models').Tag;
+const Community = require('../../models/models').Community;
+const Promise = require('promise');
 
 router.get('/user', (req, res) => {
   User.findById(req.user._id)
@@ -133,8 +136,6 @@ router.post('/join/community/code', (req, res) => {
   const code = req.body.code;
   let joined;
   let foundCommunityId;
-
-
   // TODO: decrypt
   Community.find()
     .then((arr) => {
@@ -147,9 +148,8 @@ router.post('/join/community/code', (req, res) => {
         const potentialID = startId + '_' + letters + '_' + status + '_' + endId;
         if ( potentialID === code ) {
           return community;
-        } else {
-          return null;
         }
+        return null;
       });
     })
     .then((communityArr) => {

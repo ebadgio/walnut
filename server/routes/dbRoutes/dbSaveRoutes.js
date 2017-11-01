@@ -1,10 +1,12 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
-import {User, Tag, Post, Quote, Community} from '../../models/models';
-import axios from 'axios';
-import Promise from 'promise';
-import firebaseApp from '../../../client/firebase';
-import adminApp from '../../firebaseAdmin';
+const User = require('../../models/models').User;
+const Post = require('../../models/models').Post;
+const Tag = require('../../models/models').Tag;
+const Community = require('../../models/models').Community;
+const axios = require('axios');
+const Promise = require('promise');
+
 
 router.post('/post', (req, res) => {
   const tagModels = req.body.newTags.map((filter) => {

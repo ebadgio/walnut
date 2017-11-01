@@ -1,10 +1,8 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
-import {User, Tag, Post, Quote, Community} from '../../models/models';
-import axios from 'axios';
-import Promise from 'promise';
-import firebaseApp from '../../../client/firebase';
-import adminApp from '../../firebaseAdmin';
+const User = require('../../models/models').User;
+const Post = require('../../models/models').Post;
+const Community = require('../../models/models').Community;
 
 router.post('/location', (req, res) => {
   User.findById(req.user._id)
