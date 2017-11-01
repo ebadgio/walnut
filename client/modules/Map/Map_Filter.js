@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import LocationSearch from './Map_Location_Search_Container';
 import NameSearch from './Map_NameSearch';
 import MapCard from './Map_Card';
-import uuidv4 from 'uuid/v4';
 import { connect } from 'react-redux';
-import { Scrollbars } from 'react-custom-scrollbars';
 import {Button} from 'semantic-ui-react';
 import './Map.css';
 class MapFilter extends React.Component {
@@ -44,7 +42,7 @@ class MapFilter extends React.Component {
             {this.props.users.filter((item) => {return item.location[this.props.selected].length > 0;}).map((user, index) => (
               <MapCard
                 id={user.id}
-                key={uuidv4()}
+                key={user.id}
                 profileURL={user.pictureURL}
                 name={user.fullName}
                 year={user.education.classYear}
