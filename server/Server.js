@@ -103,29 +103,6 @@ app.use(function(req, res, next) {
   }
 });
 
-app.get('/', (req, res, next) => {
-  if (!req.user) {
-    res.redirect('/login')
-  } 
-  else {
-    console.log('this should not be seen on the backend and should only take care of /login');
-    console.log('req.user', req.user);
-    if (req.user.currentCommunity) {
-      console.log('YES');
-      User.findById(req.user._id)
-          .populate('currentCommunity')
-          .then((user) => {
-              const url = '/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
-              console.log('MORE');
-              res.redirect(url);
-          })
-    }
-    else {
-      console.log('BET');
-      res.redirect('/walnuthome')
-    }
-  }
-});
 
 // app.get('/walnuthome', (req, res, next) => {
 //   // console.log('its hit');
@@ -150,9 +127,33 @@ app.use('/db/update', dbUpdateRoutes);
 app.use('/aws', awsRoutes);
 app.use('/email', emailRoutes);
 app.use(express.static(path.join(__dirname, '..', 'build')));
-app.use('/*', (request, response) => {
+app.use('/', (request, response) => {
     response.sendFile(path.join(__dirname, '..', 'build/index.html')); // For React/Redux
 });
+
+// app.get('/', (req, res, next) => {
+//     if (req.user) {
+//         console.log('this should not be seen on the backend and should only take care of /login');
+//         console.log('req.user', req.user);
+//         if (req.user.currentCommunity) {
+//             console.log('YES');
+//             User.findById(req.user._id)
+//                 .populate('currentCommunity')
+//                 .then((user) => {
+//                     const url = '/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
+//                     console.log('MORE');
+//                     res.redirect(url);
+//                 })
+//         }
+//         else {
+//             console.log('BET');
+//             res.redirect('/walnuthome')
+//         }
+//     }
+//     else {
+//         response.sendFile(path.join(__dirname, '..', 'build/index.html'));
+//     }
+// });
 
 
 

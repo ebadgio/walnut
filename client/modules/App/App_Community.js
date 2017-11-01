@@ -23,7 +23,6 @@ class Community extends React.Component {
 
   componentDidMount() {
     localStorage.setItem('isUserInCommunity', true);
-    // localStorage.setItem('url', '/community');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.handlePosition.bind(this), this.handleError.bind(this));
     }
@@ -35,6 +34,7 @@ class Community extends React.Component {
         this.callFirebase(nextProps.currentUser.firebaseId, nextProps.currentUser.currentCommunity._id);
         this.setState({called: true});
       }
+      localStorage.setItem('community', nextProps.currentUser.currentCommunity.title);
     }
   }
 

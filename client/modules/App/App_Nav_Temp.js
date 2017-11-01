@@ -11,7 +11,7 @@ import EditCommunityModal from './App_EditCommunityModal';
 import updateCommunity from '../../thunks/community_thunks/updateCommunityThunk';
 import axios from 'axios';
 import URL from '../../info';
-import $ from 'jquery';
+
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -54,9 +54,9 @@ class Navbar extends React.Component {
       newFilters: newT,
       admins: admins
     })
-            .then(() => {
-              window.location.reload();
-            });
+        .then(() => {
+          window.location.reload();
+        });
   }
 
   render() {
