@@ -1,10 +1,13 @@
-import express from 'express';
-import multer from 'multer';
-import AWS from 'aws-sdk';
-import multerS3 from 'multer-s3';
+const express = require('express');
+const multer = require('multer');
+const AWS = require('aws-sdk');
+const multerS3 = require('multer-s3');
 // TODO user models with new db layout
-import {User, Post, Tag, Community} from '../models/models';
-import Promise from 'promise';
+const User = require('../models/models').User;
+const Post = require('../models/models').Post;
+const Tag = require('../models/models').Tag;
+const Community = require('../models/models').Community;
+const Promise = require('promise');
 
 AWS.config.update(
   {

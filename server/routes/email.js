@@ -1,8 +1,8 @@
-import express from 'express';
-import { Community } from '../models/models';
+const express = require('express');
+const Community = require('../models/models').Community;
 const router = express.Router();
 
-import nodemailer from 'nodemailer';
+const nodemailer =  require('nodemailer');
 
 const transporter = nodemailer.createTransport('smtps://walnutreg@gmail.com:' + encodeURIComponent('acro355123') + '@smtp.gmail.com:465');
 
