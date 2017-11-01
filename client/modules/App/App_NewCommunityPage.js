@@ -292,7 +292,7 @@ class CreateCommunityPage extends React.Component {
                             id="memberInput"
                             labelPosition="left"
                             type="text"
-                            placeholder="Add Members..."
+                            placeholder="Add members by email..."
                             value={this.state.member}
                             onChange={(e) => { this.handleMemberChange(e); this.findEnterMember(e); }} >
                             <input />
