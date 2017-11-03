@@ -35,7 +35,8 @@ const discoverReducer = (state = {
         ...state,
         posts: action.posts.concat(state.posts).slice(0, 10),
         lastRefresh: action.lastRefresh,
-        otherTags: action.otherTags
+        otherTags: action.otherTags,
+        hasMore: true,
       };
     case 'GET_DISCOVER_DATA_ERROR':
       return state;

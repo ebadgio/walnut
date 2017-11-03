@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect} from 'react-redux';
 import { Card, Popup, Icon, Segment } from 'semantic-ui-react';
-import Linkify from 'linkifyjs/react';
 import dateStuff from '../../dateStuff';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
