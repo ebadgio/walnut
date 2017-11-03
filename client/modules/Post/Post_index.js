@@ -206,19 +206,6 @@ class Post extends React.Component {
     return urls;
   }
 
-  handleClick() {
-    this.setState({isOpen: !this.state.isOpen});
-  }
-
-  toggleLike() {
-    this.props.newLike();
-    if (this.state.isLiked) {
-      this.setState({likeCount: this.state.likeCount - 1, isLiked: false});
-    } else {
-      this.setState({likeCount: this.state.likeCount + 1, isLiked: true});
-    }
-  }
-
   renderLightBox(data) {
     this.setState({lightBoxData: data});
   }
