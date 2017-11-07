@@ -1,7 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import Parallax from 'react-springy-parallax';
+import createBrowserHistory from 'history/createBrowserHistory';
 
+export const history = createBrowserHistory();
 
 class Landing extends React.Component {
   constructor() {
@@ -17,14 +19,16 @@ class Landing extends React.Component {
               offset={0}
               speed={0.5}
               className="p1landingImgParallax">
-              <img src="" className="p1landingImg"/>
+            <img src="https://s3-us-west-1.amazonaws.com/walnut-test/photo-1467826839480-0c2a3783b327.jpeg" className="p1landingImg"/>
             </Parallax.Layer>
 
             <Parallax.Layer
               offset={0}
               speed={0.5}
               className="p1loginButton">
-              <Link to="/login">Sign in</Link>
+            <Link to={'/login'}><div
+              onClick={() => this.login()}
+              className="loginRouteButton">Login</div></Link>
             </Parallax.Layer>
 
             <Parallax.Layer

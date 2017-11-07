@@ -63,7 +63,6 @@ class Navbar extends React.Component {
               this.props.clearDirectory();
               this.props.clearMinichats();
             }}>
-                {/* <Icon name="home" size="big"/>*/}
                 <img src="https://s3.amazonaws.com/walnut-logo/logo.svg" className="logo"/>
             </Link>
             <div className="communityNavBarLogo" onClick={() => this.handleLogoClick()}>

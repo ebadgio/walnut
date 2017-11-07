@@ -14,6 +14,7 @@ import messengerReducer from './messengerReducer';
 import loginReducer from './loginReducer';
 import minichatReducer from './minichatReducer';
 import editPostReducer from './editPostReducer';
+import notificationReducer from './notificationReducer';
 
 const rootReducer = combineReducers({
   conversationReducer: conversationReducer,
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   loginReducer: loginReducer,
   minichatReducer: minichatReducer,
   editPostReducer: editPostReducer,
+  notificationReducer: notificationReducer,
   routing: routerReducer // this reducer is used by React Router in Redux
 });
 

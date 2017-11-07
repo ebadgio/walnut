@@ -172,6 +172,28 @@
     background-color: #143379 !important;
 }
 
+.loginRouteButton {
+    position: absolute !important;
+    top: 20px !important;
+    right: 0;
+    margin-right: 3%;
+    background-color: #1b4079 !important;
+    cursor: pointer;
+    width: 120px;
+    height: 36px;
+    border-radius: 4px;
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    color: #fff !important;
+    transition: background-color 0.35s ease;
+}
+
+.loginRouteButton:hover {
+    background-color: #143379 !important;
+}
+
 .backgroundImageLogin {
     width: 100%;
     height: 98.5vh;
@@ -243,4 +265,22 @@
     right: 6%;
     flex-direction: inherit;
     width: 252px !important;
+}
+
+.p1landingImg {
+    width: 100%;
+}
+
+.p1text {
+    position: absolute;
+    top: 11%;
+    left: 26%;
+    color: white;
+    font-size: 25px;
+    background-size: auto;
+    background-repeat: no-repeat;
+    will-change: transform;
+    width: fit-content;
+    height: fit-content;
+    transform: translate3d(0px, 0px, 0px);
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import firebaseApp from '../../firebase';
+import { connect } from 'react-redux';
 import _ from 'underscore';
 import Notification from 'react-web-notification';
 
@@ -13,28 +14,44 @@ class NotificationContainer extends React.Component {
   }
 
   componentDidMount() {
-    const user = firebaseApp.auth().currentUser;
-    const messagesRef = firebaseApp.database().ref('/messages/' + this.props.postData.postId).orderByKey().limitToLast(20);
-    messagesRef.on('value', (snapshot) => {
-      if (snapshot.val()) {
-        const send = _.values(snapshot.val());
-        const newMessage = send[send.length - 1];
-        console.log('inside here', newMessage);
-        if (newMessage.authorId !== user.uid) {
-          console.log('other user', this.props.postData.postId);
-          this.setState({
-            title: newMessage.author,
-            options: {
-              body: newMessage.content,
-              lang: 'en',
-              dir: 'ltr',
-              icon: 'https://s3-us-west-1.amazonaws.com/walnut-test/walnutlogo1.png'
-            },
-            ignore: false
-          });
+    if (this.props.newPost) {
+      console.log('inside new post notif');
+      this.setState({
+        // Title becomes conversation title
+        title: this.props.post.username,
+        options: {
+          body: this.props.post.content,
+          lang: 'en',
+          dir: 'ltr',
+          icon: 'https://s3.amazonaws.com/walnut-logo/logo.svg'
+        },
+        ignore: false
+      });
+      setTimeout(() => {this.props.clearNewPostData();}, 5000);
+    } else {
+      const user = firebaseApp.auth().currentUser;
+      const messagesRef = firebaseApp.database().ref('/messages/' + this.props.postData.postId).orderByKey().limitToLast(20);
+      messagesRef.on('value', (snapshot) => {
+        if (snapshot.val()) {
+          const send = _.values(snapshot.val());
+          const newMessage = send[send.length - 1];
+          console.log('inside here', newMessage);
+          if (newMessage.authorId !== user.uid) {
+            console.log('other user', this.props.postData.postId);
+            this.setState({
+              title: newMessage.author,
+              options: {
+                body: newMessage.content,
+                lang: 'en',
+                dir: 'ltr',
+                icon: 'https://s3.amazonaws.com/walnut-logo/logo.svg'
+              },
+              ignore: false
+            });
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   notifClick() {
@@ -51,6 +68,7 @@ class NotificationContainer extends React.Component {
   }
 
   render() {
+    console.log('notification rendering', this.state);
     return (
             <div className="textBoxDiv">
                 <Notification
@@ -75,7 +93,13 @@ class NotificationContainer extends React.Component {
 
 NotificationContainer.propTypes = {
   postData: PropTypes.object,
+  newPost: PropTypes.bool,
+  post: PropTypes.object,
+  clearNewPostData: PropTypes.func
 };
 
-export default NotificationContainer;
+const mapDispatchToProps = (dispatch) => ({
+  clearNewPostData: () => dispatch({type: 'CLEAR_NEW_POST_NOTIFICATION'})
+});
 
+export default connect(null, mapDispatchToProps)(NotificationContainer);
