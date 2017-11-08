@@ -6,9 +6,9 @@
     display: flex;
     height: 43px;
     background-color: #fff;
-    /*border-bottom: 1px solid rgba(34,36,38,.15);*/
-    box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.35);
 }
+
 
 .logoHolder {
     left: 6%;
@@ -814,7 +814,12 @@ button.ui.button > input {
 
 .ellipsis.vertical.icon {
     font-size: 2em;
-    color: #A18C87;
+    color: #bababa;
+    transition: color .35s ease;
+}
+
+.ellipsis.vertical.icon:hover {
+    color: #747474;
 }
 
 .navUser {
@@ -847,7 +852,7 @@ button.ui.button > input {
     padding: 0px 10px 0px 12px;
     color: #bababa;
     transition: color .35s ease;
-    height: 70px;
+    height: 50px;
     display: flex;
     align-items: center;
 }
@@ -855,7 +860,7 @@ button.ui.button > input {
 .discoverTabActive {
     padding: 0px 10px 0px 12px;
     border-left: solid 6px;
-    height: 70px;
+    height: 50px;
     color: #747474;
     display: flex;
     align-items: center;
@@ -890,12 +895,7 @@ button.ui.button > input {
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    padding-top: 50px;
-    background: #fff;
-    border-top: 1px solid rgba(34,36,38,.15);
-    border-right: 1px solid rgba(34,36,38,.15);
-    /*box-shadow: 0 2px 10px 0 rgba(34,36,38,.15);*/
-    box-shadow: 0 3px 3px 0 rgba(0,0,0,.05)
+    padding-top: 20px;
 }
  
 .createCommunityCard {
