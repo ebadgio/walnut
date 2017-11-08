@@ -181,6 +181,7 @@
     cursor: pointer;
     width: 120px;
     height: 36px;
+    z-index: 100;
     border-radius: 4px;
     display: flex;
     font-weight: bold;
@@ -269,18 +270,159 @@
 
 .p1landingImg {
     width: 100%;
+    clip: rect(0px,0px,50px,0px);
+}
+
+.p1landingDiv {
+    height: 120%;
+    overflow: hidden;
 }
 
 .p1text {
-    position: absolute;
-    top: 11%;
-    left: 26%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 13%;
     color: white;
-    font-size: 25px;
+    font-size: 30px;
     background-size: auto;
     background-repeat: no-repeat;
     will-change: transform;
-    width: fit-content;
-    height: fit-content;
+    height: 500px;
     transform: translate3d(0px, 0px, 0px);
+}
+
+.p1logo {
+    height: 97px;
+    width: auto;
+}
+
+.p1logoDiv {
+    display: flex;
+    justify-content: center;
+    margin-top: 153px;
+}
+
+.p1logoBack {
+    width: fit-content;
+    height: 159px;
+    padding: 20px;
+    padding-top: 30px;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.p2text {
+    position: absolute;
+    background-size: auto;
+    background-repeat: no-repeat;
+    will-change: transform;
+    margin-left: 8%;
+    font-size: 25px;
+    width: 100%;
+    height: 699px;
+    transform: translate3d(0px, 653.5px, 0px);
+    margin-top: 50px;
+}
+
+.p2display {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.p2displayImg {
+    height: 250px;
+    width: auto;
+    margin-right: 8%;
+}
+
+.p3display {
+    top: -550px;
+    height: 820px !important;
+    background-color: #a0f4d9;
+}
+
+.p3displayImg {
+    z-index: 100;
+    height: 300px;
+}
+
+.p3Img {
+    top: -307px;
+    display: flex;
+    z-index: 100;
+    justify-content: center;
+}
+
+.p3text {
+    top: 166px;
+    height: 100px !important;
+    z-index: 100;
+    font-size: 25px;
+    line-height: 1.2;
+    color: #303e47;
+    display: flex;
+    justify-content: center;
+}
+
+.p4text {    
+    top: -473px;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.p4display {    
+    top: -663px;
+}
+
+.p4ExtractedPost {
+
+}
+
+.p4ImgPostE {
+
+}
+
+.p4PostLeft {
+
+}
+
+.p4ImgPostL {
+
+}
+
+.p4PostRight {
+
+}
+
+.p4ImgPostR {
+
+}
+
+.p4tag {
+
+}
+
+.p4filterBy {
+
+}
+
+.p4Filters {
+
+}
+
+.p5ImgPara {
+
+}
+
+.p3Img {
+
+}
+
+.p5Display {
+
 }
