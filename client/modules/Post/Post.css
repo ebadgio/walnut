@@ -980,7 +980,6 @@ body ::-webkit-scrollbar {
 
 .postSegment {
     margin-bottom: 0 !important;
-    margin-top: 3px !important;
     padding: .5em .5em !important;
     border: none !important;
     border-radius: 0 !important;

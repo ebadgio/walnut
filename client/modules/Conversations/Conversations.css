@@ -1,11 +1,14 @@
 .conversationsMainContainer {
-    margin-left: 60px;
     margin-right: 0;
-    padding-top: 43px;
-    height: 100vh;
+    position: absolute;
+    bottom: 40px;
+    min-width: 900px;
+    height: 550px;
+    width: calc(100vw - 200px);
+    margin-left: 170px;
     display: flex;
     flex-direction: row;
-
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.24) !important;
 }
 
 .conversationsSideBar {
@@ -14,7 +17,6 @@
     max-height: 100%;
     overflow: hidden;
     background: #fff;
-    border-top: 1px solid rgba(34,36,38,.15);
 }
 
 .conversationsSideBar:hover {
@@ -26,7 +28,6 @@
     display: flex;
     background: #fff;
     flex-direction: row;
-    border-top: 1px solid rgba(34,36,38,.15);
 }
 
 .chatGrouping {

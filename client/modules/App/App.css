@@ -886,11 +886,13 @@ button.ui.button > input {
     color: #747474;
 }
 
+.tabTitle {
+    margin-left: 10px;
+}
+
 .LeftSidebar_Container {
     position: fixed;
     z-index: 302;
-    width: 60px;
-    height: 95vh;
     margin-top: 43px;
     display: flex;
     justify-content: flex-start;
