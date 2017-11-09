@@ -71,23 +71,23 @@ class LeftSideContainer extends React.Component {
             <Link className={this.state.tab === 1 ? 'discoverTabActive' : 'discoverTab'}
                   to={'/community/' + title + '/discover'}
                   style={{borderColor: borderColors2.discover}}>
-                <Icon name="browser" size="big" className="discoverIcon" /><span className="tabTitle"> Discover</span>
+                <Icon name="browser" size="large" className="discoverIcon" /><span className="tabTitle"> Discover</span>
             </Link>
             <Link className={this.state.tab === 2 ? 'discoverTabActive' : 'discoverTab'}
                   to={'/community/' + title + '/conversations'}
                   style={{borderColor: borderColors2.conversations}}>
                 {this.state.totalUnreads > 0 ? <div className="unreadsCircle">{this.state.totalUnreads}</div> : null}
-                <Icon name="comments outline" size="big" /> <span className="tabTitle"> Conversations</span>
+                <Icon name="comments outline" size="large" className="conversationsIcon" /> <span className="tabTitle"> Conversations</span>
             </Link>
             <Link className={this.state.tab === 3 ? 'discoverTabActive' : 'discoverTab'}
                   to={'/community/' + title + '/directory'}
                   style={{borderColor: borderColors2.directory}}>
-                <Icon size="big" className="address book outline" /> <span className="tabTitle"> Directory</span>
+                <Icon size="large" name="address book outline" className="directoryIcon" /> <span className="tabTitle"> Directory</span>
             </Link>
             <Link className={this.state.tab === 4 ? 'discoverTabActive' : 'discoverTab'}
                   to={'/community/' + title + '/map'}
                   style={{borderColor: borderColors2.map}}>
-                <Icon name="browser" size="big" className="world" /> <span className="tabTitle"> Map</span>
+                <Icon size="large" name="world" className="mapIcon" /> <span className="tabTitle"> Map</span>
             </Link>
         </div>
     );
