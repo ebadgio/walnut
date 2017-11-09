@@ -141,63 +141,6 @@ router.post('/joinconversation', (req, res) => {
 });
 
 
-router.post('/save/comment', (req, res) => {
-  Post.findById(req.body.postId)
-      .then((response) => {
-        const newComment = {
-          content: req.body.commentBody,
-          createdAt: new Date(),
-          createdBy: req.user._id,
-          likes: []
-        };
-        response.comments.push(newComment);
-        response.save()
-        .then((resp) => {
-          res.json({success: true, data: response});
-        });
-      })
-      .catch((err) => {
-        res.json({success: false, data: null});
-      });
-});
-
-
-router.post('/postlike', (req, res) => {
-  Post.findById(req.body.postId)
-    .then((response) => {
-      if (response.likes.indexOf(req.user._id) > -1) {
-        const idx = response.likes.indexOf(req.user._id);
-        response.likes.splice(idx, 1);
-      } else {
-        response.likes.push(req.user._id);
-      }
-      response.save()
-      .then((resp) => {
-        res.json({success: true});
-      });
-    })
-    .catch((err) => {
-      res.json({success: false});
-    });
-});
-
-router.post('/commentlike', (req, res) => {
-  Post.findById(req.body.postId)
-    .then((post) => {
-      const comment = post.comments.filter((com) => {
-        return com._id.toString() === req.body.commentId.toString();
-      });
-      comment[0].likes.push(req.user._id);
-      return post.save();
-    })
-    .then(() => {
-      res.json({success: true});
-    })
-    .catch((err) => {
-      res.json({success: false});
-    });
-});
-
 router.post('/blurb', (req, res) => {
   User.findById(req.user._id)
          .then((response) => {

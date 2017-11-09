@@ -1,7 +1,8 @@
 .directoryCardsList {
     margin-top: 43px;
     padding-top: 40px;
-    width: calc(100vw - 60px);
+    margin-right: 20px;
+    width: calc(100vw - 150px);
     position: absolute;
     right: 0;
     display: flex;

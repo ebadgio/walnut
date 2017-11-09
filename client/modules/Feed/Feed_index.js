@@ -98,8 +98,7 @@ class Feed extends React.Component {
                         key={post.postId}
                         isOpen={false}
                         currentUser={this.props.user}
-                        postData={post}
-                        newLike={() => (this.props.newLike(post.postId))}/>
+                        postData={post}/>
               ))}
           </InfiniteScroll>
         </div>
@@ -136,7 +135,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newLike: (id) => newLikeThunk(id)(dispatch),
   getRefresh: (lastRefresh, filters) => dispatch(discoverRefreshThunk(lastRefresh, filters)),
   getNext10: (param, lastRefresh, filters) => dispatch(nextTenThunk(param, lastRefresh, filters)),
   toggleModal: () => dispatch({type: 'MODAL_TOGGLE'})

@@ -114,8 +114,7 @@ class MapContainer extends React.Component {
             attributionControl={false}
             id="realmap"
             containerStyle={{
-              height: '92vh',
-              width: '73vw',
+              height: '560',
               marginTop: '5px',
               textAlign: 'left',
               marginRight: '1vh',
