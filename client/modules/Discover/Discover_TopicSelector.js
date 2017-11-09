@@ -116,7 +116,7 @@ class TopicSelectorContainer extends React.Component {
     return (
       <div className="topicContainer">
         <div id="choice_form">
-          <span className="currentView">Currently viewing posts including: </span>
+          {/* <span className="currentView">Currently viewing posts including: </span>*/}
           {this.props.useFilters.length > 0 ?
             this.props.useFilters.map((filter, index) => (
               <div key={index} className="tag">
@@ -125,8 +125,8 @@ class TopicSelectorContainer extends React.Component {
               </div>
               ))
            :
-            <span className="allTopics">All Topics</span>
-          }
+            null }
+            {/* <span className="allTopics">All Topics</span>*/}
         </div>
          <Search
              className="topicSearchBar"

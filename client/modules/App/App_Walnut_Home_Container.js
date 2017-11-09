@@ -71,6 +71,7 @@ class WalnutHomeContainer extends React.Component {
       return (
         <div className="walnutContainer">
           <div className="Heading">
+            <img src="https://s3.amazonaws.com/walnut-logo/logo.svg" className="logoHome"/>
             Walnut
           </div>
           <div className="walnutHomeActions">
