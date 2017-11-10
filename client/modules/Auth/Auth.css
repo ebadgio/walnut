@@ -380,27 +380,44 @@
 }
 
 .p4ExtractedPost {
-
+    position: absolute;
+    top: 220px;
+    display: flex;
+    justify-content: center;
 }
 
 .p4ImgPostE {
-
+    width: auto !important;
+    height: 170px !important;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.24) !important;
 }
 
 .p4PostLeft {
-
+    position: absolute;
+    top: -300px;
+    display: flex;
+    justify-content: center;
 }
 
 .p4ImgPostL {
-
+    width: auto !important;
+    height: 362px !important;
+    margin-right: 329px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.24) !important;
 }
 
 .p4PostRight {
-
+    position: absolute;
+    top: -407px;
+    display: flex;
+    justify-content: center;
 }
 
 .p4ImgPostR {
-
+    width: auto !important;
+    height: 362px !important;
+    margin-left: 316px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.24) !important;
 }
 
 .p4tag {
@@ -412,7 +429,16 @@
 }
 
 .p4Filters {
+    position: absolute;
+    top: 525px;
+    display: flex;
+    justify-content: center;
+}
 
+.p4ImgFilter {
+    width: auto !important;
+    height: 47px !important;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.24) !important;
 }
 
 .p5ImgPara {

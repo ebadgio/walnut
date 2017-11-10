@@ -94,7 +94,7 @@ class Landing extends React.Component {
 
             <Parallax.Layer
               offset={3}
-              speed={0.18}
+              speed={-0.3}
               className="p4ExtractedPost">
             <img src="https://s3-us-west-1.amazonaws.com/walnut-test/extractedpost.png" className="p4ImgPostE" />
             </Parallax.Layer>
@@ -108,7 +108,7 @@ class Landing extends React.Component {
 
             <Parallax.Layer
               offset={3}
-              speed={0.70}
+              speed={0.60}
               className="p4PostRight">
             <img src="https://s3-us-west-1.amazonaws.com/walnut-test/post.png" className="p4ImgPostR" />
             </Parallax.Layer>
@@ -129,7 +129,7 @@ class Landing extends React.Component {
 
             <Parallax.Layer
               offset={3}
-              speed={0.5}
+              speed={-0.3}
               className="p4Filters">
             <img src="https://s3-us-west-1.amazonaws.com/walnut-test/filters.png" className="p4ImgFilter" />
             </Parallax.Layer>
