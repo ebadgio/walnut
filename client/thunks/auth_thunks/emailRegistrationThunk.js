@@ -27,29 +27,13 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
             email: email,
             password: password
           })
-            .then(() => {
-              // firebaseApp.auth().signOut()
-              //   .then(() => {
-              //     localStorage.removeItem('tab');
-              //     localStorage.removeItem('url');
-              //     localStorage.removeItem('isUserInCommunity');
-              //     localStorage.removeItem('home');
-              //     sessionStorage.removeItem('url');
-              //     sessionStorage.removeItem('tab');
-              //     return axios.post('/auth/logout');
-              //   })
-              //   .then(() => {
-              //     dispatch({ type: 'LOGOUT_DONE' });
-              //     history.replace('/login');
-              //   });
-            })
-            .catch((error) => {
-              console.log('axios did not go through');
-            });
-        })
           .catch((error) => {
-            console.log('could not get token', error);
+            console.log('axios did not go through');
           });
+        })
+      .catch((error) => {
+        console.log('could not get token', error);
+      });
     })
       .catch((error) => {
         console.log('update user error', error);
@@ -62,30 +46,5 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
       console.log('firebase error', error);
       // ...
     });
-  // need to create a backend route to create user:
-  // var new_user = new User({
-  //        fullName: req.body.fname + ' ' + req.body.lname,
-  //        username: req.body.username,
-  //        password: req.body.password,
-  //        preferences: req.body.tags,
-  //        portfolio: [
-  //          {name: 'media', data: []},
-  //          {name: 'documents', data: []},
-  //          {name: 'code', data: []},
-  //          {name: 'design', data: []}
-  //        ],
-  //
-  //        pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/430-512.png'
-  //      });
-  //      return new_user.save()
-  //      .then((doc) => {
-  //        // console.log(doc);
-  //        res.status(200);
-  //        res.redirect('/')
-  //      })
-  //      .catch((err) => {
-  //        console.log(err);
-  //      })
-  //    }
 };
 export default emailRegistrationThunk;

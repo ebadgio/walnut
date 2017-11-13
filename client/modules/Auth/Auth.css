@@ -172,6 +172,29 @@
     background-color: #143379 !important;
 }
 
+.loginRouteButton {
+    position: absolute !important;
+    top: 20px !important;
+    right: 0;
+    margin-right: 3%;
+    background-color: #1b4079 !important;
+    cursor: pointer;
+    width: 120px;
+    height: 36px;
+    z-index: 100;
+    border-radius: 4px;
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    color: #fff !important;
+    transition: background-color 0.35s ease;
+}
+
+.loginRouteButton:hover {
+    background-color: #143379 !important;
+}
+
 .backgroundImageLogin {
     width: 100%;
     height: 98.5vh;
@@ -243,4 +266,337 @@
     right: 6%;
     flex-direction: inherit;
     width: 252px !important;
+}
+
+.p1landingImg {
+    width: 100%;
+    clip: rect(0px,0px,50px,0px);
+}
+
+.p1landingDiv {
+    height: 120%;
+    overflow: hidden;
+}
+
+.p1text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 13%;
+    color: white;
+    font-size: 30px;
+    background-size: auto;
+    background-repeat: no-repeat;
+    will-change: transform;
+    height: 500px;
+    transform: translate3d(0px, 0px, 0px);
+    font-weight: 800;
+}
+
+.p1logo {
+    height: 97px;
+    width: auto;
+}
+
+.p1logoDiv {
+    display: flex;
+    justify-content: center;
+    margin-top: 153px;
+}
+
+.p1logoBack {
+    width: fit-content;
+    height: 159px;
+    padding: 20px;
+    padding-top: 30px;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.p2text {
+    position: absolute;
+    background-size: auto;
+    background-repeat: no-repeat;
+    will-change: transform;
+    font-size: 25px;
+    width: 100%;
+    height: 699px;
+    transform: translate3d(0px, 653.5px, 0px);
+    top: 9px;
+    font-weight: 800;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+}
+
+.p2display {
+    display: flex;
+    justify-content: flex-end;
+    top: -300px;
+    margin-left: 40px;
+}
+
+.p2displayImg {
+    height: 800px;
+    width: 110%;
+}
+
+.p3display {
+    top: -550px;
+    height: 840px !important;
+    background-color: #a0f4d9;
+}
+
+.p3displayImg {
+    z-index: 100;
+    height: 300px;
+}
+
+.p3Img {
+    top: -295px;
+    display: flex;
+    z-index: 100;
+    justify-content: center;
+}
+
+.p3text {
+    top: 100px;
+    height: 100px !important;
+    z-index: 100;
+    font-size: 25px;
+    line-height: 1.2;
+    color: #303e47;
+    display: flex;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.p4text {    
+    top: -441px;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.p4display {    
+    top: -663px;
+}
+
+.p4ExtractedPost {
+    position: absolute;
+    top: 159px;
+    display: flex;
+    justify-content: center;
+}
+
+.p4ImgPostE {
+    width: auto !important;
+    height: 170px !important;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.24) !important;
+    margin-right: 34px;
+}
+
+.p4PostLeft {
+    position: absolute;
+    top: -264px;
+    display: flex;
+    justify-content: center;
+    z-index: -50;
+}
+
+.p4ImgPostL {
+    width: auto !important;
+    height: 362px !important;
+    margin-left: 365px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.24) !important;
+}
+
+.p4PostRight {
+    top: -275px;
+    display: flex;
+    justify-content: center;
+    z-index: -60;
+}
+
+.p4ImgPostR {
+    width: auto !important;
+    height: 413px !important;
+    margin-left: 500px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.24) !important;
+}
+
+.p4Post3 {
+    top: -304px;
+    display: flex;
+    z-index: -12;
+    justify-content: center;
+}
+
+.p4ImgPost3 {
+    width: auto !important;
+    height: 362px !important;
+    margin-left: 183px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.24) !important;
+}
+
+.p4Post4 {
+    top: -204px;
+    display: flex;
+    justify-content: center;
+    z-index: 114;
+}
+
+.p4ImgPost4 {
+    width: auto !important;
+    height: 183px !important;
+    margin-right: 291px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.24) !important;
+}
+
+.p4Post5 {
+    position: absolute;
+    top: -230px;
+    z-index: 120;
+    display: flex;
+    justify-content: center;
+}
+
+.p4ImgPost5 {
+    width: auto !important;
+    height: 170px !important;
+    margin-right: 559px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.24) !important;
+}
+
+
+.p4tag {
+    top: 77px;
+    left: 10%;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.p4filterBy {
+    top: 450px;
+    display: flex;
+    justify-content: flex-end;
+    right: 8%;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.p4Filters {
+    position: absolute;
+    top: 414px;
+    display: flex;
+    justify-content: center;
+}
+
+.p4ImgFilter {
+    width: auto !important;
+    height: 47px !important;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.24) !important;
+    margin-right: 40px;
+}
+
+.p5text {
+    top: 64px;;
+    font-size: 25px;
+    color: white;
+    left: 11%;
+    z-index: 100;
+    font-weight: 800;
+}
+
+.p5ImgPara {
+    top: 210px;
+    z-index: 100;
+    left: 8%;
+}
+
+.p5Img {
+    width: 592px !important;
+}
+
+.p5Display {
+    top: -211px;
+}
+
+.p5ImgDisp {
+    filter: brightness(62%);
+}
+
+.p6text {
+    top: -100px;
+    z-index: 100;
+    font-size: 25px;
+    line-height: 1.2;
+    text-align: center;
+    color: white;
+    padding: 134px;
+    font-weight: 800;
+}
+
+.p6Img {
+    width: 100%;
+    filter: brightness(87%);
+}
+
+.p6Display {
+    top: -260px;
+}
+
+.p6Button {
+    display: flex;
+    justify-content: center;
+    top: 200px;
+    z-index: 100;
+}
+
+.signUpRouteButton {
+    background-color: #1b4079 !important;
+    cursor: pointer;
+    width: 120px;
+    height: 36px;
+    z-index: 100;
+    border-radius: 4px;
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    color: #fff !important;
+    transition: background-color 0.35s ease;
+}
+
+.p6Footer {
+    height: 277px !important;
+    top: 475px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    z-index: 100;
+}
+
+.contactUs {
+    color: white;
+    font-size: 23px;
+    font-weight: 800;
+    margin-top: 83px !important;
+    margin-right: 71px;
+}
+
+.emailIcon {
+    margin-top: 85px !important;
+    font-size: 39px !important;
+    cursor: pointer;
+}
+
+.emailIcon:hover {
+    color: #a0f4d9;
+    margin-top: 85px;
+    font-size: 39px;
+    cursor: pointer;
 }

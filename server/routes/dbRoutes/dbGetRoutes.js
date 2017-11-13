@@ -96,9 +96,9 @@ router.get('/discoverrefresh', (req, res) => {
   let filter;
   let posts = [];
   if (filters.length > 0) {
-    filter =  { tags: { $in: filters }, community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) } };
+    filter =  { tags: { $in: filters }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.query.lastRefresh) } };
   } else {
-    filter = {community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) }};
+    filter = {community: req.user.currentCommunity, createdAt: { $gte: new Date(req.query.lastRefresh) }};
   }
   Post.find(filter)
     .sort({ createdAt: -1 })

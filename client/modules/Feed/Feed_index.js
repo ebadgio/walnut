@@ -7,10 +7,8 @@ import Post from '../Post/Post_index';
 import InfiniteScroll from 'react-infinite-scroller';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
 import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
-import NewPostContainer from './Feed_NewPost_Container.js';
 import './Feed.css';
 import $ from 'jquery';
-import { Loader, Segment, Divider } from 'semantic-ui-react';
 import EmptyLoader from './Empty_Loader';
 
 

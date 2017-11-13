@@ -9,6 +9,7 @@ import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
 import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
 // import firebaseApp from '../../firebase';
+import NotificationContainer from '../Post/Notification';
 import BottomContainer from '../Minichats/Minichat_Bottom_Container';
 
 class Home extends React.Component {
@@ -31,8 +32,10 @@ class Home extends React.Component {
   }
 
   render() {
+    console.log('rendering discover');
     return (
         <div className="row" id="Discover">
+        {this.props.newPost.length > 0 ? this.props.newPost.map((post) => <NotificationContainer post={post} newPost />) : null}
           <TopicContainer />
           <Feed id="Feed"/>
           <NewPostContainer />
@@ -56,6 +59,7 @@ Home.propTypes = {
   currentUser: PropTypes.object,
   addIds: PropTypes.func,
   getConvos: PropTypes.func,
+  newPost: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
@@ -66,6 +70,7 @@ const mapStateToProps = (state) => ({
   currentCommunity: state.conversationReducer.current,
   useFilters: state.discoverReducer.useFilters,
   currentUser: state.userReducer,
+  newPost: state.notificationReducer.newPosts
 });
 
 const mapDispatchToProps = (dispatch) => ({
