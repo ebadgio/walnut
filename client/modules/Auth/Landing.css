@@ -1,0 +1,377 @@
+.mainPhoto {
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/daria-shevtsova-57340.jpg);*/
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-423658.jpg);*/
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-423665.jpg);
+    min-height: 450px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.togetherPhoto {
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/daria-shevtsova-57340.jpg);*/
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-310778.jpg);*/
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-250087.jpg);
+    min-height: 450px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.conversationPhoto {
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/endpic.png);
+    min-height: 450px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.organizedPhoto {
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/vadim-sherbakov-68.jpg);
+    min-height: 450px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.keepTrackPhoto {
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-191102.jpg);
+    min-height: 450px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.endPhoto {
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/tim-trad-205978.jpg);*/
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/samson-duborg-rankin-91091.jpg);
+    min-height: 450px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.logoCont {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 60px;
+    align-items: center;
+}
+
+.p1logoBack2 {
+    width: fit-content;
+    height: 159px;
+    padding: 20px;
+    padding-top: 30px;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    margin-bottom: 80px;
+}
+
+
+
+.sec1 {
+    height: 500px;
+    background: #fff;
+}
+
+.sec2 {
+    height: 500px;
+    background: #fff;
+    padding-top: 160px;
+}
+
+.sec3 {
+    height: 500px;
+    background: #fff;
+    padding-top: 160px;
+}
+
+.sec4 {
+    height: 500px;
+    background: #fff;
+    padding-top: 160px;
+}
+
+.bottomSec {
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: #212121;
+}
+
+.finalWords {
+    position: absolute;
+    margin-top: -340px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 42px;
+    color: #fff;
+    font-weight: 900;
+}
+
+.contactUs2 {
+    color: white;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.emailIcon2 {
+    font-size: 39px !important;
+    cursor: pointer;
+}
+
+.emailIcon2:hover {
+    color: #a0f4d9;
+    font-size: 39px;
+    cursor: pointer;
+}
+
+.getStarted {
+    color: #fff;
+    height: 80px;
+    width: 180px;
+    font-weight: 900;
+    border: 2px solid #fff;
+    background: rgba(0, 0, 0, 0.45);
+    transition: background .2s ease;
+    cursor: pointer;
+    /*position: absolute;*/
+    margin-top: -250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    border-radius: 4px;
+}
+
+.getStarted:hover {
+    background: rgba(0,0,0,.6);
+}
+
+.toLogin {
+    height: 40px;
+    width: 90px;
+    margin: 10px;
+    /*background: #3F51B5;*/
+    /*background: #2e3138;*/
+    /*background: #3D5AFE;*/
+    background: #6874e8;
+    color: #fff;
+    transition: background .3s ease;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    border-radius: 4px;
+    align-items: center;
+    opacity: .85;
+    font-weight: bold;
+}
+
+.toLogin:hover {
+    /*background: #304FFE;*/
+    background: #7580EA;
+    /*background: #6784e8;*/
+}
+
+.toSignup {
+    height: 40px;
+    width: 90px;
+    margin: 10px;
+    color: #fff;
+    border: 2px solid #fff;
+    transition: background .15s ease;
+    top: 0;
+    right: 120px;
+    position: absolute;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border-radius: 4px;
+    background: rgba(0,0,0,.45);
+}
+
+.toSignup:hover {
+    background: rgba(0,0,0,.6);
+}
+
+.titleLand {
+    position: absolute;
+    top: 200px;
+    width: 100%;
+    text-align: center;
+    font-size: 82px;
+    color: #fff;
+}
+
+@media (max-width: 450px) {
+    .whereText {
+        font-size: 32px !important;
+    }
+}
+
+.whereText {
+    width: 100%;
+    justify-content: center;
+    color: #2e3138;
+    font-size: 42px;
+    display: flex;
+    font-weight: 900;
+    margin-top: 60px;
+    transition: font-size .2s ease;
+}
+
+.contentGroup {
+    margin-top: 100px;
+    width: 100%;
+}
+
+@media (max-width: 550px) {
+    .contentGroup {
+        flex-direction: column !important;
+    }
+}
+
+.infoGroup {
+    position: absolute;
+    left: 20%;
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+}
+
+.infoTitle {
+    /*color: #373e4c;*/
+    color: #1d2129;
+    font-size: 34px;
+    width: 100%;
+    margin-bottom: 15px;
+    line-height: 36px;
+}
+
+.infoBody {
+    font-size: 24px;
+    color: #373e4c;
+    width: 100%;
+    line-height: 26px;
+}
+
+.sec1_ph1 {
+    width: 320px;
+    position: absolute;
+    right: 20%;
+}
+
+.sec1_ph2 {
+    position: absolute;
+    width: 100px;
+    box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.25);
+    right: 20%;
+    top: 660px;
+}
+
+.sec2_ph1 {
+    width: 420px;
+    position: absolute;
+    right: 15%;
+}
+
+.sec2_ph2 {
+    position: absolute;
+    width: 180px;
+    box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+    right: 30%;
+    top: 1410px;
+ }
+
+.sec2_ph3 {
+    position: absolute;
+    width: 180px;
+    box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+    right: 40%;
+    top: 1530px;
+}
+
+.sec2_ph4 {
+    position: absolute;
+    width: 150px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+    right: 20%;
+    top: 1450px;
+}
+
+.sec3_ph1 {
+    width: 340px;
+    position: absolute;
+    right: 12%;
+    margin-top: -25px;
+}
+
+.surroundImage {
+    box-shadow: inset 4px -4px 1px 0 rgba(0, 0, 0, 0.55);
+}
+
+.sec3_ph2 {
+    width: 380px;
+    position: absolute;
+    right: 25%;
+    top: 2380px;
+    box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+}
+
+.sec3_ph3 {
+    width: 280px;
+    position: absolute;
+    right: 10%;
+    top: 2420px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+}
+.sec3_ph4 {
+    width: 180px;
+    position: absolute;
+    right: 5%;
+    top: 2380px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+}
+
+
+.sec4_ph1 {
+    width: 420px;
+    position: absolute;
+    right: 15%;
+}
+
+.sec4_ph2 {
+    width: 320px;
+    position: absolute;
+    right: 8%;
+    top: 3350px;
+    box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+}
+
+.sec4_ph3 {
+    width: 240px;
+    position: absolute;
+    right: 30%;
+    top: 3330px;
+    box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+}
+

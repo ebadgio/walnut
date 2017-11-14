@@ -10,6 +10,7 @@ import firebaseApp from '../../firebase';
 import WalnutHomeContainer from '../App/App_Walnut_Home_Container';
 import getUser from '../../thunks/app_thunks/getAppThunk';
 import Landing from './Auth_Landing';
+import NewLanding from './Auth_Landing2';
 import URL from '../../info';
 import WalnutLoader from '../App/App_WalnutLoader';
 
@@ -63,7 +64,7 @@ class Auth extends React.Component {
     return (
       <Router history={history}>
         <Switch>
-          <Route exact path="/" component={this.state.loading ? WalnutLoader : Landing} />
+          <Route exact path="/" component={this.state.loading ? WalnutLoader : NewLanding} />
           <Route path="/walnuthome" component={WalnutHomeContainer} />
           {/* <Route path="/community" render={() => (<Community history={history} />)} /> */}
           <Route path="/community/:name" component={Community} />
