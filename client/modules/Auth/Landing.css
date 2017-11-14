@@ -80,7 +80,7 @@
 
 
 .sec1 {
-    height: 450px;
+    height: 500px;
     background: #fff;
 }
 
@@ -149,7 +149,7 @@
     background: rgba(0, 0, 0, 0.45);
     transition: background .2s ease;
     cursor: pointer;
-    position: absolute;
+    /*position: absolute;*/
     margin-top: -250px;
     display: flex;
     justify-content: center;
@@ -168,7 +168,8 @@
     margin: 10px;
     /*background: #3F51B5;*/
     /*background: #2e3138;*/
-    background: #3D5AFE;
+    /*background: #3D5AFE;*/
+    background: #6874e8;
     color: #fff;
     transition: background .3s ease;
     position: absolute;
@@ -184,7 +185,9 @@
 }
 
 .toLogin:hover {
-    background: #304FFE;
+    /*background: #304FFE;*/
+    background: #7580EA;
+    /*background: #6784e8;*/
 }
 
 .toSignup {
@@ -232,12 +235,12 @@
     font-size: 42px;
     display: flex;
     font-weight: 900;
-    margin-top: 40px;
+    margin-top: 60px;
     transition: font-size .2s ease;
 }
 
 .contentGroup {
-    margin-top: 40px;
+    margin-top: 100px;
     width: 100%;
 }
 
@@ -282,7 +285,7 @@
     width: 100px;
     box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.25);
     right: 20%;
-    top: 580px;
+    top: 660px;
 }
 
 .sec2_ph1 {
@@ -296,7 +299,7 @@
     width: 180px;
     box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
     right: 30%;
-    top: 1360px;
+    top: 1410px;
  }
 
 .sec2_ph3 {
@@ -304,7 +307,7 @@
     width: 180px;
     box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
     right: 40%;
-    top: 1480px;
+    top: 1530px;
 }
 
 .sec2_ph4 {
@@ -312,5 +315,5 @@
     width: 150px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
     right: 20%;
-    top: 1400px;
+    top: 1450px;
 }
