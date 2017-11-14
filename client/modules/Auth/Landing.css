@@ -289,9 +289,9 @@
 }
 
 .sec2_ph1 {
-    width: 380px;
+    width: 420px;
     position: absolute;
-    right: 20%;
+    right: 15%;
 }
 
 .sec2_ph2 {
@@ -316,4 +316,38 @@
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
     right: 20%;
     top: 1450px;
+}
+
+.sec3_ph1 {
+    width: 340px;
+    position: absolute;
+    right: 12%;
+    margin-top: -25px;
+}
+
+.surroundImage {
+    box-shadow: inset 4px -4px 1px 0 rgba(0, 0, 0, 0.55);
+}
+
+.sec3_ph2 {
+    width: 380px;
+    position: absolute;
+    right: 25%;
+    top: 2380px;
+    box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+}
+
+.sec3_ph3 {
+    width: 280px;
+    position: absolute;
+    right: 10%;
+    top: 2420px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+}
+.sec3_ph4 {
+    width: 180px;
+    position: absolute;
+    right: 5%;
+    top: 2380px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
 }

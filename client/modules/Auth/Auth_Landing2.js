@@ -45,7 +45,7 @@ class NewLanding extends React.Component {
                         </div>
                         <div className="infoBody">
                             Create a social network centered around your community,
-                            allowing you to stay connected and sharing anytime, from anywhere.
+                            allowing you to stay connected and share anytime, from anywhere.
                         </div>
                     </div>
                     <img src="https://s3-us-west-1.amazonaws.com/walnut-test/discover+minichatsNew.png"
@@ -86,6 +86,14 @@ class NewLanding extends React.Component {
                         Add topics to your posts so people can find them later.
                     </div>
                 </div>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/Screen+Shot+2017-11-13+at+9.34.26+PM+copy.png"
+                     className="sec3_ph1"/>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/Screen+Shot+2017-11-14+at+1.06.06+PM.png"
+                     className="sec3_ph2"/>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/Screen+Shot+2017-11-14+at+1.03.52+PM.png"
+                     className="sec3_ph3"/>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/Screen+Shot+2017-11-14+at+1.04.04+PM.png"
+                     className="sec3_ph4" />
             </div>
             <div className="organizedPhoto">
             </div>
