@@ -107,6 +107,12 @@ class NewLanding extends React.Component {
                         the conversation when it’s convenient for you.
                     </div>
                 </div>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/conversationsNew.png"
+                    className="sec4_ph1"/>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/extractedpost+copy.png"
+                    className="sec4_ph2"/>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/Screen+Shot+2017-11-13+at+9.58.33+PM+copy.png"
+                    className="sec4_ph3"/>
             </div>
             <div className="keepTrackPhoto">
             </div>
