@@ -1,16 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import Parallax from 'react-springy-parallax';
-import createBrowserHistory from 'history/createBrowserHistory';
 import './Landing.css';
 import { Icon } from 'semantic-ui-react';
-export const history = createBrowserHistory();
 
 class NewLanding extends React.Component {
-  constructor() {
-    super();
-  }
-
   render() {
     return(
         <div>
@@ -21,7 +14,7 @@ class NewLanding extends React.Component {
                     Login
                 </div>
             </Link>
-            <Link to="/login">
+            <Link to="/signup">
                 <div className="toSignup">
                     Sign up
                 </div>
@@ -57,7 +50,7 @@ class NewLanding extends React.Component {
             <div className="togetherPhoto">
             </div>
             <div className="sec2">
-                <div className="infoGroup">
+                <div className="infoGroup2">
                     <div className="infoTitle">
                         Change the way your community talks
                     </div>
@@ -78,7 +71,7 @@ class NewLanding extends React.Component {
             <div className="conversationPhoto">
             </div>
             <div className="sec3">
-                <div className="infoGroup">
+                <div className="infoGroup3">
                     <div className="infoTitle">
                         Keep your content organized and easy to find
                     </div>
@@ -125,7 +118,7 @@ class NewLanding extends React.Component {
              </div>
              <div className="bottomSec">
                  <div className="finalWords">Take your community to the next level with Walnut</div>
-                 <Link to="/login">
+                 <Link to="/signup">
                  <div className="getStarted">Get Started</div>
                  </Link>
                  <h5 className="contactUs2">Get in touch with us</h5>

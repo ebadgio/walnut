@@ -4,7 +4,7 @@ import axios from 'axios';
 import URL from '../../info';
 
 
-const signInThunk = (email, password, redirect, history) => (dispatch) => {
+const signInThunk = (email, password, history) => (dispatch) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(result => {
       if (!result.emailVerified) {

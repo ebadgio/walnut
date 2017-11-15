@@ -1,17 +1,15 @@
 import React from 'react';
-import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Login from './Auth_Login';
-import Register from './Auth_Registration';
+import NewLogin from './Auth_Login2';
+import NewRegister from './Auth_Registration2';
 import Community from '../App/App_Community';
 import firebaseApp from '../../firebase';
 import WalnutHomeContainer from '../App/App_Walnut_Home_Container';
 import getUser from '../../thunks/app_thunks/getAppThunk';
-import Landing from './Auth_Landing';
 import NewLanding from './Auth_Landing2';
-import URL from '../../info';
 import WalnutLoader from '../App/App_WalnutLoader';
 
 export const history = createBrowserHistory();
@@ -22,12 +20,10 @@ class Auth extends React.Component {
     this.state = {
       loading: true
     };
-    console.log('index match', props.match);
   }
 
 
   componentDidMount() {
-    console.log('href', window.location.href);
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user && !user.emailVerified) {
         const timer = setInterval(() => {
@@ -40,7 +36,6 @@ class Auth extends React.Component {
         }, 1000);
       }
       if (user) {
-        console.log('inside');
         this.props.getUser();
         const url = window.location.href.split('/');
         if (url.length === 4 && url[url.length - 1] === '') {
@@ -54,7 +49,15 @@ class Auth extends React.Component {
         this.setState({loading: false});
       } else {
         this.setState({loading: false});
-        history.replace('/');
+        const split = window.location.href.split('/');
+        const end = split[split.length - 1];
+        if (end === 'login') {
+          history.replace('/login');
+        } else if (end === 'signup') {
+          history.replace('/signup');
+        } else {
+          history.replace('/');
+        }
       }
     });
   }
@@ -66,9 +69,9 @@ class Auth extends React.Component {
         <Switch>
           <Route exact path="/" component={this.state.loading ? WalnutLoader : NewLanding} />
           <Route path="/walnuthome" component={WalnutHomeContainer} />
-          {/* <Route path="/community" render={() => (<Community history={history} />)} /> */}
           <Route path="/community/:name" component={Community} />
-          <Route path="/login" component={Login} />
+          <Route path="/login" component={NewLogin} />
+          <Route path="/signup" component={NewRegister} />
           <Route path="/:catch" render={(props) => <p>404 Page Not Found</p>} />
         </Switch>
       </Router>
