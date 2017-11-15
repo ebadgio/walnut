@@ -17,7 +17,7 @@ const signOutThunk = (history) => (dispatch) => {
   })
   .then(() => {
     dispatch({type: 'LOGOUT_DONE'});
-    history.replace('/login');
+    history.replace('/');
   })
   .catch(function(error) {
     // Handle Errors here.

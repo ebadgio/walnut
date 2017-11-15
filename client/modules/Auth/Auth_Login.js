@@ -151,7 +151,11 @@ class Login extends React.Component {
                   <Input label="Email" onChange={(e) => this.handleResetEmailChange(e)} />
                 </Modal.Content>
                 <Modal.Actions>
-                  <Button className="authButtons" icon="mail forward" labelPosition="right" content="Verify" onClick={() => { this.handleReset(); this.close(); }} />
+                  <Button className="authButtons"
+                          icon="mail forward"
+                          labelPosition="right"
+                          content="Verify"
+                          onClick={() => { this.handleReset(); this.close(); }} />
                 </Modal.Actions>
               </Modal>
               <Modal size={'mini'} basic open={this.state.vopen} onClose={() => this.vclose()}>
