@@ -9,6 +9,20 @@
     background-size: cover;
 }
 
+@media only screen 
+and (max-device-width: 414px) {
+.mainPhoto {
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/daria-shevtsova-57340.jpg);*/
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-423658.jpg);*/
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-423665.jpg);
+    min-height: 450px;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+}
+
 .togetherPhoto {
     /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/daria-shevtsova-57340.jpg);*/
     /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-310778.jpg);*/
@@ -20,6 +34,20 @@
     background-size: cover;
 }
 
+@media only screen 
+and (max-device-width: 414px) {
+.togetherPhoto {
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/daria-shevtsova-57340.jpg);*/
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-310778.jpg);*/
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-250087.jpg);
+    min-height: 450px;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+}
+
 .conversationPhoto {
     background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/endpic.png);
     min-height: 450px;
@@ -27,6 +55,18 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.conversationPhoto {
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/endpic.png);
+    min-height: 450px;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 }
 
 .organizedPhoto {
@@ -38,6 +78,18 @@
     background-size: cover;
 }
 
+@media only screen 
+and (max-device-width: 414px) {
+.organizedPhoto {
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/vadim-sherbakov-68.jpg);
+    min-height: 450px;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+}
+
 .keepTrackPhoto {
     background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-191102.jpg);
     min-height: 450px;
@@ -45,6 +97,18 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.keepTrackPhoto {
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-191102.jpg);
+    min-height: 450px;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 }
 
 .endPhoto {
@@ -56,6 +120,20 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+@media only screen 
+and (max-device-width: 414px) {
+.endPhoto {
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/tim-trad-205978.jpg);*/
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/samson-duborg-rankin-91091.jpg);
+    min-height: 450px;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+}
+
 
 .logoCont {
     width: 100%;
@@ -82,6 +160,14 @@
 .sec1 {
     height: 500px;
     background: #fff;
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec1 {
+    height: 850px;
+    background: #fff;
+}
 }
 
 .sec2 {
@@ -219,8 +305,23 @@
     width: 100%;
     text-align: center;
     font-size: 82px;
+    font-weight: 600;
     color: #fff;
 }
+
+@media only screen 
+and (max-device-width: 414px) {
+.titleLand {
+    position: absolute;
+    top: 200px;
+    width: 100%;
+    text-align: center;
+    font-size: 100px;
+    font-weight: 600;
+    color: #fff;
+}
+}
+
 
 @media (max-width: 450px) {
     .whereText {
@@ -239,8 +340,22 @@
     transition: font-size .2s ease;
 }
 
+@media only screen 
+and (max-device-width: 414px) {
+.whereText {
+    width: 100%;
+    justify-content: center;
+    color: #2e3138;
+    font-size: 62px;
+    display: flex;
+    font-weight: 600;
+    margin-top: 80px;
+    transition: font-size .2s ease;
+}
+}
+
 .contentGroup {
-    margin-top: 100px;
+    margin-top: 91px;
     width: 100%;
 }
 
@@ -256,6 +371,19 @@
     display: flex;
     flex-direction: column;
     max-width: 300px;
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.infoGroup {
+    position: absolute;
+    left: 14%;
+    display: flex;
+    flex-direction: column;
+    max-width: 700px;
+    text-align: center;
+    margin-top: 440px;
+}
 }
 
 .infoTitle {
@@ -278,6 +406,17 @@
     width: 320px;
     position: absolute;
     right: 20%;
+    margin-top: 32px;
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec1_ph1 {
+    width: 620px;
+    position: absolute;
+    right: 18%;
+    margin-top: 52px;
+}
 }
 
 .sec1_ph2 {
@@ -285,13 +424,35 @@
     width: 100px;
     box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.25);
     right: 20%;
-    top: 660px;
+    top: 681px;
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec1_ph2 {
+    position: absolute;
+    width: 180px;
+    box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.25);
+    right: 18%;
+    top: 701px;
+}
 }
 
 .sec2_ph1 {
     width: 420px;
     position: absolute;
     right: 15%;
+    margin-top: 26px;
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec2_ph1 {
+    width: 620px;
+    position: absolute;
+    right: 18%;
+    margin-top: 72px;
+}
 }
 
 .sec2_ph2 {
@@ -299,15 +460,37 @@
     width: 180px;
     box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
     right: 30%;
-    top: 1410px;
- }
+    top: 1455px;
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec2_ph2 {
+    position: absolute;
+    width: 260px;
+    box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+    right: 40%;
+    top: 1755px;
+}
+}
 
 .sec2_ph3 {
     position: absolute;
     width: 180px;
     box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
     right: 40%;
-    top: 1530px;
+    top: 1565px;
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec2_ph3 {
+    position: absolute;
+    width: 260px;
+    box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+    right: 50%;
+    top: 1865px;
+}
 }
 
 .sec2_ph4 {
@@ -315,7 +498,18 @@
     width: 150px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
     right: 20%;
-    top: 1450px;
+    top: 1518px;
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec2_ph4 {
+    position: absolute;
+    width: 200px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+    right: 30%;
+    top: 1818px;
+}
 }
 
 .sec3_ph1 {
