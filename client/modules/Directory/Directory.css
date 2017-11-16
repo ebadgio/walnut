@@ -32,10 +32,6 @@
     line-height: 13px;
 }
 
-body ::-webkit-scrollbar-track {
-    background-color: inherit;
-    border-radius: 0;
-}
 
 .banterScroller {
     position: relative;

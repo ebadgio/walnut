@@ -514,9 +514,6 @@
     object-position: 0;
 }
 
-body ::-webkit-scrollbar-track {
-    background-color: inherit;
-}
 
 .userGroupYou {
     clear: both;
@@ -845,13 +842,7 @@ iframe {
     width: 100%;
 }
 
-body ::-webkit-scrollbar-thumb {
-    cursor: pointer;
-    border-radius: 5px;
-    background: rgba(0, 0, 0, 0.2);
-    -webkit-transition: color .2s ease;
-    transition: color .35s ease;
-}
+
 
 .inputWrapper {
     display: inline-flex;
@@ -903,10 +894,7 @@ body ::-webkit-scrollbar-thumb {
     width: 50% !important;
 }
 
-body ::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 8px;
-}
+
 
 .closingButton {
     /* margin-left: 40px;*/

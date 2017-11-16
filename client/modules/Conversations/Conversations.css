@@ -162,9 +162,7 @@
     background: rgba(0, 0, 0, .05) !important;
 }
 
-body ::-webkit-scrollbar-thumb {
 
-}
 
 .lastMessageBox {
     width: 100%;
