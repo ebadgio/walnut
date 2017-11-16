@@ -67,6 +67,17 @@
     align-items: center;
 }
 
+.p1logoBack {
+    width: fit-content;
+    height: 159px;
+    padding: 20px;
+    padding-top: 30px;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
 .p1logoBack2 {
     width: fit-content;
     height: 159px;

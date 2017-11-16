@@ -11,6 +11,7 @@ import WalnutHomeContainer from '../App/App_Walnut_Home_Container';
 import getUser from '../../thunks/app_thunks/getAppThunk';
 import NewLanding from './Auth_Landing2';
 import WalnutLoader from '../App/App_WalnutLoader';
+import Waiting from './Auth_Waiting';
 
 export const history = createBrowserHistory();
 
@@ -26,16 +27,17 @@ class Auth extends React.Component {
   componentDidMount() {
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user && !user.emailVerified) {
+        history.replace('/waiting/' + user.email);
         const timer = setInterval(() => {
           user.reload();
           if (user.emailVerified) {
             this.props.onVerified();
+            this.props.getUser();
             history.replace('/walnuthome');
             clearInterval(timer);
           }
         }, 1000);
-      }
-      if (user) {
+      } else if (user) {
         this.props.getUser();
         const url = window.location.href.split('/');
         if (url.length === 4 && url[url.length - 1] === '') {
@@ -72,6 +74,7 @@ class Auth extends React.Component {
           <Route path="/community/:name" component={Community} />
           <Route path="/login" component={NewLogin} />
           <Route path="/signup" component={NewRegister} />
+          <Route path="/waiting/:email" component={Waiting} />
           <Route path="/:catch" render={(props) => <p>404 Page Not Found</p>} />
         </Switch>
       </Router>

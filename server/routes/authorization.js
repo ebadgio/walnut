@@ -18,9 +18,6 @@ router.post('/signup', function (req, res) {
   adminApp.auth().verifyIdToken(req.body.token)
     .then(function (decodedToken) {
       const uid = decodedToken.uid;
-
-
-
       const new_user = new User({
         firebaseId: uid,
         fullName: req.body.fname + ' ' + req.body.lname,
@@ -42,10 +39,23 @@ router.post('/signup', function (req, res) {
       return new_user.save()
         .then((doc) => {
           // const token = CryptoJS.AES.encrypt(doc._id.toString(), 'secret').toString();
-          res.send({ success: true, user: doc });
+            const opts = [
+                { path: 'communities' },
+                { path: 'currentCommunity' },
+                { path: 'currentCommunity.admins' },
+                { path: 'currentCommunity.defaultTags' },
+                { path: 'currentCommunity.users' }
+            ];
+            return User.populate(doc, opts)
+                .then((pop) => {
+                    console.log('set session');
+                    req.session.userMToken = pop._id;
+                    req.user = pop;
+                    res.send({ success: true, user: pop });
+                })
         })
         .catch((err) => {
-          console.log(err);
+          console.log('reg err', err);
         })
     }).catch(function (error) {
       // Handle error
