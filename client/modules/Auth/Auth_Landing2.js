@@ -52,7 +52,7 @@ class NewLanding extends React.Component {
             <div className="togetherPhoto">
             </div>
             <div className="sec2">
-                <div className="infoGroup">
+                <div className="infoGroup2">
                     <div className="infoTitle">
                         Change the way your community talks
                     </div>
@@ -73,7 +73,7 @@ class NewLanding extends React.Component {
             <div className="conversationPhoto">
             </div>
             <div className="sec3">
-                <div className="infoGroup">
+                <div className="infoGroup3">
                     <div className="infoTitle">
                         Keep your content organized and easy to find
                     </div>

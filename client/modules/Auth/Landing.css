@@ -7,6 +7,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    filter: brightness(86%);
 }
 
 .togetherPhoto {
@@ -57,6 +58,7 @@
     background-size: cover;
 }
 
+
 .logoCont {
     width: 100%;
     display: flex;
@@ -86,6 +88,7 @@
     border: 1px solid rgba(0, 0, 0, 0.05);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
     margin-bottom: 80px;
+    z-index: 100;
 }
 
 .p1logo {
@@ -233,14 +236,10 @@
     width: 100%;
     text-align: center;
     font-size: 82px;
+    font-weight: 600;
     color: #fff;
 }
 
-@media (max-width: 450px) {
-    .whereText {
-        font-size: 32px !important;
-    }
-}
 
 .whereText {
     width: 100%;
@@ -254,14 +253,8 @@
 }
 
 .contentGroup {
-    margin-top: 100px;
+    margin-top: 91px;
     width: 100%;
-}
-
-@media (max-width: 550px) {
-    .contentGroup {
-        flex-direction: column !important;
-    }
 }
 
 .infoGroup {
@@ -292,6 +285,7 @@
     width: 320px;
     position: absolute;
     right: 20%;
+    margin-top: 32px;
 }
 
 .sec1_ph2 {
@@ -299,13 +293,14 @@
     width: 100px;
     box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.25);
     right: 20%;
-    top: 660px;
+    top: 681px;
 }
 
 .sec2_ph1 {
     width: 420px;
     position: absolute;
     right: 15%;
+    margin-top: 26px;
 }
 
 .sec2_ph2 {
@@ -313,15 +308,15 @@
     width: 180px;
     box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
     right: 30%;
-    top: 1410px;
- }
+    top: 1455px;
+}
 
 .sec2_ph3 {
     position: absolute;
     width: 180px;
     box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
     right: 40%;
-    top: 1530px;
+    top: 1565px;
 }
 
 .sec2_ph4 {
@@ -329,7 +324,7 @@
     width: 150px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
     right: 20%;
-    top: 1450px;
+    top: 1518px;
 }
 
 .sec3_ph1 {
@@ -358,6 +353,7 @@
     top: 2420px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
 }
+
 .sec3_ph4 {
     width: 180px;
     position: absolute;
@@ -365,7 +361,6 @@
     top: 2380px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
 }
-
 
 .sec4_ph1 {
     width: 420px;
@@ -389,3 +384,407 @@
     box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
 }
 
+
+
+
+
+/* mobile */
+
+
+@media only screen 
+and (max-device-width: 414px) {
+.toLogin {
+    display: none;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.toSignup {
+    display: none;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.getStarted {
+    display: none;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.infoGroup {
+    position: absolute;
+    left: 4%;
+    display: flex;
+    flex-direction: column;
+    max-width: 900px;
+    text-align: center;
+    margin-top: 550px;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.infoGroup2 {
+    position: absolute;
+    left: 5.5%;
+    display: flex;
+    flex-direction: column;
+    max-width: 900px;
+    text-align: center;
+    margin-top: 550px;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.infoGroup3 {
+    position: absolute;
+    left: 12%;
+    display: flex;
+    flex-direction: column;
+    max-width: 900px;
+    text-align: center;
+    margin-top: 550px;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.infoTitle {
+    /*color: #373e4c;*/
+    color: #1d2129;
+    font-size: 42px;
+    width: 100%;
+    margin-bottom: 15px;
+    line-height: 36px;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.infoBody {
+    font-size: 28px;
+    color: #373e4c;
+    width: 100%;
+    line-height: 26px;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.mainPhoto {
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/daria-shevtsova-57340.jpg);*/
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-423658.jpg);*/
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-423665.jpg);
+    min-height: 450px;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: brightness(62%);
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.titleLand {
+    position: absolute;
+    top: 180px;
+    width: 100%;
+    text-align: center;
+    font-size: 140px;
+    font-weight: 400;
+    color: #fff;
+}
+}
+
+@media (max-width: 450px) {
+    .whereText {
+        font-size: 52px !important;
+    }
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.whereText {
+    width: 100%;
+    justify-content: center;
+    color: #2e3138;
+    font-size: 62px;
+    display: flex;
+    font-weight: 400;
+    margin-top: 80px;
+    transition: font-size .2s ease;
+}
+}
+
+
+@media (max-width: 550px) {
+    .contentGroup {
+        flex-direction: column !important;
+    }
+}
+
+
+
+
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec1 {
+    height: 960px;
+    background: #fff;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec1_ph1 {
+    width: 820px;
+    position: absolute;
+    right: 8%;
+    margin-top: 88px;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec1_ph2 {
+    position: absolute;
+    width: 180px;
+    box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.25);
+    right: 10%;
+    top: 721px;
+}
+}
+
+
+
+
+@media only screen 
+and (max-device-width: 414px) {
+.togetherPhoto {
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/daria-shevtsova-57340.jpg);*/
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-310778.jpg);*/
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-250087.jpg);
+    min-height: 450px;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec2 {
+    height: 850px;
+    background: #fff;
+    padding-top: 160px;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec2_ph1 {
+    width: 820px;
+    position: absolute;
+    right: 8%;
+    margin-top: 90px;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec2_ph2 {
+    position: absolute;
+    width: 320px;
+    box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+    right: 43%;
+    top: 1895px;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec2_ph3 {
+    position: absolute;
+    width: 320px;
+    box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+    right: 56%;
+    top: 2085px;
+}
+}
+
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec2_ph4 {
+    position: absolute;
+    width: 268px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+    right: 29%;
+    top: 2010px;
+}
+}
+
+
+
+
+
+
+@media only screen 
+and (max-device-width: 414px) {
+.conversationPhoto {
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/endpic.png);
+    min-height: 450px;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec3 {
+    height: 850px;
+    background: #fff;
+    padding-top: 160px;
+}
+}
+
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec3_ph1 {
+    width: 540px;
+    position: absolute;
+    right: 20%;
+    margin-top: 25px;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec3_ph2 {
+    width: 580px;
+    position: absolute;
+    left: 6%;
+    top: 3220px;
+    box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+}
+}
+
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec3_ph3 {
+    width: 410px;
+    position: absolute;
+    right: 10%;
+    top: 3280px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec3_ph4 {
+    width: 260px;
+    position: absolute;
+    right: 5%;
+    top: 3220px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+}
+}
+
+
+
+
+
+
+@media only screen 
+and (max-device-width: 414px) {
+.organizedPhoto {
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/vadim-sherbakov-68.jpg);
+    min-height: 450px;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec4 {
+    height: 870px;
+    background: #fff;
+    padding-top: 160px;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec4_ph1 {
+    width: 820px;
+    position: absolute;
+    right: 8%;
+    margin-top: 85px
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec4_ph2 {
+    width: 400px;
+    position: absolute;
+    right: 8%;
+    top: 4577px;
+    box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.sec4_ph3 {
+    width: 300px;
+    position: absolute;
+    right: 30%;
+    top: 4557px;
+    box-shadow: -2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+}
+}
+
+
+
+
+
+@media only screen 
+and (max-device-width: 414px) {
+.keepTrackPhoto {
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-191102.jpg);
+    min-height: 450px;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+}
+
+@media only screen 
+and (max-device-width: 414px) {
+.endPhoto {
+    /*background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/tim-trad-205978.jpg);*/
+    background-image: url(https://s3-us-west-1.amazonaws.com/walnut-test/samson-duborg-rankin-91091.jpg);
+    min-height: 480px;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+}
