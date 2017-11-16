@@ -28,9 +28,9 @@ class WalnutHomeContainer extends React.Component {
 
   componentWillMount() {
     this.props.getAllCommunities();
-    if (this.props.loginFirebase === true) {
-      this.props.handleLogout(history);
-    }
+    // if (this.props.loginFirebase === true) {
+    //   this.props.handleLogout(history);
+    // }
   }
 
   componentDidMount() {

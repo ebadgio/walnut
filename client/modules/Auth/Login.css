@@ -165,3 +165,35 @@
     margin: 10px auto 10px auto
 }
 
+.waiting_title {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    margin-top: 40px;
+    font-size: 32px;
+    word-break: break-word;
+    line-height: 36px;
+    text-align: center;
+    font-weight: 900;
+    /*color: #757575;*/
+    color: #212121;
+}
+
+.waiting_animation {
+    width: 80%;
+    margin: 120px auto 40px auto;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.waiting_animation_circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 22px;
+  margin-right: 10px;
+  transition: background .5s ease;
+}
+

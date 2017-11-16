@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
-import { Form, Message, Icon } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import emailRegistrationThunk from '../../thunks/auth_thunks/emailRegistrationThunk';
+import {history} from './Auth_index';
 
 class NewRegister extends React.Component {
   constructor() {
@@ -48,7 +49,7 @@ class NewRegister extends React.Component {
     } else if (this.state.password.length < 6) {
       this.setState({ passwordShort: true });
     } else if (this.state.fName && this.state.lName && this.state.email && this.state.password && this.state.repeat) {
-      this.props.emailRegistration(this.state.fName, this.state.lName, this.state.email, this.state.password);
+      this.props.emailRegistration(this.state.fName, this.state.lName, this.state.email, this.state.password, history);
     } else {
       this.setState({missingFields: true});
     }
@@ -124,8 +125,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  emailRegistration: (firstname, lastname, email, password) =>
-      emailRegistrationThunk(firstname, lastname, email, password)(dispatch)
+  emailRegistration: (firstname, lastname, email, password, hist) =>
+      emailRegistrationThunk(firstname, lastname, email, password, hist)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewRegister);
