@@ -34,10 +34,13 @@ class Home extends React.Component {
   render() {
     console.log('rendering discover');
     return (
-        <div className="row" id="Discover">
-        {this.props.newPost.length > 0 ? this.props.newPost.map((post) => <NotificationContainer post={post} newPost />) : null}
-          <TopicContainer />
-          <Feed id="Feed"/>
+        <div>
+          <div className="row" id="Discover">
+            <div style={{width: '200px', height: '5px'}}></div>
+          {this.props.newPost.length > 0 ? this.props.newPost.map((post) => <NotificationContainer post={post} newPost />) : null}
+            <Feed id="Feed"/>
+            <TopicContainer />
+          </div>
           <NewPostContainer />
           <BottomContainer />
         </div>

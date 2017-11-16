@@ -6,7 +6,9 @@
     display: flex;
     height: 43px;
     background-color: #fff;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,.35);
+    /*box-shadow: 0 1px 2px 0 rgba(0,0,0,.35);*/
+    -webkit-box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);
 }
 
 
@@ -267,7 +269,9 @@
     align-items: center;
     padding-left: 30px;
     background: #fff;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,.35);
+    /*box-shadow: 0 1px 2px 0 rgba(0,0,0,.35);*/
+    -webkit-box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);
 }
 
 .walnutHomeActions {
@@ -856,17 +860,19 @@ button.ui.button > input {
     color: #6874e8;
 }
 
-.mapIcon {
-    color: #8D6E63;
+.conversationsIcon {
+    color: #03A9F4;
 }
 
 .directoryIcon {
     color: #00BCD4;
 }
 
-.conversationsIcon {
-    color: #03A9F4;
+.mapIcon {
+    /*color: #8D6E63;*/
+    color: #212121 !important;
 }
+
 
 .discoverTab {
     padding: 0px 10px 0px 12px;

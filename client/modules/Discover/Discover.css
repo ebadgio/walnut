@@ -1,8 +1,25 @@
 #Discover {
-  /* display: flex;*/
-  /* flex-direction: row;*/
-  /* margin-top: 6vh;*/
-  /* justify-content: space-between;*/
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    /*min-width: 960px;*/
+}
+
+@media (max-width: 960px) {
+    #Discover {
+        display: flex;
+        justify-content: space-between;
+        min-width: 960px;
+    }
+    .Feed_Wrapper {
+        position: relative !important;
+        transform: none !important;
+        left: auto !important;
+    }
+
+    .topicContainer {
+        position: relative !important;
+        height: fit-content !important;
+    }
 }
 
 .RightSideBar_Container {
@@ -310,7 +327,7 @@
 
 .topicContainer {
     position: fixed;
-    width: 250px;
+    width: 220px;
     margin-right: 2vw;
     top: 60px;
     right: 0;
@@ -334,7 +351,6 @@
 }
 
 .topicSearchBar {
-    width: 200px !important;
     margin-top: 10px;
     margin-bottom: 10px;
 
