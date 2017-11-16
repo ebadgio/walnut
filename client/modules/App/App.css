@@ -211,6 +211,7 @@
 .communityCardOther {
     margin: 15px 40px 15px 40px;
     min-width: 220px !important;
+    max-width: 220px;
     display: flex;
     flex-direction: column;
     padding-bottom: 10px;
@@ -240,6 +241,12 @@
 
 }
 
+.communitiesContainerOther {
+    display: flex;
+    max-width: 100vw;
+    flex-wrap: wrap;
+}
+
 .walnutContainer {
     display: flex;
     flex-direction: column;
@@ -251,8 +258,7 @@
 }
 
 .Heading {
-    color: #3a3a3a;
-    font-size: 45px;
+    color: #2e3138;
     width: 100%;
     font-weight: bolder;
     height: 60px;
@@ -847,19 +853,19 @@ button.ui.button > input {
 
 .discoverIcon {
     margin: 0 !important;
-    color: #4EAABA !important;
+    color: #6874e8;
 }
 
 .mapIcon {
-    color: #A18C87 !important;
+    color: #8D6E63;
 }
 
 .directoryIcon {
-    color: #A9BCD0 !important;
+    color: #00BCD4;
 }
 
 .conversationsIcon {
-    color: #6874e8 !important;
+    color: #03A9F4;
 }
 
 .discoverTab {
@@ -1222,4 +1228,29 @@ h1, h2, h3, h4, h5 {
     color: black;
     margin-left: 30px;
     margin-top: 20px;
+}
+
+.communitiesContainer::-webkit-scrollbar {
+    display: none !important;
+}
+
+.logout_button {
+    margin-left: auto;
+    margin-right: 20px;
+    width: 90px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid;
+    color: #Bdbdbd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: color .3s ease;
+    /* background: rgba(0,0,0,.05); */
+    /* box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2); */
+}
+
+.logout_button:hover {
+    color: #757575;
 }
