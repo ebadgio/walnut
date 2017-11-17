@@ -69,16 +69,8 @@ router.post('/post', (req, res) => {
           link: postObj.link,
           attachment: postObj.attachment,
           edited: postObj.edited,
-          comments: postObj.comments.map((commentObj) => {
-            return {
-              commentId: commentObj._id,
-              username: commentObj.createdBy.username,
-              pictureURL: commentObj.createdBy.pictureURL,
-              content: commentObj.content,
-              createdAt: commentObj.createdAt,
-              likes: commentObj.likes
-            };
-          })
+          newMemberBanner: postObj.newMemberBanner,
+          comments: []
         };
       });
       return Community.findById(req.user.currentCommunity);
@@ -126,7 +118,8 @@ router.post('/editPost', (req, res) => {
         link: postObj.link,
         attachment: postObj.attachment,
         comments: postObj.comments,
-        edited: postObj.edited
+        edited: postObj.edited,
+        newMemberBanner: postObj.newMemberBanner
       };
       res.json({success: true, editedPost: send});
     })

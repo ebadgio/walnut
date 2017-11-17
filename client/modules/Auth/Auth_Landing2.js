@@ -2,9 +2,11 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './Landing.css';
 import { Icon } from 'semantic-ui-react';
+import {history} from './Auth_index';
 
 class NewLanding extends React.Component {
   render() {
+    console.log('hist', history);
     return(
         <div>
             <div className="mainPhoto">
@@ -121,6 +123,7 @@ class NewLanding extends React.Component {
                  <Link to="/signup">
                  <div className="getStarted">Get Started</div>
                  </Link>
+                 <img src="https://s3-us-west-1.amazonaws.com/walnut-test/mobileeg.png" className="mobileEg"/>
                  <h5 className="contactUs2">Get in touch with us</h5>
                  <a id="emailLink" href="mailto:info@walnutnetwork.com">
                      <Icon name="mail outline" className="emailIcon2"/>

@@ -10,15 +10,20 @@ import $ from 'jquery';
 import './Login.css';
 import {history} from './Auth_index';
 
+
 class NewLogin extends React.Component {
   constructor() {
     super();
     this.state = {
       emailVal: '',
       passwordVal: '',
-      badPassword: false,
-      badEmail: false,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isError) {
+      this.setState({isError: true});
+    }
   }
 
   handleEmailChange(e) {
@@ -30,7 +35,13 @@ class NewLogin extends React.Component {
   }
 
   signIn() {
-    this.props.signIn(this.state.emailVal, this.state.passwordVal, history);
+    if (this.state.emailVal && this.state.passwordVal) {
+      this.props.signIn(this.state.emailVal, this.state.passwordVal, history);
+    } else if (!this.state.emailVal) {
+      this.setState({noEmail: true});
+    } else {
+      this.setState({noPassword: true});
+    }
   }
 
 
@@ -43,15 +54,27 @@ class NewLogin extends React.Component {
                          className="login_logo"/>
                 </div>
                 <div className="warning_container">
+                    {this.state.isError ? <div className="reg_warning">
+                        Email and/or password do not match any of our records.
+                        Please check your inputs and try again.
+                    </div> : null}
+                    {this.state.noEmail ? <div className="reg_warning">
+                        Please fill out the email input field.
+                    </div> : null }
+                    {this.state.noPassword ? <div className="reg_warning">
+                        Please fill out the password input field.
+                    </div> : null }
                 </div>
                 <input className="login_inputs"
                        placeholder="Enter your email"
                        type="text"
                        onChange={(e) => this.handleEmailChange(e)}
+                       style={this.state.noEmail ? {borderBottom: '1px solid #E53935'} : {}}
                        name="email" />
                 <input className="login_inputs"
                        placeholder="Enter your password"
                        type="password"
+                       style={this.state.noPassword ? {borderBottom: '1px solid #E53935'} : {}}
                        onChange={(e) => this.handlePasswordChange(e)}
                        name="password" />
                 {/* <div className="password_forget">Forgot password?</div>*/}
@@ -61,7 +84,10 @@ class NewLogin extends React.Component {
                         <Link to="/signup" className="auth_link">Sign up</Link>
                     </div>
                     <div className="signin_button"
-                         onClick={() => this.signIn()}>Sign in</div>
+                         onClick={() => {
+                           this.setState({isError: false, noEmail: false, noPassword: false});
+                           this.signIn();
+                         }}>Sign in</div>
                 </div>
             </div>
         </div>
@@ -71,10 +97,13 @@ class NewLogin extends React.Component {
 
 NewLogin.propTypes = {
   signIn: PropTypes.func,
-  history: PropTypes.object
+  history: PropTypes.object,
+  match: PropTypes.object,
+  isError: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
+  isError: state.userReducer.isError,
 });
 
 const mapDispatchToProps = (dispatch) => ({

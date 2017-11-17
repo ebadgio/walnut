@@ -10,6 +10,7 @@ import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
 import './Feed.css';
 import $ from 'jquery';
 import EmptyLoader from './Empty_Loader';
+import NewMemberBanner from '../Post/Post_NewMember';
 
 
 let refresh;
@@ -98,8 +99,8 @@ class Feed extends React.Component {
                         key={post.postId}
                         isOpen={false}
                         currentUser={this.props.user}
-                        postData={post}/>
-              ))}
+                        newMemberBanner={post.newMemberBanner}
+                        postData={post}/>))}
           </InfiniteScroll>
         </div>
     );

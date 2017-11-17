@@ -21,14 +21,14 @@ class ConversationsSideBar extends React.Component {
       const followsRef = firebaseApp.database().ref('/follows/' +
           this.props.currentUser.firebaseId +
           '/' +
-          this.props.currentCommunity);
+          this.props.currentUser.currentCommunity._id);
       followsRef.on('value', (snapshot) => {
         if (snapshot.val()) {
           const follows = _.pairs(snapshot.val());
           // this will filter down to only those postIds which are mapped to true
           const myConvs = follows.filter((follow) => follow[1]).map((fol) => fol[0]);
           if (myConvs) {
-            console.log('my convo dispatch', myConvs);
+            console.log('myConvs', myConvs);
             this.props.getConvos(myConvs);
             this.props.addIds(myConvs);
           }

@@ -12,7 +12,8 @@ class ConversationsStatsBox extends React.Component {
   constructor() {
     super();
     this.state = {
-      members: []
+      members: [],
+      postData: {}
     };
   }
 
@@ -28,7 +29,8 @@ class ConversationsStatsBox extends React.Component {
   render() {
     return(
         <div className="conversationsStatsBox">
-            <NestedPostModal postData={this.state.postData} currentUser={this.props.currentUser}/>
+            {this.state.postData.postId ?
+                <NestedPostModal postData={this.state.postData} currentUser={this.props.currentUser}/> : null}
             <div className="followersBox">
                 <div className="titleGroup">
                     <Icon name="feed" className="followersIcon"/>

@@ -10,61 +10,39 @@ const signInThunk = (email, password, history) => (dispatch) => {
       if (!result.emailVerified) {
         console.log('not verified');
         dispatch({ type: 'GET_USER_VERIFY_ERROR', email: email, password: password });
+        history.replace('/verify/' + email);
       }
       result.getIdToken(/* forceRefresh */ true)
-        .then((idToken) => {
-          axios.post(URL + 'auth/login', {
-            token: idToken,
-            email: email,
-            password: password
+          .then((idToken) => {
+            axios.post(URL + 'auth/login', {
+              token: idToken,
+              email: email,
+              password: password
+            })
+              .then((res) => {
+                dispatch({type: 'LOGIN_APP'});
+                dispatch({type: 'GET_USER_DATA_DONE', user: res.data.user});
+                if (result.emailVerified) {
+                  history.replace('/walnuthome/');
+                }
+              });
           })
-            .then((res) => {
-              dispatch({ type: 'LOGIN_APP' });
-              dispatch({ type: 'GET_USER_DATA_DONE', user: res.data.user });
-              history.replace('/walnuthome');
-              // setTimeout(() => dispatch({ type: 'WALNUT_READY' }), 5000);
-            });
-        })
-        .catch((error) => {
-          // Handle Errors here.
-          console.log('you got a fucking error', error);
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          dispatch({ type: 'GET_USER_DATA_ERROR' });
-          // ...
-        });
+          .catch((error) => {
+              // Handle Errors here.
+            console.log('you got a fucking error first', error);
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            dispatch({type: 'GET_USER_DATA_ERROR'});
+              // ...
+          });
     })
     .catch((error) => {
       // Handle Errors here.
-      console.log('you got a fucking error', error);
+      console.log('you got a fucking error first', error);
       const errorCode = error.code;
       const errorMessage = error.message;
       dispatch({ type: 'GET_USER_DATA_ERROR' });
     });
 };
-
-// firebase.auth().onAuthStateChanged(function(user) {
-//   console.log('user', user);
-//   if (user) {
-//     console.log('user was logged in', user);
-//       // if(req.user.hasProfile) {
-//       //   if (req.user.currentCommunity) {
-//       //       User.findById(req.user._id)
-//       //           .populate('currentCommunity')
-//       //           .then((user) => {
-//       //               const url = '/community/' + user.currentCommunity.title.split(' ').join('') + '/discover';
-//       //               res.redirect(url);
-//       //           })
-//       //   }
-//       //   else {
-//       //     res.redirect('/app/walnuthome')
-//       //   }
-//       // } else{
-//       //   res.redirect('/app/editprofile');
-//       // }
-//   } else {
-//     console.log('user not validated');
-//   }
-// });
 
 export default signInThunk;

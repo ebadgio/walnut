@@ -74,7 +74,8 @@ router.get('/discoverinfo', (req, res) => {
                           commentNumber: postObj.commentNumber,
                           link: postObj.link,
                           attachment: postObj.attachment,
-                          edited: postObj.edited
+                          edited: postObj.edited,
+                          newMemberBanner: postObj.newMemberBanner
                         };
                       });
                       res.json({ defaultFilters: defaultFilters, otherFilters: otherFilters, posts: posts, lastRefresh: new Date() });
@@ -119,7 +120,8 @@ router.get('/discoverrefresh', (req, res) => {
           commentNumber: postObj.commentNumber,
           link: postObj.link,
           attachment: postObj.attachment,
-          edited: postObj.edited
+          edited: postObj.edited,
+          newMemberBanner: postObj.newMemberBanner
         };
       });
       res.json({ posts: posts, lastRefresh: new Date()});
@@ -177,7 +179,8 @@ router.get('/next10', (req, res) => {
                           commentNumber: postObj.commentNumber,
                           link: postObj.link,
                           attachment: postObj.attachment,
-                          edited: postObj.edited
+                          edited: postObj.edited,
+                          newMemberBanner: postObj.newMemberBanner
                         };
                       });
                       res.json({filters: filter, posts: posts});
@@ -278,8 +281,13 @@ router.get('/myconversations/:postIds', (req, res) => {
         attachment: postObj.attachment,
         edited: postObj.edited,
         comments: postObj.comments
-      };});
+      };
+    });
+    console.log('my convos', posts, postArr);
     res.json({posts: posts});
+  })
+  .catch((err) => {
+    console.log('get my convos error', err);
   });
 });
 

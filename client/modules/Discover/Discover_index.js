@@ -67,10 +67,13 @@ class Home extends React.Component {
 
   render() {
     return (
-        <div className="row" id="Discover">
-        {this.state.notifArr.length > 0 ? this.state.notifArr.map((post) => <NotificationContainer notifClear={this.notifClear()} post={post} />) : null}
-          <TopicContainer />
-          <Feed id="Feed"/>
+        <div>
+          <div className="row" id="Discover">
+            <div style={{width: '200px', height: '5px'}}></div>
+            {this.state.notifArr.length > 0 ? this.state.notifArr.map((post) => <NotificationContainer notifClear={this.notifClear()} post={post} />) : null}
+            <Feed id="Feed"/>
+            <TopicContainer />
+          </div>
           <NewPostContainer />
           <BottomContainer />
         </div>

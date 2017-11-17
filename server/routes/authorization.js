@@ -2,13 +2,21 @@
 const express = require('express');
 const models = require('../models/models');
 const User = models.User;
-const Tag = models.Tag;
-const Profile = models.Profile;
+// const Post = models.Post;
 const router = express.Router();
 const path = require('path');
 const CryptoJS = require("crypto-js");
 
 const adminApp = require('../firebaseAdmin').admin;
+
+const defaultAvatars = [
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar1.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar2.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar3.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar4.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar5.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar6.png"
+];
 
 router.post('/signup', function (req, res) {
   // console.log('req.body.token', req.body.token);
@@ -18,9 +26,6 @@ router.post('/signup', function (req, res) {
   adminApp.auth().verifyIdToken(req.body.token)
     .then(function (decodedToken) {
       const uid = decodedToken.uid;
-
-
-
       const new_user = new User({
         firebaseId: uid,
         fullName: req.body.fname + ' ' + req.body.lname,
@@ -36,16 +41,29 @@ router.post('/signup', function (req, res) {
           email: [req.body.email]
         },
         communities: [],
-        pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/defaultProfile.png',
+        pictureURL: defaultAvatars[Math.floor(Math.random() * 6)],
         isEdited: true
       });
       return new_user.save()
         .then((doc) => {
           // const token = CryptoJS.AES.encrypt(doc._id.toString(), 'secret').toString();
-          res.send({ success: true, user: doc });
+            const opts = [
+                { path: 'communities' },
+                { path: 'currentCommunity' },
+                { path: 'currentCommunity.admins' },
+                { path: 'currentCommunity.defaultTags' },
+                { path: 'currentCommunity.users' }
+            ];
+            return User.populate(doc, opts)
+                .then((pop) => {
+                    console.log('set session');
+                    req.session.userMToken = pop._id;
+                    req.user = pop;
+                    res.send({ success: true, user: pop });
+                })
         })
         .catch((err) => {
-          console.log(err);
+          console.log('reg err', err);
         })
     }).catch(function (error) {
       // Handle error

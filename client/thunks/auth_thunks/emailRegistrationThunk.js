@@ -2,7 +2,8 @@ import firebaseApp from '../../firebase';
 import axios from 'axios';
 import URL from '../../info';
 
-const emailRegistrationThunk = (firstname, lastname, email, password) => (dispatch) => {
+
+const emailRegistrationThunk = (firstname, lastname, email, password, history) => (dispatch) => {
   dispatch({ type: 'USER_IS_NOT_VERIFIED' });
   dispatch({ type: 'REGISTER_FIREBASE_STOP'});
   const useFirstname = firstname[0].toUpperCase() + firstname.substring(1);
@@ -24,6 +25,10 @@ const emailRegistrationThunk = (firstname, lastname, email, password) => (dispat
             lname: useLastname,
             email: email,
             password: password
+          })
+          .then((res) => {
+            console.log('mongo response', res);
+            history.replace('/verify/' + email);
           })
           .catch((error) => {
             console.log('axios did not go through');

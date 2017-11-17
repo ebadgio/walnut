@@ -15,7 +15,7 @@
     flex: 2;
     border-right: 1px solid rgba(34, 36, 38, 0.15);
     max-height: 100%;
-    overflow: hidden;
+    overflow-y: auto;
     background: #fff;
 }
 
@@ -162,9 +162,7 @@
     background: rgba(0, 0, 0, .05) !important;
 }
 
-body ::-webkit-scrollbar-thumb {
 
-}
 
 .lastMessageBox {
     width: 100%;
@@ -276,3 +274,6 @@ body ::-webkit-scrollbar-thumb {
     margin-left: auto;
 }
 
+/*body ::-webkit-scrollbar {*/
+    /*width: 0;*/
+/*}*/
