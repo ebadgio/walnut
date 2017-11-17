@@ -8,7 +8,6 @@ import NewPostContainer from '../Feed/Feed_NewPost_Container';
 import discoverLoadThunk from '../../thunks/discover_thunks/discoverLoadThunk';
 import discoverRefreshThunk from '../../thunks/discover_thunks/discoverRefreshThunk';
 import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
-// import firebaseApp from '../../firebase';
 import NotificationContainer from '../Post/Notification';
 import BottomContainer from '../Minichats/Minichat_Bottom_Container';
 
@@ -16,7 +15,8 @@ class Home extends React.Component {
   constructor() {
     super();
     this.state = {
-      visible: false
+      visible: false,
+      notifArr: []
     };
   }
 
@@ -31,11 +31,44 @@ class Home extends React.Component {
     }
   }
 
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.newPost.length > 0) {
+      this.notificationFire();
+    }
+  }
+
+  notificationFire() {
+    this.props.newPost.map((post) => {
+      this.setState({
+        notifArr: [...this.state.notifArr].push({
+          title: post.username,
+          options: {
+            body: post.content,
+            lang: 'en',
+            dir: 'ltr',
+            icon: 'https://s3.amazonaws.com/walnut-logo/logo.svg'
+          },
+          ignore: false
+        })
+      });
+    });
+
+    setTimeout(() => {
+      this.setState({ notifArr: [] });
+      this.props.clearNewPostData();
+    }, 5000);
+  }
+
+  notifClear() {
+    this.setState({ notifArr: []});
+    this.props.clearNewPostData();
+  }
+
   render() {
-    console.log('rendering discover');
     return (
         <div className="row" id="Discover">
-        {this.props.newPost.length > 0 ? this.props.newPost.map((post) => <NotificationContainer post={post} newPost />) : null}
+        {this.state.notifArr.length > 0 ? this.state.notifArr.map((post) => <NotificationContainer notifClear={this.notifClear()} post={post} />) : null}
           <TopicContainer />
           <Feed id="Feed"/>
           <NewPostContainer />
@@ -59,7 +92,8 @@ Home.propTypes = {
   currentUser: PropTypes.object,
   addIds: PropTypes.func,
   getConvos: PropTypes.func,
-  newPost: PropTypes.object
+  newPost: PropTypes.object,
+  clearNewPostData: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -78,6 +112,7 @@ const mapDispatchToProps = (dispatch) => ({
   addIds: (iDs) => dispatch({type: 'ADD_IDS', iDs: iDs}),
   getDiscoverContent: () => dispatch(discoverLoadThunk()),
   getDiscoverRefresh: (lastRefresh) => dispatch(discoverRefreshThunk(lastRefresh)),
+  clearNewPostData: () => dispatch({ type: 'CLEAR_NEW_POST_NOTIFICATION' })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

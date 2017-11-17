@@ -23,10 +23,8 @@ class TopicSelectorContainer extends React.Component {
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
   componentDidMount() {
-    console.log('in did topics', this.props);
     if (!this.props.isFetching && this.props.otherFilters) {
       const options = this.selectOptions(this.props);
-      console.log('options didMount', this.props, options);
       if (options.length > 0) {
         this.setState({options: options});
       } else {
@@ -41,7 +39,6 @@ class TopicSelectorContainer extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!nextProps.isFetching && nextProps.otherFilters) {
       const options = this.selectOptions(nextProps);
-      console.log('options Will', nextProps, options);
       if (options.length > 0) {
         this.setState({options: options});
       } else {

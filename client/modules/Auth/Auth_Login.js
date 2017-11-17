@@ -38,7 +38,6 @@ class Login extends React.Component {
     });
 
     if (window.location.href.split('=')[1]) {
-      console.log('code', window.location.href.split('=')[1]);
       this.props.saveCode(window.location.href.split('=')[1]);
     }
   }
@@ -56,9 +55,7 @@ class Login extends React.Component {
   }
 
   regLogin() {
-    console.log('first', this);
     if (this.state.emailVal && this.state.passwordVal) {
-      console.log('second', this);
       this.props.signIn(this.state.emailVal, this.state.passwordVal, this.props.redirect, history);
     }
   }

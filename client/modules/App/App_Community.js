@@ -18,7 +18,6 @@ class Community extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    console.log('MATCH', props.match);
   }
 
   componentDidMount() {

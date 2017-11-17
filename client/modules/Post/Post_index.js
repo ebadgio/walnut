@@ -127,7 +127,6 @@ class Post extends React.Component {
       url: urls[0]
     })
     .then((response) => {
-      console.log('return meta fetch', response.data.meta);
       this.setState({ meta: response.data.meta });
       if (urls.length !== 0) {
         const idx = postData.content.indexOf(urls[0]);

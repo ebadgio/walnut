@@ -16,7 +16,6 @@ class JoinCommunityCode extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('stats receive', nextProps);
     if (nextProps.isJoined) {
       setTimeout(() => { this.setState({ open: false }); this.props.resetJoin(); }, 3000);
     }

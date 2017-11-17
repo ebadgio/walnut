@@ -3,6 +3,7 @@ import axios from 'axios';
 import URL from '../../info';
 
 const discoverRefreshThunk = (lastRefresh, filters) => (dispatch) => {
+  console.log('inside refresh thunk');
   axios.get(URL + 'db/get/discoverrefresh?lastRefresh=' + lastRefresh + '&filters=' + JSON.stringify(filters))
     .then((response) => {
       if (response.data.posts.length > 0) {

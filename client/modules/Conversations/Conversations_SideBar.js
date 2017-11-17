@@ -28,6 +28,7 @@ class ConversationsSideBar extends React.Component {
           // this will filter down to only those postIds which are mapped to true
           const myConvs = follows.filter((follow) => follow[1]).map((fol) => fol[0]);
           if (myConvs) {
+            console.log('my convo dispatch', myConvs);
             this.props.getConvos(myConvs);
             this.props.addIds(myConvs);
           }
