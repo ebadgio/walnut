@@ -30,7 +30,7 @@ const emailRegistrationThunk = (firstname, lastname, email, password, history) =
           })
           .then((res) => {
             console.log('mongo response', res);
-            history.replace('/waiting/' + email);
+            history.replace('/verify/' + email);
           })
           .catch((error) => {
             console.log('axios did not go through');

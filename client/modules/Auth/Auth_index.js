@@ -27,7 +27,7 @@ class Auth extends React.Component {
   componentDidMount() {
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user && !user.emailVerified) {
-        history.replace('/waiting/' + user.email);
+        history.replace('/verify/' + user.email);
         const timer = setInterval(() => {
           user.reload();
           if (user.emailVerified) {
@@ -74,7 +74,7 @@ class Auth extends React.Component {
           <Route path="/community/:name" component={Community} />
           <Route path="/login" component={NewLogin} />
           <Route path="/signup" component={NewRegister} />
-          <Route path="/waiting/:email" component={Waiting} />
+          <Route path="/verify/:email" component={Waiting} />
           <Route path="/:catch" render={(props) => <p>404 Page Not Found</p>} />
         </Switch>
       </Router>

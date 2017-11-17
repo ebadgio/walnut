@@ -273,6 +273,10 @@ const PostSchema = new mongoose.Schema({
   edited: {
     type: Boolean,
     default: false
+  },
+  newMemberBanner: {
+    type: Boolean,
+    default: false
   }
 });
 

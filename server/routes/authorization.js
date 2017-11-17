@@ -2,13 +2,21 @@
 const express = require('express');
 const models = require('../models/models');
 const User = models.User;
-const Tag = models.Tag;
-const Profile = models.Profile;
+// const Post = models.Post;
 const router = express.Router();
 const path = require('path');
 const CryptoJS = require("crypto-js");
 
 const adminApp = require('../firebaseAdmin').admin;
+
+const defaultAvatars = [
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar1.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar2.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar3.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar4.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar5.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar6.png"
+];
 
 router.post('/signup', function (req, res) {
   // console.log('req.body.token', req.body.token);
@@ -33,7 +41,7 @@ router.post('/signup', function (req, res) {
           email: [req.body.email]
         },
         communities: [],
-        pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/defaultProfile.png',
+        pictureURL: defaultAvatars[Math.floor(Math.random() * 6)],
         isEdited: true
       });
       return new_user.save()

@@ -10,7 +10,7 @@ const signInThunk = (email, password, history) => (dispatch) => {
       if (!result.emailVerified) {
         console.log('not verified');
         dispatch({ type: 'GET_USER_VERIFY_ERROR', email: email, password: password });
-        history.replace('/waiting/' + email);
+        history.replace('/verify/' + email);
       }
       result.getIdToken(/* forceRefresh */ true)
           .then((idToken) => {

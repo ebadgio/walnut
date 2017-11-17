@@ -329,7 +329,7 @@
     position: fixed;
     width: 220px;
     margin-right: 2vw;
-    top: 60px;
+    margin-top: 60px;
     right: 0;
     color: #353535 !important;
     /*height: 50px;*/

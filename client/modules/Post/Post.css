@@ -1079,3 +1079,21 @@ iframe {
 .postDropdown:hover {
     color: #313235;
 }
+
+.new_member_banner {
+    background: #fff;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.24) !important;
+    height: 70px;
+    width: 513px;
+    color: #212121;
+    display: flex;
+    padding-left: .5em;
+    align-items: center;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.banner_content {
+    color: #757575;
+    margin-left: 5px;
+}
