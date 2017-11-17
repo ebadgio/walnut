@@ -10,6 +10,7 @@ import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
 import './Feed.css';
 import $ from 'jquery';
 import EmptyLoader from './Empty_Loader';
+import NewMemberBanner from '../Post/Post_NewMember';
 
 
 let refresh;
@@ -93,7 +94,8 @@ class Feed extends React.Component {
               loader={<EmptyLoader />}
               useWindow
           >
-              {this.props.data.posts.map((post) => (
+              {this.props.data.posts.map((post) => (post.newMemberBanner ?
+                  <NewMemberBanner key={post.postId} data={post}/> :
                   <Post ref="card"
                         key={post.postId}
                         isOpen={false}
