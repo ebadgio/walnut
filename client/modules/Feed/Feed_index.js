@@ -94,14 +94,13 @@ class Feed extends React.Component {
               loader={<EmptyLoader />}
               useWindow
           >
-              {this.props.data.posts.map((post) => (post.newMemberBanner ?
-                  <NewMemberBanner key={post.postId} data={post}/> :
+              {this.props.data.posts.map((post) => (
                   <Post ref="card"
                         key={post.postId}
                         isOpen={false}
                         currentUser={this.props.user}
-                        postData={post}/>
-              ))}
+                        newMemberBanner={post.newMemberBanner}
+                        postData={post}/>))}
           </InfiniteScroll>
         </div>
     );

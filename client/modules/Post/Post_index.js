@@ -13,6 +13,7 @@ import firebaseApp from '../../firebase';
 import _ from 'underscore';
 import getPostFollowersThunk from '../../thunks/post_thunks/getPostFollowers';
 import editPostThunk from '../../thunks/post_thunks/editPostThunk';
+import NewMemberBanner from './Post_NewMember';
 
 
 class Post extends React.Component {
@@ -291,7 +292,9 @@ class Post extends React.Component {
 
   render() {
     const { minHeighter } = this.state;
-    if (this.state.loading) {
+    if (this.props.newMemberBanner) {
+      return (<NewMemberBanner data={this.props.postData} />);
+    } else if (this.state.loading) {
       return(
           <div className="postOuter">
             <Segment className={this.state.showDrawer ? 'postSegmentDrawerOpen' : 'postSegment'}>
@@ -482,7 +485,8 @@ Post.propTypes = {
   saving: PropTypes.bool,
   saveError: PropTypes.bool,
   beginEdit: PropTypes.func,
-  finishEdit: PropTypes.func
+  finishEdit: PropTypes.func,
+  newMemberBanner: PropTypes.object
 };
 
 const mapDispatchToProps = (dispatch) => ({
