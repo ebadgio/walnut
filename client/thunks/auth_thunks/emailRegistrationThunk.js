@@ -14,11 +14,9 @@ const emailRegistrationThunk = (firstname, lastname, email, password, history) =
         displayName: useFirstname + ' ' + useLastname
       })
     .then(() => {
-      console.log('current user', firebaseApp.auth().currentUser);
       return firebaseApp.auth().currentUser.sendEmailVerification();
     })
     .then(() => {
-      console.log('pre verification');
       result.getIdToken(/* forceRefresh */ true)
         .then((idToken) => {
           axios.post(URL + 'auth/signup', {

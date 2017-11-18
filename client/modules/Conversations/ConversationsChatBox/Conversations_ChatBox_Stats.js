@@ -18,7 +18,6 @@ class ConversationsStatsBox extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('stats receive', nextProps);
     const membersRef = firebaseApp.database().ref('/members/' + nextProps.postData.postId);
     membersRef.on('value', (snapshot) => {
       const peeps =  _.values(snapshot.val());

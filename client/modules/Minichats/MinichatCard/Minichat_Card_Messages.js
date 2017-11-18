@@ -23,7 +23,6 @@ class MinichatMessageBox extends React.Component {
   }
 
   componentDidMount() {
-    console.log('messages did Mount', this.props);
     const user = firebaseApp.auth().currentUser;
     if (this.props.postData.postId) {
       this.startListen(this.props.postData, user);
@@ -51,7 +50,6 @@ class MinichatMessageBox extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('message box unmounted', this.props);
     const user = firebaseApp.auth().currentUser;
     this.handleClose(this.props.postData, user);
   }

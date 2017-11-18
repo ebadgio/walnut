@@ -16,7 +16,6 @@ class BottomContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('minichat bottom props', this.props, nextProps);
     this.setState({openChats: nextProps.openChats});
   }
 

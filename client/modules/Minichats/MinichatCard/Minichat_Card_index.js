@@ -14,9 +14,9 @@ class MinichatCard extends React.Component {
     };
   }
 
-  componentDidMount() {
-    console.log('minichat mounted', this.props);
-  }
+  // componentDidMount() {
+  //   console.log('minichat mounted', this.props);
+  // }
 
   toggleOpen() {
     this.setState({active: !this.state.active});

@@ -62,7 +62,6 @@ class NewPostContainer extends React.Component {
     this.setState({ open: false });
     this.props.dimmerOff();
     if (this.state.file !== '') {
-      console.log('the motherfucker');
       superagent.post('/aws/upload/post')
       .field('body', this.state.postBody ? this.state.postBody : '')
       .field('tags', this.props.postTags ? this.props.postTags.map((tag) => tag._id) : [])
@@ -102,7 +101,6 @@ class NewPostContainer extends React.Component {
 
   upload() {
     const myFile = $('#fileInputNewpost').prop('files');
-    console.log(myFile, myFile[0]);
     this.setState({ file: myFile[0] });
   }
 

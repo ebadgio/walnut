@@ -1,8 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import firebaseApp from '../../../firebase';
-import { Form, TextArea, Popup, Icon } from 'semantic-ui-react';
+import { Form, TextArea, Icon } from 'semantic-ui-react';
 import $ from 'jquery';
 import _ from 'underscore';
 import { Picker } from 'emoji-mart';
@@ -21,12 +20,12 @@ class MinichatTextBox extends React.Component {
       typers: [],
       emojiIsOpen: false,
       file: '',
-      active: props.active
+      active: props.active,
+      notif: {}
     };
   }
 
   componentDidMount() {
-    console.log('textbox did mount', this.props);
     const user = firebaseApp.auth().currentUser;
     this.setState({user: user});
     if (this.props.postData.postId) {
@@ -38,10 +37,11 @@ class MinichatTextBox extends React.Component {
         this.setState({members: members});
       });
     }
+
+    this.notificationFire(this.props.postData.postId);
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('will text', nextProps);
     if (nextProps.active) {
       this.setState({active: true});
     } else {
@@ -73,6 +73,43 @@ class MinichatTextBox extends React.Component {
       }
     }, 300);
   }
+
+  // this listens for notification banners
+  notificationFire(postId) {
+    console.log('inside fire function');
+    const user = firebaseApp.auth().currentUser;
+    const messagesRef = firebaseApp.database().ref('/messages/' + postId).orderByKey().limitToLast(20);
+    messagesRef.on('value', (snapshot) => {
+      if (snapshot.val()) {
+        console.log('snap got');
+        const send = _.values(snapshot.val());
+        const newMessage = send[send.length - 1];
+        if (newMessage.authorId !== user.uid) {
+          console.log('other user');
+          this.setState({
+            notif: {
+              title: newMessage.author,
+              options: {
+                body: newMessage.content,
+                lang: 'en',
+                dir: 'ltr',
+                icon: 'https://s3.amazonaws.com/walnut-logo/logo.svg'
+              },
+              ignore: false
+            }
+          });
+          console.log('notif object', this.state.notif);
+          setTimeout(() => { this.setState({ notif: {} }); }, 4000);
+        }
+      }
+    });
+  }
+
+  // clears notif object
+  notifClear() {
+    this.setState({ notif: {} });
+  }
+
 
   handleChange(e) {
     this.setState({ commentBody: e.target.value });
@@ -137,7 +174,6 @@ class MinichatTextBox extends React.Component {
       // unread messages set up
       firebaseApp.database().ref('/followGroups/' + this.props.postData.postId).once('value', snapshot => {
         const followers = Object.keys(snapshot.val());
-        console.log('followers', followers);
         const memberIds = this.state.members.map(member => member.uid);
         followers.filter(fol => (memberIds.indexOf(fol) === -1 && fol !== this.state.user.uid)).forEach(follower => {
           const unreadsCountRef = firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId);
@@ -206,7 +242,7 @@ class MinichatTextBox extends React.Component {
   render() {
     return(
         <div className={this.state.active ? 'minichatTextBoxActive' : 'minichatTextBox'}>
-          <NotificationContainer postData={this.props.postData} />
+        {Object.keys(this.state.notif).length > 0 ? <NotificationContainer notifClear={this.notifClear()} notif={this.state.notif} /> : null}
           <FileModal
               handleFileSubmit={(body) => this.handleAwsUpload(body)}
               handleFileClose={()=>this.handleFileClose()}

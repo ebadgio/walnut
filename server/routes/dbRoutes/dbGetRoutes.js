@@ -93,7 +93,7 @@ router.get('/discoverinfo', (req, res) => {
 });
 
 router.get('/discoverrefresh', (req, res) => {
-  const filters = JSON.parse(req.query.filters);
+  const filters = req.query.filters;
   let filter;
   let posts = [];
   if (filters.length > 0) {

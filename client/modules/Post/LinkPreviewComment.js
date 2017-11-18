@@ -37,7 +37,6 @@ class LinkPreview extends React.Component {
         autoplay: 0
       }
     };
-    console.log('rendering preview component');
     return (
             <div ref="myRef" className="linkPrevComment">
         {((this.state.youtube === '') && (validURL && this.props.meta.description && this.props.meta.title)) ?
