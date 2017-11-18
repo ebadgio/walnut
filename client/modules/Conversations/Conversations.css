@@ -136,6 +136,7 @@
     color: #3a3a3a !important;
     max-height: 80px;
     overflow-y: auto;
+    font-weight: 500 !important;
 }
 
 
