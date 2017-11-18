@@ -926,6 +926,10 @@ iframe {
     display: none
 }
 
+#fileInputMiniChat {
+    display: none
+}
+
 #fileUploadConversation {
     margin-right: 3px !important;
     margin-top: 4px !important;

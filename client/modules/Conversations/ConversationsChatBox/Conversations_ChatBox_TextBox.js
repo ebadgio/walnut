@@ -273,7 +273,7 @@ class ConversationsTextBox extends React.Component {
                 <div className="actionsTextBox">
                     <Icon id="fileUploadConversation" onClick={() => $('#fileInputConversation').trigger('click')} className="attachFileIconModal" name="attach" size="large"/>
                     <input id="fileInputConversation" type="file" onChange={() => this.upload()} />
-                    <Icon onClick={() => this.openEmojiPicker()} size="large" name="smile" className="emojiPickerMiniChat" />
+                    <Icon onClick={() => this.openEmojiPicker()} size="large" name="smile" className="emojiPicker" />
                 </div>
             </div>
         </div>
