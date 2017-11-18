@@ -235,7 +235,7 @@ class MinichatTextBox extends React.Component {
   }
 
   upload() {
-    const myFile = $('#fileInputConversation').prop('files');
+    const myFile = $('#fileInputMiniChat').prop('files');
     this.setState({ file: myFile[0]});
   }
 
@@ -278,8 +278,8 @@ class MinichatTextBox extends React.Component {
                       />
             </Form>
             <div className="actionsTextBox">
-              <Icon id="fileUploadConversation" onClick={() => $('#fileInputConversation').trigger('click')} className="attachFileIconModal" name="attach" size="large"/>
-              <input id="fileInputConversation" type="file" onChange={() => this.upload()} />
+              <Icon id="fileUploadMiniChat" onClick={() => $('#fileInputMiniChat').trigger('click')} className="attachFileIconModal" name="attach" size="large"/>
+              <input id="fileInputMiniChat" type="file" onChange={() => this.upload()} />
               <Icon onClick={() => this.openEmojiPicker()} size="large" name="smile" className="emojiPicker" />
             </div>
           </div>

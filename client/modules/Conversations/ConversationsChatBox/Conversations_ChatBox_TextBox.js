@@ -196,6 +196,12 @@ class ConversationsTextBox extends React.Component {
 
   openEmojiPicker() {
     this.setState({ emojiIsOpen: !this.state.emojiIsOpen });
+
+    $(document).bind('click', (e) => {
+      if (!$(e.target).is('#emojiPicker')) {
+        this.setState({ emojiIsOpen: false });
+      }
+    });
   }
 
   handleUploadModal(file) {
@@ -235,6 +241,7 @@ class ConversationsTextBox extends React.Component {
             {this.state.emojiIsOpen ?
                 <div className="emojiDiv">
                     <Picker set="emojione"
+                            id="emojiPicker"
                             onClick={(emoj) => this.addEmoji(emoj)}
                             title="Pick your emoji…" emoji="point_up"
                             className="emojiContainer"
@@ -258,6 +265,7 @@ class ConversationsTextBox extends React.Component {
                           id="conversationsMessageInput"
                           autoHeight
                           placeholder="What are your thoughts?..."
+                          value={this.state.commentBody}
                           onChange={(e) => { this.handleChange(e); this.findEnter(); }}
                           rows={2}
                       />
@@ -265,7 +273,7 @@ class ConversationsTextBox extends React.Component {
                 <div className="actionsTextBox">
                     <Icon id="fileUploadConversation" onClick={() => $('#fileInputConversation').trigger('click')} className="attachFileIconModal" name="attach" size="large"/>
                     <input id="fileInputConversation" type="file" onChange={() => this.upload()} />
-                    <Icon onClick={() => this.openEmojiPicker()} size="large" name="smile" className="emojiPicker" />
+                    <Icon onClick={() => this.openEmojiPicker()} size="large" name="smile" className="emojiPickerMiniChat" />
                 </div>
             </div>
         </div>

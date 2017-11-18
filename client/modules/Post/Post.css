@@ -745,6 +745,23 @@ iframe {
 .emojiPicker {
     cursor: pointer;
     color: #b3b5c1;
+    font-size: 31px !important;
+}
+
+.emojiPicker:hover {
+    color: #5bc0e3 !important;
+}
+
+.emojiPickerMiniChat {
+    cursor: pointer;
+    color: #b3b5c1;
+    font-size: 25px !important;
+    margin: 0;
+    margin-right: 2px;
+}
+
+.emojiPickerMiniChat:hover {
+    color: #5bc0e3 !important;
 }
 
 .emojiDiv {
@@ -910,7 +927,24 @@ iframe {
 }
 
 #fileUploadConversation {
-    margin-right: 9px !important
+    margin-right: 3px !important;
+    margin-top: 4px !important;
+    margin-bottom: 4px !important;
+    font-size: 33px !important;
+}
+
+#fileUploadConversation:hover {
+    color: #5bc0e3 !important;
+}
+
+#fileUploadMiniChat {
+    margin-right: 3px !important;
+    margin-bottom: 1px !important;
+    font-size: 25px !important;
+}
+
+#fileUploadMiniChat:hover {
+    color: #5bc0e3 !important;
 }
 
 .followerGroup {
