@@ -280,7 +280,7 @@ class MinichatTextBox extends React.Component {
             <div className="actionsTextBox">
               <Icon id="fileUploadMiniChat" onClick={() => $('#fileInputMiniChat').trigger('click')} className="attachFileIconModal" name="attach" size="large"/>
               <input id="fileInputMiniChat" type="file" onChange={() => this.upload()} />
-              <Icon onClick={() => this.openEmojiPicker()} size="large" name="smile" className="emojiPicker" />
+              <Icon onClick={() => this.openEmojiPicker()} size="large" name="smile" className="emojiPickerMiniChat" />
             </div>
           </div>
         </div>
