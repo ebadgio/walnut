@@ -16,7 +16,7 @@ class Home extends React.Component {
     super();
     this.state = {
       visible: false,
-      notifArr: []
+      notif: {}
     };
   }
 
@@ -33,31 +33,33 @@ class Home extends React.Component {
 
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.newPost.length > 0) {
-      this.notificationFire();
+    if (nextProps.newPost.length > 0) {
+      this.notificationFire(nextProps.newPost);
     }
   }
 
-  notificationFire() {
-    this.props.newPost.map((post) => {
-      this.setState({
-        notifArr: [...this.state.notifArr].push({
-          title: post.username,
-          options: {
-            body: post.content,
-            lang: 'en',
-            dir: 'ltr',
-            icon: 'https://s3.amazonaws.com/walnut-logo/logo.svg'
-          },
-          ignore: false
-        })
-      });
+  notificationFire(newPosts) {
+    console.log('function is firing');
+    const mappedArr = newPosts.map((post) => {
+      return {
+        title: post.username,
+        options: {
+          body: post.content,
+          lang: 'en',
+          dir: 'ltr',
+          icon: 'https://s3.amazonaws.com/walnut-logo/logo.svg'
+        },
+        ignore: false
+      };
     });
 
+    this.setState({ notif: mappedArr[0] });
+
+    console.log('notifArr', mappedArr );
+
     setTimeout(() => {
-      this.setState({ notifArr: [] });
-      this.props.clearNewPostData();
-    }, 5000);
+      this.notifClear();
+    }, 10000);
   }
 
   notifClear() {
@@ -70,7 +72,7 @@ class Home extends React.Component {
         <div>
           <div className="row" id="Discover">
             <div style={{width: '200px', height: '5px'}}></div>
-            {this.state.notifArr.length > 0 ? this.state.notifArr.map((post) => <NotificationContainer notifClear={this.notifClear()} post={post} />) : null}
+            {Object.keys(this.state.notif).length > 0 ? <NotificationContainer notifClear={() => this.notifClear()} notif={this.state.notif} /> : null}
             <Feed id="Feed"/>
             <TopicContainer />
           </div>
