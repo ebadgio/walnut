@@ -1,6 +1,6 @@
 'use strict';
 // Maybe we have to use schema
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const CommunitySchema = new mongoose.Schema({
   title: {
     type: String
@@ -271,6 +271,10 @@ const PostSchema = new mongoose.Schema({
     }
   },
   edited: {
+    type: Boolean,
+    default: false
+  },
+  newMemberBanner: {
     type: Boolean,
     default: false
   }

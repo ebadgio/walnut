@@ -12,15 +12,41 @@ import EditProfile from '../Profile/EditProfile_index';
 import WalnutLoader from './App_WalnutLoader';
 import LeftSideContainer from './App_Left_Side_Container';
 import Conversations from '../Conversations/Conversations_Index';
+import firebaseApp from '../../firebase';
+import PageVisibility from 'react-page-visibility';
 
 class Community extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
   componentDidMount() {
     localStorage.setItem('isUserInCommunity', true);
-    // localStorage.setItem('url', '/community');
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.handlePosition.bind(this), this.handleError.bind(this));
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentUser.fullName) {
+      if (!this.state.called) {
+        this.callFirebase(nextProps.currentUser.firebaseId, nextProps.currentUser.currentCommunity._id);
+        this.setState({called: true});
+      }
+      localStorage.setItem('community', nextProps.currentUser.currentCommunity.title);
+    }
+  }
+
+  componentWillUnmount() {
+    this.setState({totalUnreads: 0});
+  }
+
+  callFirebase(uid, cid) {
+    const totalUnreadsRef = firebaseApp.database().ref('/totalUnreads/' + uid + '/' + cid);
+    totalUnreadsRef.on( 'value', (snapshot) => {
+      this.setState({totalUnreads: snapshot.val()});
+    });
   }
 
   handlePosition(position) {
@@ -31,13 +57,19 @@ class Community extends React.Component {
     this.props.updateLocation([]);
   }
 
+  handleVisibilityChange(visibilityState, documentHidden) {
+    this.props.changeWindowStatus(documentHidden);
+  }
+
   render() {
     if (this.props.isReady && this.props.currentUser.fullName) {
       return (
             <div className={this.props.showDimmer ? 'newPostDimmer' : null}>
+              <PageVisibility onChange={(e, i) => this.handleVisibilityChange(e, i)} />
                 <NavBar/>
-                <LeftSideContainer />
+                <LeftSideContainer totalUnreads={this.state.totalUnreads}/>
                 <Switch>
+                    <Route path="/community/:communityName" exact component={Discover}/>
                     <Route path="/community/:communityName/conversations" component={Conversations}/>
                     <Route path="/community/:communityName/directory" component={Directory}/>
                     <Route path="/community/:communityName/map" component={MapContainer}/>
@@ -59,7 +91,9 @@ Community.propTypes = {
   updateLocation: PropTypes.func,
   history: PropTypes.object,
   currentUser: PropTypes.object,
-  showDimmer: PropTypes.bool
+  showDimmer: PropTypes.bool,
+  match: PropTypes.object,
+  changeWindowStatus: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -71,6 +105,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   updateLocation: (params) => dispatch(updateLocationThunk(params)),
+  changeWindowStatus: (isHidden) => dispatch({type: 'CHANGE_WINDOW_STATUS', isHidden: isHidden})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Community);

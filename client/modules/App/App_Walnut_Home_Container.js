@@ -28,13 +28,13 @@ class WalnutHomeContainer extends React.Component {
 
   componentWillMount() {
     this.props.getAllCommunities();
-    if (this.props.loginFirebase === true) {
-      this.props.handleLogout(history);
-    }
+    // if (this.props.loginFirebase === true) {
+    //   this.props.handleLogout(history);
+    // }
   }
 
   componentDidMount() {
-    localStorage.setItem('url', '/walnuthome');
+    sessionStorage.setItem('url', '/walnuthome');
 
     // AUTO JOIN WITH LINK
     if (this.props.savedCode) {
@@ -59,6 +59,9 @@ class WalnutHomeContainer extends React.Component {
     // window.location.reload();
   }
 
+  handleLogout() {
+    this.props.handleLogout(history);
+  }
 
   joinCommunity(id) {
     this.props.joinCommunity(id);
@@ -71,7 +74,11 @@ class WalnutHomeContainer extends React.Component {
       return (
         <div className="walnutContainer">
           <div className="Heading">
-            Walnut
+            <img src="https://s3.amazonaws.com/walnut-logo/logo.svg" className="logoHome"/>
+            <span style={{fontSize: '45px'}}>Walnut</span>
+            <div className="logout_button" onClick={() => this.handleLogout()}>
+              Logout
+            </div>
           </div>
           <div className="walnutHomeActions">
             <JoinCommunityCode />
@@ -81,17 +88,17 @@ class WalnutHomeContainer extends React.Component {
           <div className="subHead">Your Communities</div>
           <div className="communitiesContainer">
             {this.props.userCommunities.map((community, idx) =>
-              <Link key={idx}
+              <Link key={community._id}
                 className="communityLink"
                 onClick={() => this.toggleCommunity(community)}
                 to={'/community/' + community.title.split(' ').join('') + '/discover'}>
                 <CommunityCard joined
                   icon={community.icon}
-                  title={community.title}
-                  key={idx} /></Link>)}
+                  title={community.title}/>
+              </Link>)}
           </div>
           <h2 className="subHead">Search For new Communities</h2>
-          <div className="communitiesContainer">
+          <div className="communitiesContainerOther">
             {this.props.communities.filter((com) => {
               return !(userCommunityTitles.indexOf(com.title) > -1);
             })
@@ -102,7 +109,7 @@ class WalnutHomeContainer extends React.Component {
               status={community.status}
               communityId={community._id}
               join={this.joinCommunity}
-              key={idx} />)
+              key={community._id} />)
             }
           </div>
         </div>

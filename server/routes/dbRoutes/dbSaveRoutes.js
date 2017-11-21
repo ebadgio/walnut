@@ -1,10 +1,12 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
-import {User, Tag, Post, Quote, Community} from '../../models/models';
-import axios from 'axios';
-import Promise from 'promise';
-import firebaseApp from '../../../client/firebase';
-import adminApp from '../../firebaseAdmin';
+const User = require('../../models/models').User;
+const Post = require('../../models/models').Post;
+const Tag = require('../../models/models').Tag;
+const Community = require('../../models/models').Community;
+const axios = require('axios');
+const Promise = require('promise');
+
 
 router.post('/post', (req, res) => {
   const tagModels = req.body.newTags.map((filter) => {
@@ -67,16 +69,8 @@ router.post('/post', (req, res) => {
           link: postObj.link,
           attachment: postObj.attachment,
           edited: postObj.edited,
-          comments: postObj.comments.map((commentObj) => {
-            return {
-              commentId: commentObj._id,
-              username: commentObj.createdBy.username,
-              pictureURL: commentObj.createdBy.pictureURL,
-              content: commentObj.content,
-              createdAt: commentObj.createdAt,
-              likes: commentObj.likes
-            };
-          })
+          newMemberBanner: postObj.newMemberBanner,
+          comments: []
         };
       });
       return Community.findById(req.user.currentCommunity);
@@ -124,7 +118,8 @@ router.post('/editPost', (req, res) => {
         link: postObj.link,
         attachment: postObj.attachment,
         comments: postObj.comments,
-        edited: postObj.edited
+        edited: postObj.edited,
+        newMemberBanner: postObj.newMemberBanner
       };
       res.json({success: true, editedPost: send});
     })
@@ -138,63 +133,6 @@ router.post('/joinconversation', (req, res) => {
   res.json({success: req.body.postId});
 });
 
-
-router.post('/save/comment', (req, res) => {
-  Post.findById(req.body.postId)
-      .then((response) => {
-        const newComment = {
-          content: req.body.commentBody,
-          createdAt: new Date(),
-          createdBy: req.user._id,
-          likes: []
-        };
-        response.comments.push(newComment);
-        response.save()
-        .then((resp) => {
-          res.json({success: true, data: response});
-        });
-      })
-      .catch((err) => {
-        res.json({success: false, data: null});
-      });
-});
-
-
-router.post('/postlike', (req, res) => {
-  Post.findById(req.body.postId)
-    .then((response) => {
-      if (response.likes.indexOf(req.user._id) > -1) {
-        const idx = response.likes.indexOf(req.user._id);
-        response.likes.splice(idx, 1);
-      } else {
-        response.likes.push(req.user._id);
-      }
-      response.save()
-      .then((resp) => {
-        res.json({success: true});
-      });
-    })
-    .catch((err) => {
-      res.json({success: false});
-    });
-});
-
-router.post('/commentlike', (req, res) => {
-  Post.findById(req.body.postId)
-    .then((post) => {
-      const comment = post.comments.filter((com) => {
-        return com._id.toString() === req.body.commentId.toString();
-      });
-      comment[0].likes.push(req.user._id);
-      return post.save();
-    })
-    .then(() => {
-      res.json({success: true});
-    })
-    .catch((err) => {
-      res.json({success: false});
-    });
-});
 
 router.post('/blurb', (req, res) => {
   User.findById(req.user._id)

@@ -21,11 +21,11 @@ class ConversationsTextBox extends React.Component {
       typers: [],
       emojiIsOpen: false,
       file: '',
+      notif: {}
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('will receive', nextProps);
     const user = firebaseApp.auth().currentUser;
     this.setState({user: user});
     if (nextProps.postData.postId) {
@@ -37,7 +37,9 @@ class ConversationsTextBox extends React.Component {
         this.setState({members: members});
       });
     }
+    this.notificationFire(nextProps.postData.postId);
   }
+
   startListen(postData, currentUser) {
     setInterval(() => {
       if (this.state.commentBody) {
@@ -61,6 +63,38 @@ class ConversationsTextBox extends React.Component {
         }
       }
     }, 300);
+  }
+
+  // this listens for notification banners
+  notificationFire(postId) {
+    const user = firebaseApp.auth().currentUser;
+    const messagesRef = firebaseApp.database().ref('/messages/' + postId).orderByKey().limitToLast(20);
+    messagesRef.on('value', (snapshot) => {
+      if (snapshot.val()) {
+        const send = _.values(snapshot.val());
+        const newMessage = send[send.length - 1];
+        if (newMessage.authorId !== user.uid) {
+          this.setState({
+            notif: {
+              title: newMessage.author,
+              options: {
+                body: newMessage.content,
+                lang: 'en',
+                dir: 'ltr',
+                icon: 'https://s3.amazonaws.com/walnut-logo/logo.svg'
+              },
+              ignore: false
+            }
+          });
+          setTimeout(()=> {this.setState({ notif: {} });}, 4000);
+        }
+      }
+    });
+  }
+
+  // clears notif object
+  notifClear() {
+    this.setState({ notif: {} });
   }
 
   handleChange(e) {
@@ -123,19 +157,23 @@ class ConversationsTextBox extends React.Component {
       };
       firebaseApp.database().ref().update(updateLast);
 
-        // unread messages set up
+      // unread messages set up
       firebaseApp.database().ref('/followGroups/' + this.props.postData.postId).once('value', snapshot => {
         const followers = Object.keys(snapshot.val());
-        console.log('followers', followers);
         const memberIds = this.state.members.map(member => member.uid);
         followers.filter(fol => (memberIds.indexOf(fol) === -1 && fol !== this.state.user.uid)).forEach(follower => {
           const unreadsCountRef = firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId);
           unreadsCountRef.transaction((currentValue) => {
             return (currentValue || 0) + 1;
           });
+
+          const totalUnreadsRef = firebaseApp.database().ref('/totalUnreads/' + follower + '/' + this.props.currentUser.currentCommunity._id);
+          totalUnreadsRef.transaction((currentValue) => {
+            return (currentValue || 0) + 1;
+          });
         });
       });
-        // unread stuff ends here
+      // unread stuff ends here
 
       this.setState({commentBody: '', prevBody: ''});
       const update = {};
@@ -158,6 +196,12 @@ class ConversationsTextBox extends React.Component {
 
   openEmojiPicker() {
     this.setState({ emojiIsOpen: !this.state.emojiIsOpen });
+
+    $(document).bind('click', (e) => {
+      if (!$(e.target).is('#emojiPicker')) {
+        this.setState({ emojiIsOpen: false });
+      }
+    });
   }
 
   handleUploadModal(file) {
@@ -189,7 +233,7 @@ class ConversationsTextBox extends React.Component {
   render() {
     return(
         <div className="conversationsTextBox">
-            <NotificationContainer postData={this.props.postData} />
+          {Object.keys(this.state.notif).length > 0 ? <NotificationContainer notifClear={() => this.notifClear()} notif={this.state.notif} /> : null}
             <FileModal
                 handleFileSubmit={(body) => this.handleAwsUpload(body)}
                 handleFileClose={()=>this.handleFileClose()}
@@ -197,6 +241,7 @@ class ConversationsTextBox extends React.Component {
             {this.state.emojiIsOpen ?
                 <div className="emojiDiv">
                     <Picker set="emojione"
+                            id="emojiPicker"
                             onClick={(emoj) => this.addEmoji(emoj)}
                             title="Pick your emoji…" emoji="point_up"
                             className="emojiContainer"
@@ -220,6 +265,7 @@ class ConversationsTextBox extends React.Component {
                           id="conversationsMessageInput"
                           autoHeight
                           placeholder="What are your thoughts?..."
+                          value={this.state.commentBody}
                           onChange={(e) => { this.handleChange(e); this.findEnter(); }}
                           rows={2}
                       />

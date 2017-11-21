@@ -15,8 +15,14 @@ class Conversations extends React.Component {
     };
   }
 
+
+  componentDidMount() {
+    const urls = this.props.location.pathname;
+    sessionStorage.setItem('url', urls);
+  }
+
+
   togglePostData(data) {
-    console.log('toggling', data);
     const followersRef = firebaseApp.database().ref('/followGroups/' + data.postId);
     followersRef.on('value', (snapshot) => {
       if (snapshot.val()) {
@@ -41,7 +47,8 @@ class Conversations extends React.Component {
 Conversations.propTypes = {
   currentUser: PropTypes.object,
   getPostFollowers: PropTypes.func,
-  toggleId: PropTypes.func
+  toggleId: PropTypes.func,
+  location: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({

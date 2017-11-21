@@ -1,7 +1,10 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
-import {User, Post, Quote, Community} from '../../models/models';
-import Metascraper from 'metascraper';
+const User = require('../../models/models').User;
+const Post = require('../../models/models').Post;
+const Quote = require('../../models/models').Quote;
+const Community = require('../../models/models').Community;
+const Metascraper = require('metascraper');
 
 router.get('/app', (req, res) => {
   User.findById(req.user._id)
@@ -71,7 +74,8 @@ router.get('/discoverinfo', (req, res) => {
                           commentNumber: postObj.commentNumber,
                           link: postObj.link,
                           attachment: postObj.attachment,
-                          edited: postObj.edited
+                          edited: postObj.edited,
+                          newMemberBanner: postObj.newMemberBanner
                         };
                       });
                       res.json({ defaultFilters: defaultFilters, otherFilters: otherFilters, posts: posts, lastRefresh: new Date() });
@@ -89,13 +93,13 @@ router.get('/discoverinfo', (req, res) => {
 });
 
 router.get('/discoverrefresh', (req, res) => {
-  const filters = JSON.parse(req.query.filters);
+  const filters = req.query.filters;
   let filter;
   let posts = [];
   if (filters.length > 0) {
-    filter =  { tags: { $in: filters }, community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) } };
+    filter =  { tags: { $in: filters }, community: req.user.currentCommunity, createdAt: { $gte: new Date(req.query.lastRefresh) } };
   } else {
-    filter = {community: req.user.currentCommunity, createdAt: { $lte: new Date(req.query.lastRefresh) }};
+    filter = {community: req.user.currentCommunity, createdAt: { $gte: new Date(req.query.lastRefresh) }};
   }
   Post.find(filter)
     .sort({ createdAt: -1 })
@@ -116,7 +120,8 @@ router.get('/discoverrefresh', (req, res) => {
           commentNumber: postObj.commentNumber,
           link: postObj.link,
           attachment: postObj.attachment,
-          edited: postObj.edited
+          edited: postObj.edited,
+          newMemberBanner: postObj.newMemberBanner
         };
       });
       res.json({ posts: posts, lastRefresh: new Date()});
@@ -174,7 +179,8 @@ router.get('/next10', (req, res) => {
                           commentNumber: postObj.commentNumber,
                           link: postObj.link,
                           attachment: postObj.attachment,
-                          edited: postObj.edited
+                          edited: postObj.edited,
+                          newMemberBanner: postObj.newMemberBanner
                         };
                       });
                       res.json({filters: filter, posts: posts});
@@ -275,8 +281,13 @@ router.get('/myconversations/:postIds', (req, res) => {
         attachment: postObj.attachment,
         edited: postObj.edited,
         comments: postObj.comments
-      };});
+      };
+    });
+    console.log('my convos', posts, postArr);
     res.json({posts: posts});
+  })
+  .catch((err) => {
+    console.log('get my convos error', err);
   });
 });
 

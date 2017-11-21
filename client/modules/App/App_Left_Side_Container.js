@@ -24,9 +24,11 @@ const borderColors2 = {
 };
 
 class LeftSideContainer extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      prev: '',
+      totalUnreads: props.totalUnreads
     };
   }
 
@@ -34,19 +36,25 @@ class LeftSideContainer extends React.Component {
     this.navBarChoice();
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({totalUnreads: nextProps.totalUnreads});
+  }
 
   navBarChoice() {
     setInterval(() => {
-      if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'discover') {
-        this.setState({tab: 1});
-      } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'conversations') {
-        this.setState({tab: 2});
-      } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'directory') {
-        this.setState({tab: 3});
-      } else if (window.location.href.split('/')[window.location.href.split('/').length - 1] === 'map') {
-        this.setState({tab: 4});
-      } else {
-        this.setState({tab: 0});
+      const page = window.location.href.split('/')[window.location.href.split('/').length - 1];
+      if (this.state.prev !== page) {
+        if (page === 'discover') {
+          this.setState({tab: 1, prev: 'discover'});
+        } else if (page === 'conversations') {
+          this.setState({tab: 2, prev: 'conversations'});
+        } else if (page === 'directory') {
+          this.setState({tab: 3, prev: 'directory'});
+        } else if (page === 'map') {
+          this.setState({tab: 4, prev: 'map'});
+        } else {
+          this.setState({tab: 0, prev: 'other'});
+        }
       }
     }, 200);
   }
@@ -60,27 +68,26 @@ class LeftSideContainer extends React.Component {
     }
     return (
         <div className="LeftSidebar_Container">
-            {/* <FollowedPosts />
-            <Online /> */}
             <Link className={this.state.tab === 1 ? 'discoverTabActive' : 'discoverTab'}
                   to={'/community/' + title + '/discover'}
                   style={{borderColor: borderColors2.discover}}>
-                <Icon name="browser" size="big" className="discoverIcon" />
+                <Icon name="browser" size="large" className="discoverIcon" /><span className="tabTitle"> Discover</span>
             </Link>
             <Link className={this.state.tab === 2 ? 'discoverTabActive' : 'discoverTab'}
                   to={'/community/' + title + '/conversations'}
                   style={{borderColor: borderColors2.conversations}}>
-                <Icon name="comments outline" size="big" />
+                {this.state.totalUnreads > 0 ? <div className="unreadsCircle">{this.state.totalUnreads}</div> : null}
+                <Icon name="comments outline" size="large" className="conversationsIcon" /> <span className="tabTitle"> Conversations</span>
             </Link>
             <Link className={this.state.tab === 3 ? 'discoverTabActive' : 'discoverTab'}
                   to={'/community/' + title + '/directory'}
                   style={{borderColor: borderColors2.directory}}>
-                <Icon size="big" className="address book outline" />
+                <Icon size="large" name="address book outline" className="directoryIcon" /> <span className="tabTitle"> Directory</span>
             </Link>
             <Link className={this.state.tab === 4 ? 'discoverTabActive' : 'discoverTab'}
                   to={'/community/' + title + '/map'}
                   style={{borderColor: borderColors2.map}}>
-                <Icon name="browser" size="big" className="world" />
+                <Icon size="large" name="world" className="mapIcon" /> <span className="tabTitle"> Map</span>
             </Link>
         </div>
     );
@@ -89,6 +96,7 @@ class LeftSideContainer extends React.Component {
 
 LeftSideContainer.propTypes = {
   community: PropTypes.object,
+  totalUnreads: PropTypes.number
 };
 
 const mapStateToProps = (state) => ({

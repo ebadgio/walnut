@@ -2,9 +2,8 @@
 <html>
   <head>
     <title>Walnut</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon-logo-apple.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-logo.png">
     <link rel="manifest" href="/manifest.json">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="theme-color" content="#ffffff">
@@ -20,7 +19,7 @@
       /*font-family: 'Roboto', sans-serif !important;*/
       /*font-family: 'Archivo Narrow', sans-serif !important;*/
       font-family: 'Roboto Condensed', sans-serif !important;
-      background: #f9f9f9 !important;
+      background: #f2f2f2 !important;
     }
     #root {
       overflow: auto;
@@ -28,6 +27,11 @@
   </style>
   <body>
     <div id="root"></div>
+    <audio id="soundNot" preload="auto">
+      <source src="/sounds/button_tiny.mp3" type="audio/mpeg" />
+      <source src="/sounds/button_tiny.ogg" type="audio/ogg" />
+      <embed hidden="true" autostart="false" loop="false" src="/sounds/button_tiny.mp3" />
+    </audio>
     <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
     <script>
       // Initialize Firebase

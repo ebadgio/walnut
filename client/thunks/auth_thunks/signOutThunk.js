@@ -10,13 +10,14 @@ const signOutThunk = (history) => (dispatch) => {
     localStorage.removeItem('url');
     localStorage.removeItem('isUserInCommunity');
     localStorage.removeItem('home');
+    localStorage.removeItem('community');
     sessionStorage.removeItem('url');
     sessionStorage.removeItem('tab');
     return axios.post('/auth/logout');
   })
   .then(() => {
     dispatch({type: 'LOGOUT_DONE'});
-    history.replace('/login');
+    history.replace('/');
   })
   .catch(function(error) {
     // Handle Errors here.

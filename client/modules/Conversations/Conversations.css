@@ -1,20 +1,83 @@
 .conversationsMainContainer {
-    margin-left: 60px;
     margin-right: 0;
-    padding-top: 43px;
-    height: 100vh;
+    position: absolute;
+    bottom: 40px;
+    min-width: 900px;
+    height: 584px;
+    width: calc(100vw - 200px);
+    margin-left: 170px;
     display: flex;
     flex-direction: row;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.24) !important;
+}  
 
+@-moz-document url-prefix() {
+.conversationsMainContainer {
+    margin-right: 0;
+    position: absolute;
+    bottom: 40px;
+    min-width: 900px;
+    height: 552px;
+    width: calc(100vw - 200px);
+    margin-left: 170px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.24) !important;
 }
+}
+
+@media not all and (min-resolution:.001dpcm)
+{ @supports (-webkit-appearance:none) and (stroke-color:transparent) {
+.conversationsMainContainer {
+    margin-right: 0;
+    position: absolute;
+    bottom: 40px;
+    min-width: 900px;
+    height: 549px;
+    width: calc(100vw - 200px);
+    margin-left: 170px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.24) !important;
+}
+}}
+
+
+
+/* @media screen and (-webkit-min-device-pixel-ratio:0) {
+.conversationsMainContainer {
+    margin-right: 0;
+    position: absolute;
+    bottom: 40px;
+    min-width: 900px;
+    height: 584px;
+    width: calc(100vw - 200px);
+    margin-left: 170px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.24) !important;
+}
+
+::i-block-chrome, .conversationsMainContainer {
+    margin-right: 0;
+    position: absolute;
+    bottom: 40px;
+    min-width: 900px;
+    height: 552px;
+    width: calc(100vw - 200px);
+    margin-left: 170px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.24) !important;
+}
+} */
 
 .conversationsSideBar {
     flex: 2;
     border-right: 1px solid rgba(34, 36, 38, 0.15);
     max-height: 100%;
-    overflow: hidden;
+    overflow-y: auto;
     background: #fff;
-    border-top: 1px solid rgba(34,36,38,.15);
 }
 
 .conversationsSideBar:hover {
@@ -26,7 +89,6 @@
     display: flex;
     background: #fff;
     flex-direction: row;
-    border-top: 1px solid rgba(34,36,38,.15);
 }
 
 .chatGrouping {
@@ -135,37 +197,37 @@
     color: #3a3a3a !important;
     max-height: 80px;
     overflow-y: auto;
+    font-weight: 500 !important;
 }
 
+#conversationsMessageInput::-webkit-scrollbar {
+    display: none;
+}
 
 .miniPostCard {
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
     margin-bottom: 0 !important;
     margin-top: 0 !important;
     border-radius: 0 !important;
     border: none !important;
     box-shadow: none !important;
+    padding: 5px 0 5px 5px !important;
 }
 
 .miniPostCardActive {
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
     margin-bottom: 0 !important;
     margin-top: 0 !important;
     border-radius: 0 !important;
     border: none !important;
     box-shadow: none !important;
     background: rgba(0, 0, 0, .05) !important;
+    padding: 5px 0 5px 5px !important;
 }
 
 .miniPostCard:hover {
     background: rgba(0, 0, 0, .05) !important;
 }
 
-body ::-webkit-scrollbar-thumb {
 
-}
 
 .lastMessageBox {
     width: 100%;
@@ -212,9 +274,10 @@ body ::-webkit-scrollbar-thumb {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
-    font-weight: 700;
+    font-weight: 400;
     word-spacing: 10px;
 }
+
 
 .conversationCardHeader:after {
     content: "   ";
@@ -235,4 +298,47 @@ body ::-webkit-scrollbar-thumb {
 
 }
 
+.commentNumMini {
+    margin-right: 12px;
+}
 
+.followNumMini {
+    margin-right: 12px;
+}
+
+.activeNumMini {
+    /*color: #85C7F2;*/
+    color: #11e6a7;
+    margin-right: 12px;
+}
+
+.isUnreadMini {
+    color: #d40d27;
+    margin-right: 12px;
+}
+
+.messageInfoGroupMini {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-size: 8px;
+    font-weight: 400;
+    color: #b3b5c1;
+}
+
+.unreadsCircleMini {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background: #d40d27;
+    border-radius: 50%;
+    min-width: 19px;
+    max-width: fit-content;
+    font-size: 10px;
+    margin-left: auto;
+}
+
+/*body ::-webkit-scrollbar {*/
+    /*width: 0;*/
+/*}*/

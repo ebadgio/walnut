@@ -7,13 +7,21 @@
   width: 80vw;
 }
 
+.mapDiv {
+  flex: 3;
+}
+
 #outer {
   display: flex;
   flex-direction: row;
-  padding-top: 45px;
-  width: 100%;
-  min-width: 788px;
-  padding-left: 60px;
+  left: 150px;
+  width: calc(100vw - 180px);
+  min-width: 794px;
+  position: absolute;
+  height: 580px;
+  bottom: 20px;
+  box-shadow: 0 0 2px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.24) !important;
+  background: #fff;
 }
 
 #inner {
@@ -21,6 +29,7 @@
   margin-right: 1%;
   margin-top: 8px;
   width: 25%;
+  flex: 1;
 }
 
 .marker {
@@ -78,9 +87,8 @@
 
 #scrollbar {
   position: relative !important;
-  height: 68vh !important;
-  background: #fafafa;
-  overflow-y: scroll;
+  height: 420px !important;
+  overflow-y: auto;
 }
 
 .zoomControl {

@@ -1,81 +1,53 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import firebaseApp from '../../firebase';
-import _ from 'underscore';
 import Notification from 'react-web-notification';
+import { connect } from 'react-redux';
 
 class NotificationContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ignore: true
     };
-  }
-
-  componentDidMount() {
-    const user = firebaseApp.auth().currentUser;
-    const messagesRef = firebaseApp.database().ref('/messages/' + this.props.postData.postId).orderByKey().limitToLast(20);
-    messagesRef.on('value', (snapshot) => {
-      if (snapshot.val()) {
-        const send = _.values(snapshot.val());
-        const newMessage = send[send.length - 1];
-        console.log('inside here', newMessage);
-        if (newMessage.authorId !== user.uid) {
-          console.log('other user', this.props.postData.postId);
-          this.setState({
-            title: newMessage.author,
-            options: {
-              body: newMessage.content,
-              lang: 'en',
-              dir: 'ltr',
-              icon: 'https://s3-us-west-1.amazonaws.com/walnut-test/walnutlogo1.png'
-            },
-            ignore: false
-          });
-        }
-      }
-    });
   }
 
   notifClick() {
     window.focus();
-    this.setState({ title: '', options: {}, ignore: true });
+    this.props.notifClear();
   }
 
   notifClose() {
-    this.setState({ title: '', options: {}, ignore: true });
+    this.props.notifClear();
   }
 
   notifShow() {
-    document.getElementById('sound').play();
+    document.getElementById('soundNot').play();
   }
 
   render() {
     return (
             <div className="textBoxDiv">
                 <Notification
-                    ignore={this.state.ignore && this.state.title === ''}
-                    disableActiveWindow
+                    ignore={!this.props.isHidden}
                     onClick={() => this.notifClick()}
                     onClose={() => this.notifClose()}
                     onShow={() => this.notifShow()}
                     timeout={5000}
-                    title={this.state.title}
-                    options={this.state.options}
+                    title={this.props.notif.title}
+                    options={this.props.notif.options}
                 />
-            <audio id="sound" preload="auto">
-                <source src="/sounds/button_tiny.mp3" type="audio/mpeg" />
-                <source src="/sounds/button_tiny.ogg" type="audio/ogg" />
-                <embed hidden="true" autostart="false" loop="false" src="/sounds/button_tiny.mp3" />
-            </audio>
             </div>
         );
   }
 }
 
 NotificationContainer.propTypes = {
-  postData: PropTypes.object,
+  notif: PropTypes.object,
+  notifClear: PropTypes.func,
+  isHidden: PropTypes.bool
 };
 
-export default NotificationContainer;
+const mapStateToProps = (state) => ({
+  isHidden: state.notificationReducer.isHidden
+});
 
+export default connect(mapStateToProps, null)(NotificationContainer);

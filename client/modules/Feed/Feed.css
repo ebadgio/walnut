@@ -26,7 +26,7 @@
     width: 513px;
     position: absolute;
     left: 50%;
-    margin-top: 100px;
+    margin-top: 60px;
     transform: translate(-50%);
     /*border: 1px solid rgba(34, 36, 38, 0.15);*/
 }
@@ -261,7 +261,7 @@
     margin-top: 3px !important;
     padding: 15px 20px !important;
     border: none !important;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0, .05) !important;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.24) !important;
     border-radius: 0 !important;
     height: 250px;
     padding-right: 30px !important;
@@ -411,13 +411,13 @@
 
 .newPostTrigger {
     position: fixed !important;
-    top: 105px;
-    right: 5%;
+    bottom: 30px;
+    right: 2%;
     /*background-color: #568ea3 !important;*/
     /*background-color: #1C4BBA !important;*/
     background-color: #305BC0 !important;
     color: #fff !important;
-    box-shadow: none !important;
+    box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28) !important;
     transition: background-color 0.35s ease, box-shadow 0.35s ease;
     cursor: pointer;
 }

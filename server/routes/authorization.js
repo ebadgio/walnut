@@ -1,14 +1,22 @@
 // Add Passport-related auth routes here.
-var express = require('express');
-var models = require('../models/models');
-var User = models.User;
-var Tag = models.Tag;
-const Profile = models.Profile;
-var router = express.Router();
-var path = require('path');
-var CryptoJS = require("crypto-js");
+const express = require('express');
+const models = require('../models/models');
+const User = models.User;
+// const Post = models.Post;
+const router = express.Router();
+const path = require('path');
+const CryptoJS = require("crypto-js");
 
-import adminApp from '../firebaseAdmin';
+const adminApp = require('../firebaseAdmin').admin;
+
+const defaultAvatars = [
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar1.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar2.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar3.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar4.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar5.png",
+    "https://s3-us-west-1.amazonaws.com/walnut-test/defaultAvatar6.png"
+];
 
 router.post('/signup', function (req, res) {
   // console.log('req.body.token', req.body.token);
@@ -17,26 +25,10 @@ router.post('/signup', function (req, res) {
   //console.log('req.session.userToken', req.session.userToken);
   adminApp.auth().verifyIdToken(req.body.token)
     .then(function (decodedToken) {
-      var uid = decodedToken.uid;
-
-      let useFname = '';
-      req.body.fname.split(' ').forEach((word) => {
-        const firstLetter = word.substr(0, 1).toUpperCase();
-        const rest = word.substr(1);
-        useFname += (firstLetter + rest + ' ');
-      });
-
-      let useLname = '';
-      req.body.lname.split(' ').forEach((word) => {
-        const firstLetter = word.substr(0, 1).toUpperCase();
-        const rest = word.substr(1);
-        useLname += (firstLetter + rest + ' ');
-      });
-
-
-      var new_user = new User({
+      const uid = decodedToken.uid;
+      const new_user = new User({
         firebaseId: uid,
-        fullName: useFname.trim() + ' ' + useLname.trim(),
+        fullName: req.body.fname + ' ' + req.body.lname,
         username: req.body.username,
         portfolio: [
           { name: 'media', data: [] },
@@ -49,16 +41,29 @@ router.post('/signup', function (req, res) {
           email: [req.body.email]
         },
         communities: [],
-        pictureURL: 'https://s3-us-west-1.amazonaws.com/walnut-test/defaultProfile.png',
+        pictureURL: defaultAvatars[Math.floor(Math.random() * 6)],
         isEdited: true
       });
       return new_user.save()
         .then((doc) => {
           // const token = CryptoJS.AES.encrypt(doc._id.toString(), 'secret').toString();
-          res.send({ success: true, user: doc });
+            const opts = [
+                { path: 'communities' },
+                { path: 'currentCommunity' },
+                { path: 'currentCommunity.admins' },
+                { path: 'currentCommunity.defaultTags' },
+                { path: 'currentCommunity.users' }
+            ];
+            return User.populate(doc, opts)
+                .then((pop) => {
+                    console.log('set session');
+                    req.session.userMToken = pop._id;
+                    req.user = pop;
+                    res.send({ success: true, user: pop });
+                })
         })
         .catch((err) => {
-          console.log(err);
+          console.log('reg err', err);
         })
     }).catch(function (error) {
       // Handle error
@@ -70,7 +75,7 @@ router.post('/login', function (req, res) {
   // req.session.userToken = req.body.token;
   adminApp.auth().verifyIdToken(req.body.token)
     .then(function (decodedToken) {
-      var uid = decodedToken.uid;
+      const uid = decodedToken.uid;
       return User.findOne({ firebaseId: uid })
         .then((user) => {
           user.password = req.body.password;
@@ -83,7 +88,7 @@ router.post('/login', function (req, res) {
             { path: 'currentCommunity.admins' },
             { path: 'currentCommunity.defaultTags' },
             { path: 'currentCommunity.users' }
-          ]
+          ];
           return User.populate(doc, opts)
             .then((populated) => {
               // const token = CryptoJS.AES.encrypt(populated._id.toString(), 'secret').toString();
@@ -107,7 +112,7 @@ router.post('/facebook', function (req, res) {
   req.session.userToken = req.body.token;
   adminApp.auth().verifyIdToken(req.body.token)
     .then(function (decodedToken) {
-      var uid = decodedToken.uid;
+      const uid = decodedToken.uid;
       res.status(200);
     }).catch((error) => {
       console.log('error', error);
@@ -117,18 +122,6 @@ router.post('/facebook', function (req, res) {
 router.get('/userinreq', (req, res) => {
   console.log('req.user', req.user);
   res.json({ success: true })
-})
+});
 
-// router.get('/auth/facebook', passport.authenticate('facebook'));
-//
-// router.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     res.redirect('/walnuthome');
-//   }
-// );
-//
-
-// return router;
-// }
 module.exports = router;

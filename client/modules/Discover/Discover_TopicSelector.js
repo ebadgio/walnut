@@ -23,10 +23,8 @@ class TopicSelectorContainer extends React.Component {
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
   componentDidMount() {
-    console.log('in did topics', this.props);
     if (!this.props.isFetching && this.props.otherFilters) {
       const options = this.selectOptions(this.props);
-      console.log('options didMount', this.props, options);
       if (options.length > 0) {
         this.setState({options: options});
       } else {
@@ -41,7 +39,6 @@ class TopicSelectorContainer extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!nextProps.isFetching && nextProps.otherFilters) {
       const options = this.selectOptions(nextProps);
-      console.log('options Will', nextProps, options);
       if (options.length > 0) {
         this.setState({options: options});
       } else {
@@ -116,7 +113,7 @@ class TopicSelectorContainer extends React.Component {
     return (
       <div className="topicContainer">
         <div id="choice_form">
-          <span className="currentView">Currently viewing posts including: </span>
+          {/* <span className="currentView">Currently viewing posts including: </span>*/}
           {this.props.useFilters.length > 0 ?
             this.props.useFilters.map((filter, index) => (
               <div key={index} className="tag">
@@ -125,8 +122,8 @@ class TopicSelectorContainer extends React.Component {
               </div>
               ))
            :
-            <span className="allTopics">All Topics</span>
-          }
+            null }
+            {/* <span className="allTopics">All Topics</span>*/}
         </div>
          <Search
              className="topicSearchBar"

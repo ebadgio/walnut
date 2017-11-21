@@ -1,7 +1,10 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
-import {User, Tag, Post, Community} from '../../models/models';
-import Promise from 'promise';
+const User = require('../../models/models').User;
+const Post = require('../../models/models').Post;
+const Tag = require('../../models/models').Tag;
+const Community = require('../../models/models').Community;
+const Promise = require('promise');
 
 router.get('/user', (req, res) => {
   User.findById(req.user._id)
@@ -84,6 +87,7 @@ router.post('/create/community', (req, res) => {
 
 router.post('/join/community', (req, res) => {
   let joined;
+  let popped;
   Community.findById(req.body.communityId)
         .then((community) => {
           if (community.users.indexOf(req.user._id) === -1) {
@@ -121,7 +125,29 @@ router.post('/join/community', (req, res) => {
           return User.populate(savedUser, opts);
         })
         .then((populatedUser) => {
-          res.json({success: true, community: joined, user: populatedUser});
+          popped = populatedUser;
+          const newMember = new Post({
+            content: 'has joined' + ' ' + joined.title + '!',
+            createdAt: new Date(),
+            createdBy: req.user._id,
+            likes: [],
+            tags: [],
+            comments: [],
+            commentNumber: 0,
+            community: req.body.communityId,
+            link: '',
+            attachments: {
+              name: '',
+              url: '',
+              type: ''
+            },
+            newMemberBanner: true
+          });
+          return newMember.save();
+        })
+        .then((savedPost) => {
+          console.log('new banner', savedPost);
+          res.json({success: true, community: joined, user: popped});
         })
         .catch((err) => {
           console.log('join error', err);
@@ -133,8 +159,7 @@ router.post('/join/community/code', (req, res) => {
   const code = req.body.code;
   let joined;
   let foundCommunityId;
-
-
+  let popped;
   // TODO: decrypt
   Community.find()
     .then((arr) => {
@@ -147,9 +172,8 @@ router.post('/join/community/code', (req, res) => {
         const potentialID = startId + '_' + letters + '_' + status + '_' + endId;
         if ( potentialID === code ) {
           return community;
-        } else {
-          return null;
         }
+        return null;
       });
     })
     .then((communityArr) => {
@@ -198,9 +222,31 @@ router.post('/join/community/code', (req, res) => {
       ];
       return User.populate(savedUser, opts);
     })
-    .then((populatedUser) => {
-      res.json({ success: true, community: joined, user: populatedUser });
-    })
+      .then((populatedUser) => {
+        popped = populatedUser;
+        const newMember = new Post({
+          content: 'has joined' + ' ' + joined.title + '!',
+          createdAt: new Date(),
+          createdBy: req.user._id,
+          likes: [],
+          tags: [],
+          comments: [],
+          commentNumber: 0,
+          community: req.body.communityId,
+          link: '',
+          attachments: {
+            name: '',
+            url: '',
+            type: ''
+          },
+          newMemberBanner: true
+        });
+        return newMember.save();
+      })
+      .then((savedPost) => {
+        console.log('new banner', savedPost);
+        res.json({success: true, community: joined, user: popped});
+      })
     .catch((err) => {
       console.log('join error code', err);
       res.json({ error: err });
@@ -263,7 +309,8 @@ router.post('/toggle/community', (req, res) => {
                         commentNumber: postObj.commentNumber,
                         link: postObj.link,
                         attachment: postObj.attachment,
-                        edited: postObj.edited
+                        edited: postObj.edited,
+                        newMemberBanner: postObj.newMemberBanner
                       };
                     });
                     res.json({ data: populatedUser, defaultFilters: defaultFilters, otherFilters: otherFilters, posts: posts, lastRefresh: new Date() });
@@ -330,7 +377,8 @@ router.post('/toggle/checked', (req, res) => {
                               commentNumber: postObj.commentNumber,
                               link: postObj.link,
                               attachment: postObj.attachment,
-                              edited: postObj.edited
+                              edited: postObj.edited,
+                              newMemberBanner: postObj.newMemberBanner
                             };
                           });
                           res.json({ posts: posts, user: user, lastRefresh: new Date()});
@@ -375,7 +423,8 @@ router.post('/toggle/checkedtemp', (req, res) => {
               commentNumber: postObj.commentNumber,
               link: postObj.link,
               attachment: postObj.attachment,
-              edited: postObj.edited
+              edited: postObj.edited,
+              newMemberBanner: postObj.newMemberBanner
             };
           });
           if (posts.length > 10) {

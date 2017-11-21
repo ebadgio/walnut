@@ -1,8 +1,25 @@
 #Discover {
-  /* display: flex;*/
-  /* flex-direction: row;*/
-  /* margin-top: 6vh;*/
-  /* justify-content: space-between;*/
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    /*min-width: 960px;*/
+}
+
+@media (max-width: 960px) {
+    #Discover {
+        display: flex;
+        justify-content: space-between;
+        min-width: 960px;
+    }
+    .Feed_Wrapper {
+        position: relative !important;
+        transform: none !important;
+        left: auto !important;
+    }
+
+    .topicContainer {
+        position: relative !important;
+        height: fit-content !important;
+    }
 }
 
 .RightSideBar_Container {
@@ -310,19 +327,19 @@
 
 .topicContainer {
     position: fixed;
-    z-index: 300;
-    width: calc(100vw - 60px);
-    min-width: 600px;
-    top: 0;
+    width: 220px;
+    margin-right: 2vw;
+    margin-top: 60px;
     right: 0;
     color: #353535 !important;
-    margin-top: 43px;
-    height: 50px;
+    /*height: 50px;*/
     display: flex;
+    flex-direction: column;
     align-items: center;
-    border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+    height: auto;
     background: #fff;
-    opacity: .75;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.24) !important;
+    border-radius: 28px;
 }
 
 .topicSelectorDiscover {
@@ -335,9 +352,8 @@
 }
 
 .topicSearchBar {
-    width: 200px !important;
-    margin-left: auto !important;
-    margin-right: 10px !important;
+    margin-top: 10px;
+    margin-bottom: 10px;
 
 }
 

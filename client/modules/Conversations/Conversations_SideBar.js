@@ -4,38 +4,43 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Conversations.css';
 import ConversationCard from './Conversations_FollowedPostCard';
-import { Loader, Sidebar, Button, Icon, Segment  } from 'semantic-ui-react';
 import firebaseApp from '../../firebase';
 import _ from 'underscore';
-import uuidv4 from 'uuid/v4';
 import getMyConvosThunk from '../../thunks/user_thunks/getMyConvosThunk';
 
 class ConversationsSideBar extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      called: false
+    };
   }
 
   componentDidMount() {
     if (this.props.currentUser) {
-      const followsRef = firebaseApp.database().ref('/follows/' + this.props.currentUser.firebaseId + '/' + this.props.currentCommunity);
+      const followsRef = firebaseApp.database().ref('/follows/' +
+          this.props.currentUser.firebaseId +
+          '/' +
+          this.props.currentUser.currentCommunity._id);
       followsRef.on('value', (snapshot) => {
         if (snapshot.val()) {
           const follows = _.pairs(snapshot.val());
-                    // this will filter down to only those postIds which are mapped to true
+          // this will filter down to only those postIds which are mapped to true
           const myConvs = follows.filter((follow) => follow[1]).map((fol) => fol[0]);
           if (myConvs) {
+            console.log('myConvs', myConvs);
             this.props.getConvos(myConvs);
-            setTimeout(() => {
-              console.log('TIMEOUT FINISHED NOW');
-              if (this.props.topPost.postId) {
-                this.props.togglePostData(this.props.topPost);
-              }
-            }, 1000);
             this.props.addIds(myConvs);
           }
         }
       });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.topPost.postId && !this.state.called) {
+      this.props.togglePostData(nextProps.topPost);
+      this.setState({called: true});
     }
   }
 

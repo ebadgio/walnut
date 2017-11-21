@@ -13,6 +13,7 @@ import firebaseApp from '../../firebase';
 import _ from 'underscore';
 import getPostFollowersThunk from '../../thunks/post_thunks/getPostFollowers';
 import editPostThunk from '../../thunks/post_thunks/editPostThunk';
+import NewMemberBanner from './Post_NewMember';
 
 
 class Post extends React.Component {
@@ -44,11 +45,17 @@ class Post extends React.Component {
     this.getUseDate = this.getUseDate.bind(this);
   }
 
+  componentWillMount() {
+    this.getLinkPreview(this.props.postData);
+  }
+
   componentDidMount() {
     setTimeout(() => {
       const elem = document.getElementById(this.props.postData.postId);
-      this.setState({minHeighter: elem.clientHeight + 20});
-    }, 5000);
+      if (elem) {
+        this.setState({minHeighter: elem.clientHeight + 20});
+      }
+    }, 7500);
 
     const user = firebaseApp.auth().currentUser;
     this.setState({ user: user, timeStamp: this.getUseDate(this.props.postData.createdAt)});
@@ -89,15 +96,10 @@ class Post extends React.Component {
     // unreads stuff
     firebaseApp.database().ref('/unreads/' + user.uid + '/' + this.props.postData.postId).on('value', snapshotB => {
       const unreadCount =  snapshotB.val();
-      console.log('unreads', unreadCount);
       if (!isNaN(unreadCount) && unreadCount !== null) {
         this.setState({unreads: unreadCount});
       }
     });
-  }
-
-  componentWillMount() {
-    this.getLinkPreview(this.props.postData);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -126,7 +128,6 @@ class Post extends React.Component {
       url: urls[0]
     })
     .then((response) => {
-      console.log('return meta fetch', response.data.meta);
       this.setState({ meta: response.data.meta });
       if (urls.length !== 0) {
         const idx = postData.content.indexOf(urls[0]);
@@ -205,19 +206,6 @@ class Post extends React.Component {
     return urls;
   }
 
-  handleClick() {
-    this.setState({isOpen: !this.state.isOpen});
-  }
-
-  toggleLike() {
-    this.props.newLike();
-    if (this.state.isLiked) {
-      this.setState({likeCount: this.state.likeCount - 1, isLiked: false});
-    } else {
-      this.setState({likeCount: this.state.likeCount + 1, isLiked: true});
-    }
-  }
-
   renderLightBox(data) {
     this.setState({lightBoxData: data});
   }
@@ -232,15 +220,20 @@ class Post extends React.Component {
 
   joinConversation() {
     const updates = {};
-    updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = true;
-    updates['/followGroups/' + this.props.postData.postId + '/' + this.state.user.uid] = true;
+    updates['/follows/' + this.state.user.uid + '/' +
+    this.props.currentUser.currentCommunity._id +
+          '/' + this.props.postData.postId] = true;
+    updates['/followGroups/' + this.props.postData.postId +
+          '/' + this.state.user.uid] = true;
     firebaseApp.database().ref().update(updates);
   }
 
   // Don't delete, will use it eventually
   leaveConversation() {
     const updates = {};
-    updates['/follows/' + this.state.user.uid + '/' + this.props.currentUser.currentCommunity._id + '/' + this.props.postData.postId] = null;
+    updates['/follows/' + this.state.user.uid + '/'
+            + this.props.currentUser.currentCommunity._id + '/' +
+            this.props.postData.postId] = null;
     updates['/followGroups/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
     firebaseApp.database().ref().update(updates);
   }
@@ -281,25 +274,6 @@ class Post extends React.Component {
     this.setState({downloadUrl: ''});
   }
 
-  // changeUnreads() {
-  //   // TODO: unreads to 0
-  // }
-
-  // toggleDrawer() {
-  //   const before = this.state.showDrawer;
-  //   this.setState({showDrawer: !this.state.showDrawer});
-
-  //   // trying to stop it from making the page jump, it only works sometimes tho so i commented it out
-  //   // if (!before) {
-  //   //   this.getPlace();
-  //   // }
-  // }
-
-  getPlace() {
-    const elem = document.getElementById('commentDiv');
-    elem.scrollIntoView({block: 'center'});
-  }
-
   startEdit() {
     this.props.beginEdit();
     this.setState({editing: true});
@@ -317,7 +291,9 @@ class Post extends React.Component {
 
   render() {
     const { minHeighter } = this.state;
-    if (this.state.loading) {
+    if (this.props.newMemberBanner) {
+      return (<NewMemberBanner data={this.props.postData} />);
+    } else if (this.state.loading) {
       return(
           <div className="postOuter">
             <Segment className={this.state.showDrawer ? 'postSegmentDrawerOpen' : 'postSegment'}>
@@ -343,7 +319,8 @@ class Post extends React.Component {
                         {!this.state.isFollowing ?
                             <Dropdown.Item icon="plus" onClick={() => this.joinConversation()} text="Follow" /> :
                             <Dropdown.Item text="Unfollow" onClick={() => this.leaveConversation()} />}
-                        {this.props.currentUser.fullName === this.state.postData.username ? <Dropdown.Item icon="edit" text="Edit post" onClick={() => this.startEdit()} /> : null}
+                        {this.props.currentUser.fullName === this.state.postData.username ?
+                            <Dropdown.Item icon="edit" text="Edit post" onClick={() => this.startEdit()} /> : null}
                     </Dropdown.Menu>
                   </Dropdown>
                 </div>
@@ -400,7 +377,11 @@ class Post extends React.Component {
                 <p className="postTimeStamp">{this.state.timeStamp}</p>
                   {this.state.postData.edited ? <p className="isEdited">(edited)</p> : null}
               </div>
-                {this.state.showStatus ? <div>{this.state.success ? <span className="successSave">Save successful!</span> : <span className="failSave">Something went wrong...</span>}</div> : null}
+                {this.state.showStatus ?
+                    <div>{this.state.success ?
+                        <span className="successSave">Save successful!</span> :
+                        <span className="failSave">Something went wrong...</span>}
+                    </div> : null}
                 {this.state.isFollowing ? <div className="isFollowingGroup">
                   <Icon name="checkmark" className="iconFollowing" size={'small'} />
                   <p className="followingText">Following</p>
@@ -408,14 +389,15 @@ class Post extends React.Component {
                   <Icon name="plus" className="followIcon" />
                   Follow
                 </div>}
-              <Dropdown className="postDropdown" icon={'ellipsis horizontal'}>
+                {this.state.nested ? null : <Dropdown className="postDropdown" icon={'ellipsis horizontal'}>
                 <Dropdown.Menu>
                     {!this.state.isFollowing ?
                         <Dropdown.Item icon="plus" onClick={() => this.joinConversation()} text="Follow" /> :
                         <Dropdown.Item text="Unfollow" onClick={() => this.leaveConversation()} />}
-                    {this.props.currentUser.fullName === this.state.postData.username ? <Dropdown.Item icon="edit" text="Edit post" onClick={() => this.startEdit()} /> : null}
+                    {this.props.currentUser.fullName === this.state.postData.username ?
+                        <Dropdown.Item icon="edit" text="Edit post" onClick={() => this.startEdit()} /> : null}
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown>}
             </div>
               {!this.state.editing ?
                   <div>
@@ -478,12 +460,12 @@ class Post extends React.Component {
               </div>))}
             </div>
             <div></div>
-            <div className="commentDiv" id="commentDiv">
+              {this.props.nested ? null : <div className="commentDiv" id="commentDiv">
               <div className="messagesGroup" onClick={() => this.props.addChat(this.state.postData)}>
                 <Icon size="big" name="comments outline" className="commentIcon" />
                 <p className="messageText">Chat</p>
               </div>
-            </div>
+            </div>}
           </div>
         </Segment>
       </div>
@@ -502,7 +484,8 @@ Post.propTypes = {
   saving: PropTypes.bool,
   saveError: PropTypes.bool,
   beginEdit: PropTypes.func,
-  finishEdit: PropTypes.func
+  finishEdit: PropTypes.func,
+  newMemberBanner: PropTypes.object
 };
 
 const mapDispatchToProps = (dispatch) => ({

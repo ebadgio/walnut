@@ -1,10 +1,8 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
-import {User, Tag, Post, Quote, Community} from '../../models/models';
-import axios from 'axios';
-import Promise from 'promise';
-import firebaseApp from '../../../client/firebase';
-import adminApp from '../../firebaseAdmin';
+const User = require('../../models/models').User;
+const Post = require('../../models/models').Post;
+const Community = require('../../models/models').Community;
 
 router.post('/location', (req, res) => {
   User.findById(req.user._id)
@@ -102,29 +100,39 @@ router.post('/removeportfoliotabs', (req, res) => {
 });
 
 router.post('/community', (req, res) => {
-  const tagModels = req.body.newFilters.map((filter) =>
-        new Tag({
-          name: filter.toUpperCase()
+  console.log('data', req.body.title);
+  console.log('data', req.body.image);
+  console.log('data', req.body.users);
+  console.log('data', req.body.admins);
+  Community.findById(req.user.currentCommunity)
+    .then((community) => {
+      community.title = req.body.title;
+      community.image = req.body.image;
+      community.users = req.body.users;
+      community.admins = req.body.admins;
+      return community.save();
+    })
+    .then(() => {
+      User.findById(req.user._id)
+        .then((user) => {
+          const opts = [
+            { path: 'communities' },
+            { path: 'currentCommunity' },
+            {
+              path: 'currentCommunity',
+              populate: { path: 'admins defaultags users' }
+            }
+          ];
+          return User.populate(user, opts);
         })
-    ).concat(req.body.oldFilters);
-  Promise.all(tagModels.map((tag) => tag.save()))
-        .then((values) => {
-          Community.findById(req.user.currentCommunity)
-          .then((community) => {
-            community.title = req.body.title;
-            community.image = req.body.image;
-            community.admins = req.body.admins;
-            community.defaultTags = values.map((val) => val._id);
-            return community.save();
-          })
-          .then(() => {
-            res.json({success: true});
-          });
-        })
-        .catch((err) => {
-          console.log('got error', err);
-          res.json({error: err});
+        .then((userSave) => {
+          res.json({ success: true, user: userSave });
         });
+    })
+    .catch((err) => {
+      console.log('got error', err);
+      res.json({error: err});
+    });
 });
 
 

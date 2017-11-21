@@ -78,7 +78,6 @@ class CreateCommunityPage extends React.Component {
 
   handleNewComm() {
     if (this.state.file !== '' && this.state.titleValue) {
-      console.log('inside with pic', this.state.file, this.state.titleValue, this.state.status, this.state.otherTags);
       this.props.handleCreate(this.state.file, this.state.titleValue, this.state.status, this.state.otherTags, this.state.newMembers);
       this.setState({ titleValue: '', status: 'public', otherTags: [] });
       this.props.closeModal();
@@ -103,7 +102,6 @@ class CreateCommunityPage extends React.Component {
   }
 
   handleRadio(e, val) {
-    console.log('val val', val.value);
     this.setState({ status: val.value });
   }
 
@@ -292,7 +290,7 @@ class CreateCommunityPage extends React.Component {
                             id="memberInput"
                             labelPosition="left"
                             type="text"
-                            placeholder="Add Members..."
+                            placeholder="Add members by email..."
                             value={this.state.member}
                             onChange={(e) => { this.handleMemberChange(e); this.findEnterMember(e); }} >
                             <input />

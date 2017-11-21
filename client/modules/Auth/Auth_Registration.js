@@ -16,7 +16,8 @@ class Register extends React.Component {
       password: '',
       repeat: '',
       failed: false,
-      passwordFail: false
+      passwordFail: false,
+      passwordShort: false
     };
   }
 
@@ -45,6 +46,9 @@ class Register extends React.Component {
     if (this.state.password !== this.state.repeat) {
       this.setState({ passwordFail: true });
     }
+    if (this.state.password.length < 6) {
+      this.setState({ passwordShort: true });
+    }
     if (this.state.fName && this.state.lName && this.state.email && this.state.password === this.state.repeat) {
       this.props.emailRegistration(this.state.fName, this.state.lName, this.state.email, this.state.password);
     }
@@ -53,16 +57,15 @@ class Register extends React.Component {
   render() {
     return (
       <div className="registerCard">
-        {/* {!this.props.isVerified ?
-              <Message icon>
-                <Icon name="circle notched" loading />
-                <Message.Content>
-                  <Message.Header>Email will be sent soon </Message.Header>
-                  Please verify your account
-                </Message.Content>
-              </Message> :
-              null
-          } */}
+        {this.state.passwordShort ?
+          <Message icon>
+            <Icon name="warning sign" />
+            <Message.Content>
+              <Message.Header>Passwords must be atleast 6 characters</Message.Header>
+            </Message.Content>
+          </Message> :
+          null
+        }
         {this.state.passwordFail ?
           <Message icon>
             <Icon name="warning sign" />

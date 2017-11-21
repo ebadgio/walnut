@@ -6,7 +6,6 @@ import './Directory.css';
 import getUsersThunk from '../../thunks/directory_thunks/getUsersThunk';
 import DirectoryCard from './Directory_Card';
 import Select from 'react-select';
-import uuidv4 from 'uuid/v4';
 
 class Directory extends React.Component {
   constructor(props) {
@@ -29,10 +28,7 @@ class Directory extends React.Component {
 
   componentDidMount() {
     const urls = this.props.location.pathname;
-    localStorage.setItem('url', urls);
     sessionStorage.setItem('url', urls);
-    // testing here:
-    // this.setState({currentCards: this.props.users});
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,7 +59,7 @@ class Directory extends React.Component {
               />
               {this.state.currentCards.map(user =>
               <DirectoryCard
-                key={uuidv4()}
+                key={user._id}
                 picture={user.pictureURL}
                 name={user.fullName}
                 email={user.contact.email[0]}
