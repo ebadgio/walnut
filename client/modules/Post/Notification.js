@@ -24,9 +24,6 @@ class NotificationContainer extends React.Component {
   }
 
   render() {
-    console.log('sound', document.getElementById('soundNot'));
-    console.log('rendering notification', this.props.notif);
-    console.log('isHIdden', this.props.isHidden);
     return (
             <div className="textBoxDiv">
                 <Notification

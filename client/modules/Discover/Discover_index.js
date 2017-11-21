@@ -39,7 +39,6 @@ class Home extends React.Component {
   }
 
   notificationFire(newPosts) {
-    console.log('function is firing');
     const mappedArr = newPosts.map((post) => {
       return {
         title: post.username,
@@ -54,8 +53,6 @@ class Home extends React.Component {
     });
 
     this.setState({ notif: mappedArr[0] });
-
-    console.log('notifArr', mappedArr );
 
     setTimeout(() => {
       this.notifClear();

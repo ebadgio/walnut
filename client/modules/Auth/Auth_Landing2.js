@@ -6,7 +6,6 @@ import {history} from './Auth_index';
 
 class NewLanding extends React.Component {
   render() {
-    console.log('hist', history);
     return(
         <div>
             <div className="mainPhoto">

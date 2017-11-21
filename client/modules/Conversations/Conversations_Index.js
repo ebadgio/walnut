@@ -23,7 +23,6 @@ class Conversations extends React.Component {
 
 
   togglePostData(data) {
-    console.log('toggling', data);
     const followersRef = firebaseApp.database().ref('/followGroups/' + data.postId);
     followersRef.on('value', (snapshot) => {
       if (snapshot.val()) {
