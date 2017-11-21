@@ -84,7 +84,7 @@ app.use(session({
 
 
 app.use(function(req, res, next) {
-  console.log('use function', req.session.userMToken);
+  console.log('use function 2', req.session.userMToken);
 
   // RELOAD
   // req.session.reload((err) => {
@@ -97,12 +97,12 @@ app.use(function(req, res, next) {
   //   console.log('session obj', session)
   //   return;
   // })
-
+  // console.log('local', localStorage);
   if(req.user) {
     console.log('req.user exists');
     next()
   }
-  if (req.session.userMToken) {
+  else if (req.session.userMToken) {
     // const mongoIdByte = CryptoJS.AES.decrypt(req.session.userMToken.toString(), 'secret');
     // const mongoId = mongoIdByte.toString(CryptoJS.enc.Utf8);
     console.log('have user m token');
@@ -112,13 +112,10 @@ app.use(function(req, res, next) {
           next()
         })
   } else {
-    console.log('inside this fucking piece of shit')
-    if (app.get('env') !== 'development') {
-      req.session.destroy();
-      req.user = undefined;
-      localStorage.clear();
-      res.redirect('https:www.walnutnetwork.com/')
-    }
+    console.log('inside this fucking piece of shit', req.session, req.user);
+    req.session.destroy();
+    req.user = undefined;
+    // localStorage.clear();
     next();
   }
 });
