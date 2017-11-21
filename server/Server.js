@@ -78,25 +78,31 @@ const mongoStore = new MongoStore({
 app.use(session({
   secret: process.env.SECRET,
   store: mongoStore,
-  resave: true
+  resave: true,
   // userToken: null
 }));
 
+
 app.use(function(req, res, next) {
+
   console.log('use function', req.session, req.session.userMToken, req.user);
+
   if(req.user) {
+    console.log('req.user exists');
     next()
   }
   if (req.session.userMToken) {
     // const mongoIdByte = CryptoJS.AES.decrypt(req.session.userMToken.toString(), 'secret');
     // const mongoId = mongoIdByte.toString(CryptoJS.enc.Utf8);
+    console.log('have user m token');
     User.findById(req.session.userMToken)
         .then((response) => {
-          // console.log(response);
           req.user = response;
           next()
         })
   } else {
+    console.log('inside this fucking piece of shit')
+    req.session.destroy();
     req.user = undefined;
     next();
   }
