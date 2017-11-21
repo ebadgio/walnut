@@ -117,7 +117,7 @@ app.use(function(req, res, next) {
       req.session.destroy();
       req.user = undefined;
       localStorage.clear();
-      res.redirect('https:www.walnutnetwork.com/')
+      res.redirect('https://www.walnutnetwork.com/')
     }
     next();
   }
