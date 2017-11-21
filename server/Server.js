@@ -83,7 +83,7 @@ app.use(session({
 }));
 
 app.use(function(req, res, next) {
-  console.log('use function', req.session.userMToken);
+  console.log('use function', req.session, req.session.userMToken, req.user);
   if(req.user) {
     next()
   }
