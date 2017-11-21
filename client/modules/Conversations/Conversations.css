@@ -3,7 +3,7 @@
     position: absolute;
     bottom: 40px;
     min-width: 900px;
-    height: 524px;
+    height: 2;
     width: calc(100vw - 200px);
     margin-left: 170px;
     display: flex;
