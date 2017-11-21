@@ -112,6 +112,10 @@
     overflow-y: auto;
 }
 
+#minichatMessageInput::-webkit-scrollbar {
+    display: none;
+}
+
 .headerTopics {
     padding-left: 10px;
     color: #4EAABA;

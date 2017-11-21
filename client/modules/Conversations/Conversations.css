@@ -9,7 +9,68 @@
     display: flex;
     flex-direction: row;
     box-shadow: 0 0 2px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.24) !important;
+}  
+
+@-moz-document url-prefix() {
+.conversationsMainContainer {
+    margin-right: 0;
+    position: absolute;
+    bottom: 40px;
+    min-width: 900px;
+    height: 552px;
+    width: calc(100vw - 200px);
+    margin-left: 170px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.24) !important;
 }
+}
+
+@media not all and (min-resolution:.001dpcm)
+{ @supports (-webkit-appearance:none) and (stroke-color:transparent) {
+.conversationsMainContainer {
+    margin-right: 0;
+    position: absolute;
+    bottom: 40px;
+    min-width: 900px;
+    height: 549px;
+    width: calc(100vw - 200px);
+    margin-left: 170px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.24) !important;
+}
+}}
+
+
+
+/* @media screen and (-webkit-min-device-pixel-ratio:0) {
+.conversationsMainContainer {
+    margin-right: 0;
+    position: absolute;
+    bottom: 40px;
+    min-width: 900px;
+    height: 584px;
+    width: calc(100vw - 200px);
+    margin-left: 170px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.24) !important;
+}
+
+::i-block-chrome, .conversationsMainContainer {
+    margin-right: 0;
+    position: absolute;
+    bottom: 40px;
+    min-width: 900px;
+    height: 552px;
+    width: calc(100vw - 200px);
+    margin-left: 170px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.24) !important;
+}
+} */
 
 .conversationsSideBar {
     flex: 2;
@@ -139,6 +200,9 @@
     font-weight: 500 !important;
 }
 
+#conversationsMessageInput::-webkit-scrollbar {
+    display: none;
+}
 
 .miniPostCard {
     margin-bottom: 0 !important;

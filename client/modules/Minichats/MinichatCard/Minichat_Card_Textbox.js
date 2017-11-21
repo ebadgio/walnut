@@ -76,12 +76,10 @@ class MinichatTextBox extends React.Component {
 
   // this listens for notification banners
   notificationFire(postId) {
-    console.log('inside fire function');
     const user = firebaseApp.auth().currentUser;
     const messagesRef = firebaseApp.database().ref('/messages/' + postId).orderByKey().limitToLast(20);
     messagesRef.on('value', (snapshot) => {
       if (snapshot.val()) {
-        console.log('snap got');
         const send = _.values(snapshot.val());
         const newMessage = send[send.length - 1];
         if (newMessage.authorId !== user.uid) {
@@ -98,7 +96,6 @@ class MinichatTextBox extends React.Component {
               ignore: false
             }
           });
-          console.log('notif object', this.state.notif);
           setTimeout(() => { this.setState({ notif: {} }); }, 4000);
         }
       }
@@ -239,10 +236,11 @@ class MinichatTextBox extends React.Component {
     this.setState({ file: myFile[0]});
   }
 
+
   render() {
     return(
         <div className={this.state.active ? 'minichatTextBoxActive' : 'minichatTextBox'}>
-        {Object.keys(this.state.notif).length > 0 ? <NotificationContainer notifClear={this.notifClear()} notif={this.state.notif} /> : null}
+        {Object.keys(this.state.notif).length > 0 ? <NotificationContainer notifClear={() => this.notifClear()} notif={this.state.notif} /> : null}
           <FileModal
               handleFileSubmit={(body) => this.handleAwsUpload(body)}
               handleFileClose={()=>this.handleFileClose()}

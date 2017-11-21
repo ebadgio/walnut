@@ -13,6 +13,7 @@ import WalnutLoader from './App_WalnutLoader';
 import LeftSideContainer from './App_Left_Side_Container';
 import Conversations from '../Conversations/Conversations_Index';
 import firebaseApp from '../../firebase';
+import PageVisibility from 'react-page-visibility';
 
 class Community extends React.Component {
   constructor(props) {
@@ -56,10 +57,15 @@ class Community extends React.Component {
     this.props.updateLocation([]);
   }
 
+  handleVisibilityChange(visibilityState, documentHidden) {
+    this.props.changeWindowStatus(documentHidden);
+  }
+
   render() {
     if (this.props.isReady && this.props.currentUser.fullName) {
       return (
             <div className={this.props.showDimmer ? 'newPostDimmer' : null}>
+              <PageVisibility onChange={(e, i) => this.handleVisibilityChange(e, i)} />
                 <NavBar/>
                 <LeftSideContainer totalUnreads={this.state.totalUnreads}/>
                 <Switch>
@@ -86,7 +92,8 @@ Community.propTypes = {
   history: PropTypes.object,
   currentUser: PropTypes.object,
   showDimmer: PropTypes.bool,
-  match: PropTypes.object
+  match: PropTypes.object,
+  changeWindowStatus: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -98,6 +105,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   updateLocation: (params) => dispatch(updateLocationThunk(params)),
+  changeWindowStatus: (isHidden) => dispatch({type: 'CHANGE_WINDOW_STATUS', isHidden: isHidden})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Community);

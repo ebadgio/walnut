@@ -233,7 +233,7 @@ class ConversationsTextBox extends React.Component {
   render() {
     return(
         <div className="conversationsTextBox">
-          {Object.keys(this.state.notif).length > 0 ? <NotificationContainer notifClear={this.notifClear()} notif={this.state.notif} /> : null}
+          {Object.keys(this.state.notif).length > 0 ? <NotificationContainer notifClear={() => this.notifClear()} notif={this.state.notif} /> : null}
             <FileModal
                 handleFileSubmit={(body) => this.handleAwsUpload(body)}
                 handleFileClose={()=>this.handleFileClose()}

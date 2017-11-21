@@ -80,6 +80,7 @@
     "react-images": "^0.5.4",
     "react-infinite-scroller": "^1.0.14",
     "react-mapbox-gl": "^2.1.0",
+    "react-page-visibility": "^1.0.0",
     "react-places-autocomplete": "^5.3.1",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",

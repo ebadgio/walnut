@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Notification from 'react-web-notification';
+import { connect } from 'react-redux';
 
 class NotificationContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ignore: true
     };
   }
 
@@ -20,15 +20,17 @@ class NotificationContainer extends React.Component {
   }
 
   notifShow() {
-    document.getElementById('sound').play();
+    document.getElementById('soundNot').play();
   }
 
   render() {
+    console.log('sound', document.getElementById('soundNot'));
     console.log('rendering notification', this.props.notif);
+    console.log('isHIdden', this.props.isHidden);
     return (
             <div className="textBoxDiv">
                 <Notification
-                    ignore={this.props.notif.ignore && this.props.notif.title === ''}
+                    ignore={!this.props.isHidden}
                     onClick={() => this.notifClick()}
                     onClose={() => this.notifClose()}
                     onShow={() => this.notifShow()}
@@ -36,11 +38,6 @@ class NotificationContainer extends React.Component {
                     title={this.props.notif.title}
                     options={this.props.notif.options}
                 />
-            <audio id="sound" preload="auto">
-                <source src="/sounds/button_tiny.mp3" type="audio/mpeg" />
-                <source src="/sounds/button_tiny.ogg" type="audio/ogg" />
-                <embed hidden="true" autostart="false" loop="false" src="/sounds/button_tiny.mp3" />
-            </audio>
             </div>
         );
   }
@@ -48,7 +45,12 @@ class NotificationContainer extends React.Component {
 
 NotificationContainer.propTypes = {
   notif: PropTypes.object,
-  notifClear: PropTypes.func
+  notifClear: PropTypes.func,
+  isHidden: PropTypes.bool
 };
 
-export default NotificationContainer;
+const mapStateToProps = (state) => ({
+  isHidden: state.notificationReducer.isHidden
+});
+
+export default connect(mapStateToProps, null)(NotificationContainer);

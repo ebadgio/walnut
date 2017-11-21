@@ -673,6 +673,18 @@ button.ui.button > input {
     align-items: center;
 }
 
+@-moz-document url-prefix() {
+.walnutLoading {
+    background: #fff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+}
+
+
 .walnutHead {
     color: #3a3a3a;
     text-align: center;

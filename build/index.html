@@ -27,6 +27,11 @@
   </style>
   <body>
     <div id="root"></div>
+    <audio id="soundNot" preload="auto">
+      <source src="/sounds/button_tiny.mp3" type="audio/mpeg" />
+      <source src="/sounds/button_tiny.ogg" type="audio/ogg" />
+      <embed hidden="true" autostart="false" loop="false" src="/sounds/button_tiny.mp3" />
+    </audio>
     <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
     <script>
       // Initialize Firebase
