@@ -78,12 +78,26 @@ const mongoStore = new MongoStore({
 app.use(session({
   secret: process.env.SECRET,
   store: mongoStore,
-  resave: true
+  resave: true,
   // userToken: null
 }));
 
+
 app.use(function(req, res, next) {
   console.log('use function', req.session.userMToken);
+
+  // RELOAD
+  // req.session.reload((err) => {
+  //   console.log('regened session', req.session);
+  // })
+
+  // GETTING SESSION NO DB
+  // console.log('session id ', req.sessionID);
+  // store.get(req.sessionID, (err, session) => {
+  //   console.log('session obj', session)
+  //   return;
+  // })
+
   if(req.user) {
     console.log('req.user exists');
     next()
@@ -94,12 +108,17 @@ app.use(function(req, res, next) {
     console.log('have user m token');
     User.findById(req.session.userMToken)
         .then((response) => {
-          console.log(response);
           req.user = response;
           next()
         })
   } else {
-    req.user = undefined;
+    console.log('inside this fucking piece of shit')
+    if (app.get('env') !== 'development') {
+      req.session.destroy();
+      req.user = undefined;
+      localStorage.clear();
+      res.redirect('https:www.walnutnetwork.com/')
+    }
     next();
   }
 });
