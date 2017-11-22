@@ -93,7 +93,7 @@ router.post('/login', function (req, res) {
             .then((populated) => {
               // const token = CryptoJS.AES.encrypt(populated._id.toString(), 'secret').toString();
               req.session.userMToken = populated._id;
-              req.session.save(function (err) { console.log(err); });
+              req.session.save((err) => { console.log('session save error', err); });
               console.log('req.session token', req.session.userMToken);
               req.user = populated;
               res.send({ success: true, user: populated });

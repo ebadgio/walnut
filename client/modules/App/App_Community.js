@@ -14,6 +14,7 @@ import LeftSideContainer from './App_Left_Side_Container';
 import Conversations from '../Conversations/Conversations_Index';
 import firebaseApp from '../../firebase';
 import PageVisibility from 'react-page-visibility';
+import {history} from '../Auth/Auth_index';
 
 class Community extends React.Component {
   constructor(props) {
@@ -22,10 +23,23 @@ class Community extends React.Component {
   }
 
   componentDidMount() {
+    console.log('COMMUNITY MOUNT');
     localStorage.setItem('isUserInCommunity', true);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.handlePosition.bind(this), this.handleError.bind(this));
     }
+
+
+    // Safari + firefox session issue bandaid
+    setTimeout(() => {
+      if (!this.props.currentUser.fullName) {
+        console.log('CLEARING');
+        localStorage.clear();
+        history.replace('/');
+        alert('Please login in again to continue. We are currently experiencing issues with Cookies in ' +
+            ' Safari/Firefox Sorry for the inconvenience.');
+      }
+    }, 10000);
   }
 
   componentWillReceiveProps(nextProps) {

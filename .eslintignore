@@ -1,7 +1,7 @@
 node_modules
 coverage
 webpack.*.js
-server/Server.js
+server/server.js
 *test.js
 *authorization.js
 *myNpmModules*
