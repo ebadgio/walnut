@@ -22,6 +22,7 @@ class Community extends React.Component {
   }
 
   componentDidMount() {
+    console.log('COMMUNITY MOUNT');
     localStorage.setItem('isUserInCommunity', true);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.handlePosition.bind(this), this.handleError.bind(this));

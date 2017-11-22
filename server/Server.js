@@ -101,8 +101,8 @@ app.use(function(req, res, next) {
           next()
         })
   } else {
-    console.log('inside this fucking piece of shit')
-    req.session.destroy();
+    console.log('inside this fucking piece of shit');
+    // req.session.destroy();
     req.user = undefined;
     next();
   }
