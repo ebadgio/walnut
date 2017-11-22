@@ -82,12 +82,26 @@ app.use(session({
   // userToken: null
 }));
 
+app.post('/auth/checkstall', function (req, res) {
+  if(!req.user && !req.session.userMToken) {
+    console.log('checking stall on back')
+    res.json({ success: false })
+  } else {
+    res.json({ success: true })
+  }
+});
 
+<<<<<<< HEAD
 app.use(function(req, res, next) {
 
   console.log('use function', req.session, req.session.userMToken, req.user);
 
   if(req.user) {
+=======
+app.use(function (req, res, next) {
+  console.log('use function', req.session, req.session.userMToken, req.user);
+  if (req.user) {
+>>>>>>> safari
     console.log('req.user exists');
     next()
   }
@@ -96,10 +110,10 @@ app.use(function(req, res, next) {
     // const mongoId = mongoIdByte.toString(CryptoJS.enc.Utf8);
     console.log('have user m token');
     User.findById(req.session.userMToken)
-        .then((response) => {
-          req.user = response;
-          next()
-        })
+      .then((response) => {
+        req.user = response;
+        next()
+      })
   } else {
     console.log('inside this fucking piece of shit');
     // req.session.destroy();
