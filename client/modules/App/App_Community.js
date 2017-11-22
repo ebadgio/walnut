@@ -8,6 +8,7 @@ import Directory from '../Directory/Directory_index';
 import NavBar from './App_Nav_Temp';
 import MapContainer from '../Map/Map_index';
 import updateLocationThunk from '../../thunks/map_thunks/updateLocationThunk';
+import checkBrowserStallThunk from '../../thunks/auth_thunks/checkBrowserStallThunk';
 import EditProfile from '../Profile/EditProfile_index';
 import WalnutLoader from './App_WalnutLoader';
 import LeftSideContainer from './App_Left_Side_Container';
@@ -26,6 +27,8 @@ class Community extends React.Component {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.handlePosition.bind(this), this.handleError.bind(this));
     }
+
+    this.props.checkBrowserStall();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -93,7 +96,8 @@ Community.propTypes = {
   currentUser: PropTypes.object,
   showDimmer: PropTypes.bool,
   match: PropTypes.object,
-  changeWindowStatus: PropTypes.func
+  changeWindowStatus: PropTypes.func,
+  checkBrowserStall: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -105,7 +109,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   updateLocation: (params) => dispatch(updateLocationThunk(params)),
-  changeWindowStatus: (isHidden) => dispatch({type: 'CHANGE_WINDOW_STATUS', isHidden: isHidden})
+  changeWindowStatus: (isHidden) => dispatch({type: 'CHANGE_WINDOW_STATUS', isHidden: isHidden}),
+  checkBrowserStall: () => dispatch(checkBrowserStallThunk())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Community);
