@@ -14,6 +14,7 @@ import NewCommunityModal from './App_NewCommunityModal';
 import WalnutLoader from './App_WalnutLoader';
 import signOutThunk from '../../thunks/auth_thunks/signOutThunk';
 import joinCommunityCodeThunk from '../../thunks/community_thunks/joinCommunityCodeThunk';
+import checkBrowserStallThunk from '../../thunks/auth_thunks/checkBrowserStallThunk';
 
 class WalnutHomeContainer extends React.Component {
   constructor() {
@@ -34,6 +35,8 @@ class WalnutHomeContainer extends React.Component {
   }
 
   componentDidMount() {
+    this.props.checkBrowserStall();
+
     sessionStorage.setItem('url', '/walnuthome');
 
     // AUTO JOIN WITH LINK
@@ -138,7 +141,8 @@ WalnutHomeContainer.propTypes = {
   loginFirebase: PropTypes.bool,
   errorDone: PropTypes.func,
   savedCode: PropTypes.string,
-  submitCode: PropTypes.func
+  submitCode: PropTypes.func,
+  checkBrowserStall: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -158,7 +162,8 @@ const mapDispatchToProps = (dispatch) => ({
   updateConvos: (id) => dispatch({ type: 'SWITCH_COM', communityId: id }),
   handleLogout: (his) => dispatch(signOutThunk(his)),
   errorDone: () => dispatch({ type: 'JOINING_CODE_ERROR_DONE'}),
-  submitCode: (code) => dispatch(joinCommunityCodeThunk(code))
+  submitCode: (code) => dispatch(joinCommunityCodeThunk(code)),
+  checkBrowserStall: () => dispatch(checkBrowserStallThunk())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalnutHomeContainer);

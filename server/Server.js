@@ -82,23 +82,18 @@ app.use(session({
   // userToken: null
 }));
 
+app.post('/auth/checkstall', function (req, res) {
+  if(!req.user && !req.session.userMToken) {
+    console.log('checking stall on back')
+    res.json({ success: false })
+  } else {
+    res.json({ success: true })
+  }
+});
 
-app.use(function(req, res, next) {
-  console.log('use function', req.session.userMToken);
-
-  // RELOAD
-  // req.session.reload((err) => {
-  //   console.log('regened session', req.session);
-  // })
-
-  // GETTING SESSION NO DB
-  // console.log('session id ', req.sessionID);
-  // store.get(req.sessionID, (err, session) => {
-  //   console.log('session obj', session)
-  //   return;
-  // })
-
-  if(req.user) {
+app.use(function (req, res, next) {
+  console.log('use function', req.session, req.session.userMToken, req.user);
+  if (req.user) {
     console.log('req.user exists');
     next()
   }
@@ -107,18 +102,14 @@ app.use(function(req, res, next) {
     // const mongoId = mongoIdByte.toString(CryptoJS.enc.Utf8);
     console.log('have user m token');
     User.findById(req.session.userMToken)
-        .then((response) => {
-          req.user = response;
-          next()
-        })
+      .then((response) => {
+        req.user = response;
+        next()
+      })
   } else {
-    console.log('inside this fucking piece of shit')
-    if (app.get('env') !== 'development') {
-      req.session.destroy();
-      req.user = undefined;
-      localStorage.clear();
-      res.redirect('https:www.walnutnetwork.com/')
-    }
+    console.log('inside this fucking piece of shit');
+    // req.session.destroy();
+    req.user = undefined;
     next();
   }
 });
