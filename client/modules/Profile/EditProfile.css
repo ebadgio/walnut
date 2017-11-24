@@ -1,8 +1,11 @@
 .editPage {
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-around;
-    align-items: flex-start;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 590px;
 }
 
 .editCard {
