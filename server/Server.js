@@ -84,17 +84,15 @@ app.use(session({
 
 app.post('/auth/checkstall', function (req, res) {
   if(!req.user && !req.session.userMToken) {
-    console.log('checking stall on back')
+    console.log('hit stall route')
     res.json({ success: false })
   } else {
     res.json({ success: true })
   }
 });
 
-
 app.use(function (req, res, next) {
   if (req.user) {
-    console.log('req.user exists');
     next()
   }
   else if (req.session.userMToken) {
