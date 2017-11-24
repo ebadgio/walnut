@@ -43,17 +43,6 @@ class WalnutHomeContainer extends React.Component {
     if (this.props.savedCode) {
       this.props.submitCode(this.props.savedCode);
     }
-
-    // Safari + firefox session issue bandaid
-    setTimeout(() => {
-      if (!this.props.fullName) {
-        console.log('CLEARING');
-        localStorage.clear();
-        history.replace('/');
-        alert('Please login in again to continue. We are currently experiencing issues with Cookies in ' +
-                ' Safari/Firefox Sorry for the inconvenience.');
-      }
-    }, 10000);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -153,6 +142,7 @@ WalnutHomeContainer.propTypes = {
   errorDone: PropTypes.func,
   savedCode: PropTypes.string,
   submitCode: PropTypes.func,
+  fullName: PropTypes.string,
   checkBrowserStall: PropTypes.func
 };
 

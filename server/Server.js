@@ -91,21 +91,13 @@ app.post('/auth/checkstall', function (req, res) {
   }
 });
 
-<<<<<<< HEAD
-app.use(function(req, res, next) {
 
-  console.log('use function', req.session, req.session.userMToken, req.user);
-
-  if(req.user) {
-=======
 app.use(function (req, res, next) {
-  console.log('use function', req.session, req.session.userMToken, req.user);
   if (req.user) {
->>>>>>> safari
     console.log('req.user exists');
     next()
   }
-  if (req.session.userMToken) {
+  else if (req.session.userMToken) {
     // const mongoIdByte = CryptoJS.AES.decrypt(req.session.userMToken.toString(), 'secret');
     // const mongoId = mongoIdByte.toString(CryptoJS.enc.Utf8);
     console.log('have user m token');
