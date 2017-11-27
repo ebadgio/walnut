@@ -21,7 +21,8 @@ class MinichatTextBox extends React.Component {
       emojiIsOpen: false,
       file: '',
       active: props.active,
-      notif: {}
+      notif: {},
+      modalOpen: false
     };
   }
 
@@ -125,79 +126,77 @@ class MinichatTextBox extends React.Component {
   }
 
   handleClick(id, attachment) {
-    if (this.state.commentBody) {
-      const updates = {};
-      let message;
-      updates['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
-      firebaseApp.database().ref().update(updates);
-            // const commentBody = this.state.commentBody;
-            // const split = commentBody.split(' ');
-            // split.forEach((word, idx) => {
-            //   if (word.length > 31) {
-            //     const firstHalf = word.slice(0, 32);
-            //     const secondHalf = word.slice(32);
-            //     split[idx] = firstHalf + '\n' + secondHalf;
-            //   }
-            // });
-            // const useBody = split.join(' ');
-      if (attachment) {
-        message = {
-          author: this.state.user.displayName,
-          authorId: this.state.user.uid,
-          content: this.state.commentBody,
-          createdAt: new Date(),
-          authorPhoto: this.props.currentUser.pictureURL,
-          attachment: attachment
-        };
-      } else {
-        message = {
-          author: this.state.user.displayName,
-          authorId: this.state.user.uid,
-          content: this.state.commentBody,
-          createdAt: new Date(),
-          authorPhoto: this.props.currentUser.pictureURL,
-          attachment: ''
-        };
-      }
-
-      // Last message stuff
-      const updateLast = {};
-      updateLast['/lastMessage/' + this.props.postData.postId] = {
+    const updates = {};
+    let message;
+    updates['/typers/' + this.props.postData.postId + '/' + this.state.user.uid] = null;
+    firebaseApp.database().ref().update(updates);
+          // const commentBody = this.state.commentBody;
+          // const split = commentBody.split(' ');
+          // split.forEach((word, idx) => {
+          //   if (word.length > 31) {
+          //     const firstHalf = word.slice(0, 32);
+          //     const secondHalf = word.slice(32);
+          //     split[idx] = firstHalf + '\n' + secondHalf;
+          //   }
+          // });
+          // const useBody = split.join(' ');
+    if (attachment) {
+      message = {
         author: this.state.user.displayName,
-        content: this.state.commentBody
+        authorId: this.state.user.uid,
+        content: this.state.commentBody,
+        createdAt: new Date(),
+        authorPhoto: this.props.currentUser.pictureURL,
+        attachment: attachment
       };
-      firebaseApp.database().ref().update(updateLast);
+    } else {
+      message = {
+        author: this.state.user.displayName,
+        authorId: this.state.user.uid,
+        content: this.state.commentBody,
+        createdAt: new Date(),
+        authorPhoto: this.props.currentUser.pictureURL,
+        attachment: ''
+      };
+    }
 
-      // unread messages set up
-      firebaseApp.database().ref('/followGroups/' + this.props.postData.postId).once('value', snapshot => {
-        const followers = Object.keys(snapshot.val());
-        const memberIds = this.state.members.map(member => member.uid);
-        followers.filter(fol => (memberIds.indexOf(fol) === -1 && fol !== this.state.user.uid)).forEach(follower => {
-          const unreadsCountRef = firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId);
-          unreadsCountRef.transaction((currentValue) => {
-            return (currentValue || 0) + 1;
-          });
+    // Last message stuff
+    const updateLast = {};
+    updateLast['/lastMessage/' + this.props.postData.postId] = {
+      author: this.state.user.displayName,
+      content: this.state.commentBody
+    };
+    firebaseApp.database().ref().update(updateLast);
 
-          const totalUnreadsRef = firebaseApp.database().ref('/totalUnreads/' + follower + '/' + this.props.currentUser.currentCommunity._id);
-          totalUnreadsRef.transaction((currentValue) => {
-            return (currentValue || 0) + 1;
-          });
+    // unread messages set up
+    firebaseApp.database().ref('/followGroups/' + this.props.postData.postId).once('value', snapshot => {
+      const followers = Object.keys(snapshot.val());
+      const memberIds = this.state.members.map(member => member.uid);
+      followers.filter(fol => (memberIds.indexOf(fol) === -1 && fol !== this.state.user.uid)).forEach(follower => {
+        const unreadsCountRef = firebaseApp.database().ref('/unreads/' + follower + '/' + this.props.postData.postId);
+        unreadsCountRef.transaction((currentValue) => {
+          return (currentValue || 0) + 1;
+        });
+
+        const totalUnreadsRef = firebaseApp.database().ref('/totalUnreads/' + follower + '/' + this.props.currentUser.currentCommunity._id);
+        totalUnreadsRef.transaction((currentValue) => {
+          return (currentValue || 0) + 1;
         });
       });
-      // unread stuff ends here
+    });
+    // unread stuff ends here
 
-      this.setState({commentBody: '', prevBody: ''});
-      const update = {};
-      const newMessageKey = firebaseApp.database().ref().child('messages').push().key;
-      update['/messages/' + id + '/' + newMessageKey] = message;
-      firebaseApp.database().ref().update(update);
-      const messagesCountRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
-      messagesCountRef.transaction((currentValue) => {
-        return (currentValue || 0) + 1;
-      });
-      const elem = document.getElementById('minichatMessageInput');
-      elem.value = '';
-    }
+    this.setState({commentBody: '', prevBody: ''});
+    const update = {};
+    const newMessageKey = firebaseApp.database().ref().child('messages').push().key;
+    update['/messages/' + id + '/' + newMessageKey] = message;
+    firebaseApp.database().ref().update(update);
+    const messagesCountRef = firebaseApp.database().ref('/counts/' + this.props.postData.postId + '/count');
+    messagesCountRef.transaction((currentValue) => {
+      return (currentValue || 0) + 1;
+    });
+    const elem = document.getElementById('minichatMessageInput');
+    elem.value = '';
   }
 
   addEmoji(emoj) {
@@ -210,11 +209,11 @@ class MinichatTextBox extends React.Component {
   }
 
   handleUploadModal(file) {
-    this.setState({file: file});
+    this.setState({file: file, modalOpen: true});
   }
 
   handleFileClose() {
-    this.setState({file: ''});
+    this.setState({file: '', modalOpen: false});
   }
 
   handleAwsUpload(body) {
@@ -244,7 +243,8 @@ class MinichatTextBox extends React.Component {
           <FileModal
               handleFileSubmit={(body) => this.handleAwsUpload(body)}
               handleFileClose={()=>this.handleFileClose()}
-              fileName={this.state.file.name} />
+              fileName={this.state.file.name} 
+              modalOpen={this.state.modalOpen}/>
             {this.state.emojiIsOpen ?
                 <div className="emojiDiv">
                   <Picker set="emojione"
