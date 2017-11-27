@@ -983,10 +983,10 @@ button.ui.button > input {
     height: 28px !important;
     padding-left: 11px !important;
     padding-top: 6px !important;
-    position: relative !important;
-    left: 89% !important;
+    position: absolute !important;
+    left: 48.8% !important;
     cursor: pointer;
-    margin-top: 320px !important;
+    top: 93.5% !important;
 }
 
 

@@ -15,7 +15,6 @@ import LeftSideContainer from './App_Left_Side_Container';
 import Conversations from '../Conversations/Conversations_Index';
 import firebaseApp from '../../firebase';
 import PageVisibility from 'react-page-visibility';
-import {history} from '../Auth/Auth_index';
 
 class Community extends React.Component {
   constructor(props) {

@@ -16,7 +16,7 @@ class FileModal extends React.Component {
   render() {
     return (
             <Modal size={'small'} basic
-                open={this.props.fileName}
+                open={this.props.modalOpen}
                 closeIcon="close"
                 onClose={()=> this.props.handleFileClose()}>
                 <Modal.Content image scrolling className="scrollContentClass">
@@ -33,7 +33,8 @@ class FileModal extends React.Component {
 FileModal.propTypes = {
   fileName: PropTypes.string,
   handleFileSubmit: PropTypes.func,
-  handleFileClose: PropTypes.func
+  handleFileClose: PropTypes.func,
+  modalOpen: PropTypes.bool
 };
 
 export default FileModal;
