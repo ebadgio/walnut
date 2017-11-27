@@ -208,16 +208,16 @@ class MinichatTextBox extends React.Component {
     this.setState({ emojiIsOpen: !this.state.emojiIsOpen });
   }
 
-  handleUploadModal(file) {
-    this.setState({file: file, modalOpen: true});
-  }
+  // handleUploadModal(file) {
+  //   this.setState({file: file, modalOpen: true});
+  // }
 
   handleFileClose() {
     this.setState({file: '', modalOpen: false});
   }
 
   handleAwsUpload(body) {
-    this.setState({commentBody: body});
+    this.setState({commentBody: body, modalOpen: false});
     superagent.post('/aws/upload/comment')
             .attach('attach', this.state.file)
             .end((err, res) => {
@@ -232,7 +232,7 @@ class MinichatTextBox extends React.Component {
 
   upload() {
     const myFile = $('#fileInputMiniChat').prop('files');
-    this.setState({ file: myFile[0]});
+    this.setState({ file: myFile[0], modalOpen: true});
   }
 
 
@@ -243,7 +243,7 @@ class MinichatTextBox extends React.Component {
           <FileModal
               handleFileSubmit={(body) => this.handleAwsUpload(body)}
               handleFileClose={()=>this.handleFileClose()}
-              fileName={this.state.file.name} 
+              fileName={this.state.file.name}
               modalOpen={this.state.modalOpen}/>
             {this.state.emojiIsOpen ?
                 <div className="emojiDiv">
