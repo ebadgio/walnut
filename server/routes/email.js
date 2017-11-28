@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport('smtps://walnutreg@gmail.com:' + 
 router.post('/community/invites', (req, res) => {
   const emails = req.body.newMembers;
   const id = req.body.communityID;
-  const link = 'localhost:3000/login?code=';
+  const link = 'www.walnutnetwork.com/login?code=';
   const start = id.substr(21, 24);
   const end = id.substr(0, 3);
   let letters;
@@ -39,7 +39,7 @@ router.post('/community/invites', (req, res) => {
           if (error) {
             return console.log('error on email send', error);
           }
-          console.log('success on email', info.messageId, info);
+          return console.log('success on email', info.messageId, info);
         });
       });
       console.log('code', code);

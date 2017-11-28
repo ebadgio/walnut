@@ -347,11 +347,11 @@
     border-radius: 0 !important;
     position: fixed !important;
     width: 294px !important;
-    top: 6%;
+    top: 21%;
     border: none !important;
     z-index: 1000;
     box-shadow: 0px 0px 10px 3px rgba(34, 36, 38, 0.15) !important;
-    left: 27%;
+    right: 2%;
 }
 
 .buttonIcon {
@@ -437,22 +437,16 @@
     font-size: 22px !important;
 }
 
-#communityPrivacyHeader {
-    color: black;
-    margin: 0;
-    position: absolute;
-    top: 5%;
-    left: 3%
-}
 
 .privacySettings {
-    height: 460px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     margin-left: 63px;
     margin-right: 81px;
-    margin-top: 41px;
+}
+
+.choiceBlock {
+    margin-top: 40px;
 }
 
 .privacySettingDesc {
@@ -491,10 +485,10 @@
 }
 
 .topicIntro {
-    color: black;
-    margin-left: 25px;
-    margin-right: 25px;
+    color: #212121;
+    margin: 20px 25px 20px 25px;
     text-align: center;
+    font-size: 20px;
 }
 
 .topicPicture {
@@ -506,9 +500,7 @@
 }
 
 .addTags {
-    margin-left: 64px;
-    position: absolute;
-    bottom: 10%;
+    margin-left: 22px;
 }
 
 .stickyDiv {
@@ -559,27 +551,38 @@
     border-radius: 20px;
 }
 
+.nameCont {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-titles {
+    font-weight: 900;
+    font-size: 22px;
+    margin: 20px auto 20px 20px;
+}
+
 .navbarLinkOff:hover {
     color: #5bc0e3 !important;
 }
 
+.imgUploadCont {
+    display: flex;
+    flex-direction: column;
+}
+
 .communityImgPre {
-    height: 305px;
-    width: auto;
-    position: absolute;
-    top: 14%;
-    margin-left: 143px;
-    filter: brightness(80%);
+    height: 220px;
+    width: 220px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .imgWrapperComm {
-    height: 305px;
-    width: 305px;
+    height: 260px;
+    width: 260px;
     display: flex;
     overflow: hidden;
-    position: absolute;
-    top: 14%;
-    margin-left: 143px;
 }
 
 .communityImgUpload {
@@ -638,14 +641,9 @@ button.ui.button > input {
 }
 
 #communityUploaderCreate {
-    margin-right: 100px;
-    margin-bottom: 23px;
     cursor: pointer;
 }
 
-#communityUploaderCreate:hover {
-    color: #5bc0e3 !important;
-}
 
 .closingIcon {
     cursor: pointer;
@@ -715,16 +713,27 @@ button.ui.button > input {
 }
 
 .emailDiv {
-    height: 450px;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow-x: auto;
+}
+
+.emailDiv::-webkit-scrollbar {
+    display: none !important;
 }
 
 .tagsDiv {
-    height: 261px;
-    margin-top: 144px;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    overflow-x: auto;
+}
+
+.tagsDiv::-webkit-scrollbar {
+    display: none !important;
 }
 
 .emailInnerDiv {
@@ -974,97 +983,45 @@ button.ui.button > input {
     cursor: pointer;
 }
 
-.nextButtonModal1 {
-    color: #5bc0e3 !important;
-    background-color: #fff !important;
-    border: 1.5px solid !important;
-    border-radius: 4px !important;
-    width: 57px !important;
-    height: 28px !important;
-    padding-left: 11px !important;
-    padding-top: 6px !important;
-    position: absolute !important;
-    left: 48.8% !important;
+
+
+.next-button {
     cursor: pointer;
-    top: 93.5% !important;
+    border-radius: 4px;
+    width: 90px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #6874e8;
+    color: #fff;
+    transition: background .25s ease;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.next-button:hover {
+    background: #7580EA;
 }
 
 
-.nextButtonModal2 {
-    color: #5bc0e3 !important;
-    background-color: #fff !important;
-    border: 1.5px solid !important;
-    border-radius: 4px !important;
-    width: 57px !important;
-    height: 28px !important;
-    padding-left: 11px !important;
-    padding-top: 6px !important;
-    position: relative !important;
-    left: 89% !important;
+.prev-button {
     cursor: pointer;
-    margin-top: 72px !important;
+    border-radius: 4px;
+    width: 90px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #2667FF;
+    color: #fff;
+    transition: background .25s ease;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
-.nextButtonModal3 {
-    color: #5bc0e3 !important;
-    background-color: #fff !important;
-    border: 1.5px solid !important;
-    border-radius: 4px !important;
-    width: 57px !important;
-    height: 28px !important;
-    padding-left: 11px !important;
-    padding-top: 6px !important;
-    position: relative !important;
-    left: 89% !important;
-    cursor: pointer;
-    margin-top: 101px !important;
+.prev-button:hover {
+    background: #4D82FF
 }
 
-
-.prevButtonModal2 {
-    color: #5bc0e3 !important;
-    background-color: #fff !important;
-    border: 1.5px solid !important;
-    border-radius: 4px !important;
-    width: 57px !important;
-    height: 28px !important;
-    padding-left: 11px !important;
-    padding-top: 6px !important;
-    left: 17px !important;
-    cursor: pointer;
-    margin-top: 72px !important;
-    position: absolute !important;
-}
-
-.prevButtonModal3 {
-    color: #5bc0e3 !important;
-    background-color: #fff !important;
-    border: 1.5px solid !important;
-    border-radius: 4px !important;
-    width: 57px !important;
-    height: 28px !important;
-    padding-left: 11px !important;
-    padding-top: 6px !important;
-    left: 17px !important;
-    cursor: pointer;
-    margin-top: 101px !important;
-    position: absolute !important;
-}
-
-.prevButtonModal4 {
-    color: #5bc0e3 !important;
-    background-color: #fff !important;
-    border: 1.5px solid !important;
-    border-radius: 4px !important;
-    width: 57px !important;
-    height: 28px !important;
-    padding-left: 11px !important;
-    padding-top: 6px !important;
-    position: relative !important;
-    margin-top: 85px !important;
-    left: 17px !important;
-    cursor: pointer;
-}
 
 .createCommunityActions {
     position: absolute !important;
@@ -1074,10 +1031,25 @@ button.ui.button > input {
 }
 
 #fileUploadNewComm {
-    position: relative;
-    left: 42%;
-    margin-top: 40%;
+    position: absolute;
+    width: 220px;
+    margin-top: -220px;
+    margin-left: 140px;
+    display: flex;
+    justify-content: center;
+    height: 220px;
+    font-size: 24px;
     z-index: 1;
+    cursor: pointer;
+    align-items: center;
+    background: rgba(0,0,0,.25);
+    transition: background .25s ease;
+    font-weight: 900;
+    color: #fff;
+}
+
+#fileUploadNewComm:hover {
+    background: rgba(0,0,0,.35);
 }
 
 h1, h2, h3, h4, h5 {
@@ -1271,4 +1243,91 @@ h1, h2, h3, h4, h5 {
 
 .logout_button:hover {
     color: #757575;
+}
+
+
+.create_community_paper {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+    background: #fff;
+    width: 500px;
+    height: 500px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.create_wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.step-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 80px;
+    margin-top: 40px;
+}
+
+.step-circle {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    opacity: .25;
+    margin-right: 20px;
+}
+
+.success-cont {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.success-message {
+    font-weight: 900;
+    font-size: 32px;
+    text-align: center;
+    margin-top: 60px;
+    max-width: 300px;
+    line-height: 36px;
+    margin-bottom: 60px;
+}
+
+.success-circle {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    transition: background .25s ease;
+}
+
+.cancel-create {
+    cursor: pointer;
+    position: absolute;
+    left: 50px;
+    top: 70px;
+    height: 40px;
+    width: 90px;
+    margin: 10px;
+    color: #fff;
+    border: 2px solid #fff;
+    transition: background .15s ease;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border-radius: 4px;
+    background: rgba(0,0,0,.45);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.cancel-create:hover {
+    background: rgba(0,0,0,.6);
 }

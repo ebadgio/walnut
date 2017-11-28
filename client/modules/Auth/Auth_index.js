@@ -12,6 +12,7 @@ import getUser from '../../thunks/app_thunks/getAppThunk';
 import NewLanding from './Auth_Landing2';
 import WalnutLoader from '../App/App_WalnutLoader';
 import Waiting from './Auth_Waiting';
+import NewCommunity from '../App/App_NewCommunityModal';
 
 export const history = createBrowserHistory();
 
@@ -25,6 +26,9 @@ class Auth extends React.Component {
 
 
   componentDidMount() {
+    if (window.location.href.split('=')[1]) {
+      this.props.saveCode(window.location.href.split('=')[1]);
+    }
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user && !user.emailVerified) {
         history.replace('/verify/' + user.email);
@@ -71,6 +75,7 @@ class Auth extends React.Component {
         <Switch>
           <Route exact path="/" component={this.state.loading ? WalnutLoader : NewLanding} />
           <Route path="/walnuthome" component={WalnutHomeContainer} />
+          <Route path="/create/community" component={NewCommunity} />
           <Route path="/community/:name" component={Community} />
           <Route path="/login" component={NewLogin} />
           <Route path="/signup" component={NewRegister} />
@@ -89,7 +94,8 @@ Auth.propTypes = {
   isVerified: PropTypes.bool,
   onVerified: PropTypes.func,
   currentUser: PropTypes.object,
-  match: PropTypes.object
+  match: PropTypes.object,
+  saveCode: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -100,7 +106,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getUser: () => dispatch(getUser()),
-  onVerified: () => dispatch({type: 'IS_VERIFIED'})
+  onVerified: () => dispatch({type: 'IS_VERIFIED'}),
+  saveCode: (code) => dispatch({ type: 'SAVE_CODE', code: code })
 });
 
 

@@ -9,6 +9,7 @@
         display: flex;
         justify-content: space-between;
         min-width: 960px;
+        min-height: 100vh;
     }
     .Feed_Wrapper {
         position: relative !important;

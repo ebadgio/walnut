@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
-import { Modal, Button, Icon, Input, Label, Form, Checkbox } from 'semantic-ui-react';
+import { Icon, Input, Label, Form, Checkbox } from 'semantic-ui-react';
 import createCommunityThunk from '../../thunks/community_thunks/createCommunityThunk';
 import superagent from 'superagent';
 import $ from 'jquery';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
+import {history} from '../Auth/Auth_index';
 
 class CreateCommunityPage extends React.Component {
   constructor() {
@@ -21,7 +22,7 @@ class CreateCommunityPage extends React.Component {
       file: '',
       pic: '',
       page: 1,
-      status: 'public'
+      status: 'public',
     };
   }
 
@@ -79,12 +80,12 @@ class CreateCommunityPage extends React.Component {
   handleNewComm() {
     if (this.state.file !== '' && this.state.titleValue) {
       this.props.handleCreate(this.state.file, this.state.titleValue, this.state.status, this.state.otherTags, this.state.newMembers);
-      this.setState({ titleValue: '', status: 'public', otherTags: [] });
-      this.props.closeModal();
+      this.setState({ titleValue: '', status: 'public', otherTags: [], displaySuccess: true });
+      setTimeout(() => history.replace('/walnuthome'), 1500);
     } else if (this.state.titleValue) {
       this.props.handleCreate(this.state.image, this.state.titleValue, this.state.status, this.state.otherTags, this.state.newMembers);
-      this.setState({ titleValue: '', status: 'public', otherTags: [] });
-      this.props.closeModal();
+      this.setState({ titleValue: '', status: 'public', otherTags: [], displaySuccess: true  });
+      setTimeout(() => history.replace('/walnuthome'), 1500);
     }
   }
 
@@ -127,185 +128,221 @@ class CreateCommunityPage extends React.Component {
 
 
   render() {
-    return (
-        <div className="createCommunityCard">
-
-
-            { this.state.page === 1 ?
-            <div>
-                <Modal.Header className="modalHeader">
-                    <Icon className="closingIcon" name="close" onClick={() => this.props.closeModal()} />
-                </Modal.Header>
-                <Modal.Content scrolling>
-
-                    <h3 id="communityPictureText">1) Community Picture</h3>
-                    <input id="fileInputNewComm" type="file" onChange={() => this.upload()} />
-                    {this.state.file !== '' ? <div className="imgWrapperComm"><img onClick={() => $('#fileInputNewComm').trigger('click')} className="communityImgUpload" src={this.state.file} /></div> : null }
-                    {this.state.file  === '' ?
+    if (this.state.displaySuccess) {
+      setTimeout(() => this.setState({animate: true}), 100);
+      setTimeout(() => this.setState({animate1: true}), 200);
+      setTimeout(() => this.setState({animate2: true}), 300);
+      setTimeout(() => this.setState({animate3: true}), 400);
+      setTimeout(() => this.setState({animate4: true}), 500);
+      setTimeout(() => this.setState({animate5: true}), 600);
+      return (
+          <div className="success-cont">
+            <div style={{display: 'flex'}}>
+              <div className="success-circle" style={this.state.animate ? {background: '#673AB7', marginTop: '-30px'} : {marginTop: '-30px'}}></div>
+              <div className="success-circle" style={this.state.animate1 ? {background: '#3F51B5', marginLeft: '30px', marginRight: '30px'} : {marginLeft: '30px', marginRight: '30px'}}></div>
+              <div className="success-circle" style={this.state.animate2 ? {background: '#2196F3'} : {}}></div>
+            </div>
+            <div className="success-message">
+              Your community has been created!
+            </div>
+            <div style={{display: 'flex'}}>
+              <div className="success-circle" style={this.state.animate3 ? {background: '#FFC107'} : {}}></div>
+              <div className="success-circle" style={this.state.animate4 ? {background: '#FF9800', marginLeft: '30px', marginRight: '30px'} : {marginLeft: '30px', marginRight: '30px'}}></div>
+              <div className="success-circle" style={this.state.animate5 ? {background: '#FF5722', marginBottom: '30px'} : {marginBottom: '30px'}}></div>
+            </div>
+          </div>
+      );
+    } else if (this.state.page === 1) {
+      return (
+          <div>
+            <div className="nameCont">
+              <span className="create-titles">
+                Step 1a: Name this Community
+              </span>
+              <input className="login_inputs"
+                     placeholder="Name here"
+                     style={{marginBottom: '10px'}}
+                     type="text"
+                     value={this.state.titleValue}
+                     onChange={(e) => this.handleChange(e)}
+                     name="title" />
+            </div>
+            <div className="imgUploadCont">
+              <span className="create-titles">
+                Step 1b: Give it an avatar
+              </span>
+              <input id="fileInputNewComm" type="file" onChange={() => this.upload()} />
+                {this.state.file !== '' ?
+                  <img onClick={() => $('#fileInputNewComm').trigger('click')} className="communityImgPre" src={this.state.file} /> : null }
+              {this.state.file === '' ?
+                  <img className="communityImgPre" src="https://avatars2.githubusercontent.com/u/5745754?v=4&s=88" /> : null }
+              {this.state.file  === '' ?
                     <div id="communityUploaderCreate">
-                        <Button id="fileUploadNewComm" onClick={() => $('#fileInputNewComm').trigger('click')} className="editPicButton">Upload picture</Button>
+                      <div id="fileUploadNewComm" onClick={() => $('#fileInputNewComm').trigger('click')}>Upload picture</div>
                     </div> : null }
-                    {this.state.file === '' ?
-                        <img className="communityImgPre" src="https://avatars2.githubusercontent.com/u/5745754?v=4&s=88" /> : null }
-
-                    <h3 id="communityTitleText">2) Community Title</h3>
-                    <Input
-                        className="titleInput"
-                        value={this.state.titleValue}
-                        onChange={(e) => { this.handleChange(e); }} />
-                </Modal.Content>
-                        <div className="pageMarker">
-                            <div className="outerCircle"></div>
-                            <div className="innerCircle"></div>
-                            <div className="outerCircle"></div>
-                            <div className="outerCircle"></div>
-                            <div className="outerCircle"></div>
-                        </div>
-                        <Button.Content className="nextButtonModal1" onClick={() => this.state.titleValue === '' ? null : this.setState({page: 2})} visible>Next</Button.Content>
-            </div> : null }
-
-
-            { this.state.page === 2 ?
-            <div>
-                <Modal.Header className="modalHeader">
-                    <Icon className="closingIcon" name="close" onClick={() => this.props.closeModal()} />
-                </Modal.Header>
-                <h3 id="communityPrivacyHeader">3) Community Discovery Settings</h3>
-                <Form className="privacySettings">
-                    <div>
-                        <Form.Field>
-                            <Checkbox
-                                radio
-                                id="radioLabel"
-                                label="Public"
-                                name="checkboxRadioGroup"
-                                value="public"
-                                checked={this.state.status === 'public'}
-                                onChange={(e, val) => this.handleRadio(e, val)}
-                            />
-                        </Form.Field>
-                        <p className="privacySettingDesc">Community will be open and visible to the public and can be joined by anyone</p>
+            </div>
+            <div className="step-container">
+              <div style={{width: '90px', height: '40px'}}></div>
+              <div style={{display: 'flex'}}>
+                <div className="step-circle" style={{background: '#2196F3', opacity: '1'}}></div>
+                <div className="step-circle" style={{background: '#FFC107'}}></div>
+                <div className="step-circle" style={{background: '#FF9800'}}></div>
+                <div className="step-circle" style={{background: '#FF5722'}}></div>
+              </div>
+              <div className="next-button"
+                   onClick={() => this.state.titleValue === '' ? null : this.setState({page: 2})}>
+                Next
+              </div>
+            </div>
+          </div>
+      );
+    } else if (this.state.page === 2) {
+      return (
+          <div>
+            <div style={{paddingTop: '10px'}}>
+              <span className="create-titles">Step 2: Set your Community's Privacy Status</span>
+            </div>
+            <Form className="privacySettings">
+              <div className="choiceBlock">
+                <Form.Field>
+                  <Checkbox
+                      radio
+                      id="radioLabel"
+                      label="Public"
+                      name="checkboxRadioGroup"
+                      value="public"
+                      checked={this.state.status === 'public'}
+                      onChange={(e, val) => this.handleRadio(e, val)}
+                  />
+                </Form.Field>
+                <p className="privacySettingDesc">Community will be open and visible to the public and can be joined by anyone</p>
+              </div>
+              <div className="choiceBlock">
+                <Form.Field>
+                  <Checkbox
+                      radio
+                      id="radioLabel"
+                      label="Private"
+                      name="checkboxRadioGroup"
+                      value="private"
+                      checked={this.state.status === 'private'}
+                      onChange={(e, val) => this.handleRadio(e, val)}
+                  />
+                </Form.Field>
+                <p className="privacySettingDesc">Community will be visible to the public but can only be joined by invitation or request</p>
+              </div>
+              <div className="choiceBlock">
+                <Form.Field>
+                  <Checkbox
+                      radio
+                      id="radioLabel"
+                      label="Secret"
+                      name="checkboxRadioGroup"
+                      value="secret"
+                      checked={this.state.status === 'secret'}
+                      onChange={(e, val) => this.handleRadio(e, val)}
+                  />
+                </Form.Field>
+                <p className="privacySettingDesc">Community will be hidden from the public and only be joined by invite</p>
+              </div>
+            </Form>
+            <div className="step-container">
+              <div className="prev-button" onClick={() => this.setState({ page: 1 })} >Back</div>
+              <div style={{display: 'flex'}}>
+                <div className="step-circle" style={{background: '#2196F3', opacity: '1'}}></div>
+                <div className="step-circle" style={{background: '#FFC107', opacity: '1'}}></div>
+                <div className="step-circle" style={{background: '#FF9800'}}></div>
+                <div className="step-circle" style={{background: '#FF5722'}}></div>
+              </div>
+              <div className="next-button" onClick={() => this.setState({page: 3})} >Next</div>
+            </div>
+          </div>
+      );
+    } else if (this.state.page === 3) {
+      return (
+        <div>
+          <div style={{paddingTop: '10px'}}>
+            <span className="create-titles">Step 2: Add Default Conversation Topics</span>
+          </div>
+          <h4 className="topicIntro">Topics help your community stay organised and discover conversations more efficiently.
+            Add a few topics that you think are relevant to your community.</h4>
+          <div className="tagsDiv">
+              { this.state.otherTags.map((tag, i) =>
+                  <div className="emailInnerDiv" ref={(ref) => {this['_div' + i] = ref;}}>
+                    <Icon className="removeIcon" name="close" onClick={() => this.handleTagRemove(i)} />
+                    <h4 className="email">
+                      # {tag.toString().toUpperCase()}
+                    </h4>
+                  </div>
+              )}
+          </div>
+          <div className="addTags">
+            <Input
+                id="topicInput"
+                labelPosition="left"
+                type="text"
+                placeholder="Add Topic here..."
+                value={this.state.filterValue}
+                onChange={(e) => { this.handleFilterChange(e); this.findEnterTag(e); }} >
+              <Label basic><Icon name="hashtag" /></Label>
+              <input />
+            </Input>
+          </div>
+          <div className="step-container">
+            <div className="prev-button" onClick={() => this.setState({ page: 2 })} >Back</div>
+            <div style={{display: 'flex'}}>
+              <div className="step-circle" style={{background: '#2196F3', opacity: '1'}}></div>
+              <div className="step-circle" style={{background: '#FFC107', opacity: '1'}}></div>
+              <div className="step-circle" style={{background: '#FF9800', opacity: '1'}}></div>
+              <div className="step-circle" style={{background: '#FF5722'}}></div>
+            </div>
+            <div className="next-button" onClick={() => this.setState({page: 4})} >Next</div>
+          </div>
+        </div>
+      );
+    } else if (this.state.page === 4) {
+      return (
+          <div>
+            <div style={{paddingTop: '10px'}}>
+              <span className="create-titles">Step 4: Add Members</span>
+            </div>
+            <div className="topicIntro">Send some email invites to your community members! Don't worry, you can invite them later too.</div>
+            <div className="emailDiv">
+                { this.state.newMembers.map((email, i) =>
+                    <div className="emailInnerDiv" ref={(ref) => {this['_div' + i] = ref;}}>
+                      <Icon className="removeIcon" name="close" onClick={() => this.handleMemberRemove(i)} />
+                      <h4 className="email">
+                          {email}
+                      </h4>
                     </div>
-                    <div>
-                        <Form.Field>
-                            <Checkbox
-                                radio
-                                id="radioLabel"
-                                label="Private"
-                                name="checkboxRadioGroup"
-                                value="private"
-                                checked={this.state.status === 'private'}
-                                onChange={(e, val) => this.handleRadio(e, val)}
-                            />
-                        </Form.Field>
-                        <p className="privacySettingDesc">Community will be visible to the public but can only be joined by invitation or request</p>
-                    </div>
-                    <div>
-                        <Form.Field>
-                            <Checkbox
-                                radio
-                                id="radioLabel"
-                                label="Secret"
-                                name="checkboxRadioGroup"
-                                value="secret"
-                                checked={this.state.status === 'secret'}
-                                onChange={(e, val) => this.handleRadio(e, val)}
-                            />
-                        </Form.Field>
-                        <p className="privacySettingDesc">Community will be hidden from the public and only be joined by invite</p>
-                    </div>
-                </Form>
-                    <Button.Content className="prevButtonModal2" onClick={() => this.setState({ page: 1 })} visible>Back</Button.Content>
-                    <div className="pageMarker">
-                        <div className="outerCircle"></div>
-                        <div className="outerCircle"></div>
-                        <div className="innerCircle1"></div>
-                        <div className="outerCircle"></div>
-                        <div className="outerCircle"></div>
-                    </div>
-                    <Button.Content className="nextButtonModal2" onClick={() => this.setState({page: 3})} visible>Next</Button.Content>
-            </div> : null }
-
-
-            {this.state.page === 3 ?
-                <div>
-                    <Modal.Header className="modalHeader">
-                        <Icon className="closingIcon" name="close" onClick={() => this.props.closeModal()} />
-                    </Modal.Header>
-                    <h3 className="topicTitle">4) Add Default Conversation Topics:</h3>
-                    <h4 className="topicIntro">Topics help your community stay organised and discover conversations more efficiently</h4>
-                    <img src="https://s3-us-west-1.amazonaws.com/walnut-test/topicEg.png" className="topicPicture"/>
-                    <div className="tagsDiv">
-                        { this.state.otherTags.map((tag, i) =>
-                            <div className="emailInnerDiv" ref={(ref) => {this['_div' + i] = ref;}}>
-                                <Icon className="removeIcon" name="close" onClick={() => this.handleTagRemove(i)} />
-                                <h4 className="email">
-                                    # {tag}
-                                </h4>
-                            </div>
-                        )}
-                    </div>
-                    <div className="addTags">
-                        <Input
-                            id="topicInput"
-                            labelPosition="left"
-                            type="text"
-                            placeholder="Add Topic here..."
-                            value={this.state.filterValue}
-                            onChange={(e) => { this.handleFilterChange(e); this.findEnterTag(e); }} >
-                            <Label basic><Icon name="hashtag" /></Label>
-                            <input />
-                        </Input>
-                    </div>
-                        <Button.Content className="prevButtonModal3" onClick={() => this.setState({ page: 2 })} visible>Back</Button.Content>
-                        <div className="pageMarker">
-                            <div className="outerCircle"></div>
-                            <div className="outerCircle"></div>
-                            <div className="outerCircle"></div>
-                            <div className="innerCircle2"></div>
-                            <div className="outerCircle"></div>
-                        </div>
-                        <Button.Content className="nextButtonModal3" onClick={() => this.setState({page: 4})} visible>Next</Button.Content>
-                </div> : null}
-
-
-            {this.state.page === 4 ?
-                <div>
-                    <Modal.Header className="modalHeader">
-                        <Icon className="closingIcon" name="close" onClick={() => this.props.closeModal()} />
-                    </Modal.Header>
-                    <h3 className="topicTitle">5) Add Members:</h3>
-                    <div className="emailDiv">
-                        { this.state.newMembers.map((email, i) =>
-                            <div className="emailInnerDiv" ref={(ref) => {this['_div' + i] = ref;}}>
-                                <Icon className="removeIcon" name="close" onClick={() => this.handleMemberRemove(i)} />
-                                <h4 className="email">
-                                    {email}
-                                </h4>
-                            </div>
-                        )}
-                    </div>
-                    <div className="addTags">
-                        <Input
-                            id="memberInput"
-                            labelPosition="left"
-                            type="text"
-                            placeholder="Add members by email..."
-                            value={this.state.member}
-                            onChange={(e) => { this.handleMemberChange(e); this.findEnterMember(e); }} >
-                            <input />
-                        </Input>
-                    </div>
-                        <Button.Content className="createButtonModal" onClick={() => this.handleNewComm()} visible>Create <Icon name="lightning" /></Button.Content>
-                        <div className="pageMarker">
-                            <div className="outerCircle"></div>
-                            <div className="outerCircle"></div>
-                            <div className="outerCircle"></div>
-                            <div className="outerCircle"></div>
-                            <div className="innerCircle3"></div>
-                        </div>
-                        <Button.Content className="prevButtonModal4" onClick={() => this.setState({ page: 3 })} visible>Back</Button.Content>
-                </div> : null}
+                )}
+            </div>
+            <div style={{marginBottom: '80px', marginLeft: '40px'}} className="addTags">
+              <Input
+                  id="memberInput"
+                  labelPosition="left"
+                  type="text"
+                  placeholder="Add members by email..."
+                  value={this.state.member}
+                  onChange={(e) => { this.handleMemberChange(e); this.findEnterMember(e); }} >
+                <input />
+              </Input>
+            </div>
+            <div className="step-container">
+              <div className="prev-button" onClick={() => this.setState({ page: 3 })} >Back</div>
+              <div style={{display: 'flex'}}>
+                <div className="step-circle" style={{background: '#2196F3', opacity: '1'}}></div>
+                <div className="step-circle" style={{background: '#FFC107', opacity: '1'}}></div>
+                <div className="step-circle" style={{background: '#FF9800', opacity: '1'}}></div>
+                <div className="step-circle" style={{background: '#FF5722', opacity: '1'}}></div>
+              </div>
+              <div className="next-button" onClick={() => this.handleNewComm()}>Create</div>
+            </div>
+          </div>
+      );
+    }
+    return (
+        <div>
         </div>
     );
   }

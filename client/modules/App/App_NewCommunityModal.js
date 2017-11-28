@@ -1,10 +1,9 @@
 
 import React from 'react';
-import './App.css';
-import { Modal, Icon } from 'semantic-ui-react';
 import CreateCommunityPage from './App_NewCommunityPage.js';
+import {history} from '../Auth/Auth_index';
 
-class NewCommunityModal extends React.Component {
+class NewCommunity extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -18,25 +17,28 @@ class NewCommunityModal extends React.Component {
 
   render() {
     return (
-        <Modal size={'small'}
-               basic
-               trigger={
-                 <div className="modalTrigger" onClick={() => this.setState({open: true})}>
-                   <Icon name="plus" className="buttonIconJoin"/>
-                   Create new Community
-                 </div>}
-               open={this.state.open}
-               className="modalComponent"
-        >
-        <CreateCommunityPage closeModal={() => this.closeModal()}/>
-        </Modal>
+        <div className="create_wrapper">
+            <div className="Heading">
+                <img src="https://s3.amazonaws.com/walnut-logo/logo.svg" className="logoHome"/>
+                <span style={{fontSize: '45px'}}>Walnut</span>
+                <div className="logout_button" onClick={() => this.handleLogout()}>
+                    Logout
+                </div>
+            </div>
+            <div className="cancel-create" onClick={() => history.replace('/walnuthome')}>
+                Cancel
+            </div>
+            <div className="create_community_paper">
+                <CreateCommunityPage closeModal={() => this.closeModal()}/>
+            </div>
+        </div>
     );
   }
 }
 
 
-NewCommunityModal.propTypes = {
+NewCommunity.propTypes = {
 };
 
 
-export default NewCommunityModal;
+export default NewCommunity;
