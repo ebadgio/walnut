@@ -26,6 +26,9 @@ class Auth extends React.Component {
 
 
   componentDidMount() {
+    if (window.location.href.split('=')[1]) {
+      this.props.saveCode(window.location.href.split('=')[1]);
+    }
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user && !user.emailVerified) {
         history.replace('/verify/' + user.email);
@@ -91,7 +94,8 @@ Auth.propTypes = {
   isVerified: PropTypes.bool,
   onVerified: PropTypes.func,
   currentUser: PropTypes.object,
-  match: PropTypes.object
+  match: PropTypes.object,
+  saveCode: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -102,7 +106,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getUser: () => dispatch(getUser()),
-  onVerified: () => dispatch({type: 'IS_VERIFIED'})
+  onVerified: () => dispatch({type: 'IS_VERIFIED'}),
+  saveCode: (code) => dispatch({ type: 'SAVE_CODE', code: code })
 });
 
 

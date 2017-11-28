@@ -18,6 +18,11 @@ const createCommunityThunk = (image, title, status, otherTags, newMembers) => (d
           newMembers: newMembers,
           communityID: response.data.communityID
         })
+        .then((resp) => {
+          if (resp.data.success) {
+            console.log('success on emailing');
+          }
+        })
         .catch((err) => {
           console.log('failed to send mail to users', err);
         });
