@@ -12,6 +12,7 @@ import getUser from '../../thunks/app_thunks/getAppThunk';
 import NewLanding from './Auth_Landing2';
 import WalnutLoader from '../App/App_WalnutLoader';
 import Waiting from './Auth_Waiting';
+import NewCommunity from '../App/App_NewCommunityModal';
 
 export const history = createBrowserHistory();
 
@@ -71,6 +72,7 @@ class Auth extends React.Component {
         <Switch>
           <Route exact path="/" component={this.state.loading ? WalnutLoader : NewLanding} />
           <Route path="/walnuthome" component={WalnutHomeContainer} />
+          <Route path="/create/community" component={NewCommunity} />
           <Route path="/community/:name" component={Community} />
           <Route path="/login" component={NewLogin} />
           <Route path="/signup" component={NewRegister} />

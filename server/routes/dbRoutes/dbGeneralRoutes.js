@@ -72,8 +72,30 @@ router.post('/create/community', (req, res) => {
             ];
             return User.populate(savedUser, opts);
           })
-          .then((userSave) => {
-            userEnd = userSave;
+          .then((populatedUser) => {
+            console.log('pop', populatedUser);
+            userEnd = populatedUser;
+            const newMember = new Post({
+              content: 'has joined' + ' ' + req.body.title + '!',
+              createdAt: new Date(),
+              createdBy: req.user._id,
+              likes: [],
+              tags: [],
+              comments: [],
+              commentNumber: 0,
+              community: communityID,
+              link: '',
+              attachments: {
+                name: '',
+                url: '',
+                type: ''
+              },
+              newMemberBanner: true
+            });
+            return newMember.save();
+          })
+          .then((newMemberPost) => {
+            console.log('new member post', newMemberPost);
             return Community.find();
           })
           .then((communities) => {
