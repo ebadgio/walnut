@@ -412,7 +412,7 @@
 .titleInput {
     position: absolute !important;
     top: 77%;
-    margin-left: 96px;
+    margin-left: 81px;
     width: 400px;
 }
 
@@ -470,7 +470,7 @@
 
 #memberInput {
     width: 403px;
-    margin-left: 8px;
+    margin-left: 28px;
 }
 
 #defaultTopicList {
@@ -580,9 +580,11 @@
 
 .imgWrapperComm {
     height: 260px;
-    width: 260px;
+    width: 266px;
     display: flex;
     overflow: hidden;
+    margin-left: 145px;
+    margin-top: 113px;
 }
 
 .communityImgUpload {
@@ -1119,7 +1121,7 @@ h1, h2, h3, h4, h5 {
 
 .editTabSection {
     width: 550px;
-    height: 625px;
+    height: 561px;
     background-color: white;
     position: absolute;
     top: 0%;
@@ -1203,9 +1205,13 @@ h1, h2, h3, h4, h5 {
 }
 
 .currentMembers {
-    height: 240px;
+    height: 207px;
     margin-top: 23px;
     overflow-y: scroll;
+}
+
+.currentMembers::-webkit-scrollbar {
+    display: none;
 }
 
 .emailEditDiv {
@@ -1214,9 +1220,13 @@ h1, h2, h3, h4, h5 {
     overflow-y: scroll;
 }
 
+.emailEditDiv::-webkit-scrollbar {
+    display: none;
+}
+
 .emailTopicTitle {
     color: black;
-    margin-left: 30px;
+    margin-left: 37px;
     margin-top: 20px;
 }
 
