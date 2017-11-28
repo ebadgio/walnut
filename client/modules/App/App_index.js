@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Community from './App_Community';
 import WalnutHomeContainer from './App_Walnut_Home_Container';
+import NewCommunity from './App_NewCommunityModal';
 import getUser from '../../thunks/app_thunks/getAppThunk';
 
 
@@ -31,6 +32,7 @@ class App extends React.Component {
         <div>
           <Switch>
             <Route path="/walnuthome" component={WalnutHomeContainer}/>
+            <Route path="/create/community" component={NewCommunity} />
             <Route path="/community" render={() => <Community history={history} />} />
           </Switch>
         </div>

@@ -15,6 +15,7 @@ import WalnutLoader from './App_WalnutLoader';
 import signOutThunk from '../../thunks/auth_thunks/signOutThunk';
 import joinCommunityCodeThunk from '../../thunks/community_thunks/joinCommunityCodeThunk';
 import checkBrowserStallThunk from '../../thunks/auth_thunks/checkBrowserStallThunk';
+import {Icon} from 'semantic-ui-react';
 
 class WalnutHomeContainer extends React.Component {
   constructor() {
@@ -85,8 +86,10 @@ class WalnutHomeContainer extends React.Component {
           </div>
           <div className="walnutHomeActions">
             <JoinCommunityCode />
-            <NewCommunityModal
-              handleCreate={(image, title, defaultFilters) => this.handleSubmit(image, title, defaultFilters)} />
+            <div className="modalTrigger" onClick={() => {console.log('trying to replace'); history.replace('/create/community');}}>
+              <Icon name="plus" className="buttonIconJoin"/>
+              Create new Community
+            </div>
           </div>
           <div className="subHead">Your Communities</div>
           <div className="communitiesContainer">
