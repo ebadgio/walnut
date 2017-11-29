@@ -63,6 +63,7 @@
     "image-webpack-loader": "^3.3.1",
     "karma-scss-preprocessor": "^2.0.0",
     "lodash": "^4.17.4",
+    "mailgun-js": "^0.13.1",
     "mapbox-gl": "^0.38.0",
     "metascraper": "^1.0.7",
     "mongoose": "^4.5.1",
