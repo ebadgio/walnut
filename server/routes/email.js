@@ -2,9 +2,13 @@ const express = require('express');
 const Community = require('../models/models').Community;
 const router = express.Router();
 
-const nodemailer =  require('nodemailer');
+const apiKey = 'key-06c1dc31d2ca5286b37ef0e4bef7ecfc';
+const DOMAIN = 'www.walnutnetwork.com';
+const mailgun = require('mailgun-js')({ apiKey: apiKey, domain: DOMAIN });
 
-const transporter = nodemailer.createTransport('smtps://walnutreg@gmail.com:' + encodeURIComponent('acro355123') + '@smtp.gmail.com:465');
+// const nodemailer =  require('nodemailer');
+
+// const transporter = nodemailer.createTransport('smtps://walnutreg@gmail.com:' + encodeURIComponent('acro355123') + '@smtp.gmail.com:465');
 
 router.post('/community/invites', (req, res) => {
   const emails = req.body.newMembers;
@@ -22,29 +26,27 @@ router.post('/community/invites', (req, res) => {
     status = comm.status[0];
     code = start + '_' + letters + '_' + status + '_' + end;
 
-    nodemailer.createTestAccount((err, account) => {
-      emails.forEach((email) => {
-          // setup email data with unicode symbols
+    emails.forEach((email) => {
+      console.log('email', email);
 
-        console.log('email', email);
-        const mailOptions = {
-          from: '"Walnut" <walnutreg@gmail.com>', // sender address
-          to: email, // list of receivers
-          subject: 'You have been summoned to join a new community on Walnut', // Subject line
-          text: 'Hello world?', // plain text body
-          html: '<a href=' + link + code + '>' + link + code + '</a><p>here is your code:' + code + '</p>' // html body
-        };
-          // send mail with defined transport object
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            return console.log('error on email send', error);
-          }
-          return console.log('success on email', info.messageId, info);
-        });
+      const data = {
+        from: 'Walnut <noreply@walnutnetwork.com>',
+        to: email,
+        subject: 'You have been summoned to join a new community on Walnut',
+        text: 'Testing some Mailgun awesomness!',
+        html: '<a href=' + link + code + '>' + link + code + '</a><p>Alternatively join using this code once logged in:' + code + '</p>'
+      };
+
+      mailgun.messages().send(data, (error, body) => {
+        if (error) {
+          console.log('error in sending mail', error);
+        } else {
+          console.log('success in sending mail', body);
+        }
       });
-      console.log('code', code);
-      res.json({succes: true});
     });
+
+    res.json({ succes: true });
   });
 });
 
