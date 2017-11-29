@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import firebaseApp from '../../../firebase';
-import $ from 'jquery';
 import _ from 'underscore';
 import InfiniteScroll from 'react-infinite-scroller';
 import Comment from '../../Post/Post_Comment';

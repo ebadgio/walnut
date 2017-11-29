@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import firebaseApp from '../../../firebase';
 import { Form, TextArea, Icon } from 'semantic-ui-react';
-import $ from 'jquery';
 import _ from 'underscore';
 import { Picker } from 'emoji-mart';
 import FileModal from '../../Post/Post_Modal_File_Uploader.js';
@@ -113,16 +112,12 @@ class MinichatTextBox extends React.Component {
     this.setState({ commentBody: e.target.value });
   }
 
-  findEnter() {
-    $('#minichatMessageInput').keypress((event) => {
-      if (event.which === 13) {
-        if (this.state.commentBody.length > 0) {
-          this.handleClick(this.props.postData.postId, null);
-          return false; // prevent duplicate submission
-        }
+  findEnter(event) {
+    if (event.key === 'Enter') {
+      if (this.state.commentBody.length > 0) {
+        this.handleClick(this.props.postData.postId, null);
       }
-      return null;
-    });
+    }
   }
 
   handleClick(id, attachment) {
@@ -199,14 +194,14 @@ class MinichatTextBox extends React.Component {
     elem.value = '';
   }
 
-  addEmoji(emoj) {
-    this.setState({ emojiIsOpen: false, commentBody: this.state.commentBody + emoj.native});
-        // this.handleClick(this.props.postData.postId, emoj.native);
-  }
+  // addEmoji(emoj) {
+  //   this.setState({ emojiIsOpen: false, commentBody: this.state.commentBody + emoj.native});
+  //       // this.handleClick(this.props.postData.postId, emoj.native);
+  // }
 
-  openEmojiPicker() {
-    this.setState({ emojiIsOpen: !this.state.emojiIsOpen });
-  }
+  // openEmojiPicker() {
+  //   this.setState({ emojiIsOpen: !this.state.emojiIsOpen });
+  // }
 
   // handleUploadModal(file) {
   //   this.setState({file: file, modalOpen: true});
@@ -230,11 +225,10 @@ class MinichatTextBox extends React.Component {
             });
   }
 
-  upload() {
-    const myFile = $('#fileInputMiniChat').prop('files');
+  upload(e) {
+    const myFile = e.target.files;
     this.setState({ file: myFile[0], modalOpen: true});
   }
-
 
   render() {
     return(
@@ -245,7 +239,7 @@ class MinichatTextBox extends React.Component {
               handleFileClose={()=>this.handleFileClose()}
               fileName={this.state.file.name}
               modalOpen={this.state.modalOpen}/>
-            {this.state.emojiIsOpen ?
+            {/* {this.state.emojiIsOpen ?
                 <div className="emojiDiv">
                   <Picker set="emojione"
                           onClick={(emoj) => this.addEmoji(emoj)}
@@ -264,21 +258,22 @@ class MinichatTextBox extends React.Component {
                           }}
                           autoFocus={false} />
                 </div>
-                : null}
+                : null} */}
           <div className="conversationsInputWrapper">
             <Form className="conversationsTextBoxForm">
                       <TextArea
                           id="minichatMessageInput"
                           autoHeight
+                          onKeyPress={(e) => this.findEnter(e)}
                           placeholder="What are your thoughts?..."
-                          onChange={(e) => { this.handleChange(e); this.findEnter(); }}
+                          onChange={(e) => { this.handleChange(e);}}
                           rows={2}
                       />
             </Form>
             <div className="actionsTextBox">
-              <Icon id="fileUploadMiniChat" onClick={() => $('#fileInputMiniChat').trigger('click')} className="attachFileIconModal" name="attach" size="large"/>
-              <input id="fileInputMiniChat" type="file" onChange={() => this.upload()} />
-              <Icon onClick={() => this.openEmojiPicker()} size="large" name="smile" className="emojiPickerMiniChat" />
+              <Icon id="fileUploadMiniChat" onClick={() => this.fileInputMiniChat.click()} className="attachFileIconModal" name="attach" size="large"/>
+              <input ref={(input) => { this.fileInputMiniChat = input; }} id="fileInputMiniChat" type="file" onChange={(e) => this.upload(e)} />
+              {/* <Icon onClick={() => this.openEmojiPicker()} size="large" name="smile" className="emojiPickerMiniChat" /> */}
             </div>
           </div>
         </div>

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import {  Loader, Popup, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import firebaseApp from '../../../firebase';
-import $ from 'jquery';
 import _ from 'underscore';
 import '../Conversations.css';
 import InfiniteScroll from 'react-infinite-scroller';

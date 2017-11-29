@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TagPrefContainer from './Feed_NewPost_TagPref_Container';
 import newPostThunk from '../../thunks/post_thunks/newPostThunk';
-import $ from 'jquery';
-import { Icon, Button, TextArea, Form, Divider, Popup, Segment, Portal } from 'semantic-ui-react';
+import { Icon, Button, TextArea, Form, Divider, Segment, Portal } from 'semantic-ui-react';
 import superagent from 'superagent';
 import './Feed.css';
 import firebaseApp from '../../firebase';
@@ -99,8 +98,8 @@ class NewPostContainer extends React.Component {
     }
   }
 
-  upload() {
-    const myFile = $('#fileInputNewpost').prop('files');
+  upload(e) {
+    const myFile = e.target.files;
     this.setState({ file: myFile[0] });
   }
 
@@ -165,8 +164,8 @@ class NewPostContainer extends React.Component {
           </div>
             <Divider />
             <div className="row newPostFooter">
-              <Icon id="fileUploadNewpost" onClick={() => $('#fileInputNewpost').trigger('click')} className="attachFileIcon" name="attach" size="large" />
-              <input id="fileInputNewpost" type="file" onChange={() => this.upload()} />
+              <Icon id="fileUploadNewpost" onClick={() => this.fileInputNewpost.click()} className="attachFileIcon" name="attach" size="large" />
+              <input ref={(input) => { this.fileInputNewpost = input; }} id="fileInputNewpost" type="file" onChange={(e) => this.upload(e)} />
                 {(this.state.file !== '') ?
                 <input value={(this.state.newFileName !== null) ? this.state.newFileName : this.state.file.name}
                 onChange={(e) => this.changeFileName(e.target.value)}/>

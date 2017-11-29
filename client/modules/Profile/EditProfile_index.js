@@ -6,7 +6,6 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 import saveAboutThunk from '../../thunks/profile_thunks/saveAboutThunk';
 import './EditProfile.css';
 import superagent from 'superagent';
-import $ from 'jquery';
 
 const options = [{text: 2010, value: 2010}, {text: 2011, value: 2011}, {text: 2012, value: 2012},
     {text: 2013, value: 2013}, {text: 2014, value: 2014}, {text: 2015, value: 2015},
@@ -76,8 +75,8 @@ class EditProfile extends React.Component {
     this.setState({company: e.target.value});
   }
 
-  upload() {
-    const myFile = $('#fileInputEditprofile').prop('files');
+  upload(e) {
+    const myFile = e.target.files;
     this.setState({ file: myFile[0] });
   }
 
@@ -181,8 +180,8 @@ class EditProfile extends React.Component {
                 <div className="profilePicBox">
                    <img src={this.props.profilePic} className="proPic" />
                 </div>
-                <Icon id="fileUploadEditprofile" onClick={() => $('#fileInputEditprofile').trigger('click')} className="editPicButton" size="big" name="edit"  />
-                <input id="fileInputEditprofile" type="file" onChange={() => this.upload()} />
+                <Icon id="fileUploadEditprofile" onClick={() => this.fileInputEditprofile.click()} className="editPicButton" size="big" name="edit"  />
+                <input ref={(input) => { this.fileInputEditprofile = input; }} id="fileInputEditprofile" type="file" onChange={(e) => this.upload(e)} />
                 {this.state.file ? <Button className="uploadButton" onClick={() => { this.saveImage(); }}>Upload</Button> : <p></p>}
             </div>
         </div>

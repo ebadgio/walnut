@@ -6,7 +6,6 @@ import { Button, Step, Input, Form, Modal, Message, Icon } from 'semantic-ui-rea
 import signInThunk from '../../thunks/auth_thunks/signInThunk';
 import firebase from 'firebase';
 import verificationThunk from '../../thunks/auth_thunks/verificationThunk';
-import $ from 'jquery';
 import './Login.css';
 import {history} from './Auth_index';
 

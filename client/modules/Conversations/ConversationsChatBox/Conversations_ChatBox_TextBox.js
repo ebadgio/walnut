@@ -101,16 +101,12 @@ class ConversationsTextBox extends React.Component {
     this.setState({ commentBody: e.target.value });
   }
 
-  findEnter() {
-    $('#conversationsMessageInput').keypress((event) => {
-      if (event.which === 13) {
-        if (this.state.commentBody.length > 0) {
-          this.handleClick(this.props.postData.postId, null);
-          return false; // prevent duplicate submission
-        }
+  findEnter(event) {
+    if (event.key === 'Enter') {
+      if (this.state.commentBody.length > 0) {
+        this.handleClick(this.props.postData.postId, null);
       }
-      return null;
-    });
+    }
   }
 
   handleClick(id, attachment) {
@@ -189,20 +185,21 @@ class ConversationsTextBox extends React.Component {
     }
   }
 
-  addEmoji(emoj) {
-    this.setState({ emojiIsOpen: false, commentBody: this.state.commentBody + emoj.native});
-        // this.handleClick(this.props.postData.postId, emoj.native);
-  }
+  // addEmoji(emoj) {
+  //   console.log('emoji', emoj.native);
+  //   this.setState({ emojiIsOpen: false, commentBody: this.state.commentBody + emoj.native});
+  //       // this.handleClick(this.props.postData.postId, emoj.native);
+  // }
 
-  openEmojiPicker() {
-    this.setState({ emojiIsOpen: !this.state.emojiIsOpen });
+  // openEmojiPicker() {
+  //   this.setState({ emojiIsOpen: !this.state.emojiIsOpen });
 
-    $(document).bind('click', (e) => {
-      if (!$(e.target).is('#emojiPicker')) {
-        this.setState({ emojiIsOpen: false });
-      }
-    });
-  }
+  //   $(document).bind('click', (e) => {
+  //     if (!$(e.target).is('#emojiPicker')) {
+  //       this.setState({ emojiIsOpen: false });
+  //     }
+  //   });
+  // }
 
   handleUploadModal(file) {
     this.setState({file: file});
@@ -226,10 +223,11 @@ class ConversationsTextBox extends React.Component {
             });
   }
 
-  upload() {
-    const myFile = $('#fileInputConversation').prop('files');
+  upload(e) {
+    const myFile = e.target.files;
     this.setState({ file: myFile[0]});
   }
+
   render() {
     return(
         <div className="conversationsTextBox">
@@ -238,11 +236,11 @@ class ConversationsTextBox extends React.Component {
                 handleFileSubmit={(body) => this.handleAwsUpload(body)}
                 handleFileClose={()=>this.handleFileClose()}
                 fileName={this.state.file.name} />
-            {this.state.emojiIsOpen ?
+            {/* {this.state.emojiIsOpen ?
                 <div className="emojiDiv">
                     <Picker set="emojione"
                             id="emojiPicker"
-                            onClick={(emoj) => this.addEmoji(emoj)}
+                            onClick={(emoj) => console.log('inside here')}
                             title="Pick your emoji…" emoji="point_up"
                             className="emojiContainer"
                             emojiSize={24}
@@ -258,22 +256,23 @@ class ConversationsTextBox extends React.Component {
                             }}
                             autoFocus={false} />
                 </div>
-                : null}
+                : null} */}
             <div className="conversationsInputWrapper">
                 <Form className="conversationsTextBoxForm">
                       <TextArea
                           id="conversationsMessageInput"
                           autoHeight
                           placeholder="What are your thoughts?..."
+                          onKeyPress={(e) => this.findEnter(e)}
                           value={this.state.commentBody}
-                          onChange={(e) => { this.handleChange(e); this.findEnter(); }}
+                          onChange={(e) => { this.handleChange(e);}}
                           rows={2}
                       />
                 </Form>
                 <div className="actionsTextBox">
-                    <Icon id="fileUploadConversation" onClick={() => $('#fileInputConversation').trigger('click')} className="attachFileIconModal" name="attach" size="large"/>
-                    <input id="fileInputConversation" type="file" onChange={() => this.upload()} />
-                    <Icon onClick={() => this.openEmojiPicker()} size="large" name="smile" className="emojiPicker" />
+                    <Icon id="fileUploadConversation" onClick={() => this.fileInputConversation.click()} className="attachFileIconModal" name="attach" size="large"/>
+                    <input ref={(input) => { this.fileInputConversation = input;}}  id="fileInputConversation" type="file" onChange={(e) => this.upload(e)} />
+                    {/* <Icon onClick={() => this.openEmojiPicker()} size="large" name="smile" className="emojiPicker" /> */}
                 </div>
             </div>
         </div>

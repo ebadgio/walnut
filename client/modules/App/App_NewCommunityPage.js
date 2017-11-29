@@ -4,7 +4,6 @@ import './App.css';
 import { Icon, Input, Label, Form, Checkbox } from 'semantic-ui-react';
 import createCommunityThunk from '../../thunks/community_thunks/createCommunityThunk';
 import superagent from 'superagent';
-import $ from 'jquery';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import {history} from '../Auth/Auth_index';
@@ -89,8 +88,8 @@ class CreateCommunityPage extends React.Component {
     }
   }
 
-  upload() {
-    const myFile = $('#fileInputNewComm').prop('files');
+  upload(e) {
+    const myFile = e.target.files;
     superagent.post('/aws/upload/communitypicture')
     .attach('community', myFile[0])
     .end((err, res) => {
@@ -106,24 +105,16 @@ class CreateCommunityPage extends React.Component {
     this.setState({ status: val.value });
   }
 
-  findEnterMember() {
-    $('#memberInput').keypress((event) => {
-      if (event.which === 13) {
-        this.handleMemberClick();
-        return false; // prevent duplicate submission
-      }
-      return null;
-    });
+  findEnterMember(event) {
+    if (event.key === 'Enter') {
+      this.handleMemberClick();
+    }
   }
 
-  findEnterTag() {
-    $('#topicInput').keypress((event) => {
-      if (event.which === 13) {
-        this.handleClickTag();
-        return false; // prevent duplicate submission
-      }
-      return null;
-    });
+  findEnterTag(event) {
+    if (event.key === 'Enter') {
+      this.handleClickTag();
+    }
   }
 
 
@@ -171,14 +162,14 @@ class CreateCommunityPage extends React.Component {
               <span className="create-titles">
                 Step 1b: Give it an avatar
               </span>
-              <input id="fileInputNewComm" type="file" onChange={() => this.upload()} />
+              <input ref={(input) => { this.fileInputNewComm = input; }} id="fileInputNewComm" type="file" onChange={(e) => this.upload(e)} />
                 {this.state.file !== '' ?
-                  <img onClick={() => $('#fileInputNewComm').trigger('click')} className="communityImgPre" src={this.state.file} /> : null }
+              <img onClick={() => this.fileInputNewComm.click()} className="communityImgPre" src={this.state.file} /> : null }
               {this.state.file === '' ?
                   <img className="communityImgPre" src="https://avatars2.githubusercontent.com/u/5745754?v=4&s=88" /> : null }
               {this.state.file  === '' ?
                     <div id="communityUploaderCreate">
-                      <div id="fileUploadNewComm" onClick={() => $('#fileInputNewComm').trigger('click')}>Upload picture</div>
+                      <div id="fileUploadNewComm" onClick={() => this.fileInputNewComm.click()}>Upload picture</div>
                     </div> : null }
             </div>
             <div className="step-container">
@@ -283,7 +274,8 @@ class CreateCommunityPage extends React.Component {
                 type="text"
                 placeholder="Add Topic here..."
                 value={this.state.filterValue}
-                onChange={(e) => { this.handleFilterChange(e); this.findEnterTag(e); }} >
+                onKeyPress={(e) => this.findEnterTag(e)}
+                onChange={(e) => { this.handleFilterChange(e); }} >
               <Label basic><Icon name="hashtag" /></Label>
               <input />
             </Input>
@@ -324,7 +316,8 @@ class CreateCommunityPage extends React.Component {
                   type="text"
                   placeholder="Add members by email..."
                   value={this.state.member}
-                  onChange={(e) => { this.handleMemberChange(e); this.findEnterMember(e); }} >
+                  onKeyPress={(e) => this.findEnterMember(e)}
+                  onChange={(e) => { this.handleMemberChange(e);}} >
                 <input />
               </Input>
             </div>

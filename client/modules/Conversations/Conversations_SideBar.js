@@ -31,7 +31,11 @@ class ConversationsSideBar extends React.Component {
             console.log('myConvs', myConvs);
             this.props.getConvos(myConvs);
             this.props.addIds(myConvs);
+          } else {
+            this.props.emptyConvos();
           }
+        } else {
+          this.props.emptyConvos();
         }
       });
     }
@@ -68,6 +72,7 @@ ConversationsSideBar.propTypes = {
   addIds: PropTypes.func,
   togglePostData: PropTypes.func,
   topPost: PropTypes.object,
+  emptyConvos: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -79,7 +84,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getConvos: (convos) => getMyConvosThunk(convos)(dispatch),
-  addIds: (iDs) => dispatch({type: 'ADD_IDS', iDs: iDs})
+  addIds: (iDs) => dispatch({type: 'ADD_IDS', iDs: iDs}),
+  emptyConvos: () => dispatch({ type: 'GOT_NO_CONVOS'})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConversationsSideBar);

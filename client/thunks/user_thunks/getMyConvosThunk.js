@@ -8,8 +8,11 @@ const getMyConvosThunk = (convos) => (dispatch) => {
       const reversed = response.data.posts.reverse();
       if (response.data.posts.length > 0) {
         dispatch({type: 'SELECT_TOP_DEFAULT', firstPost: reversed[0]});
+        dispatch({ type: 'GET_MY_CONVOS_DONE', posts: reversed });
       }
-      dispatch({type: 'GET_MY_CONVOS_DONE', posts: reversed});
+      if (response.data.posts.length === 0) {
+        dispatch({ type: 'GOT_NO_CONVOS' });
+      }
     })
     .catch((error) => {
       console.log('get my convos error', error);
