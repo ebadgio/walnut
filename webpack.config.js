@@ -34,9 +34,6 @@ module.exports = {
   },
   devtool: 'cheap-eval-source-map',
   plugins: [
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static'
-    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'node-static',
       filename: 'node-static.js',

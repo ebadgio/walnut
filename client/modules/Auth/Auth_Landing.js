@@ -1,216 +1,148 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import Parallax from 'react-springy-parallax';
-import createBrowserHistory from 'history/createBrowserHistory';
+import './Landing.css';
 import { Icon } from 'semantic-ui-react';
-export const history = createBrowserHistory();
+import {history} from './Auth_index';
 
-class Landing extends React.Component {
-  constructor() {
-    super();
-  }
-
+class NewLanding extends React.Component {
   render() {
     return(
         <div>
-          <Parallax ref="parallax" pages={6}>
-
-            <Parallax.Layer
-              offset={0}
-              speed={0.5}
-              className="p1landingImgParallax">
-            <div className="p1landingDiv"><img src="https://s3-us-west-1.amazonaws.com/walnut-test/photo-1467826839480-0c2a3783b327.jpeg" className="p1landingImg"/></div>
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={0}
-              speed={0.5}
-              className="p1loginButton">
-            <Link to={'/login'}><div
-              onClick={() => this.login()}
-              className="loginRouteButton">Login</div></Link>
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={0}
-              speed={0.5}
-              className="p1logoDiv">
-            <div className="p1logoBack"><img src="https://s3.amazonaws.com/walnut-logo/logo.svg" className="p1logo" /></div>
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={0}
-              speed={0.25}
-              className="p1text">
-              Walnut helps communities engage in better conversations online
-              </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={1}
-              speed={0.25}
-              className="p2text">
-              Share something with your community in order to spark up a conversation
-              </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={1}
-              speed={0.5}
-              className="p2display">
-            <img src="https://s3-us-west-1.amazonaws.com/walnut-test/startconvo.png" className="p2displayImg" />
-              </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={2}
-              speed={0.25}
-              className="p3text">
-              Each conversation persists in its respective group chat for your community to engage wherever, whenever
-              </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={2}
-              speed={0.5}
-              className="p3display">
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={2}
-              speed={0.25}
-              className="p3Img">
-              <img src="https://s3-us-west-1.amazonaws.com/walnut-test/discover+minichats.png" className="p3displayImg" />
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={3}
-              speed={0.25}
-              className="p4text">
-              Topics help keep your communities conversation organized and better content discovery
-              </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={3}
-              speed={0.5}
-              className="p4display">
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={3}
-              speed={-0.4}
-              className="p4ExtractedPost">
-            <img src="https://s3-us-west-1.amazonaws.com/walnut-test/extractedpost.png" className="p4ImgPostE" />
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={3}
-              speed={0.25}
-              className="p4PostLeft">
-            <img src="https://s3-us-west-1.amazonaws.com/walnut-test/post2.png" className="p4ImgPostL" />
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={3}
-              speed={0.25}
-              className="p4PostRight">
-            <img src="https://s3-us-west-1.amazonaws.com/walnut-test/post.png" className="p4ImgPostR" />
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={3}
-              speed={0.25}
-              className="p4Post3">
-            <img src="https://s3-us-west-1.amazonaws.com/walnut-test/post3.png" className="p4ImgPost3" />
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={3}
-              speed={0.25}
-              className="p4Post4">
-            <img src="https://s3-us-west-1.amazonaws.com/walnut-test/post4.png" className="p4ImgPost4" />
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={3}
-              speed={0.25}
-              className="p4Post5">
-            <img src="https://s3-us-west-1.amazonaws.com/walnut-test/post5.png" className="p4ImgPost5" />
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={3}
-              speed={0.25}
-              className="p4tag">
-              Add tags to your conversations
-              </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={3}
-              speed={0.25}
-              className="p4filterBy">
-              So you can filter them when you need
-              </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={3}
-              speed={-0.4}
-              className="p4Filters">
-            <img src="https://s3-us-west-1.amazonaws.com/walnut-test/filters.png" className="p4ImgFilter" />
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={4}
-              speed={0.25}
-              className="p5text">
-              Stay up to date on conversations you wish to follow
-              </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={4}
-              speed={0.25}
-              className="p5ImgPara">
-            <img src="https://s3-us-west-1.amazonaws.com/walnut-test/conversations.png" className="p5Img" />
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={4}
-              speed={0.5}
-              className="p5Display">
-            <img src="https://s3-us-west-1.amazonaws.com/walnut-test/happy-customer.jpg" className="p5ImgDisp" />
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={5}
-              speed={0.25}
-              className="p6text">
-              Join us as on our journey as we cultivate more natural discussions online
-              </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={5}
-              speed={0.5}
-              className="p6Display">
-            <img src="https://s3-us-west-1.amazonaws.com/walnut-test/endpic.png" className="p6Img" />
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={5}
-              speed={0.25}
-              className="p6Button">
-              <Link to={'/login'}><div
-                onClick={() => this.login()}
-                className="signUpRouteButton">Get started</div></Link>
-            </Parallax.Layer>
-
-            <Parallax.Layer
-              offset={5}
-              speed={0.5}
-              className="p6Footer">
-              <h5 className="contactUs">Get in touch with us</h5>
-              <a id="emailLink" href="mailto:info@walnutnetwork.com"><Icon name="mail outline" className="emailIcon"/></a>
-            </Parallax.Layer>
-
-          </Parallax>
+            <div id="mainPhoto">
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-423665.jpg"
+                     style={{display: 'none'}}/>
+            </div>
+            <Link to="/login">
+                <div className="toLogin">
+                    Login
+                </div>
+            </Link>
+            <Link to="/signup">
+                <div className="toSignup">
+                    Sign up
+                </div>
+            </Link>
+            <span className="titleLand">
+                Walnut
+            </span>
+            <div className="sec1">
+                <div className="logoCont">
+                    <div className="p1logoBack2">
+                        <img src="https://s3.amazonaws.com/walnut-logo/logo.svg" className="p1logo" />
+                    </div>
+                </div>
+                <span className="whereText">
+                    Where communities engage
+                </span>
+                <div className="contentGroup">
+                    <div className="infoGroup">
+                        <div className="infoTitle">
+                            Bring your community together
+                        </div>
+                        <div className="infoBody">
+                            Create a social network centered around your community,
+                            allowing you to stay connected and share anytime, from anywhere.
+                        </div>
+                    </div>
+                    <img src="https://s3-us-west-1.amazonaws.com/walnut-test/discover+minichatsNew.png"
+                         className="sec1_ph1"/>
+                    <img src="https://s3-us-west-1.amazonaws.com/walnut-test/Screen+Shot+2017-11-13+at+10.04.26+PM.png"
+                        className="sec1_ph2"/>
+                </div>
+            </div>
+            <div id="togetherPhoto">
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-250087.jpg"
+                     style={{display: 'none'}}/>
+            </div>
+            <div className="sec2">
+                <div className="infoGroup2">
+                    <div className="infoTitle">
+                        Change the way your community talks
+                    </div>
+                    <div className="infoBody">
+                        Posts on Walnut create a chat to foster deeper
+                        and more engaging discussions.
+                    </div>
+                </div>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/minichats.png"
+                     className="sec2_ph1"/>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/post5.png"
+                     className="sec2_ph3"/>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/post2.png"
+                     className="sec2_ph2"/>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/Screen+Shot+2017-11-13+at+9.58.44+PM+copy.png"
+                     className="sec2_ph4"/>
+            </div>
+            <div id="conversationPhoto">
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/endpic.png"
+                     style={{display: 'none'}}/>
+            </div>
+            <div className="sec3">
+                <div className="infoGroup3">
+                    <div className="infoTitle">
+                        Keep your content organized and easy to find
+                    </div>
+                    <div className="infoBody">
+                        Add topics to your posts so people can find them later.
+                    </div>
+                </div>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/Screen+Shot+2017-11-13+at+9.34.26+PM+copy.png"
+                     className="sec3_ph1"/>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/Screen+Shot+2017-11-14+at+1.06.06+PM.png"
+                     className="sec3_ph2"/>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/Screen+Shot+2017-11-14+at+1.03.52+PM.png"
+                     className="sec3_ph3"/>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/Screen+Shot+2017-11-14+at+1.04.04+PM.png"
+                     className="sec3_ph4" />
+            </div>
+            <div id="organizedPhoto">
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/vadim-sherbakov-68.jpg"
+                     style={{display: 'none'}}/>
+            </div>
+            <div className="sec4">
+                <div className="infoGroup">
+                    <div className="infoTitle">
+                        Stay up to date with conversations that matter
+                    </div>
+                    <div className="infoBody">
+                        Follow posts that interest you and come back to
+                        the conversation when it’s convenient for you.
+                    </div>
+                </div>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/conversationsNew.png"
+                    className="sec4_ph1"/>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/extractedpost+copy.png"
+                    className="sec4_ph2"/>
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/Screen+Shot+2017-11-13+at+9.58.33+PM+copy.png"
+                    className="sec4_ph3"/>
+            </div>
+            <div id="keepTrackPhoto">
+                <img src="https://s3-us-west-1.amazonaws.com/walnut-test/rawpixel-com-191102.jpg"
+                     style={{display: 'none'}}/>
+            </div>
+             <div className="logoCont" style={{background: '#fff'}}>
+                 <div className="p1logoBack">
+                     <img src="https://s3.amazonaws.com/walnut-logo/logo.svg" className="p1logo" />
+                 </div>
+             </div>
+             <div id="endPhoto">
+                 <img src="https://s3-us-west-1.amazonaws.com/walnut-test/samson-duborg-rankin-91091.jpg"
+                      style={{display: 'none'}}/>
+             </div>
+             <div className="bottomSec">
+                 <div className="finalWords">Take your community to the next level with Walnut</div>
+                 <Link to="/signup">
+                 <div className="getStarted">Get Started</div>
+                 </Link>
+                 <img src="https://s3-us-west-1.amazonaws.com/walnut-test/mobileeg.png" className="mobileEg"/>
+                 <h5 className="contactUs2">Get in touch with us</h5>
+                 <a id="emailLink" href="mailto:info@walnutnetwork.com">
+                     <Icon name="mail outline" className="emailIcon2"/>
+                 </a>
+             </div>
         </div>
     );
   }
 }
 
-export default Landing;
+export default NewLanding;

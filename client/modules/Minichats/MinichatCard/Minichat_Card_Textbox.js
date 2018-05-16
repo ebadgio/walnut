@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import firebaseApp from '../../../firebase';
 import { Form, TextArea, Icon } from 'semantic-ui-react';
 import _ from 'underscore';
-import { Picker } from 'emoji-mart';
 import FileModal from '../../Post/Post_Modal_File_Uploader.js';
 import superagent from 'superagent';
 import NotificationContainer from '../../Post/Notification';
