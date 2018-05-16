@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form, Message, Icon } from 'semantic-ui-react';
+import {Link} from 'react-router-dom';
+import { Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import emailRegistrationThunk from '../../thunks/auth_thunks/emailRegistrationThunk';
-import './Auth.css';
+import {history} from './Auth_index';
 
-
-class Register extends React.Component {
+class NewRegister extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -17,7 +17,8 @@ class Register extends React.Component {
       repeat: '',
       failed: false,
       passwordFail: false,
-      passwordShort: false
+      passwordShort: false,
+      missingFields: false
     };
   }
 
@@ -45,95 +46,87 @@ class Register extends React.Component {
     e.preventDefault();
     if (this.state.password !== this.state.repeat) {
       this.setState({ passwordFail: true });
-    }
-    if (this.state.password.length < 6) {
+    } else if (this.state.password.length < 6) {
       this.setState({ passwordShort: true });
-    }
-    if (this.state.fName && this.state.lName && this.state.email && this.state.password === this.state.repeat) {
-      this.props.emailRegistration(this.state.fName, this.state.lName, this.state.email, this.state.password);
+    } else if (this.state.fName && this.state.lName && this.state.email && this.state.password && this.state.repeat) {
+      this.props.emailRegistration(this.state.fName, this.state.lName, this.state.email, this.state.password, history);
+    } else {
+      this.setState({missingFields: true});
     }
   }
 
   render() {
-    return (
-      <div className="registerCard">
-        {this.state.passwordShort ?
-          <Message icon>
-            <Icon name="warning sign" />
-            <Message.Content>
-              <Message.Header>Passwords must be atleast 6 characters</Message.Header>
-            </Message.Content>
-          </Message> :
-          null
-        }
-        {this.state.passwordFail ?
-          <Message icon>
-            <Icon name="warning sign" />
-            <Message.Content>
-              <Message.Header>Passwords don't match </Message.Header>
-            </Message.Content>
-          </Message> :
-          null
-        }
-        <Form>
-          <Form.Field>
-            <label className="authLabelsRegister" htmlFor="fname">First Name</label>
-            <input
-              type="text"
-              name="fname"
-              value={this.state.fName}
-              onChange={(e) => this.handleFnameChange(e)} />
-          </Form.Field>
-          <Form.Field>
-            <label className="authLabelsRegister" htmlFor="lname">Last Name</label>
-            <input
-              type="text"
-              name="lname"
-              value={this.state.lName}
-              onChange={(e) => this.handleLnameChange(e)} />
-          </Form.Field>
-          <Form.Field>
-            <label className="authLabelsRegister" htmlFor="email">Email</label>
-            <input
-              type="text"
-              name="email"
-              value={this.state.email}
-              onChange={(e) => this.handleEmailChange(e)} />
-          </Form.Field>
-          <Form.Field>
-            <label className="authLabelsRegister" htmlFor="password">Password</label>
-            <input className="form-control"
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={(e) => this.handlePasswordChange(e)} />
-          </Form.Field>
-          <Form.Field>
-            <label className="authLabelsRegister" htmlFor="passwordRepeat">Confirm Password</label>
-            <input
-              type="password"
-              name="passwordRepeat"
-              value={this.state.repeat}
-              onChange={(e) => this.handleRepeatChange(e)} />
-          </Form.Field>
-          <div className="registerButton" onClick={(e) => { this.register(e); }}>Register</div>
-        </Form>
-      </div>
+    return(
+        <div className="login_wrapper">
+          <div className="register_paper">
+            <Link className="back_to_login" to="/login">
+              <Icon name="reply" size="small" className="back_icon"/>
+              Back to login
+            </Link>
+            <div className="login_header">
+              <img src="https://s3.amazonaws.com/walnut-logo/logo.svg"
+                   className="login_logo"/>
+            </div>
+              <div className="warning_container">
+                {this.state.passwordShort ? <div className="reg_warning">
+                  Password must be at least 6 characters.
+                </div> : null}
+                {this.state.passwordFail ? <div className="reg_warning">
+                  Passwords do not match please reenter and try again.
+                </div> : null}
+                {this.state.missingFields ? <div className="reg_warning">
+                  Not all fields are filled in. Please finish entering your info and try again.
+                </div> : null}
+              </div>
+            <input className="login_inputs"
+                   placeholder="Enter your first name"
+                   type="text"
+                   onChange={(e) => this.handleFnameChange(e)}
+                   name="fname" />
+            <input className="login_inputs"
+                   placeholder="Enter your last name"
+                   type="text"
+                   onChange={(e) => this.handleLnameChange(e)}
+                   name="lname" />
+            <input className="login_inputs"
+                   placeholder="Enter your email"
+                   type="text"
+                   onChange={(e) => this.handleEmailChange(e)}
+                   name="email" />
+            <input className="login_inputs"
+                   placeholder="Enter your password"
+                   type="password"
+                   onChange={(e) => this.handlePasswordChange(e)}
+                   style={this.state.passwordShort ? {borderBottom: '1px solid #E53935'} : {}}
+                   name="password" />
+            <input className="login_inputs"
+                   placeholder="Confirm password"
+                   type="password"
+                   onChange={(e) => this.handleRepeatChange(e)}
+                   style={this.state.passwordFail ? {borderBottom: '1px solid #E53935'} : {}}
+                   name="confirm-password" />
+            <div className="signup_button" onClick={(e) => {
+              this.setState({passwordShort: false, passwordFail: false, missingFields: false});
+              this.register(e);
+            }}>
+              Sign up
+            </div>
+          </div>
+        </div>
     );
   }
 }
 
-Register.propTypes = {
+NewRegister.propTypes = {
   emailRegistration: PropTypes.func,
-  isVerified: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
-  isVerified: state.userReducer.isVerified
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  emailRegistration: (firstname, lastname, email, password) => emailRegistrationThunk(firstname, lastname, email, password)(dispatch)
+  emailRegistration: (firstname, lastname, email, password, hist) =>
+      emailRegistrationThunk(firstname, lastname, email, password, hist)(dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(NewRegister);

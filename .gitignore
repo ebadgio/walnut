@@ -3,4 +3,5 @@ node_modules
 env.sh
 *bundle.js
 *node-static.js
-.idea
+.idea/
+.vscode/

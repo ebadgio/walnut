@@ -9,12 +9,13 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.prod.config.js",
+    "build": "webpack --config webpack.prod.js",
     "webpack": "webpack --watch",
     "dev": "webpack-dev-server --content-base build/",
+    "prod": "webpack --config webpack.prod.js",
     "server": "nodemon ./server/Server.js",
     "start": "node ./server/Server.js",
-    "postinstall": "webpack --config webpack.prod.config.js"
+    "postinstall": "webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -47,7 +48,6 @@
     "crypto-js": "^3.1.9-1",
     "css-loader": "^0.28.4",
     "debug": "~2.2.0",
-    "emoji-mart": "^1.0.1",
     "eslint": "^2.9.0",
     "eslint-loader": "^1.5.0",
     "eslint-plugin-react": "^5.0.1",
@@ -100,7 +100,8 @@
     "underscore": "^1.8.3",
     "url-loader": "^0.5.9",
     "webpack": "^2.6.1",
-    "webpack-bundle-analyzer": "^2.9.0"
+    "webpack-bundle-analyzer": "^2.9.0",
+    "webpack-merge": "^4.1.2"
   },
   "devDependencies": {
     "webpack-dev-server": "^2.4.5"

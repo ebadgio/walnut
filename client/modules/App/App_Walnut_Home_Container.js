@@ -105,11 +105,7 @@ class WalnutHomeContainer extends React.Component {
           </div>
           <h2 className="subHead">Search For new Communities</h2>
           <div className="communitiesContainerOther">
-            {this.props.communities.filter((com) => {
-              return !(userCommunityTitles.indexOf(com.title) > -1);
-            })
-            .filter((com) => com.status !== 'secret' )
-            .map((community, idx) =>
+            {this.props.communities.map((community, idx) =>
             <CommunityCard icon={community.icon}
               title={community.title}
               status={community.status}
