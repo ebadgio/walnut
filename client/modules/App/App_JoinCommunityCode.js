@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import joinCommunityCodeThunk from '../../thunks/community_thunks/joinCommunityCodeThunk';
 import { Button, Input, Form, Segment, Portal, Loader, Icon } from 'semantic-ui-react';
-import $ from 'jquery';
 
 class JoinCommunityCode extends React.Component {
   constructor(props) {
@@ -45,16 +44,12 @@ class JoinCommunityCode extends React.Component {
     }
   }
 
-  findEnter() {
-    $('#codeTextBox').keypress((event) => {
-      if (event.which === 13) {
-        if (this.state.code.length > 0) {
-          this.submitCode();
-          return false; // prevent duplicate submission
-        }
+  findEnter(event) {
+    if (event.key === 'Enter') {
+      if (this.state.code.length > 0) {
+        this.submitCode();
       }
-      return null;
-    });
+    }
   }
 
 
@@ -84,7 +79,8 @@ class JoinCommunityCode extends React.Component {
                           <Input
                               id="codeTextBox"
                               placeholder="Enter code from invite"
-                              onChange={(e) => { this.handleChange(e); this.findEnter(); }}
+                              onKeyPress={(e) => this.findEnter(e)}
+                              onChange={(e) => { this.handleChange(e);}}
                           />
                       </Form>
                     </div> : null}

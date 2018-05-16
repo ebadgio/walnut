@@ -1,9 +1,15 @@
-const conversationReducer = (state = { current: '', convos: [], iDs: []}, action) => {
+const conversationReducer = (state = {
+  current: '',
+  convos: [],
+  iDs: [],
+  isEmpty: false
+}, action) => {
   switch(action.type) {
     case 'GET_MY_CONVOS_DONE':
       return {
         ...state,
-        convos: action.posts
+        convos: action.posts,
+        isEmpty: false
       };
     case 'SWITCH_COM':
       return {
@@ -15,6 +21,11 @@ const conversationReducer = (state = { current: '', convos: [], iDs: []}, action
       return {
         ...state,
         iDs: action.iDs
+      };
+    case 'GOT_NO_CONVOS':
+      return {
+        ...state,
+        isEmpty: true
       };
     default:
       return state;

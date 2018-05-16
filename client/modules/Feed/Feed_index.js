@@ -10,7 +10,6 @@ import nextTenThunk from '../../thunks/discover_thunks/nextTenThunk';
 import './Feed.css';
 import $ from 'jquery';
 import EmptyLoader from './Empty_Loader';
-import NewMemberBanner from '../Post/Post_NewMember';
 
 
 let refresh;

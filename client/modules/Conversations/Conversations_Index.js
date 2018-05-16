@@ -35,12 +35,22 @@ class Conversations extends React.Component {
   }
 
   render() {
-    return(
+    if (this.props.isEmpty) {
+      return(
         <div className="conversationsMainContainer">
-            <SideBar togglePostData={(data) => this.togglePostData(data)}/>
-            <ChatBox postData={this.state.postData} currentUser={this.props.currentUser} />
+          <span className="oopsNoConvo">You have not followed any conversations yet</span>
+          <img src="https://s3-us-west-1.amazonaws.com/walnut-test/Sad-Emoji-PNG-Clipart.png" className="sadFace" />
+          <span className="noConvoText">Follow a conversation for it to appear in your messenger</span>
         </div>
-    );
+      );
+    } else {
+      return (
+        <div className="conversationsMainContainer">
+          <SideBar togglePostData={(data) => this.togglePostData(data)} />
+          <ChatBox postData={this.state.postData} currentUser={this.props.currentUser} />
+        </div>
+      );
+    }
   }
 }
 
@@ -48,11 +58,13 @@ Conversations.propTypes = {
   currentUser: PropTypes.object,
   getPostFollowers: PropTypes.func,
   toggleId: PropTypes.func,
-  location: PropTypes.object
+  location: PropTypes.object,
+  isEmpty: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
   currentUser: state.userReducer,
+  isEmpty: state.conversationReducer.isEmpty
 });
 
 const mapDispatchToProps = (dispatch) => ({

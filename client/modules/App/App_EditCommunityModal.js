@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import './App.css';
 import { Input, Modal, Button, Icon, Menu } from 'semantic-ui-react';
 import updateCommunityThunk from '../../thunks/community_thunks/updateCommunityThunk';
-import $ from 'jquery';
 import superagent from 'superagent';
 import Select from 'react-select';
 
@@ -31,8 +30,8 @@ class EditCommunityModal extends React.Component {
     this.setState({ activeItem: name });
   }
 
-  upload() {
-    const myFile = $('#fileInputEditComm').prop('files');
+  upload(e) {
+    const myFile = e.target.files;
     superagent.post('/aws/upload/communitypicture')
       .attach('community', myFile[0])
       .end((err, res) => {
@@ -74,14 +73,10 @@ class EditCommunityModal extends React.Component {
     this.setState({ member: e.target.value });
   }
 
-  findEnterMember() {
-    $('#memberInput').keypress((event) => {
-      if (event.which === 13) {
-        this.handleMemberClick();
-        return false; // prevent duplicate submission
-      }
-      return null;
-    });
+  findEnterMember(event) {
+    if (event.key === 'Enter') {
+      this.handleMemberClick();
+    }
   }
 
   handleMemberClick() {
@@ -119,8 +114,8 @@ class EditCommunityModal extends React.Component {
 
               {this.state.activeItem === 'general' ?
                 <div className="editTabSection">
-                  <input id="fileInputEditComm" type="file" onChange={() => this.upload()} />
-                  <div className="imgWrapperComm"><img onClick={() => $('#fileInputEditComm').trigger('click')} className="communityImgUpload" src={this.state.image} /></div>
+                  <input ref={(input) => { this.fileInputEditComm = input; }} id="fileInputEditComm" type="file" onChange={(e) => this.upload(e)} />
+                  <div className="imgWrapperComm"><img onClick={() => this.fileInputEditComm.click()} className="communityImgUpload" src={this.state.image} /></div>
                   <Input
                     className="titleInput"
                     value={this.state.titleValue}
@@ -191,7 +186,8 @@ class EditCommunityModal extends React.Component {
                       type="text"
                       placeholder="Add members by email..."
                       value={this.state.member}
-                      onChange={(e) => { this.handleMemberChange(e); this.findEnterMember(e); }} >
+                      onKeyPress={(e) => this.findEnterMember(e)}
+                      onChange={(e) => { this.handleMemberChange(e); }} >
                       <input />
                     </Input>
                   </div>
