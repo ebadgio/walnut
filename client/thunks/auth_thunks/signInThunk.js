@@ -8,7 +8,6 @@ const signInThunk = (email, password, history) => (dispatch) => {
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then(result => {
       if (!result.emailVerified) {
-        console.log('not verified');
         dispatch({ type: 'GET_USER_VERIFY_ERROR', email: email, password: password });
         history.replace('/verify/' + email);
       }
@@ -29,7 +28,6 @@ const signInThunk = (email, password, history) => (dispatch) => {
           })
           .catch((error) => {
               // Handle Errors here.
-            console.log('you got a fucking error first', error);
             const errorCode = error.code;
             const errorMessage = error.message;
             dispatch({type: 'GET_USER_DATA_ERROR'});

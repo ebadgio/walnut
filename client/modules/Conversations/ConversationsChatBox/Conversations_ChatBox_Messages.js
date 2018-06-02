@@ -1,6 +1,4 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom';
-import { connect } from 'react-redux';
 import {  Loader, Popup, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import firebaseApp from '../../../firebase';
